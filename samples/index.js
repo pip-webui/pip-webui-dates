@@ -6,10 +6,15 @@
     var content = [
         { title: 'Date and time control', state: 'date_time', url: '/date_time', controller: 'DateController', templateUrl: 'date_time/date_time.html' },
         { title: 'Date Format', state: 'date_format', url: '/date_format', controller: 'DateFormatController', templateUrl: 'format/date_format.html' },
-        { title: 'Moment', state: 'moment', url: '/date_format', controller: 'DateFormatController', templateUrl: 'format/date_format.html' }        
+        { title: 'Moment', state: 'moment', url: '/moment', controller: 'MomentExController', templateUrl: 'moment_examples/moment_ex.html' }        
     ];
 
-    var thisModule = angular.module('app', ['ngMaterial', 'appDateTimes.Date', 'appDateTimes.DateFormat', 'pipDateTimes']);
+    var thisModule = angular.module('app', [
+        'ngMaterial', 
+        'pipDateTimes',
+        
+        'appDateTimes.Date', 'appDateTimes.DateFormat', 'appDateTimes.momentEx'
+        ]);
 
     thisModule.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider, $mdIconProvider, pipTranslateProvider) {
 
