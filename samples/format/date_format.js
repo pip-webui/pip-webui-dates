@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    var thisModule = angular.module('appDateTimes.DateFormat', []);
+    var thisModule = angular.module('appDateTimes.DateFormat', ['pipDateTimes']);
 
     thisModule.controller('DateFormatController',
         function($scope, pipDateFormat, $window) {

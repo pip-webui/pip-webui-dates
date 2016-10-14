@@ -23,6 +23,232 @@
 })(window.angular);
 
 
+(function(module) {
+try {
+  module = angular.module('pipDates.Templates');
+} catch (e) {
+  module = angular.module('pipDates.Templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('date/date.html',
+    '<!--\n' +
+    '@file Date control content\n' +
+    '@copyright Digital Living Software Corp. 2014-2016\n' +
+    '-->\n' +
+    '\n' +
+    '<div class="pip-date layout-row flex" tabindex="-1">\n' +
+    '	<md-input-container class="tm0 flex">\n' +
+    '		<md-select class="pip-date-day tm0 flex" ng-disabled="disableControls"\n' +
+    '				   ng-model="day" placeholder="{{dayLabel}}" ng-change="onDayChanged()">\n' +
+    '			<md-option ng-value="opt" ng-repeat="opt in days track by opt">{{:: opt }}</md-option>\n' +
+    '		</md-select>\n' +
+    '	</md-input-container>\n' +
+    '	<div class="w16 flex-fixed"></div>\n' +
+    '	<md-input-container class="tm0 flex">\n' +
+    '		<md-select class="pip-date-month tm0 flex" ng-disabled="disableControls"\n' +
+    '				   ng-model="month" placeholder="{{monthLabel}}" ng-change="onMonthChanged()">\n' +
+    '			<md-option ng-value="opt.id" ng-repeat="opt in months track by opt.id">{{:: opt.name }}</md-option>\n' +
+    '		</md-select>\n' +
+    '	</md-input-container>\n' +
+    '	<div class="w16 flex-fixed"></div>\n' +
+    '	<md-input-container class="tm0 flex">\n' +
+    '		<md-select class="pip-date-year tm0 flex" ng-disabled="disableControls"\n' +
+    '				   ng-model="year" placeholder="{{yearLabel}}" ng-change="onYearChanged()">\n' +
+    '			<md-option ng-value="opt" ng-repeat="opt in years track by opt">{{:: opt }}</md-option>\n' +
+    '		</md-select>\n' +
+    '	</md-input-container>\n' +
+    '</div>\n' +
+    '					');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('pipDates.Templates');
+} catch (e) {
+  module = angular.module('pipDates.Templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('date_range/date_range.html',
+    '<!--\n' +
+    '@file Date range control content\n' +
+    '@copyright Digital Living Software Corp. 2014-2016\n' +
+    '-->\n' +
+    '\n' +
+    '<div class="pip-date-range layout-row flex" tabindex="-1">\n' +
+    '    <md-input-container ng-show="isDay()" class="tm0 pip-day flex"\n' +
+    '            ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}">\n' +
+    '        <md-select class="select-day w-stretch"\n' +
+    '                   ng-class="{\'pip-no-line\' : pipNoLine}"\n' +
+    '                   ng-disable="{{disableControls}}"\n' +
+    '                   md-on-open="onDayClick()"\n' +
+    '                   ng-model="day"\n' +
+    '                   ng-change="onDayChanged()"\n' +
+    '                   placeholder="{{dayLabel}}"\n' +
+    '                   aria-label="DAY">\n' +
+    '\n' +
+    '            <md-option ng-value="opt" ng-repeat="opt in days track by opt ">\n' +
+    '               {{nameDays[$index]}} {{ opt }}\n' +
+    '            </md-option>\n' +
+    '        </md-select>\n' +
+    '    </md-input-container>\n' +
+    '    <md-input-container ng-show="isWeek()" class="tm0 flex"\n' +
+    '                        ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}">\n' +
+    '        <md-select class="select-week w-stretch"\n' +
+    '                   ng-class="{\'pip-no-line\' : pipNoLine}"\n' +
+    '                   ng-disable="{{disableControls}}"\n' +
+    '                   ng-model="week"\n' +
+    '                   ng-change="onWeekChange()"\n' +
+    '                   placeholder="{{weekLabel}}"\n' +
+    '                   aria-label="WEEK">\n' +
+    '\n' +
+    '            <md-option ng-value="opt.id" ng-repeat="opt in weeks track by opt.id">\n' +
+    '                {{ opt.name }}\n' +
+    '            </md-option>\n' +
+    '        </md-select>\n' +
+    '    </md-input-container >\n' +
+    '    <div class="flex-fixed"\n' +
+    '         ng-class="{\'w16\': $mdMedia(\'gt-xs\'), \'w8\':  $mdMedia(\'xs\')}"\n' +
+    '         ng-show="isDay() || isWeek()">\n' +
+    '    </div>\n' +
+    '    <md-input-container ng-show="isMonth() && !monthFormatShort " class="tm0 flex min-w72"\n' +
+    '                        ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}">\n' +
+    '        <md-select class="select-month w-stretch"\n' +
+    '                   ng-class="{\'pip-no-line\' : pipNoLine}"\n' +
+    '                   ng-disable="{{disableControls}}"\n' +
+    '                   md-on-open="onMonthClick()"\n' +
+    '                   ng-model="month"\n' +
+    '                   ng-change="onMonthChanged()"\n' +
+    '                   placeholder="{{monthLabel}}"\n' +
+    '                   aria-label="MONTH">\n' +
+    '\n' +
+    '            <md-option ng-value="opt.id" ng-repeat="opt in months track by opt.id">\n' +
+    '                {{ opt.name }}\n' +
+    '            </md-option>\n' +
+    '        </md-select>\n' +
+    '    </md-input-container>\n' +
+    '    <md-input-container ng-show="isMonth() && monthFormatShort" class="flex tm0"\n' +
+    '                        ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}">\n' +
+    '        <md-select class="select-month w-stretch"\n' +
+    '                   ng-class="{\'pip-no-line\' : pipNoLine}"\n' +
+    '                   ng-disable="{{disableControls}}"\n' +
+    '                   md-on-open="onMonthClick()"\n' +
+    '                   ng-model="month"\n' +
+    '                   ng-change="onMonthChanged()"\n' +
+    '                   placeholder="{{monthLabel}}"\n' +
+    '                   aria-label="MONTH">\n' +
+    '\n' +
+    '            <md-option ng-value="opt.id" ng-repeat="opt in shortMonths track by opt.id">\n' +
+    '                {{ opt.name }}\n' +
+    '            </md-option>\n' +
+    '        </md-select>\n' +
+    '    </md-input-container>\n' +
+    '    <div class="flex-fixed"\n' +
+    '         ng-class="{\'w16\': $mdMedia(\'gt-xs\'), \'w8\':  $mdMedia(\'xs\')}"\n' +
+    '         ng-show="isMonth()">\n' +
+    '    </div>\n' +
+    '    <md-input-container class="tm0 flex"\n' +
+    '                        ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}">\n' +
+    '        <md-select class="select-year w-stretch"\n' +
+    '                   ng-class="{\'pip-no-line\' : pipNoLine}"\n' +
+    '                   ng-disable="{{disableControls}}"\n' +
+    '                   md-on-open="onYearClick()"\n' +
+    '                   ng-model="year"\n' +
+    '                   ng-change="onYearChanged()"\n' +
+    '                   placeholder="{{yearLabel}}"\n' +
+    '                   aria-label="YEAR">\n' +
+    '\n' +
+    '            <md-option ng-value="opt" ng-repeat="opt in years track by opt">\n' +
+    '                {{ opt }}\n' +
+    '            </md-option>\n' +
+    '        </md-select>\n' +
+    '    </md-input-container>\n' +
+    '</div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('pipDates.Templates');
+} catch (e) {
+  module = angular.module('pipDates.Templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('time_range_edit/time_range_edit.html',
+    '<!--\n' +
+    '@file Time edit control content\n' +
+    '@copyright Digital Living Software Corp. 2014-2016\n' +
+    '-->\n' +
+    '\n' +
+    '<div class="event-edit layout-row layout-xs-column flex layout-align-start-start">\n' +
+    '    <div flex="47" class="w-stretch rm24-flex0">\n' +
+    '        <p class="text-caption text-grey tm0">{{startLabel}}</p>\n' +
+    '\n' +
+    '        <div class="layout-row layout-align-space-between-center">\n' +
+    '            <div class="rm16 pip-datepicker-container" flex="49">\n' +
+    '                <md-datepicker ng-model="data.startDate"\n' +
+    '                               xmd-placeholder="{{startLabel}}"\n' +
+    '                               ng-change="onChangeStartDate()"\n' +
+    '                               ng-disabled="isDisabled()"\n' +
+    '                               aria-label="START-DATE">\n' +
+    '                </md-datepicker>\n' +
+    '            </div>\n' +
+    '            <div flex>\n' +
+    '                <md-input-container class="w-stretch tm0">\n' +
+    '                    <md-select aria-label="START-TIME" class="tm0 bm0" ng-model="data.startTime" ng-disabled="isDisabled()"\n' +
+    '                               ng-change="onChangeStartTime()">\n' +
+    '                        <md-option ng-value="opt.id" ng-repeat="opt in intervalTimeCollection track by opt.id">{{ opt.time }}\n' +
+    '                        </md-option>\n' +
+    '                    </md-select>\n' +
+    '                </md-input-container>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '    <div flex="47" class="w-stretch">\n' +
+    '        <p class="text-caption text-grey tm0">{{endLabel}}</p>\n' +
+    '\n' +
+    '        <div class="layout-row layout-align-space-between-center">\n' +
+    '            <div class="rm16 pip-datepicker-container flex-49">\n' +
+    '                <md-datepicker ng-model="data.endDate"\n' +
+    '                               xmd-placeholder="{{endLabel}}"\n' +
+    '                               ng-disabled="isDisabled()"\n' +
+    '                               ng-change="onChangeEndDate()"\n' +
+    '                               aria-label="END-DATE">\n' +
+    '                </md-datepicker>\n' +
+    '            </div>\n' +
+    '            <div flex>\n' +
+    '                <md-input-container class="w-stretch tm0">\n' +
+    '                    <md-select aria-label="END-TIME" class="tm0 bm0" ng-model="data.endTime" ng-change="onChangeEndTime()"\n' +
+    '                               ng-disabled="isDisabled()">\n' +
+    '                        <md-option ng-value="opt.id" ng-repeat="opt in intervalTimeCollection track by opt.id">{{\n' +
+    '                            opt.time }}\n' +
+    '                        </md-option>\n' +
+    '                    </md-select>\n' +
+    '                </md-input-container>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '</div>\n' +
+    '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('pipDates.Templates');
+} catch (e) {
+  module = angular.module('pipDates.Templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('time_range/time_range.html',
+    '<p>\n' +
+    '    <span ng-if="data.start != null">{{data.start | formatShortDateTime}}</span>\n' +
+    '    <span  class="rm4 lm4" ng-if="data.start && data.end"> - </span>\n' +
+    '    <span ng-if="data.end != null">{{data.end | formatShortDateTime}}</span>\n' +
+    '</p>');
+}]);
+})();
+
 /**
  * @file Date control
  * @copyright Digital Living Software Corp. 2014-2016
@@ -34,7 +260,7 @@
 (function (angular, _) {
     'use strict';
 
-    var thisModule = angular.module('pipDate', ['pipBasicControls.Templates']);
+    var thisModule = angular.module('pipDate', ['pipDates.Templates']);
 
     thisModule.directive('pipDate',
         function () {
@@ -209,7 +435,7 @@
 
 (function (angular, _) {
     'use strict';
-    var thisModule = angular.module('pipDateRange', []);
+    var thisModule = angular.module('pipDateRange', ['pipDates.Templates']);
 
     thisModule.directive('pipDateRange',
         function () {
@@ -777,6 +1003,75 @@
 })();
 
 /**
+ * @file Time control
+ * @copyright Digital Living Software Corp. 2014-2016
+ */
+
+(function (angular, _) {
+    'use strict';
+
+    var thisModule = angular.module('pipTimeRange', ['pipUtils']);
+
+    thisModule.directive('pipTimeRange',
+        ['pipUtils', function (pipUtils) {
+            return {
+                restrict: 'EA',
+                scope: {
+                    pipStartDate: '=',
+                    pipEndDate: '='
+                },
+                templateUrl: 'time_range/time_range.html',
+                link: function ($scope, $element, $attrs) {
+
+                    function getDateJSON(value) {
+                        return value ? new Date(value) : null;
+                    }
+
+                    function defineStartDate() {
+                        if ($scope.pipStartDate !== null && $scope.pipStartDate !== undefined) {
+                            $scope.data.start = _.isDate($scope.pipStartDate) ? $scope.pipStartDate
+                                : getDateJSON($scope.pipStartDate);
+                        }
+                    }
+
+                    function defineEndDate() {
+                        if ($scope.pipEndDate !== null && $scope.pipEndDate !== undefined) {
+                            $scope.data.end = _.isDate($scope.pipEndDate) ? $scope.pipEndDate
+                                : getDateJSON($scope.pipEndDate);
+                        }
+                    }
+
+                    $scope.data = {};
+                    $scope.data.start = null;
+                    $scope.data.end = null;
+                    defineStartDate();
+                    defineEndDate();
+
+                    if (pipUtils.toBoolean($attrs.pipRebind)) {
+                        $scope.$watch('pipStartDate',
+                            function () {
+                                $scope.data.start = null;
+                                defineStartDate();
+                            }
+                        );
+                        $scope.$watch('pipEndDate',
+                            function () {
+                                $scope.data.end = null;
+                                defineEndDate();
+                            }
+                        );
+                    }
+
+                    // Add class
+                    $element.addClass('pip-time-range');
+                }
+            };
+        }]
+    );
+
+})(window.angular, window._);
+
+/**
  * @file Date formatting service
  * @copyright Digital Living Software Corp. 2014-2016
  */
@@ -1299,75 +1594,6 @@
     );
     
 })();
-
-/**
- * @file Time control
- * @copyright Digital Living Software Corp. 2014-2016
- */
-
-(function (angular, _) {
-    'use strict';
-
-    var thisModule = angular.module('pipTimeRange', ['pipUtils']);
-
-    thisModule.directive('pipTimeRange',
-        ['pipUtils', function (pipUtils) {
-            return {
-                restrict: 'EA',
-                scope: {
-                    pipStartDate: '=',
-                    pipEndDate: '='
-                },
-                templateUrl: 'time_range/time_range.html',
-                link: function ($scope, $element, $attrs) {
-
-                    function getDateJSON(value) {
-                        return value ? new Date(value) : null;
-                    }
-
-                    function defineStartDate() {
-                        if ($scope.pipStartDate !== null && $scope.pipStartDate !== undefined) {
-                            $scope.data.start = _.isDate($scope.pipStartDate) ? $scope.pipStartDate
-                                : getDateJSON($scope.pipStartDate);
-                        }
-                    }
-
-                    function defineEndDate() {
-                        if ($scope.pipEndDate !== null && $scope.pipEndDate !== undefined) {
-                            $scope.data.end = _.isDate($scope.pipEndDate) ? $scope.pipEndDate
-                                : getDateJSON($scope.pipEndDate);
-                        }
-                    }
-
-                    $scope.data = {};
-                    $scope.data.start = null;
-                    $scope.data.end = null;
-                    defineStartDate();
-                    defineEndDate();
-
-                    if (pipUtils.toBoolean($attrs.pipRebind)) {
-                        $scope.$watch('pipStartDate',
-                            function () {
-                                $scope.data.start = null;
-                                defineStartDate();
-                            }
-                        );
-                        $scope.$watch('pipEndDate',
-                            function () {
-                                $scope.data.end = null;
-                                defineEndDate();
-                            }
-                        );
-                    }
-
-                    // Add class
-                    $element.addClass('pip-time-range');
-                }
-            };
-        }]
-    );
-
-})(window.angular, window._);
 
 
 (function (angular, _) {

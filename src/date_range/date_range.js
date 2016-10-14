@@ -13,7 +13,7 @@
 
 (function (angular, _) {
     'use strict';
-    var thisModule = angular.module('pipDateRange', []);
+    var thisModule = angular.module('pipDateRange', ['pipDates.Templates']);
 
     thisModule.directive('pipDateRange',
         function () {

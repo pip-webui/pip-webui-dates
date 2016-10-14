@@ -9,7 +9,7 @@
 (function (angular, _) {
     'use strict';
 
-    var thisModule = angular.module('pipDate', ['pipBasicControls.Templates']);
+    var thisModule = angular.module('pipDate', ['pipDates.Templates']);
 
     thisModule.directive('pipDate',
         function () {

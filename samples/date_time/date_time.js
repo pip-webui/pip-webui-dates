@@ -1,7 +1,7 @@
 (function (angular) {
     'use strict';
 
-    var thisModule = angular.module('appDateTimes.Date', []);
+    var thisModule = angular.module('appDateTimes.Date', ['pipCore', 'pipDateTimes']);
 
     thisModule.config(function (pipTranslateProvider) {
         pipTranslateProvider.translations('en', {
@@ -35,7 +35,7 @@
     });
 
     thisModule.controller('DateController',
-        function ($scope, pipAppBar, $timeout) {
+        function ($scope, $timeout) {
 
             $timeout(function() {
                 $('pre code').each(function(i, block) {
@@ -43,10 +43,6 @@
                 });
             });
 
-            pipAppBar.showMenuNavIcon();
-            pipAppBar.showLanguage();
-            pipAppBar.showTitleText('CONTROLS');
-            
             $scope.specialDate = '1975-04-08T00:00:00.00';
             $scope.specialDateDisabled = false;
 

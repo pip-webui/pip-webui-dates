@@ -1,58 +1,50 @@
-﻿(function (angular) {
+/* global angular */
+
+(function () {
     'use strict';
 
-    var thisModule = angular.module('appBasicControls',
-        [
-            'pipSampleConfig',
+    var content = [
+        { title: 'Date and time control', state: 'date_time', url: '/date_time', controller: 'DateController', templateUrl: 'date_time/date_time.html' },
+        { title: 'Date Format', state: 'date_format', url: '/date_format', controller: 'DateFormatController', templateUrl: 'format/date_format.html' }        
+    ];
 
-            'pipDropdown', 'pipLayout',
-            // 3rd Party Modules
-            'ui.router', 'ui.utils', 'ngResource', 'ngAria', 'ngCookies', 'ngSanitize', 'ngMessages',
-            'ngMaterial', 'LocalStorageModule', 'angularFileUpload', 'ngAnimate',
-            'pipCore', 'pipData',
+    var thisModule = angular.module('app', ['ngMaterial', 'appDateTimes.Date', 'appDateTimes.DateFormat', 'pipDateTimes']);
 
-            'appDateTimes.Date', 'appDateTimes.DateFormat'
-        ]
-    );
+    thisModule.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider, $mdIconProvider, pipTranslateProvider) {
 
-    thisModule.controller('pipSampleController',
-        function ($scope, $rootScope, $state, $mdSidenav, $timeout, pipTranslate, $mdTheming, pipTheme,
-                  $mdMedia) {
+            $mdIconProvider.iconSet('icons', 'images/icons.svg', 512);
+        
+            for (var i = 0; i < content.length; i++) {
+                var contentItem = content[i];
+                $stateProvider.state(contentItem.state, contentItem);
+            }
+                
+            $urlRouterProvider.otherwise('/default');
 
-            $scope.pages = [
-                { title: 'Date', state: 'date', url: '/date',
-                    controller: 'DateController', templateUrl: '../samples/date/date.html' },
-                { title: 'Date Format', state: 'date_format', url: '/date_format',
-                    controller: 'DateFormatController', templateUrl: '../samples/format/date_format.html' }
-            ];
-            $scope.selected = {};
-            $timeout(function () {
-                $scope.selected.pageIndex = _.findIndex($scope.pages, {state: $state.current.name});
+            pipTranslateProvider.translations('en', {
+                'DATE_TIME': 'Date and Time'
             });
 
-            $scope.onNavigationSelect = function (stateName) {
-                if ($state.current.name !== stateName) {
-                    $state.go(stateName);
-                }
-            };
+            pipTranslateProvider.translations('ru', {
+                'DATE_TIME': 'Дата и время'
+            });
 
-            $scope.onDropdownSelect = function (obj) {
-                if ($state.current.name !== obj.state) {
-                    $state.go(obj.state);
-                }
-            };
+        });
 
-            $scope.isEntryPage = function () {
-                return $state.current.name === 'signin' || $state.current.name === 'signup' ||
-                    $state.current.name === 'recover_password' || $state.current.name === 'post_signup';
+    thisModule.controller('AppController', 
+        function ($scope, $rootScope, $state, $mdSidenav) {
+            
+            $scope.content = content;
+                        
+            $scope.onSwitchPage = function(state) {
+                $mdSidenav('left').close();
+                $state.go(state);
             };
-
-            $scope.isPadding = function () {
-                return $rootScope.$state
-                    ? !($rootScope.$state.name === 'date' ||
-                    $rootScope.$state.name === 'dropdown' && $mdMedia('xs')) : true;
+                        
+            $scope.isActiveState = function(state) {
+                return $state.current.name == state;  
             };
         }
     );
 
-})(window.angular);
+})();
