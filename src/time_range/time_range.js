@@ -6,7 +6,7 @@
 (function (angular, _) {
     'use strict';
 
-    var thisModule = angular.module('pipTimeRange', ['pipUtils']);
+    var thisModule = angular.module('pipTimeRange', []);
 
     thisModule.directive('pipTimeRange',
         function (pipUtils) {
@@ -37,13 +37,20 @@
                         }
                     }
 
+                    function toBoolean(value) {
+                        if (value == null) return false;
+                        if (!value) return false;
+                        value = value.toString().toLowerCase();
+                        return value == '1' || value == 'true';
+                    }
+
                     $scope.data = {};
                     $scope.data.start = null;
                     $scope.data.end = null;
                     defineStartDate();
                     defineEndDate();
 
-                    if (pipUtils.toBoolean($attrs.pipRebind)) {
+                    if (toBoolean($attrs.pipRebind)) {
                         $scope.$watch('pipStartDate',
                             function () {
                                 $scope.data.start = null;

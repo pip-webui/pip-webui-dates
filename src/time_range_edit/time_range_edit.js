@@ -2,7 +2,7 @@
 (function (angular, _) {
     'use strict';
 
-    var thisModule = angular.module('pipTimeRangeEdit', ['pipUtils', 'pipTranslate']);
+    var thisModule = angular.module('pipTimeRangeEdit', ['pipDateUtils', 'pipTranslate']);
 
     thisModule.directive('pipTimeRangeEdit',
         function () {
@@ -23,6 +23,7 @@
         }
     );
 
+    // Todo: Remove dependency on Translate. Use moment localization
     thisModule.controller('pipTimeRangeEditController',
         function ($scope, $element, $attrs, pipDates, pipTranslate) {
 

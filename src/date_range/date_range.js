@@ -34,6 +34,7 @@
             };
         });
 
+    // Todo: Remove dependency on Translate. Use moment localization
     thisModule.controller('pipDateRangeController',
         function ($scope, $element, pipTranslate, $mdMedia, $rootScope) {
             var currentDate,

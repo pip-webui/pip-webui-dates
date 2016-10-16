@@ -10,6 +10,7 @@
 
     var thisModule = angular.module('pipDatesUtils', []);
 
+    // Todo: Use moment functions instead
     thisModule.factory('pipDates', function () {
         var dates = {};
 

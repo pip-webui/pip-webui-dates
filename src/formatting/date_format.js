@@ -10,6 +10,7 @@
 
     var thisModule = angular.module('pipDateFormat', ['pipUtils', 'pipTranslate']);
 
+    // Todo: Remove dependency on Translate. Use moment localization
 	thisModule.config(function(pipTranslateProvider) {
 
         pipTranslateProvider.translations('en', {

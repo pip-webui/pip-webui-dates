@@ -279,6 +279,7 @@ module.run(['$templateCache', function($templateCache) {
         }
     );
 
+    // Todo: Remove dependency on Translate. Use moment localization
     thisModule.controller('pipDateController',
         ['$scope', '$element', 'pipTranslate', function ($scope, $element, pipTranslate) {
             var value;
@@ -456,6 +457,7 @@ module.run(['$templateCache', function($templateCache) {
             };
         });
 
+    // Todo: Remove dependency on Translate. Use moment localization
     thisModule.controller('pipDateRangeController',
         ['$scope', '$element', 'pipTranslate', '$mdMedia', '$rootScope', function ($scope, $element, pipTranslate, $mdMedia, $rootScope) {
             var currentDate,
@@ -1014,6 +1016,7 @@ module.run(['$templateCache', function($templateCache) {
 
     var thisModule = angular.module('pipDateFormat', ['pipUtils', 'pipTranslate']);
 
+    // Todo: Remove dependency on Translate. Use moment localization
 	thisModule.config(['pipTranslateProvider', function(pipTranslateProvider) {
 
         pipTranslateProvider.translations('en', {
@@ -1534,7 +1537,7 @@ module.run(['$templateCache', function($templateCache) {
 (function (angular, _) {
     'use strict';
 
-    var thisModule = angular.module('pipTimeRange', ['pipUtils']);
+    var thisModule = angular.module('pipTimeRange', []);
 
     thisModule.directive('pipTimeRange',
         ['pipUtils', function (pipUtils) {
@@ -1565,13 +1568,20 @@ module.run(['$templateCache', function($templateCache) {
                         }
                     }
 
+                    function toBoolean(value) {
+                        if (value == null) return false;
+                        if (!value) return false;
+                        value = value.toString().toLowerCase();
+                        return value == '1' || value == 'true';
+                    }
+
                     $scope.data = {};
                     $scope.data.start = null;
                     $scope.data.end = null;
                     defineStartDate();
                     defineEndDate();
 
-                    if (pipUtils.toBoolean($attrs.pipRebind)) {
+                    if (toBoolean($attrs.pipRebind)) {
                         $scope.$watch('pipStartDate',
                             function () {
                                 $scope.data.start = null;
@@ -1599,7 +1609,7 @@ module.run(['$templateCache', function($templateCache) {
 (function (angular, _) {
     'use strict';
 
-    var thisModule = angular.module('pipTimeRangeEdit', ['pipUtils', 'pipTranslate']);
+    var thisModule = angular.module('pipTimeRangeEdit', ['pipDateUtils', 'pipTranslate']);
 
     thisModule.directive('pipTimeRangeEdit',
         function () {
@@ -1620,6 +1630,7 @@ module.run(['$templateCache', function($templateCache) {
         }
     );
 
+    // Todo: Remove dependency on Translate. Use moment localization
     thisModule.controller('pipTimeRangeEditController',
         ['$scope', '$element', '$attrs', 'pipDates', 'pipTranslate', function ($scope, $element, $attrs, pipDates, pipTranslate) {
 
@@ -1883,6 +1894,7 @@ module.run(['$templateCache', function($templateCache) {
 
     var thisModule = angular.module('pipDatesUtils', []);
 
+    // Todo: Use moment functions instead
     thisModule.factory('pipDates', function () {
         var dates = {};
 

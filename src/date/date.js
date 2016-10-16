@@ -28,6 +28,7 @@
         }
     );
 
+    // Todo: Remove dependency on Translate. Use moment localization
     thisModule.controller('pipDateController',
         function ($scope, $element, pipTranslate) {
             var value;
