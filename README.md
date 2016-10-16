@@ -49,7 +49,7 @@ See online sample [here...](http://webui.pipdevs.com/pip-webui-controls/index.ht
 
 * [pip-webui-lib](https://github.com/pip-webui/pip-webui-lib): angular, angular material and other 3rd party libraries
 * [pip-webui-css](https://github.com/pip-webui/pip-webui-css): CSS styles and web components
-* [pip-webui-core](https://github.com/pip-webui/pip-webui-core): core services
+* [pip-webui-services](https://github.com/pip-webui/pip-webui-services): core services
 
 ## <a name="license"></a>License
 

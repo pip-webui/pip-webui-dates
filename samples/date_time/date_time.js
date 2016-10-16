@@ -1,7 +1,7 @@
 (function (angular) {
     'use strict';
 
-    var thisModule = angular.module('appDateTimes.Date', ['pipCore', 'pipDateTimes']);
+    var thisModule = angular.module('appDateTimes.Date', ['pipServices', 'pipDateTimes']);
 
     thisModule.config(function (pipTranslateProvider) {
         pipTranslateProvider.translations('en', {
