@@ -30,7 +30,7 @@
 
     // Todo: Remove dependency on Translate. Use moment localization
     thisModule.controller('pipDateController',
-        function ($scope, $element, pipTranslate) {
+        function ($scope, $element) { //pipTranslate
             var value;
 
             function dayList(month, year) {
@@ -60,7 +60,7 @@
                 for (i = 1; i <= 12; i++) {
                     months.push({
                         id: i,
-                        name: pipTranslate.translate('MONTH_' + i)
+                        name: ''//pipTranslate.translate('MONTH_' + i)
                     });
                 }
 
@@ -146,9 +146,9 @@
             $scope.month = value ? value.getMonth() + 1 : null;
             $scope.year = value ? value.getFullYear() : null;
 
-            $scope.dayLabel = pipTranslate.translate('DAY');
-            $scope.monthLabel = pipTranslate.translate('MONTH');
-            $scope.yearLabel = pipTranslate.translate('YEAR');
+            $scope.dayLabel = 'day'; //pipTranslate.translate('DAY');
+            $scope.monthLabel = 'month'; //pipTranslate.translate('MONTH');
+            $scope.yearLabel = 'year'; //pipTranslate.translate('YEAR');
 
             $scope.days = dayList($scope.month, $scope.year);
             $scope.months = monthList();

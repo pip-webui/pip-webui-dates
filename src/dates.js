@@ -18,7 +18,6 @@
         'pipDateTimeFilters'
     ]);
 
-    angular.module('pipDateTimesControls', ['pipDateTimes']);
 
 })(window.angular);
 

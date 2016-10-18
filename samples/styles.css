@@ -1,0 +1,12 @@
+        .pip-title > h1 {
+            margin-top: 20px;
+            margin-bottom: 5px;
+        }
+
+        .pip-title > div {
+            margin-bottom: 30px;
+        }
+
+        .pip-section > h2 {
+            margin-bottom: 5px;
+        }

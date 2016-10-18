@@ -8,157 +8,157 @@
 (function () {
     'use strict';
 
-    var thisModule = angular.module('pipDateFormat', ['pipUtils', 'pipTranslate']);
+    var thisModule = angular.module('pipDateFormat', []);
 
     // Todo: Remove dependency on Translate. Use moment localization
-	thisModule.config(function(pipTranslateProvider) {
+	thisModule.config(function() {
 
-        pipTranslateProvider.translations('en', {
-            // Months - 'MONTH_' + monthIndex
-            // start at 0 to match JS date format
-            'MONTH_1': 'January',
-            'MONTH_2': 'February',
-            'MONTH_3': 'March',
-            'MONTH_4': 'April',
-            'MONTH_5': 'May',
-            'MONTH_6': 'June',
-            'MONTH_7': 'July',
-            'MONTH_8': 'August',
-            'MONTH_9': 'September',
-            'MONTH_10': 'October',
-            'MONTH_11': 'November',
-            'MONTH_12': 'December',
+        // pipTranslateProvider.translations('en', {
+        //     // Months - 'MONTH_' + monthIndex
+        //     // start at 0 to match JS date format
+        //     'MONTH_1': 'January',
+        //     'MONTH_2': 'February',
+        //     'MONTH_3': 'March',
+        //     'MONTH_4': 'April',
+        //     'MONTH_5': 'May',
+        //     'MONTH_6': 'June',
+        //     'MONTH_7': 'July',
+        //     'MONTH_8': 'August',
+        //     'MONTH_9': 'September',
+        //     'MONTH_10': 'October',
+        //     'MONTH_11': 'November',
+        //     'MONTH_12': 'December',
 
-            'MONTH_LONG_1': 'January',
-            'MONTH_LONG_2': 'February',
-            'MONTH_LONG_3': 'March',
-            'MONTH_LONG_4': 'April',
-            'MONTH_LONG_5': 'May',
-            'MONTH_LONG_6': 'June',
-            'MONTH_LONG_7': 'July',
-            'MONTH_LONG_8': 'August',
-            'MONTH_LONG_9': 'September',
-            'MONTH_LONG_10': 'October',
-            'MONTH_LONG_11': 'November',
-            'MONTH_LONG_12': 'December',
+        //     'MONTH_LONG_1': 'January',
+        //     'MONTH_LONG_2': 'February',
+        //     'MONTH_LONG_3': 'March',
+        //     'MONTH_LONG_4': 'April',
+        //     'MONTH_LONG_5': 'May',
+        //     'MONTH_LONG_6': 'June',
+        //     'MONTH_LONG_7': 'July',
+        //     'MONTH_LONG_8': 'August',
+        //     'MONTH_LONG_9': 'September',
+        //     'MONTH_LONG_10': 'October',
+        //     'MONTH_LONG_11': 'November',
+        //     'MONTH_LONG_12': 'December',
 
-            'MONTH_SHORT_1': 'Jan',
-            'MONTH_SHORT_2': 'Feb',
-            'MONTH_SHORT_3': 'Mar',
-            'MONTH_SHORT_4': 'Apr',
-            'MONTH_SHORT_5': 'May',
-            'MONTH_SHORT_6': 'Jun',
-            'MONTH_SHORT_7': 'Jul',
-            'MONTH_SHORT_8': 'Aug',
-            'MONTH_SHORT_9': 'Sep',
-            'MONTH_SHORT_10': 'Oct',
-            'MONTH_SHORT_11': 'Nov',
-            'MONTH_SHORT_12': 'Dec',
+        //     'MONTH_SHORT_1': 'Jan',
+        //     'MONTH_SHORT_2': 'Feb',
+        //     'MONTH_SHORT_3': 'Mar',
+        //     'MONTH_SHORT_4': 'Apr',
+        //     'MONTH_SHORT_5': 'May',
+        //     'MONTH_SHORT_6': 'Jun',
+        //     'MONTH_SHORT_7': 'Jul',
+        //     'MONTH_SHORT_8': 'Aug',
+        //     'MONTH_SHORT_9': 'Sep',
+        //     'MONTH_SHORT_10': 'Oct',
+        //     'MONTH_SHORT_11': 'Nov',
+        //     'MONTH_SHORT_12': 'Dec',
 
-            // Days of the week - 'DAY_' + dayIndex
-            // start at 1 to match JS date format
-            'DAY_1': 'Monday',
-            'DAY_2': 'Tuesday',
-            'DAY_3': 'Wednesday',
-            'DAY_4': 'Thursday',
-            'DAY_5': 'Friday',
-            'DAY_6': 'Saturday',
-            'DAY_7': 'Sunday',
+        //     // Days of the week - 'DAY_' + dayIndex
+        //     // start at 1 to match JS date format
+        //     'DAY_1': 'Monday',
+        //     'DAY_2': 'Tuesday',
+        //     'DAY_3': 'Wednesday',
+        //     'DAY_4': 'Thursday',
+        //     'DAY_5': 'Friday',
+        //     'DAY_6': 'Saturday',
+        //     'DAY_7': 'Sunday',
 
-            'ELAPSED_TODAY': 'Today',
-            'ELAPSED_YESTERDAY': 'Yesterday',
-            'ELAPSED_YEARS': 'y',
-            'ELAPSED_MONTHS': 'mth',
-            'ELAPSED_WEEKS': 'w',
-            'ELAPSED_DAYS': 'd',
-            'ELAPSED_HOURS': 'h',
-            'ELAPSED_MINUTES': 'm',
-            'ELAPSED_SECONDS': 's',
-            'ELAPSED_AT': 'at',
-            'ELAPSED_AGO': 'ago',
-            'ELAPSED_JUST_NOW': 'Just now',
-            'ELAPSED_FEW_MIN_AGO': 'Few min ago',
-            'ELAPSED_MIN_AGO': 'min ago',
-            'ELAPSED_HOUR_AGO': 'hour ago',
-            'ELAPSED_HOURS_AGO': 'hours ago',
-            'ELAPSED_HOURS_AGO_MORE_THAN_FIVE': 'hours ago'
-        });
+        //     'ELAPSED_TODAY': 'Today',
+        //     'ELAPSED_YESTERDAY': 'Yesterday',
+        //     'ELAPSED_YEARS': 'y',
+        //     'ELAPSED_MONTHS': 'mth',
+        //     'ELAPSED_WEEKS': 'w',
+        //     'ELAPSED_DAYS': 'd',
+        //     'ELAPSED_HOURS': 'h',
+        //     'ELAPSED_MINUTES': 'm',
+        //     'ELAPSED_SECONDS': 's',
+        //     'ELAPSED_AT': 'at',
+        //     'ELAPSED_AGO': 'ago',
+        //     'ELAPSED_JUST_NOW': 'Just now',
+        //     'ELAPSED_FEW_MIN_AGO': 'Few min ago',
+        //     'ELAPSED_MIN_AGO': 'min ago',
+        //     'ELAPSED_HOUR_AGO': 'hour ago',
+        //     'ELAPSED_HOURS_AGO': 'hours ago',
+        //     'ELAPSED_HOURS_AGO_MORE_THAN_FIVE': 'hours ago'
+        // });
 
-        pipTranslateProvider.translations('ru', {
-            // Months - 'MONTH_' + monthIndex
-            // start at 0 to match JS date format
-            'MONTH_1': 'январь',
-            'MONTH_2': 'февраль',
-            'MONTH_3': 'март',
-            'MONTH_4': 'апрель',
-            'MONTH_5': 'май',
-            'MONTH_6': 'июнь',
-            'MONTH_7': 'июль',
-            'MONTH_8': 'август',
-            'MONTH_9': 'сентябрь',
-            'MONTH_10': 'октябрь',
-            'MONTH_11': 'ноябрь',
-            'MONTH_12': 'декабрь',
+        // pipTranslateProvider.translations('ru', {
+        //     // Months - 'MONTH_' + monthIndex
+        //     // start at 0 to match JS date format
+        //     'MONTH_1': 'январь',
+        //     'MONTH_2': 'февраль',
+        //     'MONTH_3': 'март',
+        //     'MONTH_4': 'апрель',
+        //     'MONTH_5': 'май',
+        //     'MONTH_6': 'июнь',
+        //     'MONTH_7': 'июль',
+        //     'MONTH_8': 'август',
+        //     'MONTH_9': 'сентябрь',
+        //     'MONTH_10': 'октябрь',
+        //     'MONTH_11': 'ноябрь',
+        //     'MONTH_12': 'декабрь',
 
-            'MONTH_LONG_1': 'января',
-            'MONTH_LONG_2': 'февраля',
-            'MONTH_LONG_3': 'марта',
-            'MONTH_LONG_4': 'апреля',
-            'MONTH_LONG_5': 'мая',
-            'MONTH_LONG_6': 'июня',
-            'MONTH_LONG_7': 'июля',
-            'MONTH_LONG_8': 'августа',
-            'MONTH_LONG_9': 'сентября',
-            'MONTH_LONG_10': 'октября',
-            'MONTH_LONG_11': 'ноября',
-            'MONTH_LONG_12': 'декабря',
+        //     'MONTH_LONG_1': 'января',
+        //     'MONTH_LONG_2': 'февраля',
+        //     'MONTH_LONG_3': 'марта',
+        //     'MONTH_LONG_4': 'апреля',
+        //     'MONTH_LONG_5': 'мая',
+        //     'MONTH_LONG_6': 'июня',
+        //     'MONTH_LONG_7': 'июля',
+        //     'MONTH_LONG_8': 'августа',
+        //     'MONTH_LONG_9': 'сентября',
+        //     'MONTH_LONG_10': 'октября',
+        //     'MONTH_LONG_11': 'ноября',
+        //     'MONTH_LONG_12': 'декабря',
 
-            'MONTH_SHORT_1': 'янв',
-            'MONTH_SHORT_2': 'фев',
-            'MONTH_SHORT_3': 'мар',
-            'MONTH_SHORT_4': 'апр',
-            'MONTH_SHORT_5': 'май',
-            'MONTH_SHORT_6': 'июн',
-            'MONTH_SHORT_7': 'июл',
-            'MONTH_SHORT_8': 'авг',
-            'MONTH_SHORT_9': 'сен',
-            'MONTH_SHORT_10': 'окт',
-            'MONTH_SHORT_11': 'ноя',
-            'MONTH_SHORT_12': 'дек',
+        //     'MONTH_SHORT_1': 'янв',
+        //     'MONTH_SHORT_2': 'фев',
+        //     'MONTH_SHORT_3': 'мар',
+        //     'MONTH_SHORT_4': 'апр',
+        //     'MONTH_SHORT_5': 'май',
+        //     'MONTH_SHORT_6': 'июн',
+        //     'MONTH_SHORT_7': 'июл',
+        //     'MONTH_SHORT_8': 'авг',
+        //     'MONTH_SHORT_9': 'сен',
+        //     'MONTH_SHORT_10': 'окт',
+        //     'MONTH_SHORT_11': 'ноя',
+        //     'MONTH_SHORT_12': 'дек',
 
-            // Days of the week - 'DAY_' + dayIndex
-            // start at 1 to match JS date format
-            'DAY_1': 'понедельник',
-            'DAY_2': 'вторник',
-            'DAY_3': 'среда',
-            'DAY_4': 'четверг',
-            'DAY_5': 'пятница',
-            'DAY_6': 'суббота',
-            'DAY_7': 'воскресенье',
+        //     // Days of the week - 'DAY_' + dayIndex
+        //     // start at 1 to match JS date format
+        //     'DAY_1': 'понедельник',
+        //     'DAY_2': 'вторник',
+        //     'DAY_3': 'среда',
+        //     'DAY_4': 'четверг',
+        //     'DAY_5': 'пятница',
+        //     'DAY_6': 'суббота',
+        //     'DAY_7': 'воскресенье',
 
-            'ELAPSED_TODAY': 'Сегодня',
-            'ELAPSED_YESTERDAY': 'Вчера',
-            'ELAPSED_YEARS': 'г',
-            'ELAPSED_MONTHS': 'мц',
-            'ELAPSED_WEEKS': 'н',
-            'ELAPSED_DAYS': 'д',
-            'ELAPSED_HOURS': 'ч',
-            'ELAPSED_MINUTES': 'м',
-            'ELAPSED_SECONDS': 'с',
-            'ELAPSED_AT': 'в',
-            'ELAPSED_AGO': 'тн',
-            'ELAPSED_JUST_NOW': 'Только что',
-            'ELAPSED_FEW_MIN_AGO': 'Несколько мин тн',
-            'ELAPSED_MIN_AGO': 'мин тн',
-            'ELAPSED_HOUR_AGO': 'час тн',
-            'ELAPSED_HOURS_AGO': 'часа тн',
-            'ELAPSED_HOURS_AGO_MORE_THAN_FIVE': 'часов тн'
-        });
+        //     'ELAPSED_TODAY': 'Сегодня',
+        //     'ELAPSED_YESTERDAY': 'Вчера',
+        //     'ELAPSED_YEARS': 'г',
+        //     'ELAPSED_MONTHS': 'мц',
+        //     'ELAPSED_WEEKS': 'н',
+        //     'ELAPSED_DAYS': 'д',
+        //     'ELAPSED_HOURS': 'ч',
+        //     'ELAPSED_MINUTES': 'м',
+        //     'ELAPSED_SECONDS': 'с',
+        //     'ELAPSED_AT': 'в',
+        //     'ELAPSED_AGO': 'тн',
+        //     'ELAPSED_JUST_NOW': 'Только что',
+        //     'ELAPSED_FEW_MIN_AGO': 'Несколько мин тн',
+        //     'ELAPSED_MIN_AGO': 'мин тн',
+        //     'ELAPSED_HOUR_AGO': 'час тн',
+        //     'ELAPSED_HOURS_AGO': 'часа тн',
+        //     'ELAPSED_HOURS_AGO_MORE_THAN_FIVE': 'часов тн'
+        // });
 		
 	});
 
     thisModule.factory('pipDateFormat',
-        function (pipDates, pipTranslate, $rootScope) {
+        function (pipDates, $rootScope) { //pipTranslate
 
             return {
                 formatDate: formatDate,
@@ -204,9 +204,9 @@
                     thisYear = new Date().getUTCFullYear(),
                     year = value.getUTCFullYear(),
                     month = value.getUTCMonth(),
-                    longMonthName = pipTranslate.translate('MONTH_LONG_' + (month + 1)),
-                    shortMonthName = pipTranslate.translate('MONTH_SHORT_' + (month + 1)),
-                    monthName = pipTranslate.translate('MONTH_' + (month + 1)),
+                    // longMonthName = pipTranslate.translate('MONTH_LONG_' + (month + 1)),
+                    // shortMonthName = pipTranslate.translate('MONTH_SHORT_' + (month + 1)),
+                    // monthName = pipTranslate.translate('MONTH_' + (month + 1)),
                     day = value.getUTCDate(),
                     startWeek = pipDates.toStartWeek(value),
                     endWeek = pipDates.toEndWeek(value, -1);
@@ -369,11 +369,11 @@
                     secs = value.getSeconds(),
                     ampm = '';
 
-                if (pipTranslate.use() == 'en') {
-                    ampm = hours >= 12 ? ' PM' : ' AM';
-                    hours = hours % 12;
-                    if (hours == 0) hours = 12;
-                }
+                // if (pipTranslate && pipTranslate.use() == 'en') {
+                //     ampm = hours >= 12 ? ' PM' : ' AM';
+                //     hours = hours % 12;
+                //     if (hours == 0) hours = 12;
+                // }
 
                 if (format == 'hh:mm:ss')
                     return '' + twoDigits(hours) + ':' + twoDigits(mins) + ':' + twoDigits(secs) + ampm;
@@ -385,7 +385,7 @@
 
             function formatMonth(value, short) {
                 if (value == null) return '';
-                return short ? pipTranslate.translate('MONTH_SHORT_' + value) : pipTranslate.translate('MONTH_' + value);
+                return 'MONTH_SHORT_' + value //short ? pipTranslate.translate('MONTH_SHORT_' + value) : pipTranslate.translate('MONTH_' + value);
             }
 
             function formatLongTime(value) {
@@ -417,7 +417,7 @@
                     current = new Date(),
                     diff = Math.floor(((current.getTime() + current.getTimezoneOffset()) - (value.getTime() + value.getTimezoneOffset())) / 1000);
 
-                if (diff < 1) return pipTranslate.translate('ELAPSED_JUST_NOW');
+                if (diff < 1) return 'ELAPSED_JUST_NOW' //pipTranslate.translate('ELAPSED_JUST_NOW');
 
                 var years, months, weeks, days, hours, mins, secs;
 
@@ -443,71 +443,71 @@
                     weeks = 0;
                 }
 
-                if (format == 'interval') {
-                    var result = '';
+                // if (format == 'interval') {
+                //     var result = '';
 
-                    if (years) {
-                        result += ' ' + years + pipTranslate.translate('ELAPSED_YEARS');
-                        weeks = days = hours = mins = secs = null;
-                    }
-                    if (months) {
-                        result += ' ' + months + pipTranslate.translate('ELAPSED_MONTHS');
-                        days = hours = mins = secs = null;
-                    }
-                    if (weeks) {
-                        result += ' ' + weeks + pipTranslate.translate('ELAPSED_WEEKS');
-                        hours = mins = secs = null;
-                    }
-                    if (days) {
-                        result += ' ' + days + pipTranslate.translate('ELAPSED_DAYS');
-                        mins = secs = null;
-                    }
-                    if (hours) {
-                        result += ' ' + hours + pipTranslate.translate('ELAPSED_HOURS');
-                        secs = null;
-                    }
-                    if (mins) result += ' ' + mins + pipTranslate.translate('ELAPSED_MINUTES');
-                    if (secs) result += ' ' + secs + pipTranslate.translate('ELAPSED_SECONDS');
+                //     if (years) {
+                //         result += ' ' + years + pipTranslate.translate('ELAPSED_YEARS');
+                //         weeks = days = hours = mins = secs = null;
+                //     }
+                //     if (months) {
+                //         result += ' ' + months + pipTranslate.translate('ELAPSED_MONTHS');
+                //         days = hours = mins = secs = null;
+                //     }
+                //     if (weeks) {
+                //         result += ' ' + weeks + pipTranslate.translate('ELAPSED_WEEKS');
+                //         hours = mins = secs = null;
+                //     }
+                //     if (days) {
+                //         result += ' ' + days + pipTranslate.translate('ELAPSED_DAYS');
+                //         mins = secs = null;
+                //     }
+                //     if (hours) {
+                //         result += ' ' + hours + pipTranslate.translate('ELAPSED_HOURS');
+                //         secs = null;
+                //     }
+                //     if (mins) result += ' ' + mins + pipTranslate.translate('ELAPSED_MINUTES');
+                //     if (secs) result += ' ' + secs + pipTranslate.translate('ELAPSED_SECONDS');
 
-                    return result != '' ? result + ' ' + pipTranslate.translate('ELAPSED_AGO') 
-                        : pipTranslate.translate('ELAPSED_JUST_NOW');
-                }
+                //     return result != '' ? result + ' ' + pipTranslate.translate('ELAPSED_AGO') 
+                //         : pipTranslate.translate('ELAPSED_JUST_NOW');
+                // }
 
                 // Default time format = 'default'
 
-                if (years > 0) {
-                    return formatDate(value, 'd MMM yyyy');
-                }
+                // if (years > 0) {
+                //     return formatDate(value, 'd MMM yyyy');
+                // }
 
-                if (months > 0 || weeks > 0 || days > 1) {
-                    return formatDate(value, 'MMM d') 
-                        + ', ' + formatTime(value, 'hh:mm');
-                }
+                // if (months > 0 || weeks > 0 || days > 1) {
+                //     return formatDate(value, 'MMM d') 
+                //         + ', ' + formatTime(value, 'hh:mm');
+                // }
 
-                if (days == 1) {
-                    return pipTranslate.translate('ELAPSED_YESTERDAY') 
-                        + ', ' + formatTime(value, 'hh:mm');
-                }
+                // if (days == 1) {
+                //     return pipTranslate.translate('ELAPSED_YESTERDAY') 
+                //         + ', ' + formatTime(value, 'hh:mm');
+                // }
 
-                if (hours > 10) {
-                    return pipTranslate.translate('ELAPSED_TODAY') 
-                        + ', ' + formatTime(value, 'hh:mm');
-                }
+                // if (hours > 10) {
+                //     return pipTranslate.translate('ELAPSED_TODAY') 
+                //         + ', ' + formatTime(value, 'hh:mm');
+                // }
 
-                if (hours > 0) {
-                    return '' + hours + ' ' + (hours < 2 ? pipTranslate.translate('ELAPSED_HOUR_AGO') :
-                        hours < 5 ? pipTranslate.translate('ELAPSED_HOURS_AGO') : pipTranslate.translate('ELAPSED_HOURS_AGO_MORE_THAN_FIVE'));
-                }
+                // if (hours > 0) {
+                //     return '' + hours + ' ' + (hours < 2 ? pipTranslate.translate('ELAPSED_HOUR_AGO') :
+                //         hours < 5 ? pipTranslate.translate('ELAPSED_HOURS_AGO') : pipTranslate.translate('ELAPSED_HOURS_AGO_MORE_THAN_FIVE'));
+                // }
 
-                if (mins > 10) {
-                    return '' + mins + ' ' + pipTranslate.translate('ELAPSED_MIN_AGO');
-                }
+                // if (mins > 10) {
+                //     return '' + mins + ' ' + pipTranslate.translate('ELAPSED_MIN_AGO');
+                // }
 
-                if (mins > 0) {
-                    return pipTranslate.translate('ELAPSED_FEW_MIN_AGO');
-                }
+                // if (mins > 0) {
+                //     return pipTranslate.translate('ELAPSED_FEW_MIN_AGO');
+                // }
 
-                return pipTranslate.translate('ELAPSED_JUST_NOW');
+                // return pipTranslate.translate('ELAPSED_JUST_NOW');
             }
 
             function formatElapsedInterval(value) {

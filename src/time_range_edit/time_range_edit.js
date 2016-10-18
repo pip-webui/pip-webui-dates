@@ -2,7 +2,7 @@
 (function (angular, _) {
     'use strict';
 
-    var thisModule = angular.module('pipTimeRangeEdit', ['pipDateUtils', 'pipTranslate']);
+    var thisModule = angular.module('pipTimeRangeEdit', ['pipDatesUtils']);
 
     thisModule.directive('pipTimeRangeEdit',
         function () {

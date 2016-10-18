@@ -36,7 +36,7 @@
 
     // Todo: Remove dependency on Translate. Use moment localization
     thisModule.controller('pipDateRangeController',
-        function ($scope, $element, pipTranslate, $mdMedia, $rootScope) {
+        function ($scope, $element, $mdMedia, $rootScope) { //pipTranslate, 
             var currentDate,
                 currentYear,
                 currentMonth,
@@ -295,7 +295,7 @@
                 for (i = 1; i <= 12; i++) {
                     months.push({
                         id: i,
-                        name: pipTranslate.translate('MONTH_' + i)
+                        name: ''//pipTranslate.translate('MONTH_' + i)
                     });
                 }
 

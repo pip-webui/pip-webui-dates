@@ -9,7 +9,7 @@
     var thisModule = angular.module('pipTimeRange', []);
 
     thisModule.directive('pipTimeRange',
-        function (pipUtils) {
+        function () {
             return {
                 restrict: 'EA',
                 scope: {

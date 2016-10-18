@@ -1,38 +1,38 @@
 (function (angular) {
     'use strict';
 
-    var thisModule = angular.module('appDateTimes.Date', ['pipServices', 'pipDateTimes']);
+    var thisModule = angular.module('appDateTimes.Date', ['pipDateTimes']);
 
-    thisModule.config(function (pipTranslateProvider) {
-        pipTranslateProvider.translations('en', {
-            EVENT_NEW_START_TIME: 'Start time',
-            EVENT_NEW_END_TIME: 'End time',
-            DATE: 'Date',
-            VALUE: 'Value',
-            TIME_EDIT_TIME_VIEW: 'Full date editing and viewing',
-            DATE_RANGE: 'Date range',
-            DAILY: 'Daily',
-            WEEKLY: 'Weekly',
-            MONTHLY: 'Monthly',
-            YEARLY: 'Yearly',
-            DISABLED: 'Disabled',
-            NEXT_WEEK: 'Next week'
-        });
-        pipTranslateProvider.translations('ru', {
-            EVENT_NEW_START_TIME: 'Начало',
-            EVENT_NEW_END_TIME: 'Конец',
-            DATE: 'Дата',
-            VALUE: 'Значение',
-            TIME_EDIT_TIME_VIEW: 'Изменение и просмотр полной даты',
-            DATE_RANGE: 'Диапозоны дат',
-            DAILY: 'Суточный',
-            WEEKLY: 'Недельный',
-            MONTHLY: 'Месячный',
-            YEARLY: 'Годовой',
-            DISABLED: 'Отключенный',
-            NEXT_WEEK: 'Следующая неделя'
-        });
-    });
+    // thisModule.config(function (pipTranslateProvider) {
+    //     pipTranslateProvider.translations('en', {
+    //         EVENT_NEW_START_TIME: 'Start time',
+    //         EVENT_NEW_END_TIME: 'End time',
+    //         DATE: 'Date',
+    //         VALUE: 'Value',
+    //         TIME_EDIT_TIME_VIEW: 'Full date editing and viewing',
+    //         DATE_RANGE: 'Date range',
+    //         DAILY: 'Daily',
+    //         WEEKLY: 'Weekly',
+    //         MONTHLY: 'Monthly',
+    //         YEARLY: 'Yearly',
+    //         DISABLED: 'Disabled',
+    //         NEXT_WEEK: 'Next week'
+    //     });
+    //     pipTranslateProvider.translations('ru', {
+    //         EVENT_NEW_START_TIME: 'Начало',
+    //         EVENT_NEW_END_TIME: 'Конец',
+    //         DATE: 'Дата',
+    //         VALUE: 'Значение',
+    //         TIME_EDIT_TIME_VIEW: 'Изменение и просмотр полной даты',
+    //         DATE_RANGE: 'Диапозоны дат',
+    //         DAILY: 'Суточный',
+    //         WEEKLY: 'Недельный',
+    //         MONTHLY: 'Месячный',
+    //         YEARLY: 'Годовой',
+    //         DISABLED: 'Отключенный',
+    //         NEXT_WEEK: 'Следующая неделя'
+    //     });
+    // });
 
     thisModule.controller('DateController',
         function ($scope, $timeout) {

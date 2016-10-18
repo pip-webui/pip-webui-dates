@@ -6,29 +6,18 @@
     <title>WebUI Framework. PipDevs Team</title>
 
     <link rel="stylesheet" href="../lib/pip-webui-lib.css"/>
-    <link rel="stylesheet" href="../lib/pip-webui-css.css"/>
-    <link rel="stylesheet" href="../lib/pip-webui-csscomponents"/>    
+    <!--<link rel="stylesheet" href="../lib/pip-webui-css.css"/>-->
+    <!--<link rel="stylesheet" href="../lib/pip-webui-csscomponents"/>    -->
     <link rel="stylesheet" href="../dist/pip-webui-dates.css"/>
     <link rel="stylesheet" href="../../node_modules/prismjs/themes/prism.css">    
+    <link rel="stylesheet" href="styles.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
 
-    <style>
-        .pip-title > h1 {
-            margin-top: 20px;
-            margin-bottom: 5px;
-        }
 
-        .pip-title > div {
-            margin-bottom: 30px;
-        }
-
-        .pip-section > h2 {
-            margin-bottom: 5px;
-        }
-    </style>
 
     <script src="../lib/pip-webui-lib.js"></script>
     <script src="../lib/pip-webui-services.js"></script>
+    <script src="../lib/pip-webui-themes.js"></script>
     <script src="../dist/pip-webui-dates.js"></script>
 
     <script src="../../node_modules/prismjs/prism.js"></script>
@@ -39,7 +28,9 @@
     <script src="index.js"></script>
 
 </head>
-<body ng-app="app" class="layout-column layout-align-start-center" ng-controller="AppController">
+
+
+<!--<body ng-app="app" class="layout-column layout-align-start-center" ng-controller="AppController">
 
 <md-toolbar ng-if="!$partialReset">
     <div class="md-toolbar-tools">
@@ -66,5 +57,73 @@
     </md-content>
 </div>
 
+</body>-->
+
+
+<body ng-app="appDates" ng-if="!$reset" ng-controller="pipSampleController"
+     class="pip-main layout-column {{$theme}}" md-theme="{{$theme}}">
+
+<md-toolbar xxxng-if="!$partialReset">
+    <div class="layout-row layout-align-start-center">
+        <md-button class="md-icon-button" aria-label="MENU" ng-if="!$mdMedia('gt-sm')" ng-click="onToggleMenu()">
+            <md-icon md-svg-icon="icons:menu" ></md-icon>
+            </md-button>
+        <div class="md-toolbar-tools">
+            <div class="flex-var text-overflow">
+                {{'DATE_TIME' |translate}}
+            </div>
+        </div>
+
+        <md-menu md-position-mode="target-right target" ng-if="isTheme">
+            <div class="layout-row layout-align-start-center" style="  cursor: pointer;outline: none; margin-right: 16px;"
+                      ng-click="$mdOpenMenu()"
+                      aria-label="theme selection">
+                <span style="white-space:nowrap;">
+                    {{ $theme | translate}}</span>
+                    <md-icon md-svg-icon="icons:triangle-down"></md-icon>
+                </span>
+            </div>
+                <md-menu-content width="3">
+                    <md-menu-item ng-repeat="theme in themes">
+                        <md-button ng-click="onThemeClick(theme)">{{theme | translate}}</md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+
+        <md-menu md-position-mode="target-right target" ng-if="isTranslated">
+            <div class="layout-row layout-align-start-center" style="  cursor: pointer;outline: none; margin-right: 16px;"
+                      ng-click="$mdOpenMenu()"
+                      aria-label="language selection">
+                <span >
+                    {{ $language | translate}}</span>
+                    <md-icon md-svg-icon="icons:triangle-down"></md-icon>
+                </span>
+            </div>
+                <md-menu-content width="3">
+                    <md-menu-item ng-repeat="lang in languages">
+                        <md-button ng-click="onLanguageClick(lang)">{{lang | translate}}</md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+    </div>
+</md-toolbar>
+
+<div class="layout-row flex">
+    <md-sidenav md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')"
+                class="md-whiteframe-z2 md-sidenav-left layout-column color-content-bg">
+        <md-list>
+            <md-list-item ng-repeat="contentItem in content"
+                          ng-click="onSwitchPage(contentItem.state)"
+                          ng-class="{ 'selected-state': isActiveState(contentItem.state) }">
+                <p ui-sref="{{contentItem.state}}">{{contentItem.title}}</p>
+            </md-list-item>
+        </md-list>
+    </md-sidenav>
+
+    <md-content id="content" class="p24-flex flex">
+        <div ui-view></div>
+    </md-content>
+</div>
 </body>
+
 </html>
