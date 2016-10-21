@@ -1,20 +1,369 @@
 <h2>Moment Examples</h2>
-<div class="h48 p8 layout-row layout-align-start-center">
-        <md-menu md-position-mode="target-right target">
-                <span ng-click="$mdOpenMenu()"
-                      aria-label="language selection">
-                    {{ language | translate}}
-                    <md-icon md-svg-icon="icons:triangle-down"></md-icon>
-                </span>
-            <md-menu-content width="3">
-                <md-menu-item ng-repeat="lang in languages">
-                    <md-button ng-click="onLanguageClick(lang)">{{lang | translate}}</md-button>
-                </md-menu-item>
-            </md-menu-content>
-        </md-menu>
-    <div>
-        {{language}}
-    </div>
-</div>    
-<p>Now date time: {{date}}</p>
-<p>Time between now and 31/10/2011: {{time}}</p>
+
+<div class="text-subhead2"> 
+    Current locale
+</div>
+ 
+
+<md-divider class="content-divider"></md-divider>
+<md-datepicker ng-model="dateDayStart" md-placeholder="Enter date"></md-datepicker>
+<md-divider class="content-divider"></md-divider>
+
+<p>
+    Дата: {{date}}
+</p>
+<p>
+    Дата UTC: {{dateUTC}}
+</p>
+<p>
+    Дата JSON: {{dateJSON}}
+</p>
+<p>
+    Дата UTC JSON: {{dateUTCJSON}}
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Операция
+            </th>
+            <th>
+                Дата
+            </th>
+            <th>
+                UTC Дата
+            </th>
+            <th>
+                JSON
+            </th>    
+            <th>
+                JSON UTC
+            </th>                                               
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Original</td>          <td>{{date}}</td>       <td>{{dateUTC}}</td>        
+                                                    <td>{{dateJSON}}</td>       <td>{{dateUTCJSON}}</td>                                   
+        </tr>
+
+        <!--<tr>
+            <td> object</td>  <td>{{moment(date).toObject()}}</td> 
+                                 <td>{{moment(dateUTC).toObject()}}</td>
+                                 <td>{{moment(dateJSON).toObject()}}</td> 
+                                 <td>{{moment(dateUTCJSON).toObject()}}</td>                                   
+        </tr>-->
+      
+        <tr>
+            <td> Start Day</td>  <td>{{moment(date).startOf('day')}}</td> 
+                                 <td>{{moment(dateUTC).startOf('day')}}</td>
+                                 <td>{{moment(dateJSON).startOf('day')}}</td> 
+                                 <td>{{moment(dateUTCJSON).startOf('day')}}</td>                                   
+        </tr>
+        <tr>
+            <td> End Day</td>     <td>{{moment(date).endOf('day')}}</td> 
+                                 <td>{{moment(dateUTC).endOf('day')}}</td>
+                                 <td>{{moment(dateJSON).endOf('day')}}</td>
+                                 <td>{{moment(dateUTCJSON).endOf('day')}}</td>                                      
+        </tr>        
+        <tr>
+            <td> Start Week</td>     <td>{{moment(date).startOf('week')}}</td> 
+                                 <td>{{moment(dateUTC).startOf('week')}}</td>
+                                 <td>{{moment(dateJSON).startOf('week')}}</td>
+                                 <td>{{moment(dateUTCJSON).startOf('week')}}</td>                                      
+        </tr>
+        <tr>
+            <td> End Week</td>     <td>{{moment(date).endOf('week')}}</td> 
+                                 <td>{{moment(dateUTC).endOf('week')}}</td>
+                                 <td>{{moment(dateJSON).endOf('week')}}</td>
+                                 <td>{{moment(dateUTCJSON).endOf('week')}}</td>                                      
+        </tr>   
+        <tr>
+            <td> Start iso Week</td>     <td>{{moment(date).startOf('isoWeek')}}</td> 
+                                 <td>{{moment(dateUTC).startOf('isoWeek')}}</td>
+                                 <td>{{moment(dateJSON).startOf('isoWeek')}}</td>
+                                 <td>{{moment(dateUTCJSON).startOf('isoWeek')}}</td>                                      
+        </tr>
+        <tr>
+            <td> End iso Week</td>     <td>{{moment(date).endOf('isoWeek')}}</td> 
+                                 <td>{{moment(dateUTC).endOf('isoWeek')}}</td>
+                                 <td>{{moment(dateJSON).endOf('isoWeek')}}</td>
+                                 <td>{{moment(dateUTCJSON).endOf('isoWeek')}}</td>                                      
+        </tr>   
+        <tr>
+            <td> Start Month</td>     <td>{{moment(date).startOf('month')}}</td> 
+                                 <td>{{moment(dateUTC).startOf('month')}}</td>
+                                 <td>{{moment(dateJSON).startOf('month')}}</td>
+                                 <td>{{moment(dateUTCJSON).startOf('month')}}</td>                                      
+        </tr>
+        <tr>
+            <td> End Month</td>     <td>{{moment(date).endOf('month')}}</td> 
+                                 <td>{{moment(dateUTC).endOf('month')}}</td>
+                                 <td>{{moment(dateJSON).endOf('month')}}</td>
+                                 <td>{{moment(dateUTCJSON).endOf('month')}}</td>                                      
+        </tr>   
+        <tr>
+            <td> Start Year</td>     <td>{{moment(date).startOf('year')}}</td> 
+                                 <td>{{moment(dateUTC).startOf('year')}}</td>
+                                 <td>{{moment(dateJSON).startOf('year')}}</td>
+                                 <td>{{moment(dateUTCJSON).startOf('year')}}</td>                                      
+        </tr>
+        <tr>
+            <td> End Year</td>     <td>{{moment(date).endOf('year')}}</td> 
+                                 <td>{{moment(dateUTC).endOf('year')}}</td>
+                                 <td>{{moment(dateJSON).endOf('year')}}</td>
+                                 <td>{{moment(dateUTCJSON).endOf('year')}}</td>                                      
+        </tr>  
+        <tr>
+            <td> Get Day of year</td>     <td>{{moment(date).dayOfYear()}}</td> 
+                                 <td>{{moment(dateUTC).dayOfYear()}}</td>
+                                 <td>{{moment(dateJSON).dayOfYear()}}</td>
+                                 <td>{{moment(dateUTCJSON).dayOfYear()}}</td>                                      
+        </tr>  
+        <tr>
+            <td> Get Day of Month</td>     <td>{{moment(date).month()}}</td> 
+                                 <td>{{moment(dateUTC).month()}}</td>
+                                 <td>{{moment(dateJSON).month()}}</td>
+                                 <td>{{moment(dateUTCJSON).month()}}</td>                                      
+        </tr>  
+        <tr>
+            <td> Get  Week</td>     <td>{{moment(date).week()}}</td> 
+                                 <td>{{moment(dateUTC).week()}}</td>
+                                 <td>{{moment(dateJSON).week()}}</td>
+                                 <td>{{moment(dateUTCJSON).week()}}</td>                                      
+        </tr>  
+        <tr>
+            <td> Get Day of ISO Week</td>     <td>{{moment(date).isoWeekday()}}</td> 
+                                 <td>{{moment(dateUTC).isoWeekday()}}</td>
+                                 <td>{{moment(dateJSON).isoWeekday()}}</td>
+                                 <td>{{moment(dateUTCJSON).isoWeekday()}}</td>                                      
+        </tr> 
+        <tr>
+            <td> Set Day 1st of year</td>     <td>{{moment(date).dayOfYear(1)}}</td> 
+                                 <td>{{moment(dateUTC).dayOfYear(1)}}</td>
+                                 <td>{{moment(dateJSON).dayOfYear(1)}}</td>
+                                 <td>{{moment(dateUTCJSON).dayOfYear(1)}}</td>                                      
+        </tr>  
+        <tr>
+            <td> Set 3rd Month</td>     <td>{{moment(date).month(2)}}</td> 
+                                 <td>{{moment(dateUTC).month(2)}}</td>
+                                 <td>{{moment(dateJSON).month(2)}}</td>
+                                 <td>{{moment(dateUTCJSON).month(2)}}</td>                                      
+        </tr>  
+        <tr style="color:red;">
+            <td> Set 5rd Week</td>     <td>{{moment(date).week(3)}}</td> 
+                                 <td>{{moment(dateUTC).week(3)}}</td>
+                                 <td>{{moment(dateJSON).week(3)}}</td>
+                                 <td>{{moment(dateUTCJSON).week(3)}}</td>                                      
+        </tr>  
+        <tr>
+            <td> Set  1st Day of ISO Week</td>     <td>{{moment(date).isoWeekday(1)}}</td> 
+                                 <td>{{moment(dateUTC).isoWeekday(1)}}</td>
+                                 <td>{{moment(dateJSON).isoWeekday(1)}}</td>
+                                 <td>{{moment(dateUTCJSON).isoWeekday(1)}}</td>                                      
+        </tr>        
+        <tr>
+            <td> Week of year</td>     <td>{{moment(date).isoWeek(2)}}</td> 
+                                 <td>{{moment(dateUTC).isoWeek(2)}}</td>
+                                 <td>{{moment(dateJSON).isoWeek(2)}}</td>
+                                 <td>{{moment(dateUTCJSON).isoWeek(2)}}</td>                                      
+        </tr>        
+        <tr>
+            <td>Add 1 day</td>     <td>{{moment(date).add(1, 'day')}}</td> 
+                                 <td>{{moment(dateUTC).add(1, 'day')}}</td>
+                                 <td>{{moment(dateJSON).add(1, 'day')}}</td>
+                                 <td>{{moment(dateUTCJSON).add(1, 'day')}}</td>                                      
+        </tr> 
+        <tr>
+            <td>Add 1 week</td>     <td>{{moment(date).add(1, 'week')}}</td> 
+                                 <td>{{moment(dateUTC).add(1, 'week')}}</td>
+                                 <td>{{moment(dateJSON).add(1, 'week')}}</td>
+                                 <td>{{moment(dateUTCJSON).add(1, 'week')}}</td>                                      
+        </tr> 
+        <tr>
+            <td colspan="5">
+                Formats date
+            </td>
+        </tr>
+
+        <tr>
+            <td>default </td>     <td>{{moment(date).format()}}</td> 
+                                 <td>{{moment(dateUTC).format()}}</td>
+                                 <td>{{moment(dateJSON).format()}}</td>
+                                 <td>{{moment(dateUTCJSON).format()}}</td>                                      
+        </tr> 
+        <tr>
+            <td>L</td>     <td>{{moment(date).format('L')}}</td> 
+                                 <td>{{moment(dateUTC).format('L')}}</td>
+                                 <td>{{moment(dateJSON).format('L')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('L')}}</td>                                      
+        </tr>         
+        <tr>
+            <td>l</td>     <td>{{moment(date).format('l')}}</td> 
+                                 <td>{{moment(dateUTC).format('l')}}</td>
+                                 <td>{{moment(dateJSON).format('l')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('l')}}</td>                                      
+        </tr> 
+        <tr>
+            <td>LL</td>     <td>{{moment(date).format('LL')}}</td> 
+                                 <td>{{moment(dateUTC).format('LL')}}</td>
+                                 <td>{{moment(dateJSON).format('LL')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('LL')}}</td>                                      
+        </tr>         
+        <tr>
+            <td>ll</td>     <td>{{moment(date).format('ll')}}</td> 
+                                 <td>{{moment(dateUTC).format('ll')}}</td>
+                                 <td>{{moment(dateJSON).format('ll')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('ll')}}</td>                                      
+        </tr> 
+        <tr>
+            <td>LLL</td>     <td>{{moment(date).format('LLL')}}</td> 
+                                 <td>{{moment(dateUTC).format('LLL')}}</td>
+                                 <td>{{moment(dateJSON).format('LLL')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('LLL')}}</td>                                      
+        </tr>         
+        <tr>
+            <td>lll</td>     <td>{{moment(date).format('lll')}}</td> 
+                                 <td>{{moment(dateUTC).format('lll')}}</td>
+                                 <td>{{moment(dateJSON).format('lll')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('lll')}}</td>                                      
+        </tr> 
+        <tr>
+            <td>LLLL</td>     <td>{{moment(date).format('LLLL')}}</td> 
+                                 <td>{{moment(dateUTC).format('LLLL')}}</td>
+                                 <td>{{moment(dateJSON).format('LLLL')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('LLLL')}}</td>                                      
+        </tr>         
+        <tr>
+            <td>llll</td>     <td>{{moment(date).format('llll')}}</td> 
+                                 <td>{{moment(dateUTC).format('llll')}}</td>
+                                 <td>{{moment(dateJSON).format('llll')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('llll')}}</td>                                      
+        </tr> 
+
+        <tr>
+            <td colspan="5">
+                Formats time
+            </td>
+        </tr>
+        <tr>
+            <td>default </td>     <td>{{moment(date).format()}}</td> 
+                                 <td>{{moment(dateUTC).format()}}</td>
+                                 <td>{{moment(dateJSON).format()}}</td>
+                                 <td>{{moment(dateUTCJSON).format()}}</td>                                      
+        </tr>         
+        <tr>
+            <td>LT </td>     <td>{{moment(date).format('LT')}}</td> 
+                                 <td>{{moment(dateUTC).format('LT')}}</td>
+                                 <td>{{moment(dateJSON).format('LT')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('LT')}}</td>                                      
+        </tr> 
+
+        <tr>
+            <td>LTS</td>     <td>{{moment(date).format('LTS')}}</td> 
+                                 <td>{{moment(dateUTC).format('LTS')}}</td>
+                                 <td>{{moment(dateJSON).format('LTS')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('LTS')}}</td>                                      
+        </tr>     
+        <tr>
+            <td>m</td>     <td>{{moment(date).format('m')}}</td> 
+                                 <td>{{moment(dateUTC).format('m')}}</td>
+                                 <td>{{moment(dateJSON).format('m')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('m')}}</td>                                      
+        </tr> 
+        <tr>
+            <td>mm</td>     <td>{{moment(date).format('mm')}}</td> 
+                                 <td>{{moment(dateUTC).format('mm')}}</td>
+                                 <td>{{moment(dateJSON).format('mm')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('mm')}}</td>                                      
+        </tr> 
+        <tr>
+            <td>s</td>     <td>{{moment(date).format('s')}}</td> 
+                                 <td>{{moment(dateUTC).format('s')}}</td>
+                                 <td>{{moment(dateJSON).format('s')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('s')}}</td>                                      
+        </tr>       
+        <tr>
+            <td>ss</td>     <td>{{moment(date).format('ss')}}</td> 
+                                 <td>{{moment(dateUTC).format('ss')}}</td>
+                                 <td>{{moment(dateJSON).format('ss')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('ss')}}</td>                                      
+        </tr>  
+        <tr>
+            <td>S</td>     <td>{{moment(date).format('S')}}</td> 
+                                 <td>{{moment(dateUTC).format('S')}}</td>
+                                 <td>{{moment(dateJSON).format('S')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('S')}}</td>                                      
+        </tr> 
+        <tr>
+            <td>SS</td>     <td>{{moment(date).format('SS')}}</td> 
+                                 <td>{{moment(dateUTC).format('SS')}}</td>
+                                 <td>{{moment(dateJSON).format('SS')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('SS')}}</td>                                      
+        </tr>       
+        <tr>
+            <td>SSS</td>     <td>{{moment(date).format('SSS')}}</td> 
+                                 <td>{{moment(dateUTC).format('SSS')}}</td>
+                                 <td>{{moment(dateJSON).format('SSS')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('SSS')}}</td>                                      
+        </tr>   
+        <tr>
+            <td>Month MMMM</td>     <td>{{moment(date).format('MMMM')}}</td> 
+                                 <td>{{moment(dateUTC).format('MMMM')}}</td>
+                                 <td>{{moment(dateJSON).format('MMMM')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('MMMM')}}</td>                                      
+        </tr>       
+        <tr>
+            <td>Month MM</td>     <td>{{moment(date).format('MM')}}</td> 
+                                 <td>{{moment(dateUTC).format('MM')}}</td>
+                                 <td>{{moment(dateJSON).format('MM')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('MM')}}</td>                                      
+        </tr>  
+        <tr>
+            <td>Day of Week dd</td>     <td>{{moment(date).format('dd')}}</td> 
+                                 <td>{{moment(dateUTC).format('dd')}}</td>
+                                 <td>{{moment(dateJSON).format('dd')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('dd')}}</td>                                      
+        </tr>       
+    
+        <tr>
+            <td>Day of Week dddd</td>     <td>{{moment(date).format('dddd')}}</td> 
+                                 <td>{{moment(dateUTC).format('dddd')}}</td>
+                                 <td>{{moment(dateJSON).format('dddd')}}</td>
+                                 <td>{{moment(dateUTCJSON).format('dddd')}}</td>                                      
+        </tr>
+
+       <tr>
+            <td colspan="5">
+                Time from now 
+            </td>
+        </tr>            
+        <td>date to JSON</td>     <td>{{moment(date).fromNow()}}</td> 
+                                 <td>{{moment(dateUTC).fromNow()}}</td>
+                                 <td>{{moment(dateJSON).fromNow()}}</td>
+                                 <td>{{moment(dateUTCJSON).fromNow()}}</td>                                       
+        </tr>         
+       <tr>
+            <td colspan="5">
+                Custom
+            </td>
+        </tr>            
+        <td>date to JSON</td>     <td>{{getDateJSON(date)}}</td> 
+                                 <td>{{getDateJSON(dateUTC)}}</td>
+                                 <td>{{getDateJSON(dateJSON)}}</td>
+                                 <td>{{getDateJSON(dateUTCJSON)}}</td>                                      
+        </tr>         
+    </tbody>
+</table>    
+
+<h3>Time From now</h3>
+<p>{{moment([now.years, now.months, now.date, now.hours, now.minutes, now.seconds - 10]).fromNow()}}</p>
+<p>{{moment([now.years, now.months, now.date, now.hours, now.minutes - 1, now.seconds]).fromNow()}}</p>
+<p>{{moment([now.years, now.months, now.date, now.hours, now.minutes - 2, now.seconds ]).fromNow()}}</p>
+<p>{{moment([now.years, now.months, now.date, now.hours - 1, now.minutes, now.seconds ]).fromNow()}}</p>
+<p>{{moment([now.years, now.months, now.date, now.hours - 5, now.minutes, now.seconds ]).fromNow()}}</p>
+<p>{{moment([now.years, now.months, now.date - 2, now.hours, now.minutes, now.seconds ]).fromNow()}}</p>
+<p>{{moment([now.years, now.months - 1, now.date , now.hours, now.minutes, now.seconds ]).fromNow()}}</p>
+<p>{{moment([now.years, now.months - 2, now.date, now.hours, now.minutes, now.seconds ]).fromNow()}}</p>
+<p>{{moment([now.years - 1, now.months, now.date, now.hours, now.minutes, now.seconds ]).fromNow()}}</p>
+<p>{{moment([now.years - 3, now.months, now.date, now.hours, now.minutes, now.seconds ]).fromNow()}}</p>

@@ -1,11 +1,11 @@
 /* global angular */
 
-(function () {
+(function (moment) {
     'use strict';
 
     var content = [
-        { title: 'Date and time control', state: 'date_time', url: '/date_time', controller: 'DateController', templateUrl: 'date_time/date_time.html' },
-        { title: 'Date Format', state: 'date_format', url: '/date_format', controller: 'DateFormatController', templateUrl: 'format/date_format.html' },
+        // { title: 'Date and time control', state: 'date_time', url: '/date_time', controller: 'DateController', templateUrl: 'date_time/date_time.html' },
+        // { title: 'Date Format', state: 'date_format', url: '/date_format', controller: 'DateFormatController', templateUrl: 'format/date_format.html' },
         { title: 'Moment', state: 'moment', url: '/moment', controller: 'MomentExController', templateUrl: 'moment_examples/moment_ex.html' }        
     ];
 
@@ -23,13 +23,14 @@
 
             'pipDateTimes',
             
-            'appDateTimes.Date', 'appDateTimes.DateFormat', 'appDateTimes.momentEx'
+            // 'appDateTimes.Date', 'appDateTimes.DateFormat', 
+            'appDateTimes.momentEx'
         ]
     );
 
     thisModule.config(
         function ($stateProvider, $urlRouterProvider, $mdIconProvider,
-                  $compileProvider, $httpProvider) { // pipTranslateProvider, pipSideNavProvider, pipAppBarProvider,
+                  $compileProvider, $httpProvider, $mdDateLocaleProvider) { 
 
             $compileProvider.debugInfoEnabled(false);
             $httpProvider.useApplyAsync(true);
@@ -43,12 +44,27 @@
                 $stateProvider.state(contentItem.state, contentItem);
             }
 
-            $urlRouterProvider.otherwise('/date_time');
+            $urlRouterProvider.otherwise('/moment');
+
+            // set locales
+            moment.locale(['en', 'ru', 'fr']);
+
+            // configure matrials date provider with momentjs
+            $mdDateLocaleProvider.parseDate = function(dateString) {
+                var m = moment(dateString, 'L', true);
+
+                return m.isValid() ? m.toDate() : new Date(NaN);
+            };
+                $mdDateLocaleProvider.formatDate = function(date) {
+                var m = moment(date);
+                return m.isValid() ? m.format('L') : '';
+            };
+
         }        
     );
 
     thisModule.controller('pipSampleController',
-        function ($scope, $rootScope, $injector, $state, $mdSidenav, $timeout, $mdTheming, $mdMedia, localStorageService) {
+        function ($scope, $rootScope, $injector, $state, $mdSidenav, $timeout, $mdTheming, $mdMedia, localStorageService, $mdDateLocale) {
 
             var pipTranslate = $injector.has('pipTranslate') ? $injector.get('pipTranslate') : null,
                 // appThemesDefault = $injector.has('appThemesDefault') ? $injector.get('appThemesDefault') : null,
@@ -58,7 +74,7 @@
             $scope.isTheme = !!pipTheme;
             $scope.$mdMedia = $mdMedia;
 
-            $rootScope.$theme = localStorageService.get('theme');
+            $rootScope.$theme = localStorageService.get('theme') || 'blue';
             if ($scope.isTheme) {
                 $scope.themes = _.keys(_.omit($mdTheming.THEMES, 'default'));
             } else {
@@ -66,10 +82,11 @@
             }
             
 
-            $scope.languages = ['en', 'ru'];
+            $scope.languages = ['en', 'ru', 'fr'];
             if (!$rootScope.$language) {
                 $rootScope.$language = 'en';
             }
+            changeLocale($rootScope.$language);
 
             $scope.content = content;
             $scope.menuOpened = false;
@@ -105,11 +122,29 @@
                 $mdSidenav('left').toggle();
             };
 
+            function changeLocale(locale) {
+                var localeDate = moment.localeData();
+console.log('moment.localeData();', localeDate);                
+                moment.locale(locale);
+                
+                var localeDate = moment.localeData();
+                
+                $mdDateLocale.months = angular.isArray(localeDate._months) ? localeDate._months : localeDate._months.format;
+                $mdDateLocale.shortMonths = angular.isArray(localeDate._monthsShort) ? localeDate._monthsShort : localeDate._monthsShort.format;
+                $mdDateLocale.days = angular.isArray(localeDate._weekdays) ? localeDate._weekdays : localeDate._weekdays.format;
+                $mdDateLocale.shortDays = localeDate._weekdaysMin;
+
+                $mdDateLocale.firstDayOfWeek = localeDate._week.dow;
+
+            }
+
             $scope.onLanguageClick = function(language) {
                 console.log('onLanguageClick');
                 if (pipTranslate) {
                     console.log('onLanguageClick1', language);
                     setTimeout(function () {
+                        // change momentjs local 
+                        changeLocale(language);
                         pipTranslate.use(language);
                         $rootScope.$apply();
                     }, 0);   
@@ -120,15 +155,7 @@
             $scope.isActiveState = function (state) {
                 return $state.current.name == state;
             };
-
-            // pipTranslateProvider.translations('en', {
-            //     'DATE_TIME': 'Date and Time'
-            // });
-
-            // pipTranslateProvider.translations('ru', {
-            //     'DATE_TIME': 'Дата и время'
-            // });
         }
     );
 
-})();
+})(window.moment);
