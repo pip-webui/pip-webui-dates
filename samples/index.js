@@ -21,7 +21,7 @@
             // 'pipTheme.Default', 'pipTheme.Bootbarn', 'pipTheme', 
 
 
-            'pipDateTimes',
+            'pipDates',
             
             // 'appDateTimes.Date', 'appDateTimes.DateFormat', 
             'appDateTimes.momentEx'

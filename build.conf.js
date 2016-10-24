@@ -3,40 +3,36 @@ module.exports = {
         name: 'pipDates',
         styles: 'dates'
     },
+
     build: {
         js: true,
-        ts: false,
+        ts: true,
         html: true,
         css: true,
         lib: true,
         images: true,
         dist: false
     },
+
+    
+    typescript: {
+        noImplicitAny: false,
+        declaration: true
+    },
+
     file: {
         lib: [
-            '../pip-webui-test/dist/**/*',
-            '../pip-webui-lib/dist/**/*',
+            '../pip-webui-lib/dist/**/*',            
+            // '../pip-webui-test/dist/**/*',
             '../pip-webui-services/dist/**/*',
-            '../pip-webui-themes/dist/**/*',
-            // '../pip-webui-rest/dist/**/*',
-            // '../pip-webui-controls/dist/**/*',
-            //  '../pip-webui-nav/dist/**/*',
-            // '../pip-webui-layouts/dist/**/*',             
-            // '../pip-webui-pictures/dist/**/*',
-            // '../pip-webui-locations/dist/**/*',
-            // '../pip-webui-documents/dist/**/*',
-            // '../pip-webui-composite/dist/**/*',
-            // '../pip-webui-errors/dist/**/*',
-            // '../pip-webui-entry/dist/**/*',
-            // '../pip-webui-settings/dist/**/*',
-            // '../pip-webui-guidance/dist/**/*',
-            // '../pip-webui-support/dist/**/*',
-            // '../pip-webui-help/dist/**/*'
+            '../pip-webui-themes/dist/**/*'
         ]
     },
+
     samples: {
-        port: 8080
+        port: 8042
     },
+
     api: {
         port: 8081
     }
