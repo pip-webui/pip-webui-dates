@@ -12,6 +12,7 @@
 
             var pipTranslate = $injector.has('pipTranslate') ? $injector.get('pipTranslate') : null
 
+
             $scope.moment = moment;
             $scope.date = new moment();
             $scope.dateUTC = new moment.utc();
@@ -51,41 +52,39 @@ moment().toDate();
 */        
             return;
 
-            function GetNextWeekStart(date) {
-                var today = moment();
-                //edited part
-                var daystoMonday = 0 - (today.isoWeekday() - 1) + 7;       
-                var nextMonday = today.subtract('days', daystoMonday);
-
-                return nextMonday;
+            function getNextStart(date, category) {
+                
+                moment(date).startOf('day')
             }
 
-            function GetNextWeekEnd(date) {
-                var nextMonday = GetNextWeekStart();
-                var nextSunday = nextMonday.add('days', 6);
+            function getPrevStart(date, category) {
 
-                return nextSunday;
             }
 
-            function GetPrevWeekStart() {
-                var today = moment();
-                var daystoLastMonday = 0 - (1 - today.isoWeekday()) + 7;
+            function getNowStart(date, category) {
 
-                var lastMonday = today.subtract('days', daystoLastMonday);
-
-                return lastMonday;
             }
 
-            function GetPrevWeekEnd() {
-                var lastMonday = GetLastWeekStart();
-                var lastSunday = lastMonday.add('days', 6);
+            function formatLongMonthDay(date) {
 
-                return lastSunday; 
             }
+
+            function formatShortMonthDay(date) {
+                
+            }    
+
+            function formatDateRange(dateStart, dateEnd) {
+                
+            } 
+
+            function formatDateTimeRange(dateStart, dateEnd) {
+                
+            }      
 
             function getDateJSON(date) {
                 return JSON.stringify(moment(date));                
-            }
+            }                   
+
         }
     );
 
