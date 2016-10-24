@@ -1042,6 +1042,7 @@ module.run(['$templateCache', function($templateCache) {
                         }
                     }
 
+<<<<<<< HEAD
                     function toBoolean(value) {
                         if (value == null) return false;
                         if (!value) return false;
@@ -1123,6 +1124,8 @@ module.run(['$templateCache', function($templateCache) {
         //     'MONTH_LONG_11': 'November',
         //     'MONTH_LONG_12': 'December',
 
+=======
+>>>>>>> ee95374cd5d3d79dd91459de37cfe88e8b282cf5
         //     'MONTH_SHORT_1': 'Jan',
         //     'MONTH_SHORT_2': 'Feb',
         //     'MONTH_SHORT_3': 'Mar',
