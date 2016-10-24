@@ -17,8 +17,8 @@
             // 'wu.masonry', 
             'LocalStorageModule', 
 
-            'pipServices',
-            'pipTheme.Default', 'pipTheme.Bootbarn', 'pipTheme', 
+            // 'pipServices',
+            // 'pipTheme.Default', 'pipTheme.Bootbarn', 'pipTheme', 
 
 
             'pipDateTimes',
