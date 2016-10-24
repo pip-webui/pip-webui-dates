@@ -15,7 +15,8 @@
         'pipTimeRange',
         'pipDatesUtils',
         'pipDateFormat',
-        'pipDateTimeFilters'
+        'pipDateTimeFilters',
+        'pipDates.Translate'
     ]);
 
 

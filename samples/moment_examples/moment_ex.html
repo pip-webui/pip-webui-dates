@@ -352,6 +352,18 @@
                                  <td>{{getDateJSON(dateUTC)}}</td>
                                  <td>{{getDateJSON(dateJSON)}}</td>
                                  <td>{{getDateJSON(dateUTCJSON)}}</td>                                      
+        </tr> 
+        <tr>        
+        <td>formatLongMonthDay MMMM DD</td>     <td>{{formatLongMonthDay(date)}}</td> 
+                                 <td>{{formatLongMonthDay(dateUTC)}}</td>
+                                 <td>{{formatLongMonthDay(dateJSON)}}</td>
+                                 <td>{{formatLongMonthDay(dateUTCJSON)}}</td>                                      
+        </tr>         
+        <tr>        
+        <td>formatShortMonthDay MMMM DD</td>     <td>{{formatShortMonthDay(date)}}</td> 
+                                 <td>{{formatShortMonthDay(dateUTC)}}</td>
+                                 <td>{{formatShortMonthDay(dateJSON)}}</td>
+                                 <td>{{formatShortMonthDay(dateUTCJSON)}}</td>                                      
         </tr>         
     </tbody>
 </table>    
@@ -369,3 +381,57 @@
 <p>{{moment([now.years - 3, now.months, now.date, now.hours, now.minutes, now.seconds ]).fromNow()}}</p>
 
 <p>{{moment().fromNow()}}</p>
+
+
+<h3>Get next Period Samples</h3>
+<p>Date: {{date}}</p>
+<p>Start undefined: {{getNextStart(date)}}</p>
+
+<p>Date day: {{getNextStart(date, 'day')}}</p>
+<p>Date week: {{getNextStart(date, 'week')}}</p>
+<p>Date isoweek: {{getNextStart(date, 'isoweek')}}</p>
+<p>Date month: {{getNextStart(date, 'month')}}</p>
+<p>Date year: {{getNextStart(date, 'year')}}</p>
+
+<h3>Get prev Period Samples</h3>
+<p>Date: {{date}}</p>
+<p>Start undefined: {{getPrevStart(date)}}</p>
+
+<p>Date day: {{getPrevStart(date, 'day')}}</p>
+<p>Date week: {{getPrevStart(date, 'week')}}</p>
+<p>Date isoweek: {{getPrevStart(date, 'isoweek')}}</p>
+<p>Date month: {{getPrevStart(date, 'month')}}</p>
+<p>Date year: {{getPrevStart(date, 'year')}}</p>
+
+<h3>Get now Period Samples</h3>
+<p>Date: {{date}}</p>
+<p>Start undefined: {{getNowStart()}}</p>
+
+<p>Date day: {{getNowStart('day')}}</p>
+<p>Date week: {{getNowStart('week')}}</p>
+<p>Date isoweek: {{getNowStart('isoweek')}}</p>
+<p>Date month: {{getNowStart('month')}}</p>
+<p>Date year: {{getNowStart('year')}}</p>
+
+<h3>Date Range Format</h3>
+<p>Date range: null - null: {{formatDateRange(null, null)}}</p>
+<p>Date Time range: null - null: {{formatDateTimeRange(null, null)}}</p>
+<br/><br/>
+<p>Date range: {{date}} - null: {{formatDateRange(date, null)}}</p>
+<p>Date Time range: {{date}} - null: {{formatDateTimeRange(date, null)}}</p>
+<br/><br/>
+<p>Date range: null - {{date}}: {{formatDateRange(null, date)}}</p>
+<p>Date Time range: null - {{date}}: {{formatDateTimeRange(null, date)}}</p>
+<br/><br/>
+<p>Date range: {{date}} - {{date}}: {{formatDateRange(date, date)}}</p>
+<p>Date Time range: {{date}} - {{date}}: {{formatDateTimeRange(date, date)}}</p>
+<br/><br/>
+<p>Date range: {{dateJSON}} - {{date}}: {{formatDateRange(dateJSON, date)}}</p>
+<p>Date Time range: {{dateJSON}} - {{date}}: {{formatDateTimeRange(dateJSON, date)}}</p>
+<br/><br/>
+<p>Date range: {{dateJSON1}} - {{date}}: {{formatDateRange(dateJSON1, date)}}</p>
+<p>Date Time range: {{dateJSON1}} - {{date}}: {{formatDateTimeRange(dateJSON1, date)}}</p>
+<br/><br/>
+<p>Date range: {{dateJSON1}} - {{dateJSON2}}: {{formatDateRange(dateJSON1, dateJSON2)}}</p>
+<p>Date Time range: {{dateJSON1}} - {{dateJSON2}}: {{formatDateTimeRange(dateJSON1, dateJSON2)}}</p>
+<br/><br/>
