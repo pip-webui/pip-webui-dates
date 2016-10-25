@@ -13,12 +13,10 @@
         [
             'ngMaterial',
             'ui.router', 'ui.utils', 
-            // 'ngResource', 'ngAria', 'ngCookies', 'ngSanitize', 'ngMessages',
-            // 'wu.masonry', 
             'LocalStorageModule', 
 
-            // 'pipServices',
-            // 'pipTheme.Default', 'pipTheme.Bootbarn', 'pipTheme', 
+            'pipServices',
+            'pipTheme.Default', 'pipTheme.Bootbarn', 'pipTheme', 
 
 
             'pipDates',
@@ -90,7 +88,7 @@
         function ($scope, $rootScope, $injector, $state, $mdSidenav, $timeout, $mdTheming, $mdMedia, localStorageService, $mdDateLocale) {
 
             var pipTranslate = $injector.has('pipTranslate') ? $injector.get('pipTranslate') : null,
-                // appThemesDefault = $injector.has('appThemesDefault') ? $injector.get('appThemesDefault') : null,
+                appThemesDefault = $injector.has('appThemesDefault') ? $injector.get('appThemesDefault') : null,
                 pipTheme = $injector.has('pipTheme') ? $injector.get('pipTheme') : null;
 
             if (pipTranslate) {
