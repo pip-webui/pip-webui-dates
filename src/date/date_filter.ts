@@ -3,7 +3,7 @@
 module pip.datetime {
     'use strict';
 
-    function formatTimeFilter(pipDateTime) {
+    function formatTimeFilter(pipDateTime: any) {
         "ngInject";
 
         return function (value: any, format: string): string {
@@ -11,7 +11,7 @@ module pip.datetime {
         }
     }
 
-    function formatDateOptionalFilter(pipDateTime) {
+    function formatDateOptionalFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any, format: string): string {
@@ -19,7 +19,7 @@ module pip.datetime {
         }
     }
 
-    function formatLongDateFilter(pipDateTime) {
+    function formatLongDateFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -27,7 +27,7 @@ module pip.datetime {
         }
     }
 
-    function formatShortDateFilter(pipDateTime) {
+    function formatShortDateFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -35,7 +35,7 @@ module pip.datetime {
         }
     }
 
-    function formatMonthFilter(pipDateTime) {
+    function formatMonthFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any) {
@@ -43,7 +43,7 @@ module pip.datetime {
         }
     }
 
-    function formatLongMonthFilter(pipDateTime) {
+    function formatLongMonthFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -51,7 +51,7 @@ module pip.datetime {
         }
     }
 
-    function formatYearFilter(pipDateTime) {
+    function formatYearFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -59,7 +59,7 @@ module pip.datetime {
         }
     }
 
-    function formatWeekFilter(pipDateTime) {
+    function formatWeekFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -67,7 +67,7 @@ module pip.datetime {
         }
     }
 
-    function formatShortWeekFilter(pipDateTime) {
+    function formatShortWeekFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -75,7 +75,7 @@ module pip.datetime {
         }
     }
 
-    function formatShortDateTimeFilter(pipDateTime) {
+    function formatShortDateTimeFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -83,7 +83,7 @@ module pip.datetime {
         }
     }
 
-    function formatLongDateTimeFilter(pipDateTime) {
+    function formatLongDateTimeFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -91,7 +91,7 @@ module pip.datetime {
         }
     }
 
-    function formatShortTimeFilter(pipDateTime) {
+    function formatShortTimeFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -99,7 +99,7 @@ module pip.datetime {
         }
     }
 
-    function formatLongTimeFilter(pipDateTime) {
+    function formatLongTimeFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -107,7 +107,7 @@ module pip.datetime {
         }
     }
 
-    function formatShortDayOfWeekFilter(pipDateTime) {
+    function formatShortDayOfWeekFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -115,7 +115,7 @@ module pip.datetime {
         }
     }
 
-    function formatLongDayOfWeekFilter(pipDateTime) {
+    function formatLongDayOfWeekFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -123,7 +123,7 @@ module pip.datetime {
         }
     }
 
-    function formatDateNumberFilter(pipDateTime) {
+    function formatDateNumberFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -131,7 +131,7 @@ module pip.datetime {
         }
     }
 
-    function formatLongDateNumberFilter(pipDateTime) {
+    function formatLongDateNumberFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -139,7 +139,7 @@ module pip.datetime {
         }
     }
 
-    function formatTimeNumberFilter(pipDateTime) {
+    function formatTimeNumberFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -147,7 +147,7 @@ module pip.datetime {
         }
     }
 
-    function formatLongTimeNumberFilter(pipDateTime) {
+    function formatLongTimeNumberFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -155,7 +155,7 @@ module pip.datetime {
         }
     }
 
-    function formatLongMonthDayFilter(pipDateTime) {
+    function formatLongMonthDayFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -163,7 +163,7 @@ module pip.datetime {
         }
     }
 
-    function formatShortMonthDayFilter(pipDateTime) {
+    function formatShortMonthDayFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -171,7 +171,7 @@ module pip.datetime {
         }
     }
 
-    function formatDateRangeFilter(pipDateTime) {
+    function formatDateRangeFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value1: any, value2: any): string {
@@ -179,7 +179,7 @@ module pip.datetime {
         }
     }
 
-    function formatDateTimeRangeFilter(pipDateTime) {
+    function formatDateTimeRangeFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value1: any, value2: any): string {
@@ -187,7 +187,7 @@ module pip.datetime {
         }
     }
 
-    function formatISOWeekFilter(pipDateTime) {
+    function formatISOWeekFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -195,7 +195,7 @@ module pip.datetime {
         }
     }
 
-    function formatShortISOWeekFilter(pipDateTime) {
+    function formatShortISOWeekFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -203,7 +203,7 @@ module pip.datetime {
         }
     }
 
-    function formatISOWeekOrdinalFilter(pipDateTime) {
+    function formatISOWeekOrdinalFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -211,7 +211,7 @@ module pip.datetime {
         }
     }
 
-    function formatDateYFilter(pipDateTime) {
+    function formatDateYFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -219,7 +219,7 @@ module pip.datetime {
         }
     }
 
-    function formatLongDateYFilter(pipDateTime) {
+    function formatLongDateYFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -227,7 +227,7 @@ module pip.datetime {
         }
     }
 
-    function formatMillisecondsToSecondsFilter(pipDateTime) {
+    function formatMillisecondsToSecondsFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {
@@ -235,7 +235,7 @@ module pip.datetime {
         }
     }
 
-    function formatElapsedIntervalFilter(pipDateTime) {
+    function formatElapsedIntervalFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any, start: any): string {
@@ -243,7 +243,7 @@ module pip.datetime {
         }
     }
 
-    function getDateJSONFilter(pipDateTime) {
+    function getDateJSONFilter(pipDateTime: any) {
         "ngInject";  
 
         return function (value: any): string {

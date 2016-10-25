@@ -134,7 +134,7 @@ module pip.datetime {
         }
 
             private formatDay(value: any, basicFormat: string): string {
-                var date,
+                var date: any,
                     format = moment.localeData().longDateFormat(basicFormat ? basicFormat : this._defaultFormat),
                     formatMonthYearless = format.replace(/Y/g,'').replace(/^\W|\W$|\W\W/,'').replace(/M/g,'');
 
@@ -148,7 +148,7 @@ module pip.datetime {
             }
 
             private formatMonthDay(value: any, basicFormat: string): string {
-                var date,
+                var date: any,
                     format = basicFormat ? basicFormat : this._defaultFormat,
                     formatLL = moment.localeData().longDateFormat(format),
                     formatYearlessLL = formatLL.replace(/Y/g,'').replace(/^\W|\W$|\W\W/,'');
@@ -163,7 +163,8 @@ module pip.datetime {
             }
 
             private formatRange(value1: any, value2: any, basicFormat: string): string {
-                var dateStart, dateEnd,
+                var dateStart: any, 
+                    dateEnd: any,
                     format = basicFormat ? basicFormat : this._defaultFormat;
 
                 if (this.isUndefinedOrNull(value1)) { 
@@ -202,7 +203,7 @@ module pip.datetime {
             }
 
         private toStartRange(value: any, range: string): any {
-            var date;
+            var date: any;
 
             if (this.isUndefinedOrNull(value)) {
 				return '';
@@ -216,15 +217,17 @@ module pip.datetime {
             return date.startOf(range);    
         }
 
-        private toEndRange(value: any, range: string, offset): any {
-            var date, result;
+        private toEndRange(value: any, range: string, offset: number): any {
+            var date: any, 
+                result: any,
+                mssOffset: number;
 
             if (this.isUndefinedOrNull(value)) {
 				return '';
 			}
 
             if (!angular.isNumber(offset)) {
-                offset = 0;
+                mssOffset = 0;
             }
 
 			date = moment(value);
@@ -232,8 +235,8 @@ module pip.datetime {
 				return '';
 			}       
 
-            if (offset) {
-                result = date.startOf(range).add(offset, 'milliseconds');
+            if (mssOffset) {
+                result = date.startOf(range).add(mssOffset, 'milliseconds');
             } else {
                 result = date.startOf(range);
             }
@@ -377,7 +380,8 @@ module pip.datetime {
 
         // todo
         public formatElapsedInterval(value: any, start: any): string {
-            var date: any, nowDate;
+            var date: any, 
+                nowDate: any;
             
             if (this.isUndefinedOrNull(value)) {
 				return '';
@@ -404,7 +408,9 @@ module pip.datetime {
         // ------------------
 
         public getNextStart(value: any, category: string): any {
-                var date, range, result;
+                var date: any, 
+                    range: string, 
+                    result: any;
 
                 if (this.isUndefinedOrNull(value)) {
 					return '';
@@ -422,7 +428,9 @@ module pip.datetime {
             }
 
             public getPrevStart(value: any, category: string): any {
-                var date, range, result;
+                var date: any, 
+                    range: string, 
+                    result: any;
 
                 if (this.isUndefinedOrNull(value)) {
 					return '';
@@ -440,7 +448,9 @@ module pip.datetime {
             }
 
             public getNowStart(category: string): any {
-                var date, range, result;
+                var date: any, 
+                    range: string, 
+                    result: any;
 
 				date = moment();
 				if (!date.isValid()) {
@@ -454,7 +464,7 @@ module pip.datetime {
             }  
 
             public addHours(value: any, hours: number): any {
-                var date;
+                var date: any;
 
                 if (this.isUndefinedOrNull(value) || !angular.isNumber(hours)) {
 					return '';
@@ -592,19 +602,19 @@ module pip.datetime {
             return this._datetime.formatLongTimeNumber(value);
         }
 
-        public formatLongMonthDay(value) {
+        public formatLongMonthDay(value: any): string {
             return this._datetime.formatLongMonthDay(value);
         }
 
-        public formatShortMonthDay(value) {
+        public formatShortMonthDay(value: any): string {
             return this._datetime.formatShortMonthDay(value);        
         }  
 
-        public formatDateRange(value1, value2) {
+        public formatDateRange(value1: any, value2: any): string {
             return this._datetime.formatDateRange(value1, value2);
         } 
 
-        public formatDateTimeRange(value1, value2) {
+        public formatDateTimeRange(value1: any, value2: any): string {
             return this._datetime.formatDateTimeRange(value1, value2);
         }    
 
@@ -645,7 +655,7 @@ module pip.datetime {
             return this._datetime.formatElapsedInterval(value, start);         
         }
 
-        public getDateJSON(date) {
+        public getDateJSON(date: any): string {
             return this._datetime.getDateJSON(date);                
         }
 

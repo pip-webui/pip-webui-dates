@@ -1,6 +1,6 @@
 <h2>user Agent</h2>
 <p>{{userAgent}}</p>
-<!--
+
 <h2>Date</h2>
 <table>
     <tr>
@@ -16,16 +16,16 @@
         <td>{{ currentTime | formatShortDate }}</td>
     </tr>
     <tr>
-        <td><b>Long Date with year:</b></td>
-        <td>{{ longDateWithYear }}</td>
+        <td><b>Long Date without year:</b></td>
+        <td>{{ longDateWithoutYear }}</td>
         <td><b>Filter:</b></td>
-        <td>{{ currentTime | formatLongDateWithYear }}</td>
+        <td>{{ currentTime | formatLongDateY }}</td>
     </tr>
     <tr>
-        <td><b>Short Date with year:</b></td>
-        <td>{{ shortDateWithYear }} </td>
+        <td><b>Short Date without year:</b></td>
+        <td>{{ shortDateWithoutYear }} </td>
         <td><b>Filter:</b></td>
-        <td>{{ currentTime | formatShortDateWithYear }}</td>
+        <td>{{ currentTime | formatDateY }}</td>
     </tr>
     <tr>
         <td><b>Long Time:</b></td>
@@ -116,9 +116,7 @@
 <h2>Elapsed Time</h2>
 <table>
     <tr>
-        <td><b>Elapsed Time:</b></td>
-        <td>{{ pastTime | formatElapsedTime }}</td>
         <td><b>Filter:</b></td>
         <td>{{ pastTime | formatElapsedInterval }}</td>
     </tr>
-</table>-->
+</table>
