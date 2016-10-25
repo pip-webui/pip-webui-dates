@@ -5,7 +5,9 @@
 
     angular.module('pipDates', [
         'pipDate',
+        'pipTimeRange',
         'pipDateTime',
+        'pipTimeRangeEdit',
         'pipDates.Translate'
     ]);
     

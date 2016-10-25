@@ -214,7 +214,7 @@ module pip.datetime {
 				return '';
 			}       
 
-            return date.startOf(range);    
+            return date.startOf(range).toDate();    
         }
 
         private toEndRange(value: any, range: string, offset: number): any {
@@ -241,7 +241,7 @@ module pip.datetime {
                 result = date.startOf(range);
             }
 
-            return date.startOf(range);    
+            return date.startOf(range).toDate();    
         }
 
         public constructor() {};        
@@ -424,7 +424,7 @@ module pip.datetime {
                 range = this.getRange(category);
                 result = moment(date).startOf(range).add(this.getOperationRange(range));
 
-                return result;
+                return result.toDate();
             }
 
             public getPrevStart(value: any, category: string): any {
@@ -444,7 +444,7 @@ module pip.datetime {
                 range = this.getRange(category);
                 result = moment(date).startOf(range).add(-1, this.getOperationRange(range));
 
-                return result;
+                return result.toDate();
             }
 
             public getNowStart(category: string): any {
@@ -460,7 +460,7 @@ module pip.datetime {
                 range = this.getRange(category) 
                 result = moment(date).startOf(range);
 
-                return result;
+                return result.toDate();
             }  
 
             public addHours(value: any, hours: number): any {
@@ -475,7 +475,7 @@ module pip.datetime {
 					return '';
 				}
 
-                return date.add(hours, 'hours');
+                return date.add(hours, 'hours').toDate();
             }  
 
             public toStartDay(value: any): any {

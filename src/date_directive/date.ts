@@ -24,7 +24,7 @@
 
     // Todo: Remove dependency on Translate. Use moment localization
     thisModule.controller('pipDateController',
-        function ($scope, $element) { //pipTranslate
+        function ($scope, $element, $injector) { //pipTranslate
             var value,
                 localeDate = moment.localeData(),
                 momentMonths = angular.isArray(localeDate._months) ? localeDate._months : localeDate._months.format,
@@ -32,11 +32,28 @@
                 momentShortDays = localeDate._weekdaysMin,
                 momentFirstDayOfWeek = localeDate._week.dow;
 
+            var pipTranslate = $injector.has('pipTranslate') ? $injector.get('pipTranslate') : null;
 
-console.log('months', momentMonths);
-console.log('days', momentDays);
-console.log('shortDays', momentShortDays);
-console.log('firstDayOfWeek', momentFirstDayOfWeek);
+            if (pipTranslate) {
+                pipTranslate.translations('en', {
+                    DAY: 'Day',
+                    MONTH: 'Month',
+                    YEAR: 'Year'
+                });
+                pipTranslate.translations('ru', {
+                    DAY: 'День',
+                    MONTH: 'Месяц',
+                    YEAR: 'Год'                    
+                });
+                $scope.dayLabel = pipTranslate.translate('DAY');
+                $scope.monthLabel = pipTranslate.translate('MONTH');
+                $scope.yearLabel = pipTranslate.translate('YEAR');
+            } else {
+                $scope.dayLabel = 'Day';
+                $scope.monthLabel = 'Month';                
+                $scope.yearLabel = 'Year';
+
+            }
 
             function dayList(month, year) {
                 var count = 31, days = [], i;
@@ -68,7 +85,7 @@ console.log('firstDayOfWeek', momentFirstDayOfWeek);
                         name: momentMonths[i-1]
                     });
                 }
-console.log('monthList', months);
+
                 return months;
             }
 
@@ -151,9 +168,7 @@ console.log('monthList', months);
             $scope.month = value ? value.getMonth() + 1 : null;
             $scope.year = value ? value.getFullYear() : null;
 
-            $scope.dayLabel = 'day'; //pipTranslate.translate('DAY');
-            $scope.monthLabel = 'month'; //pipTranslate.translate('MONTH');
-            $scope.yearLabel = 'year'; //pipTranslate.translate('YEAR');
+
 
             $scope.days = dayList($scope.month, $scope.year);
             $scope.months = monthList();

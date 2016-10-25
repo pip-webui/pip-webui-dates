@@ -1,0 +1,61 @@
+// @file CSS styles for time edit controls
+// @copyright Digital Living Software Corp. 2014-2016
+
+.pip-time-range-edit {
+  .pip-datepicker-container {
+    height: 52px;
+    padding-top: 4px;
+    margin-right: 16px!important;
+
+    md-datepicker {
+      background: transparent;
+
+      .md-datepicker-button {
+        display: none;
+      }
+
+      .md-datepicker-input-container {
+        margin-left: 0px!important;
+        width: 100%;
+      }
+    }
+
+    md-datepicker[disabled] {
+      .md-datepicker-input-container {
+        background-image: linear-gradient(to right, rgba(0, 0, 0, .26) 0, rgba(0, 0, 0, .26) 33%, transparent 0);
+        background-image: -ms-linear-gradient(left, transparent 0, rgba(0, 0, 0, .26) 100%);
+        background-position: 0 bottom;
+        background-repeat: repeat-x;
+        background-size: 4px 1px;
+        margin-top: 2px;
+      }
+    }
+  }
+
+  .text-caption {
+    margin-top: 0px!important;
+  }
+
+  .input-container{
+    width: 100%!important;
+    margin-top: 0px!important;
+  }
+
+  md-select {
+    height: 30px;
+    margin-top: 0px!important;
+    margin-bottom: 0px!important;
+  }
+
+  .start-time-container {
+    width: 100%!important;
+    margin-right: 24px;
+
+    @media (min-width: 1200px) {
+      margin-right: 16px;
+    }
+  }
+  .end-time-container {
+    width: 100%!important;
+  }
+}
