@@ -4,7 +4,7 @@
     'use strict';
 
     var content = [
-        // { title: 'Date and time control', state: 'date_time', url: '/date_time', controller: 'DateController', templateUrl: 'date_time/date_time.html' },
+        { title: 'Date and time control', state: 'date_time', url: '/date_time', controller: 'DateController', templateUrl: 'date_time/date_time.html' },
         { title: 'Date Format', state: 'date_format', url: '/date_format', controller: 'DateFormatController', templateUrl: 'format/date_format.html' },
         { title: 'Moment', state: 'moment', url: '/moment', controller: 'MomentExController', templateUrl: 'moment_examples/moment_ex.html' }        
     ];
@@ -23,7 +23,7 @@
 
             'pipDates',
             
-            // 'appDateTimes.Date',
+            'appDateTimes.Date',
             'appDateTimes.DateFormat', 
             'appDateTimes.momentEx'
         ]
@@ -130,9 +130,7 @@
             };
 
             $scope.onThemeClick = function(theme) {
-                console.log('onThemeClick');
                 if ($scope.isTheme) {
-                    console.log('onThemeClick1');
                     setTimeout(function () {
                         pipTheme.use(theme, false, false);
                         $rootScope.$theme = theme;
@@ -147,7 +145,7 @@
 
             function changeLocale(locale) {
                 var localeDate = moment.localeData();
-console.log('moment.localeData();', localeDate);                
+          
                 moment.locale(locale);
                 
                 var localeDate = moment.localeData();
@@ -162,9 +160,7 @@ console.log('moment.localeData();', localeDate);
             }
 
             $scope.onLanguageClick = function(language) {
-                console.log('onLanguageClick');
                 if (pipTranslate) {
-                    console.log('onLanguageClick1', language);
                     setTimeout(function () {
                         // change momentjs local 
                         changeLocale(language);

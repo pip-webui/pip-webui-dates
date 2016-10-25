@@ -1,7 +1,7 @@
 (function (angular) {
     'use strict';
 
-    var thisModule = angular.module('appDateTimes.Date', ['pipDateTimes']);
+    var thisModule = angular.module('appDateTimes.Date', []);
 
     // thisModule.config(function (pipTranslateProvider) {
     //     pipTranslateProvider.translations('en', {
@@ -35,13 +35,44 @@
     // });
 
     thisModule.controller('DateController',
-        function ($scope, $timeout) {
+        function ($scope, $timeout, $injector) {
 
             $timeout(function() {
                 $('pre code').each(function(i, block) {
                     Prism.highlightElement(block);
                 });
             });
+            var pipTranslate = $injector.has('pipTranslate') ? $injector.get('pipTranslate') : null;
+
+            if (pipTranslate) {
+                pipTranslate.translations('en', {
+                    DISABLED: 'Disabled',
+                    DATE: 'Date',
+                    VALUE: 'Value',
+                    SAMPLE: 'Sample',
+                    CODE: 'Code'
+                });
+                pipTranslate.translations('ru', {
+                    DISABLED: 'Отключенный',
+                    DATE: 'Дата',
+                    VALUE: 'Значение',
+                    SAMPLE: 'Пример',
+                    CODE: 'Пример кода'                    
+                });
+                $scope.disabledLabel = pipTranslate.translate('DISABLED');
+                $scope.dateLabel = pipTranslate.translate('DATE');
+                $scope.valueLabel = pipTranslate.translate('VALUE');
+                $scope.sampleLabel = pipTranslate.translate('SAMPLE');
+                $scope.code = pipTranslate.translate('CODE');
+            } else {
+                $scope.disabledLabel = 'Disabled';
+                $scope.dateLabel = 'Date';                
+                $scope.valueLabel = 'Value';                
+                $scope.sampleLabel = 'Sample';
+                $scope.codeLabel = 'Code';
+
+            }
+
 
             $scope.specialDate = '1975-04-08T00:00:00.00';
             $scope.specialDateDisabled = false;

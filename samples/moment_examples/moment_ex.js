@@ -28,11 +28,6 @@
 
 
             $scope.now = $scope.date.toObject();    
-console.log('now', $scope.now);
-
-
-
-
 
         $scope.getDateJSON = getDateJSON;
 
@@ -44,26 +39,6 @@ console.log('now', $scope.now);
         $scope.formatShortMonthDay = formatShortMonthDay;
         $scope.formatDateRange = formatDateRange;
         $scope.formatDateTimeRange = formatDateTimeRange;
-/*
-moment.utc();
-
-// as object
-moment().toObject() 
-// You may also specify a list of locales, and Moment will use the first one it has localizations for.
-moment.locale(['tq', 'fr']);
-// строгий формат
-moment('5917238b-33ff-f849-cd63-80f4c9b37d0c', moment.ISO_8601, true).format()
-
-moment.duration().toJSON();
-
-moment.locale('en'); // set to english
-moment.locale(); // returns 'en'
-moment.locale('fr'); // set to french
-moment.locale(); // returns 'fr'
-//Use this to transform a moment object into a date object:
-moment().toDate();
-
-*/        
 
             var momentRanged = new Array('year','month','week','isoweek', 'day');
 

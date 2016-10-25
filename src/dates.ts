@@ -4,6 +4,7 @@
     'use strict';
 
     angular.module('pipDates', [
+        'pipDate',
         'pipDateTime',
         'pipDates.Translate'
     ]);

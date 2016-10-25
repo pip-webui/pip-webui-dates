@@ -58,3 +58,5 @@ declare module pip.datetime {
     interface IDateTimeProvider extends IDateTimeService, ng.IServiceProvider {
     }
 }
+
+/// <reference path="../../typings/tsd.d.ts" />
