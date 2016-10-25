@@ -8,6 +8,7 @@
         'pipTimeRange',
         'pipDateTime',
         'pipTimeRangeEdit',
+        'pipDateRange',
         'pipDates.Translate'
     ]);
     

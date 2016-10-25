@@ -93,6 +93,18 @@
                 // appThemesDefault = $injector.has('appThemesDefault') ? $injector.get('appThemesDefault') : null,
                 pipTheme = $injector.has('pipTheme') ? $injector.get('pipTheme') : null;
 
+            if (pipTranslate) {
+                pipTranslate.translations('en', {
+                    DATE_TIME: 'Date and time Controls and filters',
+                });
+                pipTranslate.translations('ru', {
+                    DATE_TIME: 'Элементы и фильтры для работы с датой и временем',
+                });
+                $scope.dateTimeLabel = pipTranslate.translate('DATE_TIME');
+            } else {
+                $scope.dateTimeLabel = 'Date and time Controls and filters';
+            }
+
             $scope.isTranslated = !!pipTranslate;
             $scope.isTheme = !!pipTheme;
             $scope.$mdMedia = $mdMedia;

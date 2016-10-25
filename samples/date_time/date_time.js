@@ -49,6 +49,13 @@
                     DISABLED: 'Disabled',
                     DATE: 'Date',
                     VALUE: 'Value',
+                    TIME_EDIT_TIME_VIEW: 'Full date editing and viewing',
+                    DATE_RANGE: 'Date range',
+                    DAILY: 'Daily',
+                    WEEKLY: 'Weekly',
+                    MONTHLY: 'Monthly',
+                    YEARLY: 'Yearly',
+                    NEXT_WEEK: 'Next week',                    
                     SAMPLE: 'Sample',
                     CODE: 'Code'
                 });
@@ -56,6 +63,13 @@
                     DISABLED: 'Отключенный',
                     DATE: 'Дата',
                     VALUE: 'Значение',
+                    TIME_EDIT_TIME_VIEW: 'Изменение и просмотр полной даты',
+                    DATE_RANGE: 'Диапозоны дат',
+                    DAILY: 'Суточный',
+                    WEEKLY: 'Недельный',
+                    MONTHLY: 'Месячный',
+                    YEARLY: 'Годовой',
+                    NEXT_WEEK: 'Следующая неделя',                    
                     SAMPLE: 'Пример',
                     CODE: 'Пример кода'                    
                 });
@@ -64,13 +78,27 @@
                 $scope.valueLabel = pipTranslate.translate('VALUE');
                 $scope.sampleLabel = pipTranslate.translate('SAMPLE');
                 $scope.code = pipTranslate.translate('CODE');
+
+                $scope.teimeEditLabek = pipTranslate.translate('TIME_EDIT_TIME_VIEW');
+                $scope.dateRangeLabel = pipTranslate.translate('DATE_RANGE');
+                $scope.dailyLabel = pipTranslate.translate('DAILY');
+                $scope.weeklyLabel = pipTranslate.translate('WEEKLY');
+                $scope.monthlyLabel = pipTranslate.translate('MONTHLY');
+                $scope.yearlyLabel = pipTranslate.translate('YEARLY');
+                $scope.nextWeekLabel = pipTranslate.translate('NEXT_WEEK');
             } else {
                 $scope.disabledLabel = 'Disabled';
                 $scope.dateLabel = 'Date';                
                 $scope.valueLabel = 'Value';                
                 $scope.sampleLabel = 'Sample';
                 $scope.codeLabel = 'Code';
-
+                $scope.teimeEditLabek = 'Full date editing and viewing';
+                $scope.dateRangeLabel = 'Date range';
+                $scope.dailyLabel = 'Daily';
+                $scope.weeklyLabel = 'Weekly';
+                $scope.monthlyLabel = 'Monthly';
+                $scope.yearlyLabel = 'Yearly';
+                $scope.nextWeekLabel = 'Next week';                
             }
 
 
