@@ -149,22 +149,6 @@ try {
   module = angular.module('pipDates.Templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('time_range_directive/time_range.html',
-    '<p>\n' +
-    '    <span ng-if="data.start != null">{{data.start | formatShortDateTime}}</span>\n' +
-    '    <span  class="separator" ng-if="data.start && data.end"> - </span>\n' +
-    '    <span ng-if="data.end != null">{{data.end | formatShortDateTime}}</span>\n' +
-    '</p>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('pipDates.Templates');
-} catch (e) {
-  module = angular.module('pipDates.Templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('time_range_edit_directive/time_range_edit.html',
     '<!--\n' +
     '@file Time edit control content\n' +
@@ -221,6 +205,22 @@ module.run(['$templateCache', function($templateCache) {
     '    </div>\n' +
     '</div>\n' +
     '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('pipDates.Templates');
+} catch (e) {
+  module = angular.module('pipDates.Templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('time_range_directive/time_range.html',
+    '<p>\n' +
+    '    <span ng-if="data.start != null">{{data.start | formatShortDateTime}}</span>\n' +
+    '    <span  class="separator" ng-if="data.start && data.end"> - </span>\n' +
+    '    <span ng-if="data.end != null">{{data.end | formatShortDateTime}}</span>\n' +
+    '</p>');
 }]);
 })();
 
@@ -1199,6 +1199,7 @@ var pip;
     }]);
 })(window.angular, window._);
 
+/// <reference path="../../typings/tsd.d.ts" />
 (function (angular, _) {
     'use strict';
     var thisModule = angular.module('pipDateRange', ['pipDates.Templates']);
@@ -1555,64 +1556,6 @@ var pip;
 /// <reference path="../../typings/tsd.d.ts" />
 (function (angular, _) {
     'use strict';
-    var thisModule = angular.module('pipTimeRange', []);
-    thisModule.directive('pipTimeRange', function () {
-        return {
-            restrict: 'EA',
-            scope: {
-                pipStartDate: '=',
-                pipEndDate: '='
-            },
-            templateUrl: 'time_range_directive/time_range.html',
-            link: function ($scope, $element, $attrs) {
-                function getDateJSON(value) {
-                    return value ? new Date(value) : null;
-                }
-                function defineStartDate() {
-                    if ($scope.pipStartDate !== null && $scope.pipStartDate !== undefined) {
-                        $scope.data.start = _.isDate($scope.pipStartDate) ? $scope.pipStartDate
-                            : getDateJSON($scope.pipStartDate);
-                    }
-                }
-                function defineEndDate() {
-                    if ($scope.pipEndDate !== null && $scope.pipEndDate !== undefined) {
-                        $scope.data.end = _.isDate($scope.pipEndDate) ? $scope.pipEndDate
-                            : getDateJSON($scope.pipEndDate);
-                    }
-                }
-                function toBoolean(value) {
-                    if (value == null)
-                        return false;
-                    if (!value)
-                        return false;
-                    value = value.toString().toLowerCase();
-                    return value == '1' || value == 'true';
-                }
-                $scope.data = {};
-                $scope.data.start = null;
-                $scope.data.end = null;
-                defineStartDate();
-                defineEndDate();
-                if (toBoolean($attrs.pipRebind)) {
-                    $scope.$watch('pipStartDate', function () {
-                        $scope.data.start = null;
-                        defineStartDate();
-                    });
-                    $scope.$watch('pipEndDate', function () {
-                        $scope.data.end = null;
-                        defineEndDate();
-                    });
-                }
-                // Add class
-                $element.addClass('pip-time-range');
-            }
-        };
-    });
-})(window.angular, window._);
-
-/// <reference path="../../typings/tsd.d.ts" />
-(function (angular, _) {
-    'use strict';
     var thisModule = angular.module('pipTimeRangeEdit', []);
     thisModule.directive('pipTimeRangeEdit', function () {
         return {
@@ -1846,6 +1789,64 @@ var pip;
         // Add class
         $element.addClass('pip-time-range-edit');
     }]);
+})(window.angular, window._);
+
+/// <reference path="../../typings/tsd.d.ts" />
+(function (angular, _) {
+    'use strict';
+    var thisModule = angular.module('pipTimeRange', []);
+    thisModule.directive('pipTimeRange', function () {
+        return {
+            restrict: 'EA',
+            scope: {
+                pipStartDate: '=',
+                pipEndDate: '='
+            },
+            templateUrl: 'time_range_directive/time_range.html',
+            link: function ($scope, $element, $attrs) {
+                function getDateJSON(value) {
+                    return value ? new Date(value) : null;
+                }
+                function defineStartDate() {
+                    if ($scope.pipStartDate !== null && $scope.pipStartDate !== undefined) {
+                        $scope.data.start = _.isDate($scope.pipStartDate) ? $scope.pipStartDate
+                            : getDateJSON($scope.pipStartDate);
+                    }
+                }
+                function defineEndDate() {
+                    if ($scope.pipEndDate !== null && $scope.pipEndDate !== undefined) {
+                        $scope.data.end = _.isDate($scope.pipEndDate) ? $scope.pipEndDate
+                            : getDateJSON($scope.pipEndDate);
+                    }
+                }
+                function toBoolean(value) {
+                    if (value == null)
+                        return false;
+                    if (!value)
+                        return false;
+                    value = value.toString().toLowerCase();
+                    return value == '1' || value == 'true';
+                }
+                $scope.data = {};
+                $scope.data.start = null;
+                $scope.data.end = null;
+                defineStartDate();
+                defineEndDate();
+                if (toBoolean($attrs.pipRebind)) {
+                    $scope.$watch('pipStartDate', function () {
+                        $scope.data.start = null;
+                        defineStartDate();
+                    });
+                    $scope.$watch('pipEndDate', function () {
+                        $scope.data.end = null;
+                        defineEndDate();
+                    });
+                }
+                // Add class
+                $element.addClass('pip-time-range');
+            }
+        };
+    });
 })(window.angular, window._);
 
 
