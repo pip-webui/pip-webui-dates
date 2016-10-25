@@ -40,11 +40,11 @@
             // var pipTranslate = $injector.has('pipTranslate') ? $injector.get('pipTranslate') : null;
 
             // if (pipTranslate) {
-            //     pipTranslate.translations('en', {
+            //     pipTranslate.setTranslations('en', {
             //         EVENT_NEW_START_TIME: 'Start time',
             //         EVENT_NEW_END_TIME: 'End time'
             //     });
-            //     pipTranslate.translations('ru', {
+            //     pipTranslate.setTranslations('ru', {
             //         EVENT_NEW_START_TIME: 'Начало',
             //         EVENT_NEW_END_TIME: 'Конец'                
             //     });

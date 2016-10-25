@@ -92,10 +92,10 @@
                 pipTheme = $injector.has('pipTheme') ? $injector.get('pipTheme') : null;
 
             if (pipTranslate) {
-                pipTranslate.translations('en', {
+                pipTranslate.setTranslations('en', {
                     DATE_TIME: 'Date and time Controls and filters',
                 });
-                pipTranslate.translations('ru', {
+                pipTranslate.setTranslations('ru', {
                     DATE_TIME: 'Элементы и фильтры для работы с датой и временем',
                 });
                 $scope.dateTimeLabel = pipTranslate.translate('DATE_TIME');
@@ -170,7 +170,7 @@
             }
 
             $scope.onLanguageClick = function(language) {
-                if (pipTranslate) {
+                if ($scope.isTranslated) {
                     setTimeout(function () {
                         // change momentjs local 
                         changeLocale(language);

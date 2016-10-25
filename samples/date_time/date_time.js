@@ -45,7 +45,7 @@
             var pipTranslate = $injector.has('pipTranslate') ? $injector.get('pipTranslate') : null;
 
             if (pipTranslate) {
-                pipTranslate.translations('en', {
+                pipTranslate.setTranslations('en', {
                     DISABLED: 'Disabled',
                     DATE: 'Date',
                     VALUE: 'Value',
@@ -59,7 +59,7 @@
                     SAMPLE: 'Sample',
                     CODE: 'Code'
                 });
-                pipTranslate.translations('ru', {
+                pipTranslate.setTranslations('ru', {
                     DISABLED: 'Отключенный',
                     DATE: 'Дата',
                     VALUE: 'Значение',

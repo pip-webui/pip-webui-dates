@@ -35,12 +35,12 @@
             var pipTranslate = $injector.has('pipTranslate') ? $injector.get('pipTranslate') : null;
 
             if (pipTranslate) {
-                pipTranslate.translations('en', {
+                pipTranslate.setTranslations('en', {
                     DAY: 'Day',
                     MONTH: 'Month',
                     YEAR: 'Year'
                 });
-                pipTranslate.translations('ru', {
+                pipTranslate.setTranslations('ru', {
                     DAY: 'День',
                     MONTH: 'Месяц',
                     YEAR: 'Год'                    
