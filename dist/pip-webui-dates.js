@@ -21,7 +21,6 @@
 
 })();
 
-/// <reference path="../typings/tsd.d.ts" />
 (function () {
     'use strict';
     angular.module('pipDates', [
@@ -30,7 +29,6 @@
     ]);
 })();
 
-/// <reference path="../../typings/tsd.d.ts" />
 var pip;
 (function (pip) {
     var datetime;
@@ -42,7 +40,6 @@ var pip;
     })(datetime = pip.datetime || (pip.datetime = {}));
 })(pip || (pip = {}));
 
-/// <reference path="../../typings/tsd.d.ts" />
 var pip;
 (function (pip) {
     var datetime;
@@ -52,7 +49,7 @@ var pip;
         function formatDateFilter(pipDateTime) {
             "ngInject";
             return function (value) {
-                return pipDateTime.formatShortDate(value) || value;
+                return pipDateTime.formatDate(value) || value;
             };
         }
         angular
@@ -61,7 +58,6 @@ var pip;
     })(datetime = pip.datetime || (pip.datetime = {}));
 })(pip || (pip = {}));
 
-/// <reference path="../../typings/tsd.d.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -172,7 +168,6 @@ var pip;
                     ;
                 }
                 if (dateStart.isAfter(dateEnd)) {
-                    // todo localization
                     throw new Error('Date range error. Start date is more than end date.');
                 }
                 if (dateStart.year() == dateEnd.year()) {
@@ -219,13 +214,9 @@ var pip;
                 return date.startOf(range);
             };
             ;
-            // formating functions 
-            // -------------------
-            // todo Optional
             DateTime.prototype.formatTime = function (value, format) {
                 return this.formatDateTime(value, 'LLL');
             };
-            // todo Optional
             DateTime.prototype.formatDateOptional = function (value, format) {
                 return this.formatDateTime(value, 'L');
             };
@@ -268,13 +259,9 @@ var pip;
             DateTime.prototype.formatLongDayOfWeek = function (value) {
                 return this.formatDateTime(value, 'dddd');
             };
-            // numeric month writing formats
-            // --------------
-            // numeric month writing 
             DateTime.prototype.formatDateNumber = function (value) {
                 return this.formatDateTime(value, 'l');
             };
-            // numeric month writing 
             DateTime.prototype.formatLongDateNumber = function (value) {
                 return this.formatDateTime(value, 'll');
             };
@@ -296,8 +283,6 @@ var pip;
             DateTime.prototype.formatDateTimeRange = function (value1, value2) {
                 return this.formatRange(value1, value2, 'LLL');
             };
-            // iso function
-            // --------------
             DateTime.prototype.formatISOWeek = function (value) {
                 return this.formatDateTime(value, 'WW');
             };
@@ -307,21 +292,15 @@ var pip;
             DateTime.prototype.formatISOWeekOrdinal = function (value) {
                 return this.formatDateTime(value, 'Wo');
             };
-            // special formats 
-            // --------------
-            // year option displays if the current year is not equal to, the date of 
             DateTime.prototype.formatDateY = function (value) {
                 return this.formatDateTimeY(value, 'L');
             };
-            // year option displays if the current year is not equal to, the date of
             DateTime.prototype.formatLongDateY = function (value) {
                 return this.formatDateTimeY(value, 'LL');
             };
-            // todo
             DateTime.prototype.formatMillisecondsToSeconds = function (value) {
                 return '';
             };
-            // todo
             DateTime.prototype.formatElapsedInterval = function (value, start) {
                 var date, nowDate;
                 if (this.isUndefinedOrNull(value)) {
@@ -342,8 +321,6 @@ var pip;
             DateTime.prototype.getDateJSON = function (date) {
                 return JSON.stringify(moment(date));
             };
-            // navigation functions 
-            // ------------------
             DateTime.prototype.getNextStart = function (value, category) {
                 var date, range, result;
                 if (this.isUndefinedOrNull(value)) {
@@ -421,11 +398,9 @@ var pip;
             function DateTimeService(datetime) {
                 this._datetime = datetime;
             }
-            // todo Optional
             DateTimeService.prototype.formatTime = function (value, format) {
                 return this._datetime.formatTime(value, format);
             };
-            // todo Optional
             DateTimeService.prototype.formatDateOptional = function (value, format) {
                 return this._datetime.formatDateOptional(value, format);
             };
@@ -468,13 +443,9 @@ var pip;
             DateTimeService.prototype.formatLongDayOfWeek = function (value) {
                 return this._datetime.formatLongDayOfWeek(value);
             };
-            // numeric month writing formats
-            // --------------
-            // numeric month writing 
             DateTimeService.prototype.formatDateNumber = function (value) {
                 return this._datetime.formatDateNumber(value);
             };
-            // numeric month writing 
             DateTimeService.prototype.formatLongDateNumber = function (value) {
                 return this._datetime.formatLongDateNumber(value);
             };
@@ -496,8 +467,6 @@ var pip;
             DateTimeService.prototype.formatDateTimeRange = function (value1, value2) {
                 return this._datetime.formatDateTimeRange(value1, value2);
             };
-            // iso function
-            // --------------
             DateTimeService.prototype.formatISOWeek = function (value) {
                 return this._datetime.formatISOWeek(value);
             };
@@ -507,29 +476,21 @@ var pip;
             DateTimeService.prototype.formatISOWeekOrdinal = function (value) {
                 return this._datetime.formatISOWeekOrdinal(value);
             };
-            // special formats 
-            // --------------
-            // year option displays if the current year is not equal to, the date of 
             DateTimeService.prototype.formatDateY = function (value) {
                 return this._datetime.formatDateY(value);
             };
-            // year option displays if the current year is not equal to, the date of
             DateTimeService.prototype.formatLongDateY = function (value) {
                 return this._datetime.formatLongDateY(value);
             };
-            // todo
             DateTimeService.prototype.formatMillisecondsToSeconds = function (value) {
                 return this._datetime.formatMillisecondsToSeconds(value);
             };
-            // todo
             DateTimeService.prototype.formatElapsedInterval = function (value, start) {
                 return this._datetime.formatElapsedInterval(value, start);
             };
             DateTimeService.prototype.getDateJSON = function (date) {
                 return this._datetime.getDateJSON(date);
             };
-            // navigation functions 
-            // ------------------
             DateTimeService.prototype.getNextStart = function (value, category) {
                 return this._datetime.getNextStart(value, category);
             };
