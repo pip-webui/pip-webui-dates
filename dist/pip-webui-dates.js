@@ -149,22 +149,6 @@ try {
   module = angular.module('pipDates.Templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('time_range_directive/time_range.html',
-    '<p>\n' +
-    '    <span ng-if="data.start != null">{{data.start | formatShortDateTime}}</span>\n' +
-    '    <span  class="separator" ng-if="data.start && data.end"> - </span>\n' +
-    '    <span ng-if="data.end != null">{{data.end | formatShortDateTime}}</span>\n' +
-    '</p>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('pipDates.Templates');
-} catch (e) {
-  module = angular.module('pipDates.Templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('time_range_edit_directive/time_range_edit.html',
     '<!--\n' +
     '@file Time edit control content\n' +
@@ -224,6 +208,22 @@ module.run(['$templateCache', function($templateCache) {
 }]);
 })();
 
+(function(module) {
+try {
+  module = angular.module('pipDates.Templates');
+} catch (e) {
+  module = angular.module('pipDates.Templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('time_range_directive/time_range.html',
+    '<p>\n' +
+    '    <span ng-if="data.start != null">{{data.start | formatShortDateTime}}</span>\n' +
+    '    <span  class="separator" ng-if="data.start && data.end"> - </span>\n' +
+    '    <span ng-if="data.end != null">{{data.end | formatShortDateTime}}</span>\n' +
+    '</p>');
+}]);
+})();
+
 /**
  * @file Optional filter to translate string resources
  * @copyright Digital Living Software Corp. 2014-2016
@@ -247,6 +247,7 @@ module.run(['$templateCache', function($templateCache) {
 
 })();
 
+/// <reference path="../typings/tsd.d.ts" />
 (function () {
     'use strict';
     angular.module('pipDates', [
@@ -259,6 +260,7 @@ module.run(['$templateCache', function($templateCache) {
     ]);
 })();
 
+/// <reference path="../../typings/tsd.d.ts" />
 var pip;
 (function (pip) {
     var datetime;
@@ -270,6 +272,7 @@ var pip;
     })(datetime = pip.datetime || (pip.datetime = {}));
 })(pip || (pip = {}));
 
+/// <reference path="../../typings/tsd.d.ts" />
 var pip;
 (function (pip) {
     var datetime;
@@ -527,6 +530,7 @@ var pip;
     })(datetime = pip.datetime || (pip.datetime = {}));
 })(pip || (pip = {}));
 
+/// <reference path="../../typings/tsd.d.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -637,6 +641,7 @@ var pip;
                     ;
                 }
                 if (dateStart.isAfter(dateEnd)) {
+                    // todo localization
                     throw new Error('Date range error. Start date is more than end date.');
                 }
                 if (dateStart.year() == dateEnd.year()) {
@@ -683,9 +688,13 @@ var pip;
                 return date.startOf(range).toDate();
             };
             ;
+            // formating functions 
+            // -------------------
+            // todo Optional
             DateTime.prototype.formatTime = function (value, format) {
                 return this.formatDateTime(value, 'LLL');
             };
+            // todo Optional
             DateTime.prototype.formatDateOptional = function (value, format) {
                 return this.formatDateTime(value, 'L');
             };
@@ -728,9 +737,13 @@ var pip;
             DateTime.prototype.formatLongDayOfWeek = function (value) {
                 return this.formatDateTime(value, 'dddd');
             };
+            // numeric month writing formats
+            // --------------
+            // numeric month writing 
             DateTime.prototype.formatDateNumber = function (value) {
                 return this.formatDateTime(value, 'l');
             };
+            // numeric month writing 
             DateTime.prototype.formatLongDateNumber = function (value) {
                 return this.formatDateTime(value, 'll');
             };
@@ -752,6 +765,8 @@ var pip;
             DateTime.prototype.formatDateTimeRange = function (value1, value2) {
                 return this.formatRange(value1, value2, 'LLL');
             };
+            // iso function
+            // --------------
             DateTime.prototype.formatISOWeek = function (value) {
                 return this.formatDateTime(value, 'WW');
             };
@@ -761,15 +776,21 @@ var pip;
             DateTime.prototype.formatISOWeekOrdinal = function (value) {
                 return this.formatDateTime(value, 'Wo');
             };
+            // special formats 
+            // --------------
+            // year option displays if the current year is not equal to, the date of 
             DateTime.prototype.formatDateY = function (value) {
                 return this.formatDateTimeY(value, 'L');
             };
+            // year option displays if the current year is not equal to, the date of
             DateTime.prototype.formatLongDateY = function (value) {
                 return this.formatDateTimeY(value, 'LL');
             };
+            // todo
             DateTime.prototype.formatMillisecondsToSeconds = function (value) {
                 return '';
             };
+            // todo
             DateTime.prototype.formatElapsedInterval = function (value, start) {
                 var date, nowDate;
                 if (this.isUndefinedOrNull(value)) {
@@ -790,6 +811,8 @@ var pip;
             DateTime.prototype.getDateJSON = function (date) {
                 return JSON.stringify(moment(date));
             };
+            // navigation functions 
+            // ------------------
             DateTime.prototype.getNextStart = function (value, category) {
                 var date, range, result;
                 if (this.isUndefinedOrNull(value)) {
@@ -867,9 +890,11 @@ var pip;
             function DateTimeService(datetime) {
                 this._datetime = datetime;
             }
+            // todo Optional
             DateTimeService.prototype.formatTime = function (value, format) {
                 return this._datetime.formatTime(value, format);
             };
+            // todo Optional
             DateTimeService.prototype.formatDateOptional = function (value, format) {
                 return this._datetime.formatDateOptional(value, format);
             };
@@ -912,9 +937,13 @@ var pip;
             DateTimeService.prototype.formatLongDayOfWeek = function (value) {
                 return this._datetime.formatLongDayOfWeek(value);
             };
+            // numeric month writing formats
+            // --------------
+            // numeric month writing 
             DateTimeService.prototype.formatDateNumber = function (value) {
                 return this._datetime.formatDateNumber(value);
             };
+            // numeric month writing 
             DateTimeService.prototype.formatLongDateNumber = function (value) {
                 return this._datetime.formatLongDateNumber(value);
             };
@@ -936,6 +965,8 @@ var pip;
             DateTimeService.prototype.formatDateTimeRange = function (value1, value2) {
                 return this._datetime.formatDateTimeRange(value1, value2);
             };
+            // iso function
+            // --------------
             DateTimeService.prototype.formatISOWeek = function (value) {
                 return this._datetime.formatISOWeek(value);
             };
@@ -945,21 +976,29 @@ var pip;
             DateTimeService.prototype.formatISOWeekOrdinal = function (value) {
                 return this._datetime.formatISOWeekOrdinal(value);
             };
+            // special formats 
+            // --------------
+            // year option displays if the current year is not equal to, the date of 
             DateTimeService.prototype.formatDateY = function (value) {
                 return this._datetime.formatDateY(value);
             };
+            // year option displays if the current year is not equal to, the date of
             DateTimeService.prototype.formatLongDateY = function (value) {
                 return this._datetime.formatLongDateY(value);
             };
+            // todo
             DateTimeService.prototype.formatMillisecondsToSeconds = function (value) {
                 return this._datetime.formatMillisecondsToSeconds(value);
             };
+            // todo
             DateTimeService.prototype.formatElapsedInterval = function (value, start) {
                 return this._datetime.formatElapsedInterval(value, start);
             };
             DateTimeService.prototype.getDateJSON = function (date) {
                 return this._datetime.getDateJSON(date);
             };
+            // navigation functions 
+            // ------------------
             DateTimeService.prototype.getNextStart = function (value, category) {
                 return this._datetime.getNextStart(value, category);
             };
@@ -1017,6 +1056,7 @@ var pip;
     })(datetime = pip.datetime || (pip.datetime = {}));
 })(pip || (pip = {}));
 
+/// <reference path="../../typings/tsd.d.ts" />
 (function (angular, _) {
     'use strict';
     var thisModule = angular.module('pipDate', ['pipDates.Templates']);
@@ -1034,6 +1074,7 @@ var pip;
             controller: 'pipDateController'
         };
     });
+    // Todo: Remove dependency on Translate. Use moment localization
     thisModule.controller('pipDateController', ['$scope', '$element', '$injector', function ($scope, $element, $injector) {
         var value, localeDate = moment.localeData(), momentMonths = angular.isArray(localeDate._months) ? localeDate._months : localeDate._months.format, momentDays = angular.isArray(localeDate._weekdays) ? localeDate._weekdays : localeDate._weekdays.format, momentShortDays = localeDate._weekdaysMin, momentFirstDayOfWeek = localeDate._week.dow;
         var pipTranslate = $injector.has('pipTranslate') ? $injector.get('pipTranslate') : null;
@@ -1064,6 +1105,7 @@ var pip;
             }
             else if (month === 2) {
                 if (year) {
+                    // Calculate leap year (primitive)
                     count = year % 4 === 0 ? 29 : 28;
                 }
                 else {
@@ -1110,9 +1152,11 @@ var pip;
         }
         function getValue(v) {
             var value = v ? _.isDate(v) ? v : new Date(v) : null, day = value ? value.getDate() : null, month = value ? value.getMonth() + 1 : null, year = value ? value.getFullYear() : null;
+            // Update day list if month and year were changed
             if ($scope.month !== month && $scope.year !== year) {
                 $scope.days = dayList($scope.month, $scope.year);
             }
+            // Assign values to scope
             $scope.day = day;
             $scope.month = month;
             $scope.year = year;
@@ -1136,6 +1180,7 @@ var pip;
             adjustDay();
             setValue();
         };
+        // Set initial values
         value = $scope.model ? _.isDate($scope.model) ? $scope.model : new Date($scope.model) : null;
         $scope.day = value ? value.getDate() : null;
         $scope.month = value ? value.getMonth() + 1 : null;
@@ -1144,6 +1189,7 @@ var pip;
         $scope.months = monthList();
         $scope.years = yearList();
         $scope.disableControls = $scope.disabled ? $scope.disabled() : false;
+        // React on changes
         $scope.$watch('model', function (newValue) {
             getValue(newValue);
         });
@@ -1153,6 +1199,7 @@ var pip;
     }]);
 })(window.angular, window._);
 
+/// <reference path="../../typings/tsd.d.ts" />
 (function (angular, _) {
     'use strict';
     var thisModule = angular.module('pipDateRange', ['pipDates.Templates']);
@@ -1173,8 +1220,27 @@ var pip;
             controller: 'pipDateRangeController'
         };
     });
+    // Todo: Remove dependency on Translate. Use moment localization
     thisModule.controller('pipDateRangeController', ['$scope', '$element', '$mdMedia', '$rootScope', '$injector', function ($scope, $element, $mdMedia, $rootScope, $injector) {
         var currentDate, currentYear, currentMonth, currentDay, prevState = {}, currentState = {}, localeDate = moment.localeData(), momentMonths = angular.isArray(localeDate._months) ? localeDate._months : localeDate._months.format, momentDays = angular.isArray(localeDate._weekdays) ? localeDate._weekdays : localeDate._weekdays.format, momentShortDays = localeDate._weekdaysMin, momentFirstDayOfWeek = localeDate._week.dow;
+        // var pipTranslate = $injector.has('pipTranslate') ? $injector.get('pipTranslate') : null;
+        // if (pipTranslate) {
+        //     pipTranslate.setTranslations('en', {
+        //         EVENT_NEW_START_TIME: 'Start time',
+        //         EVENT_NEW_END_TIME: 'End time'
+        //     });
+        //     pipTranslate.setTranslations('ru', {
+        //         EVENT_NEW_START_TIME: 'Начало',
+        //         EVENT_NEW_END_TIME: 'Конец'                
+        //     });
+        //     $scope.startLabel = $scope.pipStartLabel ? pipTranslate.translate($scope.pipStartLabel)
+        //             : pipTranslate.translate('EVENT_NEW_START_TIME');
+        //     $scope.endLabel = $scope.pipEndLabel ? pipTranslate.translate($scope.pipEndLabel)
+        //             : pipTranslate.translate('EVENT_NEW_END_TIME');
+        // } else {
+        //     $scope.startLabel = $scope.pipStartLabel ? $scope.pipStartLabel : 'Start time';
+        //     $scope.endLabel = $scope.pipEndLabel ? $scope.pipEndLabel : 'End time';              
+        // }
         currentDate = new Date();
         currentYear = currentDate.getUTCFullYear();
         currentMonth = currentDate.getUTCMonth() + 1;
@@ -1220,6 +1286,7 @@ var pip;
             }
             setValue();
         };
+        // visibility
         $scope.isDay = function () {
             return $scope.pipDateRangeType === 'daily';
         };
@@ -1253,6 +1320,7 @@ var pip;
         }
         function correctWeek() {
             if (!prevState.model || prevState.model && prevState.model.getTime() >= $scope.model.getTime()) {
+                // if shift week -> increase month
                 if ($scope.weeks && $scope.weeks[$scope.week] && $scope.weeks[$scope.week].id <= 0) {
                     if ($scope.month < 12) {
                         $scope.month += 1;
@@ -1282,9 +1350,11 @@ var pip;
             }
             setValue();
         }
+        // Set initial values
         $scope.$mdMedia = $mdMedia;
         init();
         $scope.disableControls = $scope.disabled ? $scope.disabled() : false;
+        // React on changes
         $scope.$watch('model', function (newValue, oldValue) {
             if (newValue !== oldValue) {
                 getValue(newValue);
@@ -1313,6 +1383,7 @@ var pip;
                 $scope.day = currentDay;
             }
         };
+        // ---------------------------------------------------------------------------------------
         function getCountDay(month, year) {
             var count = 31;
             if (month === 4 || month === 6 || month === 9 || month === 11) {
@@ -1320,6 +1391,7 @@ var pip;
             }
             else if (month === 2) {
                 if (year) {
+                    // Calculate leap year (primitive)
                     count = year % 4 === 0 ? 29 : 28;
                 }
                 else {
@@ -1330,6 +1402,7 @@ var pip;
         }
         function dayList(month, year) {
             var count, days, i, ln;
+            //  ln = $rootScope.$language || 'en';
             count = getCountDay(month, year);
             $scope.nameDays = [];
             days = [];
@@ -1359,7 +1432,7 @@ var pip;
         }
         function weekList(month, year) {
             var weeks, countDay, countPrevMonthDay, startWeek;
-            weeks = [];
+            weeks = []; // в массиве первые дни недели в текущем месяце
             countDay = getCountDay(month, year);
             startWeek = getWeekByDate(1, month - 1, year);
             countPrevMonthDay = month - 1 ? getCountDay(month - 1, year) : getCountDay(12, year - 1);
@@ -1443,17 +1516,21 @@ var pip;
         function getValue(v) {
             var value, day, month, year, week;
             value = v ? new Date(v) : null;
+            // Define values
             day = value ? value.getUTCDate() : null;
             month = value ? value.getUTCMonth() + 1 : null;
             year = value ? value.getUTCFullYear() : null;
             week = value ? getWeekByDate(day, month - 1, year) : null;
+            // Exit if nothing to update
             if ($scope.day === day && $scope.month === month && $scope.year === year && $scope.week === week) {
                 return;
             }
+            // Assign values to scope
             $scope.day = day;
             $scope.month = month;
             $scope.year = year;
             $scope.week = week;
+            // Define data sources
             $scope.days = dayList($scope.month, $scope.year);
             $scope.weeks = weekList($scope.month, $scope.year);
         }
@@ -1476,62 +1553,7 @@ var pip;
     }]);
 })(window.angular, window._);
 
-(function (angular, _) {
-    'use strict';
-    var thisModule = angular.module('pipTimeRange', []);
-    thisModule.directive('pipTimeRange', function () {
-        return {
-            restrict: 'EA',
-            scope: {
-                pipStartDate: '=',
-                pipEndDate: '='
-            },
-            templateUrl: 'time_range_directive/time_range.html',
-            link: function ($scope, $element, $attrs) {
-                function getDateJSON(value) {
-                    return value ? new Date(value) : null;
-                }
-                function defineStartDate() {
-                    if ($scope.pipStartDate !== null && $scope.pipStartDate !== undefined) {
-                        $scope.data.start = _.isDate($scope.pipStartDate) ? $scope.pipStartDate
-                            : getDateJSON($scope.pipStartDate);
-                    }
-                }
-                function defineEndDate() {
-                    if ($scope.pipEndDate !== null && $scope.pipEndDate !== undefined) {
-                        $scope.data.end = _.isDate($scope.pipEndDate) ? $scope.pipEndDate
-                            : getDateJSON($scope.pipEndDate);
-                    }
-                }
-                function toBoolean(value) {
-                    if (value == null)
-                        return false;
-                    if (!value)
-                        return false;
-                    value = value.toString().toLowerCase();
-                    return value == '1' || value == 'true';
-                }
-                $scope.data = {};
-                $scope.data.start = null;
-                $scope.data.end = null;
-                defineStartDate();
-                defineEndDate();
-                if (toBoolean($attrs.pipRebind)) {
-                    $scope.$watch('pipStartDate', function () {
-                        $scope.data.start = null;
-                        defineStartDate();
-                    });
-                    $scope.$watch('pipEndDate', function () {
-                        $scope.data.end = null;
-                        defineEndDate();
-                    });
-                }
-                $element.addClass('pip-time-range');
-            }
-        };
-    });
-})(window.angular, window._);
-
+/// <reference path="../../typings/tsd.d.ts" />
 (function (angular, _) {
     'use strict';
     var thisModule = angular.module('pipTimeRangeEdit', []);
@@ -1551,6 +1573,7 @@ var pip;
             controller: 'pipTimeRangeEditController'
         };
     });
+    // Todo: Remove dependency on Translate. Use moment localization
     thisModule.controller('pipTimeRangeEditController', ['$scope', '$element', '$attrs', '$injector', 'pipDateTime', function ($scope, $element, $attrs, $injector, pipDateTime) {
         var pipTranslate = $injector.has('pipTranslate') ? $injector.get('pipTranslate') : null;
         if (pipTranslate) {
@@ -1585,10 +1608,12 @@ var pip;
         }
         function validateStartDate() {
             var date, start, end;
+            // если начальная дата не задана, обнуляем и выходим
             if (!$scope.data.startDate) {
                 $scope.data.startTime = null;
                 return;
             }
+            // еcли не задано начальное время - задаем его
             if (!$scope.data.startTime) {
                 if (!$scope.data.endTime) {
                     date = new Date();
@@ -1599,11 +1624,13 @@ var pip;
                     $scope.data.startTime = $scope.data.endTime === 0 ? 0 : $scope.data.endTime - 30;
                 }
             }
+            // если конечная дата не задана, обнуляем и выходим
             if (!$scope.data.endDate) {
                 $scope.data.endTime = null;
                 return;
             }
             start = new Date($scope.data.startDate.getTime() + $scope.data.startTime * 60 * 1000);
+            // Если есть длительность, то сохраняем ее. Длительность можно изменить только изменяя конечную дату
             if ($scope.data.duration) {
                 end = new Date(start.getTime() + $scope.data.duration);
                 $scope.data.endDate = pipDateTime.toStartDay(end);
@@ -1611,8 +1638,10 @@ var pip;
                 $scope.data.endTime = Math.floor(end / (30 * 60 * 1000)) * 30;
             }
             else {
+                // Если нет длительности сравниваем даты
                 end = new Date($scope.data.endDate.getTime() + $scope.data.endTime * 60 * 1000);
                 if (start >= end) {
+                    // Если начальная дата больше, то двигаем конечную дату
                     $scope.data.endDate = pipDateTime.toStartDay(new Date(start.getTime() + 30 * 60000));
                     $scope.data.endTime = ($scope.data.startTime + 30) % 1440;
                 }
@@ -1620,10 +1649,12 @@ var pip;
         }
         function validateEndDate() {
             var date, start, end;
+            // если начальная дата не задана, обнуляем и выходим
             if (!$scope.data.endDate) {
                 $scope.data.endTime = null;
                 return;
             }
+            // еcли не задано конечное время - задаем его
             if (!$scope.data.endTime) {
                 if (!$scope.data.startTime) {
                     date = new Date();
@@ -1634,6 +1665,7 @@ var pip;
                     $scope.data.endTime = $scope.data.startTime === 1410 ? 1410 : $scope.data.startTime + 30;
                 }
             }
+            // если yачальная дата не задана, обнуляем и выходим
             if (!$scope.data.startDate) {
                 $scope.data.startTime = null;
                 return;
@@ -1641,6 +1673,7 @@ var pip;
             start = new Date($scope.data.startDate.getTime() + $scope.data.startTime * 60 * 1000);
             end = new Date($scope.data.endDate.getTime() + $scope.data.endTime * 60 * 1000);
             if (start >= end) {
+                // Если начальная дата больше, то двигаем начальную дату
                 $scope.data.startDate = pipDateTime.toStartDay(new Date(end.getTime() - 30 * 60000));
                 $scope.data.startTime = $scope.data.endTime % 1440 === 0 ? 1410 : $scope.data.endTime - 30;
             }
@@ -1702,10 +1735,12 @@ var pip;
             $scope.data.endTime = null;
             $scope.data.duration = null;
         }
+        // initialize data
         $scope.intervalTimeCollection = getTimeInterval();
         $scope.data = {};
         initDate();
         defineDate();
+        // process function
         $scope.onChangeStartDate = function () {
             validateStartDate();
             $scope.data.duration = setDuration();
@@ -1751,8 +1786,67 @@ var pip;
         $scope.$watch($scope.disabled, function (newValue) {
             $scope.disableControls = newValue;
         });
+        // Add class
         $element.addClass('pip-time-range-edit');
     }]);
+})(window.angular, window._);
+
+/// <reference path="../../typings/tsd.d.ts" />
+(function (angular, _) {
+    'use strict';
+    var thisModule = angular.module('pipTimeRange', []);
+    thisModule.directive('pipTimeRange', function () {
+        return {
+            restrict: 'EA',
+            scope: {
+                pipStartDate: '=',
+                pipEndDate: '='
+            },
+            templateUrl: 'time_range_directive/time_range.html',
+            link: function ($scope, $element, $attrs) {
+                function getDateJSON(value) {
+                    return value ? new Date(value) : null;
+                }
+                function defineStartDate() {
+                    if ($scope.pipStartDate !== null && $scope.pipStartDate !== undefined) {
+                        $scope.data.start = _.isDate($scope.pipStartDate) ? $scope.pipStartDate
+                            : getDateJSON($scope.pipStartDate);
+                    }
+                }
+                function defineEndDate() {
+                    if ($scope.pipEndDate !== null && $scope.pipEndDate !== undefined) {
+                        $scope.data.end = _.isDate($scope.pipEndDate) ? $scope.pipEndDate
+                            : getDateJSON($scope.pipEndDate);
+                    }
+                }
+                function toBoolean(value) {
+                    if (value == null)
+                        return false;
+                    if (!value)
+                        return false;
+                    value = value.toString().toLowerCase();
+                    return value == '1' || value == 'true';
+                }
+                $scope.data = {};
+                $scope.data.start = null;
+                $scope.data.end = null;
+                defineStartDate();
+                defineEndDate();
+                if (toBoolean($attrs.pipRebind)) {
+                    $scope.$watch('pipStartDate', function () {
+                        $scope.data.start = null;
+                        defineStartDate();
+                    });
+                    $scope.$watch('pipEndDate', function () {
+                        $scope.data.end = null;
+                        defineEndDate();
+                    });
+                }
+                // Add class
+                $element.addClass('pip-time-range');
+            }
+        };
+    });
 })(window.angular, window._);
 
 
