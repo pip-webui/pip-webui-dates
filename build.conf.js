@@ -1,20 +1,22 @@
 module.exports = {
     module: {
         name: 'pipDates',
-        styles: 'dates'
+        styles: 'dates',
+        export: 'pip'
     },
 
     build: {
-        js: true,
-        ts: true,
+        js: false,
+        ts: false,
+        tsd: true,
+        bundle: true,
         html: true,
-        css: true,
+        less: true,
         lib: true,
         images: true,
         dist: false
     },
 
-    
     typescript: {
         noImplicitAny: false,
         declaration: true

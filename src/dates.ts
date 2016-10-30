@@ -1,16 +1,10 @@
-/// <reference path="../typings/tsd.d.ts" />
+'use strict';
 
-(function () {
-    'use strict';
-
-    angular.module('pipDates', [
-        'pipDate',
-        'pipTimeRange',
-        'pipDateTime',
-        'pipTimeRangeEdit',
-        'pipDateRange',
-        'pipDates.Translate'
-    ]);
-    
-})();
-
+angular.module('pipDates', [
+    'pipDate',
+    'pipTimeRange',
+    'pipDateTime',
+    'pipTimeRangeEdit',
+    'pipDateRange',
+    'pipDates.Translate'
+]);

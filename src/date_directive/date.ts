@@ -1,6 +1,6 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
-(function (angular, _) {
+(function () {
     'use strict';
 
     var thisModule = angular.module('pipDate', ['pipDates.Templates']);
@@ -26,7 +26,7 @@
     thisModule.controller('pipDateController',
         function ($scope, $element, $injector) { //pipTranslate
             var value,
-                localeDate = moment.localeData(),
+                localeDate: any = moment.localeData(),
                 momentMonths = angular.isArray(localeDate._months) ? localeDate._months : localeDate._months.format,
                 momentDays = angular.isArray(localeDate._weekdays) ? localeDate._weekdays : localeDate._weekdays.format,
                 momentShortDays = localeDate._weekdaysMin,
@@ -187,5 +187,5 @@
         }
     );
 
-})(window.angular, window._);
+})();
 

@@ -1,6 +1,6 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
-(function (angular, _) {
+(function () {
     'use strict';
 
     var thisModule = angular.module('pipTimeRangeEdit', []);
@@ -180,7 +180,7 @@
                     }
 
                     $scope.data.startDate = pipDateTime.toStartDay(start);
-                    $scope.data.startTime = (new Date(start) - $scope.data.startDate) / (60 * 1000);
+                    $scope.data.startTime = (<any>new Date(start) - $scope.data.startDate) / (60 * 1000);
                 }
 
                 if ($scope.pipEndDate !== null && $scope.pipEndDate !== undefined) {
@@ -191,7 +191,7 @@
                     }
 
                     $scope.data.endDate = pipDateTime.toStartDay(end);
-                    $scope.data.endTime = (new Date(end) - $scope.data.endDate) / (60 * 1000);
+                    $scope.data.endTime = (<any>new Date(end) - $scope.data.endDate) / (60 * 1000);
                 }
 
                 validateStartDate();
@@ -290,4 +290,4 @@
         }
     );
 
-})(window.angular, window._);
+})();

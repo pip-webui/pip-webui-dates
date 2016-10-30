@@ -1,6 +1,6 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
-(function (angular, _) {
+(function () {
     'use strict';
     var thisModule = angular.module('pipDateRange', ['pipDates.Templates']);
 
@@ -30,8 +30,9 @@
                 currentYear,
                 currentMonth,
                 currentDay,
-                prevState = {}, currentState = {},
-                localeDate = moment.localeData(),
+                prevState: any = {}, 
+                currentState: any = {},
+                localeDate: any = moment.localeData(),
                 momentMonths = angular.isArray(localeDate._months) ? localeDate._months : localeDate._months.format,
                 momentDays = angular.isArray(localeDate._weekdays) ? localeDate._weekdays : localeDate._weekdays.format,
                 momentShortDays = localeDate._weekdaysMin,
@@ -140,7 +141,7 @@
                 $scope.days = dayList($scope.month, $scope.year);
                 $scope.weeks = weekList($scope.month, $scope.year);
                 $scope.months = monthList();
-                $scope.shortMonths = monthList(true);
+                $scope.shortMonths = monthList();
                 $scope.years = yearList();
 
             }
@@ -421,4 +422,4 @@
         }
     );
 
-})(window.angular, window._);
+})();

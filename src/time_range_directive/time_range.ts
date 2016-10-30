@@ -1,6 +1,6 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
-(function (angular, _) {
+(function () {
     'use strict';
 
     var thisModule = angular.module('pipTimeRange', []);
@@ -14,7 +14,7 @@
                     pipEndDate: '='
                 },
                 templateUrl: 'time_range_directive/time_range.html',
-                link: function ($scope, $element, $attrs) {
+                link: function ($scope: any, $element, $attrs) {
 
                     function getDateJSON(value) {
                         return value ? new Date(value) : null;
@@ -69,4 +69,4 @@
         }
     );
 
-})(window.angular, window._);
+})();

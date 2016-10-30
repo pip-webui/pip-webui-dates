@@ -1,10 +1,5 @@
-/// <reference path="../../typings/tsd.d.ts" />
+'use strict';
 
-module pip.datetime {
-    'use strict';
-
-    angular.module('pipDateTime', [
-        'pipDateTime.Service', 'pipDateTime.Filter'
-    ]);
-
-}
+angular.module('pipDateTime', [
+    'pipDateTime.Service', 'pipDateTime.Filter'
+]);
