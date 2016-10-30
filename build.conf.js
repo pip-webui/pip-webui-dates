@@ -2,7 +2,8 @@ module.exports = {
     module: {
         name: 'pipDates',
         styles: 'dates',
-        export: 'pip'
+        export: 'pip',
+        standalone: 'pip.dates'
     },
 
     build: {
