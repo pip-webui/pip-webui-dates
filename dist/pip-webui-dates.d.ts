@@ -1,4 +1,4 @@
-declare module pip {
+declare module pip.dates {
 
 
 function formatTimeFilter(pipDateTime: any): (value: any, format: string) => string;
