@@ -29,6 +29,10 @@ function formatShortISOWeekFilter(pipDateTime: any): (value: any) => string;
 function formatISOWeekOrdinalFilter(pipDateTime: any): (value: any) => string;
 function formatDateYFilter(pipDateTime: any): (value: any) => string;
 function formatLongDateYFilter(pipDateTime: any): (value: any) => string;
+function formatTodayDateLongTimeLongFilter(pipDateTime: any): (value: any) => string;
+function formatTodayDateShortTimeLongFilter(pipDateTime: any): (value: any) => string;
+function formatTodayDateLongTimeShortFilter(pipDateTime: any): (value: any) => string;
+function formatTodayDateShortTimeShortFilter(pipDateTime: any): (value: any) => string;
 function formatMillisecondsToSecondsFilter(pipDateTime: any): (value: any) => string;
 function formatElapsedIntervalFilter(pipDateTime: any): (value: any, start: any) => string;
 function getDateJSONFilter(pipDateTime: any): (value: any) => string;
@@ -62,6 +66,10 @@ export interface IDateTimeService {
     formatISOWeekOrdinal(value: any): string;
     formatDateY(value: any): string;
     formatLongDateY(value: any): string;
+    formatTodayDateLongTimeLong(value: any): string;
+    formatTodayDateShortTimeLong(value: any): string;
+    formatTodayDateLongTimeShort(value: any): string;
+    formatTodayDateShortTimeShort(value: any): string;
     formatMillisecondsToSeconds(value: any): string;
     formatElapsedInterval(value: any, start: any): string;
     getDateJSON(date: any): string;
@@ -80,10 +88,6 @@ export interface IDateTimeService {
 }
 export interface IDateTimeProvider extends IDateTimeService, ng.IServiceProvider {
 }
-
-
-
-
 
 
 

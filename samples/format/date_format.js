@@ -55,7 +55,34 @@
 
             // $scope.userAgent = $window.navigator.userAgent;
 
-        }
+            $scope.fewDayAgo = new Date(new Date().getTime() - 6*24*60*60*1000);
+
+            $scope.formatTodayDateTimeLong = function (value) {
+                var date,
+                    nowDate,
+                    formatMoment,
+                    result;
+                
+                // if (this.isUndefinedOrNull(value)) {
+                //     return '';
+                // }
+
+                date = moment(value);
+                if (!date.isValid()) {
+                    return '';
+                }
+
+                nowDate = moment();
+
+                if (nowDate.year() == date.year() && nowDate.month() == date.month() && nowDate.day() == date.day()) {
+                    result = date.format('LTS');
+                } else {
+                    result = date.format('LL') + ' ' + date.format('LTS');
+                }
+
+                return result;
+            }
+        }   
     );
 
 })();

@@ -53,6 +53,46 @@
     </tr>
 </table>
 
+<h2>Date Time formats based on current Day or current Year</h2>
+<table>
+    <tr >
+        <td >Today Date Time Filter <b>formatTodayDateLongTimeLong:</b> September 4 1986 8:30:25 PM or 8:30:25 PM</td>
+    </tr>
+    <tr>
+        <td><b>Now Date:</b> {{ currentTime }} <b> Filter: </b>{{ currentTime | formatTodayDateLongTimeLong }}</td>
+    </tr>
+    <tr>        
+        <td><b>Past Date:</b> {{ fewDayAgo }} <b> Filter: </b>{{ fewDayAgo | formatTodayDateLongTimeLong }}</td>
+    </tr>
+    <tr>
+        <td  style="padding-top: 20px;">Today Date Time Filter <b>formatTodayDateShortTimeLong:</b> Sep 4 1986 8:30:25 PM or 8:30:25 PM</td>
+    </tr>
+    <tr>        
+        <td><b>Now Date:</b> {{ currentTime }} <b> Filter: </b>{{ currentTime | formatTodayDateShortTimeLong }}</td>
+    </tr>
+    <tr>        
+        <td><b>Past Date:</b> {{ fewDayAgo }} <b> Filter: </b>{{ fewDayAgo | formatTodayDateShortTimeLong }}</td>
+    </tr>
+    <tr>
+        <td   style="padding-top: 20px;">Today Date Time Filter <b>formatTodayDateLongTimeShort:</b> September 4 1986 8:30 PM or 8:30 PM</td>
+    </tr>
+    <tr>        
+        <td><b>Now Date:</b> {{ currentTime }} <b> Filter: </b>{{ currentTime | formatTodayDateLongTimeShort }}</td>
+    </tr>
+    <tr>        
+        <td><b>Past Date:</b> {{ fewDayAgo }} <b> Filter: </b>{{ fewDayAgo | formatTodayDateLongTimeShort }}</td>
+    </tr>
+    <tr>
+        <td  style="padding-top: 20px;">Today Date Time Filter <b>formatTodayDateShortTimeShort:</b> Sep 4 1986 8:30 PM or 8:30 PM</td>
+    </tr>
+    <tr>        
+        <td><b>Now Date:</b> {{ currentTime }} <b> Filter: </b>{{ currentTime | formatTodayDateShortTimeShort }}</td>
+    </tr>
+    <tr>        
+        <td><b>Past Date:</b> {{ fewDayAgo }} <b> Filter: </b>{{ fewDayAgo | formatTodayDateShortTimeShort }}</td>
+    </tr>             
+</table>
+
 <h2>Date range</h2>
 <table>
     <tr>

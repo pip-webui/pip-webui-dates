@@ -224,6 +224,38 @@ function formatLongDateYFilter(pipDateTime: any) {
     }
 }
 
+function formatTodayDateLongTimeLongFilter(pipDateTime: any) {
+    "ngInject";  
+
+    return function (value: any): string {
+        return pipDateTime.formatTodayDateLongTimeLong(value);
+    }
+}
+
+function formatTodayDateShortTimeLongFilter(pipDateTime: any) {
+    "ngInject";  
+
+    return function (value: any): string {
+        return pipDateTime.formatTodayDateShortTimeLong(value);
+    }
+}
+
+function formatTodayDateLongTimeShortFilter(pipDateTime: any) {
+    "ngInject";  
+
+    return function (value: any): string {
+        return pipDateTime.formatTodayDateLongTimeShort(value);
+    }
+}
+
+function formatTodayDateShortTimeShortFilter(pipDateTime: any) {
+    "ngInject";  
+
+    return function (value: any): string {
+        return pipDateTime.formatTodayDateShortTimeShort(value);
+    }
+}
+
 function formatMillisecondsToSecondsFilter(pipDateTime: any) {
     "ngInject";  
 
@@ -278,5 +310,9 @@ angular
     .filter('formatISOWeekOrdinal', formatISOWeekOrdinalFilter)
     .filter('formatDateY', formatDateYFilter)
     .filter('formatLongDateY', formatLongDateYFilter)
+    .filter('formatTodayDateLongTimeLong', formatTodayDateLongTimeLongFilter)
+    .filter('formatTodayDateShortTimeLong', formatTodayDateShortTimeLongFilter)
+    .filter('formatTodayDateLongTimeShort', formatTodayDateLongTimeShortFilter)
+    .filter('formatTodayDateShortTimeShort', formatTodayDateShortTimeShortFilter)
     .filter('formatMillisecondsToSeconds', formatMillisecondsToSecondsFilter)
     .filter('formatElapsedInterval', formatElapsedIntervalFilter);

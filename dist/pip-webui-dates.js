@@ -33,6 +33,10 @@ formatShortISOWeekFilter.$inject = ['pipDateTime'];
 formatISOWeekOrdinalFilter.$inject = ['pipDateTime'];
 formatDateYFilter.$inject = ['pipDateTime'];
 formatLongDateYFilter.$inject = ['pipDateTime'];
+formatTodayDateLongTimeLongFilter.$inject = ['pipDateTime'];
+formatTodayDateShortTimeLongFilter.$inject = ['pipDateTime'];
+formatTodayDateLongTimeShortFilter.$inject = ['pipDateTime'];
+formatTodayDateShortTimeShortFilter.$inject = ['pipDateTime'];
 formatMillisecondsToSecondsFilter.$inject = ['pipDateTime'];
 formatElapsedIntervalFilter.$inject = ['pipDateTime'];
 getDateJSONFilter.$inject = ['pipDateTime'];
@@ -204,6 +208,30 @@ function formatLongDateYFilter(pipDateTime) {
         return pipDateTime.formatLongDateY(value);
     };
 }
+function formatTodayDateLongTimeLongFilter(pipDateTime) {
+    "ngInject";
+    return function (value) {
+        return pipDateTime.formatTodayDateLongTimeLong(value);
+    };
+}
+function formatTodayDateShortTimeLongFilter(pipDateTime) {
+    "ngInject";
+    return function (value) {
+        return pipDateTime.formatTodayDateShortTimeLong(value);
+    };
+}
+function formatTodayDateLongTimeShortFilter(pipDateTime) {
+    "ngInject";
+    return function (value) {
+        return pipDateTime.formatTodayDateLongTimeShort(value);
+    };
+}
+function formatTodayDateShortTimeShortFilter(pipDateTime) {
+    "ngInject";
+    return function (value) {
+        return pipDateTime.formatTodayDateShortTimeShort(value);
+    };
+}
 function formatMillisecondsToSecondsFilter(pipDateTime) {
     "ngInject";
     return function (value) {
@@ -252,6 +280,10 @@ angular
     .filter('formatISOWeekOrdinal', formatISOWeekOrdinalFilter)
     .filter('formatDateY', formatDateYFilter)
     .filter('formatLongDateY', formatLongDateYFilter)
+    .filter('formatTodayDateLongTimeLong', formatTodayDateLongTimeLongFilter)
+    .filter('formatTodayDateShortTimeLong', formatTodayDateShortTimeLongFilter)
+    .filter('formatTodayDateLongTimeShort', formatTodayDateLongTimeShortFilter)
+    .filter('formatTodayDateShortTimeShort', formatTodayDateShortTimeShortFilter)
     .filter('formatMillisecondsToSeconds', formatMillisecondsToSecondsFilter)
     .filter('formatElapsedInterval', formatElapsedIntervalFilter);
 },{}],3:[function(require,module,exports){
@@ -406,6 +438,24 @@ var DateTime = (function () {
         }
         return date.startOf(range).toDate();
     };
+    DateTime.prototype.toTodayDate = function (value, formatDate, formatTime) {
+        var date, result, nowDate;
+        if (this.isUndefinedOrNull(value)) {
+            return '';
+        }
+        date = moment(value);
+        if (!date.isValid()) {
+            return '';
+        }
+        nowDate = moment();
+        if (nowDate.year() == date.year() && nowDate.month() == date.month() && nowDate.day() == date.day()) {
+            result = date.format(formatTime);
+        }
+        else {
+            result = date.format(formatDate) + ' ' + date.format(formatTime);
+        }
+        return result;
+    };
     ;
     DateTime.prototype.formatTime = function (value, format) {
         return this.formatDateTime(value, 'LLL');
@@ -490,6 +540,18 @@ var DateTime = (function () {
     };
     DateTime.prototype.formatLongDateY = function (value) {
         return this.formatDateTimeY(value, 'LL');
+    };
+    DateTime.prototype.formatTodayDateLongTimeLong = function (value) {
+        return this.toTodayDate(value, 'LL', 'LTS');
+    };
+    DateTime.prototype.formatTodayDateShortTimeLong = function (value) {
+        return this.toTodayDate(value, 'LL', 'LTS');
+    };
+    DateTime.prototype.formatTodayDateLongTimeShort = function (value) {
+        return this.toTodayDate(value, 'LL', 'LT');
+    };
+    DateTime.prototype.formatTodayDateShortTimeShort = function (value) {
+        return this.toTodayDate(value, 'll', 'LT');
     };
     DateTime.prototype.formatMillisecondsToSeconds = function (value) {
         return '';
@@ -674,6 +736,18 @@ var DateTimeService = (function () {
     };
     DateTimeService.prototype.formatLongDateY = function (value) {
         return this._datetime.formatLongDateY(value);
+    };
+    DateTimeService.prototype.formatTodayDateLongTimeLong = function (value) {
+        return this._datetime.formatTodayDateLongTimeLong(value);
+    };
+    DateTimeService.prototype.formatTodayDateShortTimeLong = function (value) {
+        return this._datetime.formatTodayDateShortTimeLong(value);
+    };
+    DateTimeService.prototype.formatTodayDateLongTimeShort = function (value) {
+        return this._datetime.formatTodayDateLongTimeShort(value);
+    };
+    DateTimeService.prototype.formatTodayDateShortTimeShort = function (value) {
+        return this._datetime.formatTodayDateShortTimeShort(value);
     };
     DateTimeService.prototype.formatMillisecondsToSeconds = function (value) {
         return this._datetime.formatMillisecondsToSeconds(value);
@@ -1519,34 +1593,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('date_directive/date.html',
-    '<!--\n' +
-    '@file Date control content\n' +
-    '@copyright Digital Living Software Corp. 2014-2016\n' +
-    '-->\n' +
-    '\n' +
-    '<div class="pip-date layout-row flex" tabindex="-1">\n' +
-    '	<md-input-container class="input-container flex">\n' +
-    '		<md-select class="pip-date-day flex" ng-disabled="disableControls"\n' +
-    '				   ng-model="day" placeholder="{{dayLabel}}" ng-change="onDayChanged()">\n' +
-    '			<md-option ng-value="opt" ng-repeat="opt in days track by opt">{{:: opt }}</md-option>\n' +
-    '		</md-select>\n' +
-    '	</md-input-container>\n' +
-    '	<div class="input-container-separator flex-fixed"></div>\n' +
-    '	<md-input-container class="input-container flex">\n' +
-    '		<md-select class="pip-date-monthflex" ng-disabled="disableControls"\n' +
-    '				   ng-model="month" placeholder="{{monthLabel}}" ng-change="onMonthChanged()">\n' +
-    '			<md-option ng-value="opt.id" ng-repeat="opt in months track by opt.id">{{:: opt.name }}</md-option>\n' +
-    '		</md-select>\n' +
-    '	</md-input-container>\n' +
-    '	<div class="input-container-separator flex-fixed"></div>\n' +
-    '	<md-input-container class="input-container flex">\n' +
-    '		<md-select class="pip-date-year flex" ng-disabled="disableControls"\n' +
-    '				   ng-model="year" placeholder="{{yearLabel}}" ng-change="onYearChanged()">\n' +
-    '			<md-option ng-value="opt" ng-repeat="opt in years track by opt">{{:: opt }}</md-option>\n' +
-    '		</md-select>\n' +
-    '	</md-input-container>\n' +
-    '</div>\n' +
-    '					');
+    '<div class="pip-date layout-row flex" tabindex="-1"><md-input-container class="input-container flex"><md-select class="pip-date-day flex" ng-disabled="disableControls" ng-model="day" placeholder="{{dayLabel}}" ng-change="onDayChanged()"><md-option ng-value="opt" ng-repeat="opt in days track by opt">{{:: opt }}</md-option></md-select></md-input-container><div class="input-container-separator flex-fixed"></div><md-input-container class="input-container flex"><md-select class="pip-date-monthflex" ng-disabled="disableControls" ng-model="month" placeholder="{{monthLabel}}" ng-change="onMonthChanged()"><md-option ng-value="opt.id" ng-repeat="opt in months track by opt.id">{{:: opt.name }}</md-option></md-select></md-input-container><div class="input-container-separator flex-fixed"></div><md-input-container class="input-container flex"><md-select class="pip-date-year flex" ng-disabled="disableControls" ng-model="year" placeholder="{{yearLabel}}" ng-change="onYearChanged()"><md-option ng-value="opt" ng-repeat="opt in years track by opt">{{:: opt }}</md-option></md-select></md-input-container></div>');
 }]);
 })();
 
@@ -1558,100 +1605,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('date_range_directive/date_range.html',
-    '<!--\n' +
-    '@file Date range control content\n' +
-    '@copyright Digital Living Software Corp. 2014-2016\n' +
-    '-->\n' +
-    '\n' +
-    '<div class="pip-date-range layout-row flex" tabindex="-1">\n' +
-    '    <md-input-container ng-show="isDay()" class="input-container pip-day flex"\n' +
-    '            ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}">\n' +
-    '        <md-select class="select-day"\n' +
-    '                   ng-class="{\'pip-no-line\' : pipNoLine}"\n' +
-    '                   ng-disable="{{disableControls}}"\n' +
-    '                   md-on-open="onDayClick()"\n' +
-    '                   ng-model="day"\n' +
-    '                   ng-change="onDayChanged()"\n' +
-    '                   placeholder="{{dayLabel}}"\n' +
-    '                   aria-label="DAY">\n' +
-    '\n' +
-    '            <md-option ng-value="opt" ng-repeat="opt in days track by opt ">\n' +
-    '               {{nameDays[$index]}} {{ opt }}\n' +
-    '            </md-option>\n' +
-    '        </md-select>\n' +
-    '    </md-input-container>\n' +
-    '    <md-input-container ng-show="isWeek()" class="input-container flex"\n' +
-    '                        ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}">\n' +
-    '        <md-select class="select-week"\n' +
-    '                   ng-class="{\'pip-no-line\' : pipNoLine}"\n' +
-    '                   ng-disable="{{disableControls}}"\n' +
-    '                   ng-model="week"\n' +
-    '                   ng-change="onWeekChange()"\n' +
-    '                   placeholder="{{weekLabel}}"\n' +
-    '                   aria-label="WEEK">\n' +
-    '\n' +
-    '            <md-option ng-value="opt.id" ng-repeat="opt in weeks track by opt.id">\n' +
-    '                {{ opt.name }}\n' +
-    '            </md-option>\n' +
-    '        </md-select>\n' +
-    '    </md-input-container >\n' +
-    '    <div class="flex-fixed"\n' +
-    '         ng-class="{\'space16\': $mdMedia(\'gt-xs\'), \'space8\':  $mdMedia(\'xs\')}"\n' +
-    '         ng-show="isDay() || isWeek()">\n' +
-    '    </div>\n' +
-    '    <md-input-container ng-show="isMonth() && !monthFormatShort " class="input-container flex"\n' +
-    '                        ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}">\n' +
-    '        <md-select class="select-month"\n' +
-    '                   ng-class="{\'pip-no-line\' : pipNoLine}"\n' +
-    '                   ng-disable="{{disableControls}}"\n' +
-    '                   md-on-open="onMonthClick()"\n' +
-    '                   ng-model="month"\n' +
-    '                   ng-change="onMonthChanged()"\n' +
-    '                   placeholder="{{monthLabel}}"\n' +
-    '                   aria-label="MONTH">\n' +
-    '\n' +
-    '            <md-option ng-value="opt.id" ng-repeat="opt in months track by opt.id">\n' +
-    '                {{ opt.name }}\n' +
-    '            </md-option>\n' +
-    '        </md-select>\n' +
-    '    </md-input-container>\n' +
-    '    <md-input-container ng-show="isMonth() && monthFormatShort" class="flex input-container"\n' +
-    '                        ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}">\n' +
-    '        <md-select class="select-month"\n' +
-    '                   ng-class="{\'pip-no-line\' : pipNoLine}"\n' +
-    '                   ng-disable="{{disableControls}}"\n' +
-    '                   md-on-open="onMonthClick()"\n' +
-    '                   ng-model="month"\n' +
-    '                   ng-change="onMonthChanged()"\n' +
-    '                   placeholder="{{monthLabel}}"\n' +
-    '                   aria-label="MONTH">\n' +
-    '\n' +
-    '            <md-option ng-value="opt.id" ng-repeat="opt in shortMonths track by opt.id">\n' +
-    '                {{ opt.name }}\n' +
-    '            </md-option>\n' +
-    '        </md-select>\n' +
-    '    </md-input-container>\n' +
-    '    <div class="flex-fixed"\n' +
-    '         ng-class="{\'space16\': $mdMedia(\'gt-xs\'), \'space8\':  $mdMedia(\'xs\')}"\n' +
-    '         ng-show="isMonth()">\n' +
-    '    </div>\n' +
-    '    <md-input-container class="input-container flex"\n' +
-    '                        ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}">\n' +
-    '        <md-select class="select-year"\n' +
-    '                   ng-class="{\'pip-no-line\' : pipNoLine}"\n' +
-    '                   ng-disable="{{disableControls}}"\n' +
-    '                   md-on-open="onYearClick()"\n' +
-    '                   ng-model="year"\n' +
-    '                   ng-change="onYearChanged()"\n' +
-    '                   placeholder="{{yearLabel}}"\n' +
-    '                   aria-label="YEAR">\n' +
-    '\n' +
-    '            <md-option ng-value="opt" ng-repeat="opt in years track by opt">\n' +
-    '                {{ opt }}\n' +
-    '            </md-option>\n' +
-    '        </md-select>\n' +
-    '    </md-input-container>\n' +
-    '</div>');
+    '<div class="pip-date-range layout-row flex" tabindex="-1"><md-input-container ng-show="isDay()" class="input-container pip-day flex" ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}"><md-select class="select-day" ng-class="{\'pip-no-line\' : pipNoLine}" ng-disable="{{disableControls}}" md-on-open="onDayClick()" ng-model="day" ng-change="onDayChanged()" placeholder="{{dayLabel}}" aria-label="DAY"><md-option ng-value="opt" ng-repeat="opt in days track by opt">{{nameDays[$index]}} {{ opt }}</md-option></md-select></md-input-container><md-input-container ng-show="isWeek()" class="input-container flex" ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}"><md-select class="select-week" ng-class="{\'pip-no-line\' : pipNoLine}" ng-disable="{{disableControls}}" ng-model="week" ng-change="onWeekChange()" placeholder="{{weekLabel}}" aria-label="WEEK"><md-option ng-value="opt.id" ng-repeat="opt in weeks track by opt.id">{{ opt.name }}</md-option></md-select></md-input-container><div class="flex-fixed" ng-class="{\'space16\': $mdMedia(\'gt-xs\'), \'space8\': $mdMedia(\'xs\')}" ng-show="isDay() || isWeek()"></div><md-input-container ng-show="isMonth() && !monthFormatShort" class="input-container flex" ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}"><md-select class="select-month" ng-class="{\'pip-no-line\' : pipNoLine}" ng-disable="{{disableControls}}" md-on-open="onMonthClick()" ng-model="month" ng-change="onMonthChanged()" placeholder="{{monthLabel}}" aria-label="MONTH"><md-option ng-value="opt.id" ng-repeat="opt in months track by opt.id">{{ opt.name }}</md-option></md-select></md-input-container><md-input-container ng-show="isMonth() && monthFormatShort" class="flex input-container" ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}"><md-select class="select-month" ng-class="{\'pip-no-line\' : pipNoLine}" ng-disable="{{disableControls}}" md-on-open="onMonthClick()" ng-model="month" ng-change="onMonthChanged()" placeholder="{{monthLabel}}" aria-label="MONTH"><md-option ng-value="opt.id" ng-repeat="opt in shortMonths track by opt.id">{{ opt.name }}</md-option></md-select></md-input-container><div class="flex-fixed" ng-class="{\'space16\': $mdMedia(\'gt-xs\'), \'space8\': $mdMedia(\'xs\')}" ng-show="isMonth()"></div><md-input-container class="input-container flex" ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}"><md-select class="select-year" ng-class="{\'pip-no-line\' : pipNoLine}" ng-disable="{{disableControls}}" md-on-open="onYearClick()" ng-model="year" ng-change="onYearChanged()" placeholder="{{yearLabel}}" aria-label="YEAR"><md-option ng-value="opt" ng-repeat="opt in years track by opt">{{ opt }}</md-option></md-select></md-input-container></div>');
 }]);
 })();
 
@@ -1663,11 +1617,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('time_range_directive/time_range.html',
-    '<p>\n' +
-    '    <span ng-if="data.start != null">{{data.start | formatShortDateTime}}</span>\n' +
-    '    <span  class="separator" ng-if="data.start && data.end"> - </span>\n' +
-    '    <span ng-if="data.end != null">{{data.end | formatShortDateTime}}</span>\n' +
-    '</p>');
+    '<p><span ng-if="data.start != null">{{data.start | formatShortDateTime}}</span> <span class="separator" ng-if="data.start && data.end">-</span> <span ng-if="data.end != null">{{data.end | formatShortDateTime}}</span></p>');
 }]);
 })();
 
@@ -1679,61 +1629,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('time_range_edit_directive/time_range_edit.html',
-    '<!--\n' +
-    '@file Time edit control content\n' +
-    '@copyright Digital Living Software Corp. 2014-2016\n' +
-    '-->\n' +
-    '\n' +
-    '<div class="event-edit layout-row layout-xs-column flex layout-align-start-start">\n' +
-    '    <div flex="47" class="start-time-container ">\n' +
-    '        <p class="text-caption text-grey">{{startLabel}}</p>\n' +
-    '\n' +
-    '        <div class="layout-row layout-align-space-between-center">\n' +
-    '            <div class="pip-datepicker-container" flex="49">\n' +
-    '                <md-datepicker ng-model="data.startDate"\n' +
-    '                               xmd-placeholder="{{startLabel}}"\n' +
-    '                               ng-change="onChangeStartDate()"\n' +
-    '                               ng-disabled="isDisabled()"\n' +
-    '                               aria-label="START-DATE">\n' +
-    '                </md-datepicker>\n' +
-    '            </div>\n' +
-    '            <div flex>\n' +
-    '                <md-input-container class="input-container">\n' +
-    '                    <md-select aria-label="START-TIME" ng-model="data.startTime" ng-disabled="isDisabled()"\n' +
-    '                               ng-change="onChangeStartTime()">\n' +
-    '                        <md-option ng-value="opt.id" ng-repeat="opt in intervalTimeCollection track by opt.id">{{ opt.time }}\n' +
-    '                        </md-option>\n' +
-    '                    </md-select>\n' +
-    '                </md-input-container>\n' +
-    '            </div>\n' +
-    '        </div>\n' +
-    '    </div>\n' +
-    '    <div flex="47" class="end-time-container">\n' +
-    '        <p class="text-caption text-grey">{{endLabel}}</p>\n' +
-    '\n' +
-    '        <div class="layout-row layout-align-space-between-center">\n' +
-    '            <div class="pip-datepicker-container flex-49">\n' +
-    '                <md-datepicker ng-model="data.endDate"\n' +
-    '                               xmd-placeholder="{{endLabel}}"\n' +
-    '                               ng-disabled="isDisabled()"\n' +
-    '                               ng-change="onChangeEndDate()"\n' +
-    '                               aria-label="END-DATE">\n' +
-    '                </md-datepicker>\n' +
-    '            </div>\n' +
-    '            <div flex>\n' +
-    '                <md-input-container class="input-container">\n' +
-    '                    <md-select aria-label="END-TIME" ng-model="data.endTime" ng-change="onChangeEndTime()"\n' +
-    '                               ng-disabled="isDisabled()">\n' +
-    '                        <md-option ng-value="opt.id" ng-repeat="opt in intervalTimeCollection track by opt.id">{{\n' +
-    '                            opt.time }}\n' +
-    '                        </md-option>\n' +
-    '                    </md-select>\n' +
-    '                </md-input-container>\n' +
-    '            </div>\n' +
-    '        </div>\n' +
-    '    </div>\n' +
-    '</div>\n' +
-    '');
+    '<div class="event-edit layout-row layout-xs-column flex layout-align-start-start"><div flex="47" class="start-time-container"><p class="text-caption text-grey">{{startLabel}}</p><div class="layout-row layout-align-space-between-center"><div class="pip-datepicker-container" flex="49"><md-datepicker ng-model="data.startDate" xmd-placeholder="{{startLabel}}" ng-change="onChangeStartDate()" ng-disabled="isDisabled()" aria-label="START-DATE"></md-datepicker></div><div flex=""><md-input-container class="input-container"><md-select aria-label="START-TIME" ng-model="data.startTime" ng-disabled="isDisabled()" ng-change="onChangeStartTime()"><md-option ng-value="opt.id" ng-repeat="opt in intervalTimeCollection track by opt.id">{{ opt.time }}</md-option></md-select></md-input-container></div></div></div><div flex="47" class="end-time-container"><p class="text-caption text-grey">{{endLabel}}</p><div class="layout-row layout-align-space-between-center"><div class="pip-datepicker-container flex-49"><md-datepicker ng-model="data.endDate" xmd-placeholder="{{endLabel}}" ng-disabled="isDisabled()" ng-change="onChangeEndDate()" aria-label="END-DATE"></md-datepicker></div><div flex=""><md-input-container class="input-container"><md-select aria-label="END-TIME" ng-model="data.endTime" ng-change="onChangeEndTime()" ng-disabled="isDisabled()"><md-option ng-value="opt.id" ng-repeat="opt in intervalTimeCollection track by opt.id">{{ opt.time }}</md-option></md-select></md-input-container></div></div></div></div>');
 }]);
 })();
 

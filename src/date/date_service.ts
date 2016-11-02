@@ -29,6 +29,10 @@ export interface IDateTimeService {
     formatISOWeekOrdinal(value: any): string;
     formatDateY(value: any): string;
     formatLongDateY(value: any): string;
+    formatTodayDateLongTimeLong(value: any): string;
+    formatTodayDateShortTimeLong(value: any): string;
+    formatTodayDateLongTimeShort(value: any): string;
+    formatTodayDateShortTimeShort(value: any): string;
     formatMillisecondsToSeconds(value: any): string;
     formatElapsedInterval(value: any, start: any): string;
     getDateJSON(date: any): string;
@@ -44,15 +48,15 @@ export interface IDateTimeService {
     toEndMonth(value: any, offset: number): any;
     toStartYear(value: any): any;
     toEndYear(value: any, offset: number): any;
-
-}    
+ 
+}
 
 export interface IDateTimeProvider extends IDateTimeService, ng.IServiceProvider {
 
-}    
+}
 
-class DateTime implements IDateTimeService{
-    protected _momentRanged = new Array('year','month','week','isoweek', 'day');
+class DateTime implements IDateTimeService {
+    protected _momentRanged = new Array('year', 'month', 'week', 'isoweek', 'day');
     protected _defaultFormat = 'LL'
 
     private isUndefinedOrNull(value: any): boolean {
@@ -91,8 +95,8 @@ class DateTime implements IDateTimeService{
     private formatDateTime(value: any, basicFormat: string): string {
         var date: any,
             formatTpl: string;
-        
-            if (this.isUndefinedOrNull(value)) {
+
+        if (this.isUndefinedOrNull(value)) {
             return '';
         }
 
@@ -110,7 +114,7 @@ class DateTime implements IDateTimeService{
         var date: any,
             nowDate: any,
             formatMoment: string;
-        
+
         if (this.isUndefinedOrNull(value)) {
             return '';
         }
@@ -124,80 +128,80 @@ class DateTime implements IDateTimeService{
         formatMoment = moment.localeData().longDateFormat(basicFormat ? basicFormat : this._defaultFormat);
 
         if (nowDate.year() == date.year()) {
-            formatMoment = formatMoment.replace(/Y/g,'').replace(/^\W|\W$|\W\W/,'');
+            formatMoment = formatMoment.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '');
         }
 
         return date.format(formatMoment);
     }
 
-        private formatDay(value: any, basicFormat: string): string {
-            var date: any,
-                format = moment.localeData().longDateFormat(basicFormat ? basicFormat : this._defaultFormat),
-                formatMonthYearless = format.replace(/Y/g,'').replace(/^\W|\W$|\W\W/,'').replace(/M/g,'');
+    private formatDay(value: any, basicFormat: string): string {
+        var date: any,
+            format = moment.localeData().longDateFormat(basicFormat ? basicFormat : this._defaultFormat),
+            formatMonthYearless = format.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '').replace(/M/g, '');
 
-            if (this.isUndefinedOrNull(value)) {
-                return '';
-            }
-
-            date = moment(value);
-
-            return date.format(formatMonthYearless);
+        if (this.isUndefinedOrNull(value)) {
+            return '';
         }
 
-        private formatMonthDay(value: any, basicFormat: string): string {
-            var date: any,
-                format = basicFormat ? basicFormat : this._defaultFormat,
-                formatLL = moment.localeData().longDateFormat(format),
-                formatYearlessLL = formatLL.replace(/Y/g,'').replace(/^\W|\W$|\W\W/,'');
+        date = moment(value);
 
-            if (this.isUndefinedOrNull(value)) {
-                return '';
-            }
+        return date.format(formatMonthYearless);
+    }
 
-            date = moment(value);
+    private formatMonthDay(value: any, basicFormat: string): string {
+        var date: any,
+            format = basicFormat ? basicFormat : this._defaultFormat,
+            formatLL = moment.localeData().longDateFormat(format),
+            formatYearlessLL = formatLL.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '');
 
-            return date.format(formatYearlessLL);
+        if (this.isUndefinedOrNull(value)) {
+            return '';
         }
 
-        private formatRange(value1: any, value2: any, basicFormat: string): string {
-            var dateStart: any, 
-                dateEnd: any,
-                format = basicFormat ? basicFormat : this._defaultFormat;
+        date = moment(value);
 
-            if (this.isUndefinedOrNull(value1)) { 
-                dateStart = null;
-            } else { 
-                dateStart = moment(value1);
-            }
-            if (this.isUndefinedOrNull(value2)) {
-                dateEnd = null;
-            } else { 
-                dateEnd = moment(value2);
-            }
+        return date.format(formatYearlessLL);
+    }
 
-            if (dateStart === null && dateEnd === null) return '';
+    private formatRange(value1: any, value2: any, basicFormat: string): string {
+        var dateStart: any,
+            dateEnd: any,
+            format = basicFormat ? basicFormat : this._defaultFormat;
 
-            if  (dateStart === null) {
-                return dateEnd.format(basicFormat);
-            } else if (dateEnd === null || dateStart.isSame(dateEnd)) {
-                return dateStart.format(basicFormat);;
-            }
+        if (this.isUndefinedOrNull(value1)) {
+            dateStart = null;
+        } else {
+            dateStart = moment(value1);
+        }
+        if (this.isUndefinedOrNull(value2)) {
+            dateEnd = null;
+        } else {
+            dateEnd = moment(value2);
+        }
 
-            if (dateStart.isAfter(dateEnd)) {
-                // todo localization
-                throw new Error('Date range error. Start date is more than end date.');
-            }
+        if (dateStart === null && dateEnd === null) return '';
 
-            if (dateStart.year() == dateEnd.year()) {
-                if (dateStart.month() == dateEnd.month()) {
-                    return this.formatDay(dateStart, basicFormat) + '-' + dateEnd.format(basicFormat);
-                } else {
-                    return this.formatMonthDay(dateStart, basicFormat) + '-' + dateEnd.format(basicFormat);
-                }
+        if (dateStart === null) {
+            return dateEnd.format(basicFormat);
+        } else if (dateEnd === null || dateStart.isSame(dateEnd)) {
+            return dateStart.format(basicFormat);;
+        }
+
+        if (dateStart.isAfter(dateEnd)) {
+            // todo localization
+            throw new Error('Date range error. Start date is more than end date.');
+        }
+
+        if (dateStart.year() == dateEnd.year()) {
+            if (dateStart.month() == dateEnd.month()) {
+                return this.formatDay(dateStart, basicFormat) + '-' + dateEnd.format(basicFormat);
             } else {
-                return dateStart.format(basicFormat) + '-' + dateEnd.format(basicFormat);
-            }                
+                return this.formatMonthDay(dateStart, basicFormat) + '-' + dateEnd.format(basicFormat);
+            }
+        } else {
+            return dateStart.format(basicFormat) + '-' + dateEnd.format(basicFormat);
         }
+    }
 
     private toStartRange(value: any, range: string): any {
         var date: any;
@@ -209,13 +213,13 @@ class DateTime implements IDateTimeService{
         date = moment(value);
         if (!date.isValid()) {
             return '';
-        }       
+        }
 
-        return date.startOf(range).toDate();    
+        return date.startOf(range).toDate();
     }
 
     private toEndRange(value: any, range: string, offset: number): any {
-        var date: any, 
+        var date: any,
             result: any,
             mssOffset: number;
 
@@ -230,7 +234,7 @@ class DateTime implements IDateTimeService{
         date = moment(value);
         if (!date.isValid()) {
             return '';
-        }       
+        }
 
         if (mssOffset) {
             result = date.startOf(range).add(mssOffset, 'milliseconds');
@@ -238,10 +242,35 @@ class DateTime implements IDateTimeService{
             result = date.startOf(range);
         }
 
-        return date.startOf(range).toDate();    
+        return date.startOf(range).toDate();
     }
 
-    public constructor() {};        
+    private toTodayDate(value: any, formatDate: string, formatTime: string): any {
+        var date: any,
+            result: string,
+            nowDate: any;
+
+        if (this.isUndefinedOrNull(value)) {
+            return '';
+        }
+
+        date = moment(value);
+        if (!date.isValid()) {
+            return '';
+        }
+
+        nowDate = moment();
+
+        if (nowDate.year() == date.year() && nowDate.month() == date.month() && nowDate.day() == date.day()) {
+            result = date.format(formatTime);
+        } else {
+            result = date.format(formatDate) + ' ' + date.format(formatTime);
+        }
+
+        return result;
+    }
+
+    public constructor() { };
 
     // formating functions 
     // -------------------
@@ -254,7 +283,7 @@ class DateTime implements IDateTimeService{
     public formatDateOptional(value: any, format: string): string {
         return this.formatDateTime(value, 'L');
     }
-    
+
     public formatShortDate(value: any): string {
         return this.formatDateTime(value, 'L');
     }
@@ -317,7 +346,7 @@ class DateTime implements IDateTimeService{
     // numeric month writing 
     public formatLongDateNumber(value: any): string {
         return this.formatDateTime(value, 'll');
-    }  
+    }
 
     public formatTimeNumber(value: any): string {
         return this.formatDateTime(value, 'LLL');
@@ -332,16 +361,16 @@ class DateTime implements IDateTimeService{
     }
 
     public formatShortMonthDay(value: any): string {
-        return this.formatMonthDay(value, 'L');        
-    }  
+        return this.formatMonthDay(value, 'L');
+    }
 
     public formatDateRange(value1: any, value2: any): string {
         return this.formatRange(value1, value2, 'LL');
-    } 
+    }
 
     public formatDateTimeRange(value1: any, value2: any): string {
         return this.formatRange(value1, value2, 'LLL');
-    }    
+    }
 
     // iso function
     // --------------
@@ -356,7 +385,7 @@ class DateTime implements IDateTimeService{
 
     public formatISOWeekOrdinal(value: any): string {
         return this.formatDateTime(value, 'Wo');
-    }        
+    }
     // special formats 
     // --------------
 
@@ -370,6 +399,30 @@ class DateTime implements IDateTimeService{
         return this.formatDateTimeY(value, 'LL');
     }
 
+    // date displays if the current date  is not equal now 
+    // September 4 1986 8:30:25 PM or 8:30:25 PM
+    public formatTodayDateLongTimeLong(value: any): string {
+        return this.toTodayDate(value, 'LL', 'LTS')
+    }
+
+    // date displays if the current date  is not equal now 
+    // Sep 4 1986 8:30:25 PM or 8:30:25 PM
+    public formatTodayDateShortTimeLong(value: any): string {
+        return this.toTodayDate(value, 'LL', 'LTS')
+    }
+
+    // date displays if the current date  is not equal now 
+    // September 4 1986 8:30 PM or 8:30 PM
+    public formatTodayDateLongTimeShort(value: any): string {
+        return this.toTodayDate(value, 'LL', 'LT')
+    }
+
+    // date displays if the current date  is not equal now 
+    // Sep 4 1986 8:30 PM or 8:30 PM
+    public formatTodayDateShortTimeShort(value: any): string {
+        return this.toTodayDate(value, 'll', 'LT')
+    }
+
     // todo
     public formatMillisecondsToSeconds(value: any): string {
         return '';
@@ -377,9 +430,9 @@ class DateTime implements IDateTimeService{
 
     // todo
     public formatElapsedInterval(value: any, start: any): string {
-        var date: any, 
+        var date: any,
             nowDate: any;
-        
+
         if (this.isUndefinedOrNull(value)) {
             return '';
         }
@@ -394,118 +447,118 @@ class DateTime implements IDateTimeService{
             return '';
         }
 
-            return moment(date).fromNow(nowDate);           
+        return moment(date).fromNow(nowDate);
     }
 
     public getDateJSON(date: any): string {
-        return JSON.stringify(moment(date));                
+        return JSON.stringify(moment(date));
     }
 
     // navigation functions 
     // ------------------
 
     public getNextStart(value: any, category: string): any {
-            var date: any, 
-                range: string, 
-                result: any;
+        var date: any,
+            range: string,
+            result: any;
 
-            if (this.isUndefinedOrNull(value)) {
-                return '';
-            }
-
-            date = moment(value);
-            if (!date.isValid()) {
-                return '';
-            }
-
-            range = this.getRange(category);
-            result = moment(date).startOf(range).add(this.getOperationRange(range));
-
-            return result.toDate();
+        if (this.isUndefinedOrNull(value)) {
+            return '';
         }
 
-        public getPrevStart(value: any, category: string): any {
-            var date: any, 
-                range: string, 
-                result: any;
-
-            if (this.isUndefinedOrNull(value)) {
-                return '';
-            }
-
-            date = moment(value);
-            if (!date.isValid()) {
-                return '';
-            }
-
-            range = this.getRange(category);
-            result = moment(date).startOf(range).add(-1, this.getOperationRange(range));
-
-            return result.toDate();
+        date = moment(value);
+        if (!date.isValid()) {
+            return '';
         }
 
-        public getNowStart(category: string): any {
-            var date: any, 
-                range: string, 
-                result: any;
+        range = this.getRange(category);
+        result = moment(date).startOf(range).add(this.getOperationRange(range));
 
-            date = moment();
-            if (!date.isValid()) {
-                return '';
-            }
+        return result.toDate();
+    }
 
-            range = this.getRange(category) 
-            result = moment(date).startOf(range);
+    public getPrevStart(value: any, category: string): any {
+        var date: any,
+            range: string,
+            result: any;
 
-            return result.toDate();
-        }  
+        if (this.isUndefinedOrNull(value)) {
+            return '';
+        }
 
-        public addHours(value: any, hours: number): any {
-            var date: any;
+        date = moment(value);
+        if (!date.isValid()) {
+            return '';
+        }
 
-            if (this.isUndefinedOrNull(value) || !angular.isNumber(hours)) {
-                return '';
-            }
+        range = this.getRange(category);
+        result = moment(date).startOf(range).add(-1, this.getOperationRange(range));
 
-            date = moment(value);
-            if (!date.isValid()) {
-                return '';
-            }
+        return result.toDate();
+    }
 
-            return date.add(hours, 'hours').toDate();
-        }  
+    public getNowStart(category: string): any {
+        var date: any,
+            range: string,
+            result: any;
 
-        public toStartDay(value: any): any {
-            return this.toStartRange(value, 'day');
-        }  
+        date = moment();
+        if (!date.isValid()) {
+            return '';
+        }
 
-        public toEndDay(value: any, offset: number): any {
-            return this.toEndRange(value, 'day', offset);
-        }  
+        range = this.getRange(category)
+        result = moment(date).startOf(range);
 
-        public toStartWeek(value: any): any {
-            return this.toStartRange(value, 'week');
-        }  
+        return result.toDate();
+    }
 
-        public toEndWeek(value: any, offset: number): any {
-            return this.toEndRange(value, 'week', offset);
-        }  
+    public addHours(value: any, hours: number): any {
+        var date: any;
 
-        public toStartMonth(value: any): any {
-            return this.toStartRange(value, 'month');
-        }  
+        if (this.isUndefinedOrNull(value) || !angular.isNumber(hours)) {
+            return '';
+        }
 
-        public toEndMonth(value: any, offset: number): any {
-            return this.toEndRange(value, 'month', offset);
-        }  
+        date = moment(value);
+        if (!date.isValid()) {
+            return '';
+        }
 
-        public toStartYear(value: any): any {
-            return this.toStartRange(value, 'year');
-        }  
+        return date.add(hours, 'hours').toDate();
+    }
 
-        public toEndYear(value: any, offset: number): any {
-            return this.toEndRange(value, 'year', offset);
-        }  
+    public toStartDay(value: any): any {
+        return this.toStartRange(value, 'day');
+    }
+
+    public toEndDay(value: any, offset: number): any {
+        return this.toEndRange(value, 'day', offset);
+    }
+
+    public toStartWeek(value: any): any {
+        return this.toStartRange(value, 'week');
+    }
+
+    public toEndWeek(value: any, offset: number): any {
+        return this.toEndRange(value, 'week', offset);
+    }
+
+    public toStartMonth(value: any): any {
+        return this.toStartRange(value, 'month');
+    }
+
+    public toEndMonth(value: any, offset: number): any {
+        return this.toEndRange(value, 'month', offset);
+    }
+
+    public toStartYear(value: any): any {
+        return this.toStartRange(value, 'year');
+    }
+
+    public toEndYear(value: any, offset: number): any {
+        return this.toEndRange(value, 'year', offset);
+    }
 
 }
 
@@ -589,7 +642,7 @@ class DateTimeService {
     // numeric month writing 
     public formatLongDateNumber(value: any): string {
         return this._datetime.formatLongDateNumber(value);
-    }  
+    }
 
     public formatTimeNumber(value: any): string {
         return this._datetime.formatTimeNumber(value);
@@ -604,16 +657,16 @@ class DateTimeService {
     }
 
     public formatShortMonthDay(value: any): string {
-        return this._datetime.formatShortMonthDay(value);        
-    }  
+        return this._datetime.formatShortMonthDay(value);
+    }
 
     public formatDateRange(value1: any, value2: any): string {
         return this._datetime.formatDateRange(value1, value2);
-    } 
+    }
 
     public formatDateTimeRange(value1: any, value2: any): string {
         return this._datetime.formatDateTimeRange(value1, value2);
-    }    
+    }
 
     // iso function
     // --------------
@@ -628,7 +681,7 @@ class DateTimeService {
 
     public formatISOWeekOrdinal(value: any): string {
         return this._datetime.formatISOWeekOrdinal(value);
-    }        
+    }
     // special formats 
     // --------------
 
@@ -642,6 +695,30 @@ class DateTimeService {
         return this._datetime.formatLongDateY(value);
     }
 
+    // date displays if the current date  is not equal now 
+    // September 4 1986 8:30:25 PM or 8:30:25 PM
+    public formatTodayDateLongTimeLong(value: any): string {
+        return this._datetime.formatTodayDateLongTimeLong(value);
+    }    
+
+    // date displays if the current date  is not equal now 
+    // Sep 4 1986 8:30:25 PM or 8:30:25 PM
+    public formatTodayDateShortTimeLong(value: any): string {
+        return this._datetime.formatTodayDateShortTimeLong(value);
+    }     
+
+    // date displays if the current date  is not equal now 
+    // September 4 1986 8:30 PM or 8:30 PM
+    public formatTodayDateLongTimeShort(value: any): string {
+        return this._datetime.formatTodayDateLongTimeShort(value);
+    }     
+
+    // date displays if the current date  is not equal now 
+    // Sep 4 1986 8:30 PM or 8:30 PM
+    public formatTodayDateShortTimeShort(value: any): string {
+        return this._datetime.formatTodayDateShortTimeShort(value);
+    }     
+
     // todo
     public formatMillisecondsToSeconds(value: any) {
         return this._datetime.formatMillisecondsToSeconds(value);
@@ -649,11 +726,11 @@ class DateTimeService {
 
     // todo
     public formatElapsedInterval(value: any, start: any): string {
-        return this._datetime.formatElapsedInterval(value, start);         
+        return this._datetime.formatElapsedInterval(value, start);
     }
 
     public getDateJSON(date: any): string {
-        return this._datetime.getDateJSON(date);                
+        return this._datetime.getDateJSON(date);
     }
 
     // navigation functions 
@@ -673,46 +750,46 @@ class DateTimeService {
 
     public addHours(value: any, hours: number): any {
         return this._datetime.addHours(value, hours);
-    } 
+    }
 
     public toStartDay(value: any): any {
         return this._datetime.toStartDay(value);
-    } 
+    }
 
     public toEndDay(value: any, offset: number): any {
         return this._datetime.toEndDay(value, offset);
-    } 
+    }
 
     public toStartWeek(value: any): any {
         return this._datetime.toStartWeek(value);
-    } 
+    }
 
     public toEndWeek(value: any, offset: number): any {
         return this._datetime.toEndWeek(value, offset);
-    } 
+    }
 
     public toStartMonth(value: any): any {
         return this._datetime.toStartMonth(value);
-    } 
+    }
 
     public toEndMonth(value: any, offset: number): any {
         return this._datetime.toEndMonth(value, offset);
-    } 
+    }
 
     public toStartYear(value: any): any {
         return this._datetime.toStartYear(value);
-    } 
+    }
 
     public toEndYear(value: any, offset: number): any {
         return this._datetime.toEndYear(value, offset);
-    }  
+    }
 
 }
 
 class DateTimeProvider extends DateTime implements IDateTimeProvider {
     private _translation: DateTime;
     private _service: DateTimeService;
-    
+
     public constructor() {
         super();
     }
@@ -720,7 +797,7 @@ class DateTimeProvider extends DateTime implements IDateTimeProvider {
     public $get(): any {
         "ngInject";
 
-        if (this._service == null) 
+        if (this._service == null)
             this._service = new DateTimeService(this);
         return this._service;
     }
