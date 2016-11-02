@@ -16,7 +16,7 @@
             'LocalStorageModule', 
 
             'pipServices',
-            'pipTheme.Default', 'pipTheme.Bootbarn', 'pipTheme', 
+            'pipTheme.Default', 'pipTheme.BootBarn', 'pipTheme', 
 
 
             'pipDates',
