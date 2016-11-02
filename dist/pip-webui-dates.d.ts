@@ -85,9 +85,5 @@ export interface IDateTimeProvider extends IDateTimeService, ng.IServiceProvider
 
 
 
-
-
-
-
 }
 
