@@ -173,7 +173,7 @@
                 if ($scope.isTranslated) {
                     setTimeout(function () {
                         // change momentjs local 
-                        changeLocale(language);
+                        // changeLocale(language);
                         pipTranslate.use(language);
                         $rootScope.$apply();
                     }, 0);   
