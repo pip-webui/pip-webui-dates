@@ -128,6 +128,14 @@ function formatLongDateLongTimeFilter(pipDateTime: any) {
     }
 }
 
+function bbFormatDateLongTimeFilter(pipDateTime: any) {
+    "ngInject";  
+
+    return function (value: any, firstTime: boolean): string {
+        return pipDateTime.bbFormatDateLongTime(value, firstTime);
+    }
+}
+
 function formatFullDateTimeFilter(pipDateTime: any) {
     "ngInject";  
 
@@ -300,6 +308,7 @@ angular
     .module('pipDateTime.Filter', [])
     .filter('formatTime', formatTimeFilter)
     .filter('formatDateOptional', formatDateOptionalFilter)
+    .filter('bbFormatDateLongTime', bbFormatDateLongTimeFilter)
     .filter('formatShortDate', formatShortDateFilter)
     .filter('formatMiddleDate', formatMiddleDateFilter)
     .filter('formatLongDate', formatLongDateFilter)

@@ -8,6 +8,8 @@ export interface IDateTimeService {
     readonly config: DateTimeConfig;
     useTimeZone(offset: number);
 
+    bbFormatDateLongTime(value: any, firstTime?: boolean): string; 
+    
     formatTime(value: any, format: string): string;
     formatDateOptional(value: any, format: string): string;
     formatShortDate(value: any): string;
@@ -375,6 +377,10 @@ class DateTime implements IDateTimeService {
     // date formats
     public formatShortDate(value: any): string {
         return this.formatDateTime(value, 'L');
+    }
+
+    public bbFormatDateLongTime(value: any, firstTime?: boolean): string {
+        return this.toDateWithTime(value, 'MM/DD/YY', 'LTS', firstTime); 
     }
 
     public formatMiddleDate(value: any): string {
@@ -749,6 +755,10 @@ class DateTimeService {
 
     public formatLongDateLongTime(value: any, firstTime?: boolean): string {
         return this._datetime.formatLongDateLongTime(value, firstTime);
+    }
+
+    public bbFormatDateLongTime(value: any, firstTime?: boolean): string {
+        return this._datetime.bbFormatDateLongTime(value, firstTime);
     }
 
     public formatShortTime(value: any): string {

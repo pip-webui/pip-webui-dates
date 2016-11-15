@@ -8,7 +8,7 @@
     thisModule.controller('DateFormatController',
         function($scope, pipDateTime, $window, $timeout) {
 
-            pipDateTime.useTimeZone(10);
+            // pipDateTime.useTimeZone(10);
 
             $scope.currentTime = new Date();
             $scope.fewDaysAgo = new Date(new Date().getTime() - 172800000);

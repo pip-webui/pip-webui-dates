@@ -17,6 +17,7 @@ function formatLongDateTimeFilter(pipDateTime: any): (value: any) => string;
 function formatShortDateLongTimeFilter(pipDateTime: any): (value: any, firstTime: boolean) => string;
 function formatMiddleDateLongTimeFilter(pipDateTime: any): (value: any, firstTime: boolean) => string;
 function formatLongDateLongTimeFilter(pipDateTime: any): (value: any, firstTime: boolean) => string;
+function bbFormatDateLongTimeFilter(pipDateTime: any): (value: any, firstTime: boolean) => string;
 function formatFullDateTimeFilter(pipDateTime: any): (value: any) => string;
 function formatShortTimeFilter(pipDateTime: any): (value: any) => string;
 function formatLongTimeFilter(pipDateTime: any): (value: any) => string;
@@ -45,6 +46,7 @@ export class DateTimeConfig {
 export interface IDateTimeService {
     readonly config: DateTimeConfig;
     useTimeZone(offset: number): any;
+    bbFormatDateLongTime(value: any, firstTime?: boolean): string;
     formatTime(value: any, format: string): string;
     formatDateOptional(value: any, format: string): string;
     formatShortDate(value: any): string;
