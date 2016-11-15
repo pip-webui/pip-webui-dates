@@ -6,7 +6,10 @@
     var thisModule = angular.module('appDateTimes.DateFormat', []);
 
     thisModule.controller('DateFormatController',
-        function($scope, pipDateTime, $window) {
+        function($scope, pipDateTime, $window, $timeout) {
+
+            pipDateTime.useTimeZone(10);
+
             $scope.currentTime = new Date();
             $scope.fewDaysAgo = new Date(new Date().getTime() - 172800000);
             $scope.fewHoursFuture = new Date($scope.currentTime.getTime() + 60000*180);
@@ -82,6 +85,14 @@
 
                 return result;
             }
+
+            // $scope.onSetTimeZone = function (value) {
+            //     $timeout(function () {
+            //         pipDateTime.useTimeZone(value)       
+            //     }, 0);
+                
+            //     console.log('Set timezone: ', value);
+            // }
         }   
     );
 

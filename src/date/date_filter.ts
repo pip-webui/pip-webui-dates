@@ -32,6 +32,14 @@ function formatShortDateFilter(pipDateTime: any) {
     }
 }
 
+function formatMiddleDateFilter(pipDateTime: any) {
+    "ngInject";  
+
+    return function (value: any): string {
+        return pipDateTime.formatMiddleDate(value);
+    }
+}
+
 function formatMonthFilter(pipDateTime: any) {
     "ngInject";  
 
@@ -80,11 +88,51 @@ function formatShortDateTimeFilter(pipDateTime: any) {
     }
 }
 
+function formatMiddleDateTimeFilter(pipDateTime: any) {
+    "ngInject";  
+
+    return function (value: any): string {
+        return pipDateTime.formatMiddleDateTime(value);
+    }
+}
+
 function formatLongDateTimeFilter(pipDateTime: any) {
     "ngInject";  
 
     return function (value: any): string {
         return pipDateTime.formatLongDateTime(value);
+    }
+}
+
+function formatShortDateLongTimeFilter(pipDateTime: any) {
+    "ngInject";  
+
+    return function (value: any, firstTime: boolean): string {
+        return pipDateTime.formatShortDateLongTime(value, firstTime);
+    }
+}
+
+function formatMiddleDateLongTimeFilter(pipDateTime: any) {
+    "ngInject";  
+
+    return function (value: any, firstTime: boolean): string {
+        return pipDateTime.formatMiddleDateLongTime(value, firstTime);
+    }
+}
+
+function formatLongDateLongTimeFilter(pipDateTime: any) {
+    "ngInject";  
+
+    return function (value: any, firstTime: boolean): string {
+        return pipDateTime.formatLongDateLongTime(value, firstTime);
+    }
+}
+
+function formatFullDateTimeFilter(pipDateTime: any) {
+    "ngInject";  
+
+    return function (value: any): string {
+        return pipDateTime.formatFullDateTime(value);
     }
 }
 
@@ -117,38 +165,6 @@ function formatLongDayOfWeekFilter(pipDateTime: any) {
 
     return function (value: any): string {
         return pipDateTime.formatLongDayOfWeek(value);
-    }
-}
-
-function formatDateNumberFilter(pipDateTime: any) {
-    "ngInject";  
-
-    return function (value: any): string {
-        return pipDateTime.formatDateNumber(value);
-    }
-}
-
-function formatLongDateNumberFilter(pipDateTime: any) {
-    "ngInject";  
-
-    return function (value: any): string {
-        return pipDateTime.formatLongDateNumber(value);
-    }
-}
-
-function formatTimeNumberFilter(pipDateTime: any) {
-    "ngInject";  
-
-    return function (value: any): string {
-        return pipDateTime.formatTimeNumber(value);
-    }
-}
-
-function formatLongTimeNumberFilter(pipDateTime: any) {
-    "ngInject";  
-
-    return function (value: any): string {
-        return pipDateTime.formatLongTimeNumber(value);
     }
 }
 
@@ -285,6 +301,7 @@ angular
     .filter('formatTime', formatTimeFilter)
     .filter('formatDateOptional', formatDateOptionalFilter)
     .filter('formatShortDate', formatShortDateFilter)
+    .filter('formatMiddleDate', formatMiddleDateFilter)
     .filter('formatLongDate', formatLongDateFilter)
     .filter('formatMonth', formatMonthFilter)
     .filter('formatLongMonth', formatLongMonthFilter)
@@ -292,15 +309,16 @@ angular
     .filter('formatWeek', formatWeekFilter)
     .filter('formatShortWeek', formatShortWeekFilter)
     .filter('formatShortDateTime', formatShortDateTimeFilter)
+    .filter('formatMiddleDateTime', formatMiddleDateTimeFilter)    
     .filter('formatLongDateTime', formatLongDateTimeFilter)
+    .filter('formatShortDateLongTime', formatShortDateLongTimeFilter)
+    .filter('formatMiddleDateLongTime', formatMiddleDateLongTimeFilter)    
+    .filter('formatLongDateLongTime', formatLongDateLongTimeFilter)    
+    .filter('formatFullDateTime', formatFullDateTimeFilter)
     .filter('formatShortTime', formatShortTimeFilter)
     .filter('formatLongTime', formatLongTimeFilter)
     .filter('formatShortDayOfWeek', formatShortDayOfWeekFilter)
     .filter('formatLongDayOfWeek', formatLongDayOfWeekFilter)
-    .filter('formatDateNumber', formatDateNumberFilter)
-    .filter('formatLongDateNumber', formatLongDateNumberFilter)
-    .filter('formatTimeNumber', formatTimeNumberFilter)
-    .filter('formatLongTimeNumber', formatLongTimeNumberFilter)
     .filter('formatLongMonthDay', formatLongMonthDayFilter)
     .filter('formatShortMonthDay', formatShortMonthDayFilter)
     .filter('formatDateRange', formatDateRangeFilter)

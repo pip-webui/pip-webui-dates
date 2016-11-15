@@ -9,21 +9,23 @@ formatTimeFilter.$inject = ['pipDateTime'];
 formatDateOptionalFilter.$inject = ['pipDateTime'];
 formatLongDateFilter.$inject = ['pipDateTime'];
 formatShortDateFilter.$inject = ['pipDateTime'];
+formatMiddleDateFilter.$inject = ['pipDateTime'];
 formatMonthFilter.$inject = ['pipDateTime'];
 formatLongMonthFilter.$inject = ['pipDateTime'];
 formatYearFilter.$inject = ['pipDateTime'];
 formatWeekFilter.$inject = ['pipDateTime'];
 formatShortWeekFilter.$inject = ['pipDateTime'];
 formatShortDateTimeFilter.$inject = ['pipDateTime'];
+formatMiddleDateTimeFilter.$inject = ['pipDateTime'];
 formatLongDateTimeFilter.$inject = ['pipDateTime'];
+formatShortDateLongTimeFilter.$inject = ['pipDateTime'];
+formatMiddleDateLongTimeFilter.$inject = ['pipDateTime'];
+formatLongDateLongTimeFilter.$inject = ['pipDateTime'];
+formatFullDateTimeFilter.$inject = ['pipDateTime'];
 formatShortTimeFilter.$inject = ['pipDateTime'];
 formatLongTimeFilter.$inject = ['pipDateTime'];
 formatShortDayOfWeekFilter.$inject = ['pipDateTime'];
 formatLongDayOfWeekFilter.$inject = ['pipDateTime'];
-formatDateNumberFilter.$inject = ['pipDateTime'];
-formatLongDateNumberFilter.$inject = ['pipDateTime'];
-formatTimeNumberFilter.$inject = ['pipDateTime'];
-formatLongTimeNumberFilter.$inject = ['pipDateTime'];
 formatLongMonthDayFilter.$inject = ['pipDateTime'];
 formatShortMonthDayFilter.$inject = ['pipDateTime'];
 formatDateRangeFilter.$inject = ['pipDateTime'];
@@ -64,6 +66,12 @@ function formatShortDateFilter(pipDateTime) {
         return pipDateTime.formatShortDate(value);
     };
 }
+function formatMiddleDateFilter(pipDateTime) {
+    "ngInject";
+    return function (value) {
+        return pipDateTime.formatMiddleDate(value);
+    };
+}
 function formatMonthFilter(pipDateTime) {
     "ngInject";
     return function (value) {
@@ -100,10 +108,40 @@ function formatShortDateTimeFilter(pipDateTime) {
         return pipDateTime.formatShortDateTime(value);
     };
 }
+function formatMiddleDateTimeFilter(pipDateTime) {
+    "ngInject";
+    return function (value) {
+        return pipDateTime.formatMiddleDateTime(value);
+    };
+}
 function formatLongDateTimeFilter(pipDateTime) {
     "ngInject";
     return function (value) {
         return pipDateTime.formatLongDateTime(value);
+    };
+}
+function formatShortDateLongTimeFilter(pipDateTime) {
+    "ngInject";
+    return function (value, firstTime) {
+        return pipDateTime.formatShortDateLongTime(value, firstTime);
+    };
+}
+function formatMiddleDateLongTimeFilter(pipDateTime) {
+    "ngInject";
+    return function (value, firstTime) {
+        return pipDateTime.formatMiddleDateLongTime(value, firstTime);
+    };
+}
+function formatLongDateLongTimeFilter(pipDateTime) {
+    "ngInject";
+    return function (value, firstTime) {
+        return pipDateTime.formatLongDateLongTime(value, firstTime);
+    };
+}
+function formatFullDateTimeFilter(pipDateTime) {
+    "ngInject";
+    return function (value) {
+        return pipDateTime.formatFullDateTime(value);
     };
 }
 function formatShortTimeFilter(pipDateTime) {
@@ -128,30 +166,6 @@ function formatLongDayOfWeekFilter(pipDateTime) {
     "ngInject";
     return function (value) {
         return pipDateTime.formatLongDayOfWeek(value);
-    };
-}
-function formatDateNumberFilter(pipDateTime) {
-    "ngInject";
-    return function (value) {
-        return pipDateTime.formatDateNumber(value);
-    };
-}
-function formatLongDateNumberFilter(pipDateTime) {
-    "ngInject";
-    return function (value) {
-        return pipDateTime.formatLongDateNumber(value);
-    };
-}
-function formatTimeNumberFilter(pipDateTime) {
-    "ngInject";
-    return function (value) {
-        return pipDateTime.formatTimeNumber(value);
-    };
-}
-function formatLongTimeNumberFilter(pipDateTime) {
-    "ngInject";
-    return function (value) {
-        return pipDateTime.formatLongTimeNumber(value);
     };
 }
 function formatLongMonthDayFilter(pipDateTime) {
@@ -255,6 +269,7 @@ angular
     .filter('formatTime', formatTimeFilter)
     .filter('formatDateOptional', formatDateOptionalFilter)
     .filter('formatShortDate', formatShortDateFilter)
+    .filter('formatMiddleDate', formatMiddleDateFilter)
     .filter('formatLongDate', formatLongDateFilter)
     .filter('formatMonth', formatMonthFilter)
     .filter('formatLongMonth', formatLongMonthFilter)
@@ -262,15 +277,16 @@ angular
     .filter('formatWeek', formatWeekFilter)
     .filter('formatShortWeek', formatShortWeekFilter)
     .filter('formatShortDateTime', formatShortDateTimeFilter)
+    .filter('formatMiddleDateTime', formatMiddleDateTimeFilter)
     .filter('formatLongDateTime', formatLongDateTimeFilter)
+    .filter('formatShortDateLongTime', formatShortDateLongTimeFilter)
+    .filter('formatMiddleDateLongTime', formatMiddleDateLongTimeFilter)
+    .filter('formatLongDateLongTime', formatLongDateLongTimeFilter)
+    .filter('formatFullDateTime', formatFullDateTimeFilter)
     .filter('formatShortTime', formatShortTimeFilter)
     .filter('formatLongTime', formatLongTimeFilter)
     .filter('formatShortDayOfWeek', formatShortDayOfWeekFilter)
     .filter('formatLongDayOfWeek', formatLongDayOfWeekFilter)
-    .filter('formatDateNumber', formatDateNumberFilter)
-    .filter('formatLongDateNumber', formatLongDateNumberFilter)
-    .filter('formatTimeNumber', formatTimeNumberFilter)
-    .filter('formatLongTimeNumber', formatLongTimeNumberFilter)
     .filter('formatLongMonthDay', formatLongMonthDayFilter)
     .filter('formatShortMonthDay', formatShortMonthDayFilter)
     .filter('formatDateRange', formatDateRangeFilter)
@@ -293,10 +309,17 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var DateTimeConfig = (function () {
+    function DateTimeConfig() {
+    }
+    return DateTimeConfig;
+}());
+exports.DateTimeConfig = DateTimeConfig;
 var DateTime = (function () {
-    function DateTime() {
+    function DateTime(config) {
         this._momentRanged = new Array('year', 'month', 'week', 'isoweek', 'day');
         this._defaultFormat = 'LL';
+        this._config = config || { timeZone: null };
     }
     DateTime.prototype.isUndefinedOrNull = function (value) {
         return angular.isUndefined(value) || value === null;
@@ -330,7 +353,12 @@ var DateTime = (function () {
         if (this.isUndefinedOrNull(value)) {
             return '';
         }
-        date = moment(value);
+        if (this._config.timeZone) {
+            date = moment(value).utcOffset(this._config.timeZone);
+        }
+        else {
+            date = moment(value);
+        }
         if (!date.isValid()) {
             return '';
         }
@@ -342,7 +370,12 @@ var DateTime = (function () {
         if (this.isUndefinedOrNull(value)) {
             return '';
         }
-        date = moment(value);
+        if (this._config.timeZone) {
+            date = moment(value).utcOffset(this._config.timeZone);
+        }
+        else {
+            date = moment(value);
+        }
         if (!date.isValid()) {
             return '';
         }
@@ -358,7 +391,15 @@ var DateTime = (function () {
         if (this.isUndefinedOrNull(value)) {
             return '';
         }
-        date = moment(value);
+        if (this._config.timeZone) {
+            date = moment(value).utcOffset(this._config.timeZone);
+        }
+        else {
+            date = moment(value);
+        }
+        if (!date.isValid()) {
+            return '';
+        }
         return date.format(formatMonthYearless);
     };
     DateTime.prototype.formatMonthDay = function (value, basicFormat) {
@@ -366,7 +407,15 @@ var DateTime = (function () {
         if (this.isUndefinedOrNull(value)) {
             return '';
         }
-        date = moment(value);
+        if (this._config.timeZone) {
+            date = moment(value).utcOffset(this._config.timeZone);
+        }
+        else {
+            date = moment(value);
+        }
+        if (!date.isValid()) {
+            return '';
+        }
         return date.format(formatYearlessLL);
     };
     DateTime.prototype.formatRange = function (value1, value2, basicFormat) {
@@ -375,13 +424,13 @@ var DateTime = (function () {
             dateStart = null;
         }
         else {
-            dateStart = moment(value1);
+            dateStart = this._config.timeZone ? moment(value1).utcOffset(this._config.timeZone) : moment(value1);
         }
         if (this.isUndefinedOrNull(value2)) {
             dateEnd = null;
         }
         else {
-            dateEnd = moment(value2);
+            dateEnd = this._config.timeZone ? moment(value2).utcOffset(this._config.timeZone) : moment(value2);
         }
         if (dateStart === null && dateEnd === null)
             return '';
@@ -412,7 +461,12 @@ var DateTime = (function () {
         if (this.isUndefinedOrNull(value)) {
             return '';
         }
-        date = moment(value);
+        if (this._config.timeZone) {
+            date = moment(value).utcOffset(this._config.timeZone);
+        }
+        else {
+            date = moment(value);
+        }
         if (!date.isValid()) {
             return '';
         }
@@ -426,7 +480,12 @@ var DateTime = (function () {
         if (!angular.isNumber(offset)) {
             mssOffset = 0;
         }
-        date = moment(value);
+        if (this._config.timeZone) {
+            date = moment(value).utcOffset(this._config.timeZone);
+        }
+        else {
+            date = moment(value);
+        }
         if (!date.isValid()) {
             return '';
         }
@@ -438,12 +497,40 @@ var DateTime = (function () {
         }
         return date.startOf(range).toDate();
     };
+    DateTime.prototype.toDateWithTime = function (value, formatDate, formatTime, firstTime) {
+        var date, result, nowDate;
+        if (this.isUndefinedOrNull(value)) {
+            return '';
+        }
+        if (this._config.timeZone) {
+            date = moment(value).utcOffset(this._config.timeZone);
+        }
+        else {
+            date = moment(value);
+        }
+        if (!date.isValid()) {
+            return '';
+        }
+        nowDate = moment();
+        if (firstTime) {
+            result = date.format(formatTime) + ' ' + date.format(formatDate);
+        }
+        else {
+            result = date.format(formatDate) + ' ' + date.format(formatTime);
+        }
+        return result;
+    };
     DateTime.prototype.toTodayDate = function (value, formatDate, formatTime) {
         var date, result, nowDate;
         if (this.isUndefinedOrNull(value)) {
             return '';
         }
-        date = moment(value);
+        if (this._config.timeZone) {
+            date = moment(value).utcOffset(this._config.timeZone);
+        }
+        else {
+            date = moment(value);
+        }
         if (!date.isValid()) {
             return '';
         }
@@ -457,6 +544,16 @@ var DateTime = (function () {
         return result;
     };
     ;
+    Object.defineProperty(DateTime.prototype, "config", {
+        get: function () {
+            return this._config;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    DateTime.prototype.useTimeZone = function (offset) {
+        this._config.timeZone = offset;
+    };
     DateTime.prototype.formatTime = function (value, format) {
         return this.formatDateTime(value, 'LLL');
     };
@@ -465,6 +562,9 @@ var DateTime = (function () {
     };
     DateTime.prototype.formatShortDate = function (value) {
         return this.formatDateTime(value, 'L');
+    };
+    DateTime.prototype.formatMiddleDate = function (value) {
+        return this.formatDateTime(value, 'll');
     };
     DateTime.prototype.formatLongDate = function (value) {
         return this.formatDateTime(value, 'LL');
@@ -485,10 +585,25 @@ var DateTime = (function () {
         return this.formatDateTime(value, 'w');
     };
     DateTime.prototype.formatShortDateTime = function (value) {
-        return this.formatDateTime(value, 'LLL');
+        return this.toDateWithTime(value, 'L', 'LT');
+    };
+    DateTime.prototype.formatMiddleDateTime = function (value) {
+        return this.formatDateTime(value, 'lll');
     };
     DateTime.prototype.formatLongDateTime = function (value) {
+        return this.formatDateTime(value, 'LLL');
+    };
+    DateTime.prototype.formatFullDateTime = function (value) {
         return this.formatDateTime(value, 'LLLL');
+    };
+    DateTime.prototype.formatShortDateLongTime = function (value, firstTime) {
+        return this.toDateWithTime(value, 'L', 'LTS', firstTime);
+    };
+    DateTime.prototype.formatMiddleDateLongTime = function (value, firstTime) {
+        return this.toDateWithTime(value, 'll', 'LTS', firstTime);
+    };
+    DateTime.prototype.formatLongDateLongTime = function (value, firstTime) {
+        return this.toDateWithTime(value, 'LL', 'LTS', firstTime);
     };
     DateTime.prototype.formatShortTime = function (value) {
         return this.formatDateTime(value, 'LT');
@@ -501,18 +616,6 @@ var DateTime = (function () {
     };
     DateTime.prototype.formatLongDayOfWeek = function (value) {
         return this.formatDateTime(value, 'dddd');
-    };
-    DateTime.prototype.formatDateNumber = function (value) {
-        return this.formatDateTime(value, 'l');
-    };
-    DateTime.prototype.formatLongDateNumber = function (value) {
-        return this.formatDateTime(value, 'll');
-    };
-    DateTime.prototype.formatTimeNumber = function (value) {
-        return this.formatDateTime(value, 'LLL');
-    };
-    DateTime.prototype.formatLongTimeNumber = function (value) {
-        return this.formatDateTime(value, 'LLLL');
     };
     DateTime.prototype.formatLongMonthDay = function (value) {
         return this.formatMonthDay(value, 'LL');
@@ -651,8 +754,12 @@ var DateTime = (function () {
 }());
 var DateTimeService = (function () {
     function DateTimeService(datetime) {
+        this._config = { timeZone: null };
         this._datetime = datetime;
     }
+    DateTimeService.prototype.useTimeZone = function (offset) {
+        return this._datetime.useTimeZone(offset);
+    };
     DateTimeService.prototype.formatTime = function (value, format) {
         return this._datetime.formatTime(value, format);
     };
@@ -661,6 +768,9 @@ var DateTimeService = (function () {
     };
     DateTimeService.prototype.formatShortDate = function (value) {
         return this._datetime.formatShortDate(value);
+    };
+    DateTimeService.prototype.formatMiddleDate = function (value) {
+        return this._datetime.formatMiddleDate(value);
     };
     DateTimeService.prototype.formatLongDate = function (value) {
         return this._datetime.formatLongDate(value);
@@ -683,8 +793,23 @@ var DateTimeService = (function () {
     DateTimeService.prototype.formatShortDateTime = function (value) {
         return this._datetime.formatShortDateTime(value);
     };
+    DateTimeService.prototype.formatMiddleDateTime = function (value) {
+        return this._datetime.formatMiddleDateTime(value);
+    };
     DateTimeService.prototype.formatLongDateTime = function (value) {
         return this._datetime.formatLongDateTime(value);
+    };
+    DateTimeService.prototype.formatFullDateTime = function (value) {
+        return this._datetime.formatFullDateTime(value);
+    };
+    DateTimeService.prototype.formatShortDateLongTime = function (value, firstTime) {
+        return this._datetime.formatShortDateLongTime(value, firstTime);
+    };
+    DateTimeService.prototype.formatMiddleDateLongTime = function (value, firstTime) {
+        return this._datetime.formatMiddleDateLongTime(value, firstTime);
+    };
+    DateTimeService.prototype.formatLongDateLongTime = function (value, firstTime) {
+        return this._datetime.formatLongDateLongTime(value, firstTime);
     };
     DateTimeService.prototype.formatShortTime = function (value) {
         return this._datetime.formatShortTime(value);
@@ -697,18 +822,6 @@ var DateTimeService = (function () {
     };
     DateTimeService.prototype.formatLongDayOfWeek = function (value) {
         return this._datetime.formatLongDayOfWeek(value);
-    };
-    DateTimeService.prototype.formatDateNumber = function (value) {
-        return this._datetime.formatDateNumber(value);
-    };
-    DateTimeService.prototype.formatLongDateNumber = function (value) {
-        return this._datetime.formatLongDateNumber(value);
-    };
-    DateTimeService.prototype.formatTimeNumber = function (value) {
-        return this._datetime.formatTimeNumber(value);
-    };
-    DateTimeService.prototype.formatLongTimeNumber = function (value) {
-        return this._datetime.formatLongTimeNumber(value);
     };
     DateTimeService.prototype.formatLongMonthDay = function (value) {
         return this._datetime.formatLongMonthDay(value);
@@ -799,7 +912,7 @@ var DateTimeService = (function () {
 var DateTimeProvider = (function (_super) {
     __extends(DateTimeProvider, _super);
     function DateTimeProvider() {
-        _super.call(this);
+        _super.call(this, { timeZone: null });
     }
     DateTimeProvider.prototype.$get = function () {
         "ngInject";
@@ -1617,7 +1730,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('time_range_directive/time_range.html',
-    '<p><span ng-if="data.start != null">{{data.start | formatShortDateTime}}</span> <span class="separator" ng-if="data.start && data.end">-</span> <span ng-if="data.end != null">{{data.end | formatShortDateTime}}</span></p>');
+    '<p><span ng-if="data.start != null">{{data.start | formatLongDateTime}}</span> <span class="separator" ng-if="data.start && data.end">-</span> <span ng-if="data.end != null">{{data.end | formatLongDateTime}}</span></p>');
 }]);
 })();
 

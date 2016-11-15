@@ -1,57 +1,170 @@
-<h2>user Agent</h2>
-<p>{{userAgent}}</p>
+<h1>Date</h1>
 
-<h2>Date</h2>
+<!--<div>
+    <md-button class="md-accent" ng-click="onSetTimeZone(10)">
+        Set timezone "+10:00"
+    </md-button>
+    <md-button class="md-accent" ng-click="onSetTimeZone(-5)">
+        Set timezone "-5:00"
+    </md-button>
+    <md-button class="md-accent"  ng-click="onSetTimeZone(0)">
+        Reset timezone
+    </md-button>    
+</div>-->
+
+<h2>Time formats for: {{ currentTime }}</h2>
 <table>
     <tr>
-        <td><b>Long Date:</b></td>
-        <td>{{ longDate }}</td>
-        <td><b>Filter:</b></td>
-        <td>{{ currentTime | formatLongDate }}</td>
+        <td>filter name</td>
+        <td>Filter result</td>
     </tr>
     <tr>
-        <td><b>Short Date:</b> </td>
-        <td>{{ shortDate }} </td>
-        <td><b>Filter:</b></td>
-        <td>{{ currentTime | formatShortDate }}</td>
+        <td><b>formatShortTime :</b></td>
+        <td>{{ currentTime |  formatShortTime}}</td>
     </tr>
     <tr>
-        <td><b>Long Date without year:</b></td>
-        <td>{{ longDateWithoutYear }}</td>
-        <td><b>Filter:</b></td>
-        <td>{{ currentTime | formatLongDateY }}</td>
+        <td><b>formatLongTime :</b></td>
+        <td>{{ currentTime |  formatLongTime}}</td>
     </tr>
     <tr>
-        <td><b>Short Date without year:</b></td>
-        <td>{{ shortDateWithoutYear }} </td>
-        <td><b>Filter:</b></td>
+        <td><b>formatMillisecondsToSeconds :</b></td>
+        <td>{{ currentTime | formatMillisecondsToSeconds }}</td>
+    </tr>
+</table>
+
+<h2>Date formats for: {{ currentTime }}</h2>
+<table>
+    <tr>
+        <td>filter name</td>
+        <td>Filter result</td>
+    </tr>
+    <tr>
+        <td><b>formatShortDate :</b></td>
+        <td>{{ currentTime |  formatShortDate}}</td>
+    </tr>
+     <tr>
+        <td><b>formatMiddleDate :</b></td>
+        <td>{{ currentTime | formatMiddleDate }}</td>
+    </tr>    
+    <tr>
+        <td><b>formatLongDate :</b></td>
+        <td>{{ currentTime |  formatLongDate}}</td>
+    </tr>
+</table>
+
+<h2>Date Time format for: {{ currentTime }}</h2>
+<table>
+    <tr>
+        <td>filter name</td>
+        <td>Filter result</td>
+    </tr>
+     <tr>
+        <td><b>formatShortDateTime  :</b></td>
+        <td>{{ currentTime |  formatShortDateTime  }}</td>
+    </tr>
+    <tr>
+        <td><b>formatMiddleDateTime  :</b></td>
+        <td>{{ currentTime |  formatMiddleDateTime }}</td>
+    </tr>    
+     <tr>
+        <td><b>formatLongDateTime  :</b></td>
+        <td>{{ currentTime |  formatLongDateTime  }}</td>
+    </tr>
+    <tr>
+        <td><b>formatFullDateTime  :</b></td>
+        <td>{{ currentTime |  formatFullDateTime }}</td>
+    </tr>
+     <tr>
+        <td><b>formatShortDateLongTime  :</b></td>
+        <td>{{ currentTime |  formatShortDateLongTime  }}</td>
+    </tr>
+    <tr>
+        <td><b>formatMiddleDateLongTime  :</b></td>
+        <td>{{ currentTime |  formatMiddleDateLongTime }}</td>
+    </tr>    
+     <tr>
+        <td><b>formatLongDateLongTime  :</b></td>
+        <td>{{ currentTime |  formatLongDateLongTime  }}</td>
+    </tr>   
+     <tr>
+        <td><b>formatShortDateLongTime  :</b></td>
+        <td>{{ currentTime |  formatShortDateLongTime:'true' }}</td>
+    </tr>
+    <tr>
+        <td><b>formatMiddleDateLongTime  :</b></td>
+        <td>{{ currentTime |  formatMiddleDateLongTime:'true' }}</td>
+    </tr>    
+     <tr>
+        <td><b>formatLongDateLongTime  :</b></td>
+        <td>{{ currentTime |  formatLongDateLongTime:'true' }}</td>
+    </tr>       
+ </table>
+
+<h2>Part of Date format for: {{ currentTime }}</h2>
+<table>
+    <tr>
+        <td>filter name</td>
+        <td>Filter result</td>
+    </tr>
+    <tr>
+        <td><b>formatMonth :</b></td>
+        <td>{{ currentTime |  formatMonth}}</td>
+    </tr>
+    <tr>
+        <td><b>formatLongMonth :</b></td>
+        <td>{{ currentTime |  formatLongMonth}}</td>
+    </tr>
+    <tr>
+        <td><b>formatYear :</b></td>
+        <td>{{ currentTime |  formatYear}}</td>
+    </tr>
+    <tr>
+        <td><b>formatWeek :</b></td>
+        <td>{{ currentTime |  formatWeek}}</td>
+    </tr>
+    <tr>
+        <td><b>formatShortWeek :</b></td>
+        <td>{{ currentTime | formatShortWeek }}</td>
+    </tr>
+     <tr>
+        <td><b>formatShortDayOfWeek :</b></td>
+        <td>{{ currentTime | formatShortDayOfWeek }}</td>
+    </tr>
+    <tr>
+        <td><b>formatLongDayOfWeek :</b></td>
+        <td>{{ currentTime | formatLongDayOfWeek }}</td>
+    </tr>
+     <tr>
+        <td><b>formatLongMonthDay :</b></td>
+        <td>{{ currentTime | formatLongMonthDay }}</td>
+    </tr>
+    <tr>
+        <td><b>formatShortMonthDay :</b></td>
+        <td>{{ currentTime | formatShortMonthDay }}</td>
+    </tr>
+    <tr>
+        <td><b>formatISOWeek :</b></td>
+        <td>{{ currentTime | formatISOWeek }}</td>
+    </tr>
+    <tr>
+        <td><b>formatShortISOWeek :</b></td>
+        <td>{{ currentTime | formatShortISOWeek }}</td>
+    </tr>
+    <tr>
+        <td><b>formatISOWeekOrdinal :</b></td>
+        <td>{{ currentTime | formatISOWeekOrdinal }}</td>
+    </tr>
+    <tr>
+        <td><b>formatDateY :</b></td>
         <td>{{ currentTime | formatDateY }}</td>
     </tr>
     <tr>
-        <td><b>Long Time:</b></td>
-        <td>{{ longTime }}</td>
-        <td><b>Filter:</b></td>
-        <td>{{ currentTime | formatLongTime }}</td>
-    </tr>
-    <tr>
-        <td><b>Short Time:</b></td>
-        <td>{{ shortTime }}</td>
-        <td><b>Filter:</b></td>
-        <td>{{ currentTime | formatShortTime }}</td>
-    </tr>
-    <tr>
-        <td><b>Long DateTime:</b></td>
-        <td>{{ longDateTime }} </td>
-        <td><b>Filter:</b></td>
-        <td>{{ currentTime | formatLongDateTime }}</td>
-    </tr>
-    <tr>
-        <td><b>Short DateTime:</b></td>
-        <td>{{ shortDateTime }}</td>
-        <td><b>Filter:</b></td>
-        <td>{{ currentTime | formatShortDateTime }}</td>
+        <td><b>formatLongDateY :</b></td>
+        <td>{{ currentTime | formatLongDateY }}</td>
     </tr>
 </table>
+
+
 
 <h2>Date Time formats based on current Day or current Year</h2>
 <table>
@@ -91,6 +204,23 @@
     <tr>        
         <td><b>Past Date:</b> {{ fewDayAgo }} <b> Filter: </b>{{ fewDayAgo | formatTodayDateShortTimeShort }}</td>
     </tr>             
+</table>
+
+<h2>Date Time formats with parametrs for: {{ currentTime }}</h2>
+<table>
+    <tr>
+        <td>filter name</td>
+        <td>Filter Parametr</td>
+        <td>Filter result</td>
+    </tr>
+    <tr>
+        <td><b>formatTime :</b></td>
+        <td>{{ currentTime |  formatTime}}</td>
+    </tr>
+    <tr>
+        <td><b>formatDateOptional :</b></td>
+        <td>{{ currentTime |  formatDateOptional}}</td>
+    </tr>
 </table>
 
 <h2>Date range</h2>

@@ -1,9 +1,17 @@
 'use strict';
 
+export class DateTimeConfig {
+    timeZone: number;
+}
+
 export interface IDateTimeService {
+    readonly config: DateTimeConfig;
+    useTimeZone(offset: number);
+
     formatTime(value: any, format: string): string;
     formatDateOptional(value: any, format: string): string;
     formatShortDate(value: any): string;
+    formatMiddleDate(value: any): string;
     formatLongDate(value: any): string;
     formatMonth(value: any): string;
     formatLongMonth(value: any): string;
@@ -11,15 +19,16 @@ export interface IDateTimeService {
     formatWeek(value: any): string;
     formatShortWeek(value: any): string;
     formatShortDateTime(value: any): string;
+    formatMiddleDateTime(value: any): string;    
     formatLongDateTime(value: any): string;
+    formatFullDateTime(value: any): string;
+    formatShortDateLongTime(value: any, firstTime?: boolean): string;
+    formatMiddleDateLongTime(value: any, firstTime?: boolean): string;    
+    formatLongDateLongTime(value: any, firstTime?: boolean): string;    
     formatShortTime(value: any): string;
     formatLongTime(value: any): string;
     formatShortDayOfWeek(value: any): string;
     formatLongDayOfWeek(value: any): string;
-    formatDateNumber(value: any): string;
-    formatLongDateNumber(value: any): string;
-    formatTimeNumber(value: any): string;
-    formatLongTimeNumber(value: any): string;
     formatLongMonthDay(value: any): string;
     formatShortMonthDay(value: any): string;
     formatDateRange(value1: any, value2: any): string;
@@ -35,10 +44,12 @@ export interface IDateTimeService {
     formatTodayDateShortTimeShort(value: any): string;
     formatMillisecondsToSeconds(value: any): string;
     formatElapsedInterval(value: any, start: any): string;
+
     getDateJSON(date: any): string;
     getNextStart(value: any, category: string): any;
     getPrevStart(value: any, category: string): any;
     getNowStart(category: string): any;
+
     addHours(value: any, hours: number): any;
     toStartDay(value: any): any;
     toEndDay(value: any, offset: number): any;
@@ -56,6 +67,7 @@ export interface IDateTimeProvider extends IDateTimeService, ng.IServiceProvider
 }
 
 class DateTime implements IDateTimeService {
+    private _config: DateTimeConfig;
     protected _momentRanged = new Array('year', 'month', 'week', 'isoweek', 'day');
     protected _defaultFormat = 'LL'
 
@@ -100,7 +112,12 @@ class DateTime implements IDateTimeService {
             return '';
         }
 
-        date = moment(value);
+        if (this._config.timeZone) {
+            date = moment(value).utcOffset(this._config.timeZone);
+        } else {
+            date = moment(value);
+        }
+        
         if (!date.isValid()) {
             return '';
         }
@@ -119,7 +136,12 @@ class DateTime implements IDateTimeService {
             return '';
         }
 
-        date = moment(value);
+        if (this._config.timeZone) {
+            date = moment(value).utcOffset(this._config.timeZone);
+        } else {
+            date = moment(value);
+        }
+        
         if (!date.isValid()) {
             return '';
         }
@@ -143,7 +165,15 @@ class DateTime implements IDateTimeService {
             return '';
         }
 
-        date = moment(value);
+        if (this._config.timeZone) {
+            date = moment(value).utcOffset(this._config.timeZone);
+        } else {
+            date = moment(value);
+        }
+        
+        if (!date.isValid()) {
+            return '';
+        }
 
         return date.format(formatMonthYearless);
     }
@@ -158,11 +188,20 @@ class DateTime implements IDateTimeService {
             return '';
         }
 
-        date = moment(value);
+        if (this._config.timeZone) {
+            date = moment(value).utcOffset(this._config.timeZone);
+        } else {
+            date = moment(value);
+        }
+        
+        if (!date.isValid()) {
+            return '';
+        }
 
         return date.format(formatYearlessLL);
     }
 
+//  use timezone not testing
     private formatRange(value1: any, value2: any, basicFormat: string): string {
         var dateStart: any,
             dateEnd: any,
@@ -171,12 +210,12 @@ class DateTime implements IDateTimeService {
         if (this.isUndefinedOrNull(value1)) {
             dateStart = null;
         } else {
-            dateStart = moment(value1);
+            dateStart = this._config.timeZone ?  moment(value1).utcOffset(this._config.timeZone) : moment(value1);
         }
         if (this.isUndefinedOrNull(value2)) {
             dateEnd = null;
         } else {
-            dateEnd = moment(value2);
+            dateEnd = this._config.timeZone ?  moment(value2).utcOffset(this._config.timeZone) : moment(value2);
         }
 
         if (dateStart === null && dateEnd === null) return '';
@@ -210,7 +249,11 @@ class DateTime implements IDateTimeService {
             return '';
         }
 
-        date = moment(value);
+        if (this._config.timeZone) {
+            date = moment(value).utcOffset(this._config.timeZone);
+        } else {
+            date = moment(value);
+        }
         if (!date.isValid()) {
             return '';
         }
@@ -231,7 +274,11 @@ class DateTime implements IDateTimeService {
             mssOffset = 0;
         }
 
-        date = moment(value);
+        if (this._config.timeZone) {
+            date = moment(value).utcOffset(this._config.timeZone);
+        } else {
+            date = moment(value);
+        }
         if (!date.isValid()) {
             return '';
         }
@@ -245,6 +292,34 @@ class DateTime implements IDateTimeService {
         return date.startOf(range).toDate();
     }
 
+    private toDateWithTime(value: any, formatDate: string, formatTime: string, firstTime?: boolean): any {
+        var date: any,
+            result: string,
+            nowDate: any;
+
+        if (this.isUndefinedOrNull(value)) {
+            return '';
+        }
+
+        if (this._config.timeZone) {
+            date = moment(value).utcOffset(this._config.timeZone);
+        } else {
+            date = moment(value);
+        }
+        if (!date.isValid()) {
+            return '';
+        }
+
+        nowDate = moment();
+        if (firstTime) {
+            result = date.format(formatTime) + ' ' + date.format(formatDate);
+        } else {
+            result = date.format(formatDate) + ' ' + date.format(formatTime);
+        }
+
+        return result;
+    }
+
     private toTodayDate(value: any, formatDate: string, formatTime: string): any {
         var date: any,
             result: string,
@@ -254,7 +329,11 @@ class DateTime implements IDateTimeService {
             return '';
         }
 
-        date = moment(value);
+        if (this._config.timeZone) {
+            date = moment(value).utcOffset(this._config.timeZone);
+        } else {
+            date = moment(value);
+        }
         if (!date.isValid()) {
             return '';
         }
@@ -270,8 +349,17 @@ class DateTime implements IDateTimeService {
         return result;
     }
 
-    public constructor() { };
+    public constructor(config: DateTimeConfig) { 
+        this._config = config || { timeZone: null };
+    };
 
+    public get config(): DateTimeConfig {
+        return this._config;
+    }
+
+    public useTimeZone(offset: number) {
+        this._config.timeZone = offset;
+    }
     // formating functions 
     // -------------------
 
@@ -284,8 +372,13 @@ class DateTime implements IDateTimeService {
         return this.formatDateTime(value, 'L');
     }
 
+    // date formats
     public formatShortDate(value: any): string {
         return this.formatDateTime(value, 'L');
+    }
+
+    public formatMiddleDate(value: any): string {
+        return this.formatDateTime(value, 'll');
     }
 
     public formatLongDate(value: any): string {
@@ -313,11 +406,31 @@ class DateTime implements IDateTimeService {
     }
 
     public formatShortDateTime(value: any): string {
-        return this.formatDateTime(value, 'LLL');
+        return this.toDateWithTime(value, 'L', 'LT'); 
+    }
+
+    public formatMiddleDateTime(value: any): string {
+        return this.formatDateTime(value, 'lll');
     }
 
     public formatLongDateTime(value: any): string {
+        return this.formatDateTime(value, 'LLL');
+    }
+
+    public formatFullDateTime(value: any): string {
         return this.formatDateTime(value, 'LLLL');
+    }
+
+    public formatShortDateLongTime(value: any, firstTime?: boolean): string {
+        return this.toDateWithTime(value, 'L', 'LTS', firstTime); 
+    }
+
+    public formatMiddleDateLongTime(value: any, firstTime?: boolean): string {
+        return this.toDateWithTime(value, 'll', 'LTS', firstTime);
+    }
+
+    public formatLongDateLongTime(value: any, firstTime?: boolean): string {
+        return this.toDateWithTime(value, 'LL', 'LTS', firstTime);
     }
 
     public formatShortTime(value: any): string {
@@ -336,25 +449,15 @@ class DateTime implements IDateTimeService {
         return this.formatDateTime(value, 'dddd');
     }
 
-    // numeric month writing formats
-    // --------------
+    // public formatTimeNumber(value: any): string {
+    //     return this.formatDateTime(value, 'LLL');
+    // }
 
-    // numeric month writing 
-    public formatDateNumber(value: any): string {
-        return this.formatDateTime(value, 'l');
-    }
-    // numeric month writing 
-    public formatLongDateNumber(value: any): string {
-        return this.formatDateTime(value, 'll');
-    }
+    // public formatLongTimeNumber(value: any): string {
+    //     return this.formatDateTime(value, 'LLLL');
+    // }
 
-    public formatTimeNumber(value: any): string {
-        return this.formatDateTime(value, 'LLL');
-    }
-
-    public formatLongTimeNumber(value: any): string {
-        return this.formatDateTime(value, 'LLLL');
-    }
+    ///-----------------
 
     public formatLongMonthDay(value: any): string {
         return this.formatMonthDay(value, 'LL');
@@ -564,17 +667,25 @@ class DateTime implements IDateTimeService {
 
 class DateTimeService {
     private _datetime: DateTime;
+    private _config: DateTimeConfig;
 
     public constructor(
         datetime: DateTime,
     ) {
+        this._config = { timeZone: null};
         this._datetime = datetime;
+    }
+
+    // todo Optional
+    public useTimeZone(offset: number): void {
+        return this._datetime.useTimeZone(offset);
     }
 
     // todo Optional
     public formatTime(value: any, format: string): string {
         return this._datetime.formatTime(value, format);
     }
+
     // todo Optional
     public formatDateOptional(value: any, format: string): string {
         return this._datetime.formatDateOptional(value, format);
@@ -582,6 +693,10 @@ class DateTimeService {
 
     public formatShortDate(value: any): string {
         return this._datetime.formatShortDate(value);
+    }
+
+    public formatMiddleDate(value: any): string {
+        return this._datetime.formatMiddleDate(value);
     }
 
     public formatLongDate(value: any): string {
@@ -612,8 +727,28 @@ class DateTimeService {
         return this._datetime.formatShortDateTime(value);
     }
 
+    public formatMiddleDateTime(value: any): string {
+        return this._datetime.formatMiddleDateTime(value);
+    }
+
     public formatLongDateTime(value: any): string {
         return this._datetime.formatLongDateTime(value);
+    }
+
+    public formatFullDateTime(value: any): string {
+        return this._datetime.formatFullDateTime(value);
+    }
+
+    public formatShortDateLongTime(value: any, firstTime?: boolean): string {
+        return this._datetime.formatShortDateLongTime(value, firstTime);
+    }
+
+    public formatMiddleDateLongTime(value: any, firstTime?: boolean): string {
+        return this._datetime.formatMiddleDateLongTime(value, firstTime);
+    }
+
+    public formatLongDateLongTime(value: any, firstTime?: boolean): string {
+        return this._datetime.formatLongDateLongTime(value, firstTime);
     }
 
     public formatShortTime(value: any): string {
@@ -630,26 +765,6 @@ class DateTimeService {
 
     public formatLongDayOfWeek(value: any): string {
         return this._datetime.formatLongDayOfWeek(value);
-    }
-
-    // numeric month writing formats
-    // --------------
-
-    // numeric month writing 
-    public formatDateNumber(value: any): string {
-        return this._datetime.formatDateNumber(value);
-    }
-    // numeric month writing 
-    public formatLongDateNumber(value: any): string {
-        return this._datetime.formatLongDateNumber(value);
-    }
-
-    public formatTimeNumber(value: any): string {
-        return this._datetime.formatTimeNumber(value);
-    }
-
-    public formatLongTimeNumber(value: any): string {
-        return this._datetime.formatLongTimeNumber(value);
     }
 
     public formatLongMonthDay(value: any): string {
@@ -791,7 +906,7 @@ class DateTimeProvider extends DateTime implements IDateTimeProvider {
     private _service: DateTimeService;
 
     public constructor() {
-        super();
+        super({ timeZone: null });
     }
 
     public $get(): any {
