@@ -25,7 +25,7 @@
 
     // Todo: Remove dependency on Translate. Use moment localization
     thisModule.controller('pipDateRangeController',
-        function ($scope, $element, $mdMedia, $rootScope, $injector) { //pipTranslate, 
+        function ($scope, $element, $mdMedia, $rootScope, $injector, $timeout) { //pipTranslate, 
             var currentDate,
                 currentYear,
                 currentMonth,
@@ -124,7 +124,9 @@
 
             $scope.onChange = function () {
                 if ($scope.pipChanged) {
-                    $scope.pipChanged();
+                    $timeout(function() {
+                        $scope.pipChanged();
+                    }, 0);
                 }
             };
 

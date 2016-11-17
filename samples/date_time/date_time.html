@@ -70,7 +70,7 @@
 <md-divider class=" pip-list-divider"></md-divider>
 
 <h3 class="text-subhead2">{{:: weeklyLabel | translate}}: </h3>
-<pip-date-range pip-date-range-type="weekly" ng-model="weekly"></pip-date-range>
+<pip-date-range pip-date-range-type="weekly" ng-model="weekly" pip-changed="onChangeWeekly()"></pip-date-range>
 <p class="text-body1 tm16 bm16">{{:: valueLabel | translate }}: {{ weekly }}</p>
 <md-button class="l md-raised md-accent flat" ng-click="onNextWeek()">
     {{:: nextWeekLabel | translate }}

@@ -119,6 +119,10 @@
 
                 $scope.weekly = new Date(Date.UTC($scope.weekly.getFullYear(), $scope.weekly.getMonth(), day));
             };
+
+            $scope.onChangeWeekly = function() {
+                console.log('$scope.weekly', $scope.weekly);
+            }
         }
     );
 
