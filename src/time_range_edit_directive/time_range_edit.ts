@@ -16,6 +16,7 @@
                     pipStartLabel: '@',
                     pipEndLabel: '@',
                     disabled: '&ngDisabled',
+                    pipHideTime: '=',
                     pipSize: '='
                 },
                 templateUrl: 'time_range_edit_directive/time_range_edit.html',
@@ -216,12 +217,20 @@
                 return result;
             }
 
+            function toBoolean(value) {
+                if (value == null) return false;
+                if (!value) return false;
+                value = value.toString().toLowerCase();
+                return value == '1' || value == 'true';
+            }
+
             function initDate() {
                 $scope.data.startDate = null;
                 $scope.data.startTime = null;
                 $scope.data.endDate = null;
                 $scope.data.endTime = null;
                 $scope.data.duration = null;
+                $scope.showTime = !toBoolean($scope.pipHideTime);
             }
 
             // initialize data

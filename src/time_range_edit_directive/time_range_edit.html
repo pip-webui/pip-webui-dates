@@ -16,7 +16,7 @@
                                aria-label="START-DATE">
                 </md-datepicker>
             </div>
-            <div flex>
+            <div flex ng-if="showTime">
                 <md-input-container class="input-container">
                     <md-select aria-label="START-TIME" ng-model="data.startTime" ng-disabled="isDisabled()"
                                ng-change="onChangeStartTime()">
@@ -39,12 +39,12 @@
                                aria-label="END-DATE">
                 </md-datepicker>
             </div>
-            <div flex>
+            <div flex ng-if="showTime">
                 <md-input-container class="input-container">
                     <md-select aria-label="END-TIME" ng-model="data.endTime" ng-change="onChangeEndTime()"
                                ng-disabled="isDisabled()">
-                        <md-option ng-value="opt.id" ng-repeat="opt in intervalTimeCollection track by opt.id">{{
-                            opt.time }}
+                        <md-option ng-value="opt.id" ng-repeat="opt in intervalTimeCollection track by opt.id">
+                            {{ opt.time }}
                         </md-option>
                     </md-select>
                 </md-input-container>
