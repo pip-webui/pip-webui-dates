@@ -47,7 +47,7 @@
                     defineStartDate();
                     defineEndDate();
 
-                    if (toBoolean($attrs.pipRebind)) {
+                    if (toBoolean((<any>$attrs).pipRebind)) {
                         $scope.$watch('pipStartDate',
                             function () {
                                 $scope.data.start = null;
