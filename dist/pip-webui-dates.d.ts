@@ -1,6 +1,8 @@
 declare module pip.dates {
 
 
+
+
 function formatTimeFilter(pipDateTime: any): (value: any, format: string) => string;
 function formatDateOptionalFilter(pipDateTime: any): (value: any, format: string) => string;
 function formatLongDateFilter(pipDateTime: any): (value: any) => string;
@@ -99,8 +101,6 @@ export interface IDateTimeService {
 }
 export interface IDateTimeProvider extends IDateTimeService, ng.IServiceProvider {
 }
-
-
 
 
 
