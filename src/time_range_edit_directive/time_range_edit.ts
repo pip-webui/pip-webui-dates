@@ -67,7 +67,6 @@
 
             function validateStartDate() {
                 var date, start, end;
-
                 // если начальная дата не задана, обнуляем и выходим
                 if (!$scope.data.startDate) {
                     $scope.data.startTime = null;
@@ -76,7 +75,7 @@
                 }
 
                 // еcли не задано начальное время - задаем его
-                if (!$scope.data.startTime) {
+                if ($scope.data.startTime === undefined || $scope.data.startTime === null) {
                     if (!$scope.data.endTime) {
                         date = new Date();
                         date = date.getTime() - pipDateTime.toStartDay(date);
@@ -123,7 +122,7 @@
                 }
 
                 // еcли не задано конечное время - задаем его
-                if (!$scope.data.endTime) {
+                if ($scope.data.endTime === undefined || $scope.data.endTime === null) {
                     if (!$scope.data.startTime) {
                         date = new Date();
                         date = date.getTime() - pipDateTime.toStartDay(date);
@@ -159,6 +158,7 @@
 
                 if ($scope.data.startDate) {
                     time = $scope.data.startTime ? $scope.data.startTime * 60 * 1000 : 0;
+                    console.log('time', $scope.data.startTime);
                     $scope.pipStartDate = new Date($scope.data.startDate.getTime() + time);
                 }
 
@@ -240,7 +240,7 @@
             defineDate();
 
             // process function
-            $scope.onChangeStartDate = function () {
+            $scope.onChangeStartDate = function (newV) {
                 validateStartDate();
                 $scope.data.duration = setDuration();
                 setDate();

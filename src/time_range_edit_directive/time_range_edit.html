@@ -19,7 +19,7 @@
             <div flex ng-if="showTime">
                 <md-input-container class="input-container">
                     <md-select aria-label="START-TIME" ng-model="data.startTime" ng-disabled="isDisabled()"
-                               ng-change="onChangeStartTime()">
+                               ng-change="onChangeStartTime(data.startTime)">
                         <md-option ng-value="opt.id" ng-repeat="opt in intervalTimeCollection track by opt.id">{{ opt.time }}
                         </md-option>
                     </md-select>
