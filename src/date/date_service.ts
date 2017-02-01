@@ -114,7 +114,7 @@ class DateTime implements IDateTimeService {
             return '';
         }
 
-        if (this._config.timeZone) {
+        if (this._config.timeZone != undefined && this._config.timeZone != null) {
             date = moment(value).utcOffset(this._config.timeZone);
         } else {
             date = moment(value);
@@ -138,7 +138,7 @@ class DateTime implements IDateTimeService {
             return '';
         }
 
-        if (this._config.timeZone) {
+        if (this._config.timeZone != undefined && this._config.timeZone != null) {
             date = moment(value).utcOffset(this._config.timeZone);
         } else {
             date = moment(value);
@@ -167,7 +167,7 @@ class DateTime implements IDateTimeService {
             return '';
         }
 
-        if (this._config.timeZone) {
+        if (this._config.timeZone != undefined && this._config.timeZone != null) {
             date = moment(value).utcOffset(this._config.timeZone);
         } else {
             date = moment(value);
@@ -190,7 +190,7 @@ class DateTime implements IDateTimeService {
             return '';
         }
 
-        if (this._config.timeZone) {
+        if (this._config.timeZone != undefined && this._config.timeZone != null) {
             date = moment(value).utcOffset(this._config.timeZone);
         } else {
             date = moment(value);
@@ -212,12 +212,12 @@ class DateTime implements IDateTimeService {
         if (this.isUndefinedOrNull(value1)) {
             dateStart = null;
         } else {
-            dateStart = this._config.timeZone ?  moment(value1).utcOffset(this._config.timeZone) : moment(value1);
+            dateStart = (this._config.timeZone != undefined && this._config.timeZone != null) ?  moment(value1).utcOffset(this._config.timeZone) : moment(value1);
         }
         if (this.isUndefinedOrNull(value2)) {
             dateEnd = null;
         } else {
-            dateEnd = this._config.timeZone ?  moment(value2).utcOffset(this._config.timeZone) : moment(value2);
+            dateEnd = (this._config.timeZone != undefined && this._config.timeZone != null) ?  moment(value2).utcOffset(this._config.timeZone) : moment(value2);
         }
 
         if (dateStart === null && dateEnd === null) return '';
@@ -251,7 +251,7 @@ class DateTime implements IDateTimeService {
             return '';
         }
 
-        if (this._config.timeZone) {
+        if (this._config.timeZone != undefined && this._config.timeZone != null) {
             date = moment(value).utcOffset(this._config.timeZone);
         } else {
             date = moment(value);
@@ -276,7 +276,7 @@ class DateTime implements IDateTimeService {
             mssOffset = 0;
         }
 
-        if (this._config.timeZone) {
+        if (this._config.timeZone != undefined && this._config.timeZone != null) {
             date = moment(value).utcOffset(this._config.timeZone);
         } else {
             date = moment(value);
@@ -303,7 +303,7 @@ class DateTime implements IDateTimeService {
             return '';
         }
 
-        if (this._config.timeZone) {
+        if (this._config.timeZone != undefined && this._config.timeZone != null) {
             date = moment(value).utcOffset(this._config.timeZone);
         } else {
             date = moment(value);
@@ -331,7 +331,7 @@ class DateTime implements IDateTimeService {
             return '';
         }
 
-        if (this._config.timeZone) {
+        if (this._config.timeZone != undefined && this._config.timeZone != null) {
             date = moment(value).utcOffset(this._config.timeZone);
         } else {
             date = moment(value);
