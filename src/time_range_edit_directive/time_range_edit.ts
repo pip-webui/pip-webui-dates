@@ -59,6 +59,7 @@
                 if (!$scope.data.startDate || !$scope.data.endDate) {
                     return null;
                 }
+                
                 start = new Date($scope.data.startDate.getTime() + $scope.data.startTime * 60 * 1000);
                 end = new Date($scope.data.endDate.getTime() + $scope.data.endTime * 60 * 1000);
 
@@ -85,13 +86,6 @@
                     }
                 }
 
-                // если конечная дата не задана, обнуляем и выходим
-                if (!$scope.data.endDate) {
-                    $scope.data.endTime = null;
-
-                    return;
-                }
-
                 start = new Date($scope.data.startDate.getTime() + $scope.data.startTime * 60 * 1000);
 
                 // Если есть длительность, то сохраняем ее. Длительность можно изменить только изменяя конечную дату
@@ -109,6 +103,8 @@
                         $scope.data.endTime = ($scope.data.startTime + 30) % 1440;
                     }
                 }
+
+                $scope.data.startTime = Math.round($scope.data.startTime / 30) * 30;
             }
 
             function validateEndDate() {
@@ -132,13 +128,6 @@
                     }
                 }
 
-                // если yачальная дата не задана, обнуляем и выходим
-                if (!$scope.data.startDate) {
-                    $scope.data.startTime = null;
-
-                    return;
-                }
-
                 start = new Date($scope.data.startDate.getTime() + $scope.data.startTime * 60 * 1000);
                 end = new Date($scope.data.endDate.getTime() + $scope.data.endTime * 60 * 1000);
 
@@ -148,6 +137,7 @@
                     $scope.data.startTime = $scope.data.endTime % 1440 === 0 ? 1410 : $scope.data.endTime - 30;
                 }
 
+                $scope.data.endTime = Math.round($scope.data.endTime / 30) * 30;
                 $scope.data.duration = setDuration();
             }
 
@@ -158,7 +148,6 @@
 
                 if ($scope.data.startDate) {
                     time = $scope.data.startTime ? $scope.data.startTime * 60 * 1000 : 0;
-                    console.log('time', $scope.data.startTime);
                     $scope.pipStartDate = new Date($scope.data.startDate.getTime() + time);
                 }
 
@@ -196,6 +185,7 @@
                 }
 
                 validateStartDate();
+                validateEndDate();
                 $scope.data.duration = setDuration();
                 setDate();
             }

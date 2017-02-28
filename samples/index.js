@@ -54,7 +54,7 @@
 
                 return m.isValid() ? m.toDate() : new Date(NaN);
             };
-                $mdDateLocaleProvider.formatDate = function(date) {
+            $mdDateLocaleProvider.formatDate = function(date) {
                 var m = moment(date);
                 return m.isValid() ? m.format('L') : '';
             };
