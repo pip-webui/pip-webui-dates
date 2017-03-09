@@ -3,7 +3,6 @@
 angular.module('pipDateTime', [
     'pipDateTime.Service', 'pipDateTime.Filter'
 ]);
-
 },{}],2:[function(require,module,exports){
 'use strict';
 formatTimeFilter.$inject = ['pipDateTime'];
@@ -311,7 +310,6 @@ angular
     .filter('formatTodayDateShortTimeShort', formatTodayDateShortTimeShortFilter)
     .filter('formatMillisecondsToSeconds', formatMillisecondsToSecondsFilter)
     .filter('formatElapsedInterval', formatElapsedIntervalFilter);
-
 },{}],3:[function(require,module,exports){
 'use strict';
 var __extends = (this && this.__extends) || (function () {
@@ -947,7 +945,6 @@ var DateTimeProvider = (function (_super) {
 angular
     .module('pipDateTime.Service', [])
     .provider('pipDateTime', DateTimeProvider);
-
 },{}],4:[function(require,module,exports){
 (function () {
     'use strict';
@@ -1084,7 +1081,6 @@ angular
         });
     }]);
 })();
-
 },{}],5:[function(require,module,exports){
 (function () {
     'use strict';
@@ -1410,7 +1406,6 @@ angular
         }
     }]);
 })();
-
 },{}],6:[function(require,module,exports){
 'use strict';
 angular.module('pipDates', [
@@ -1421,7 +1416,6 @@ angular.module('pipDates', [
     'pipDateRange',
     'pipDates.Translate'
 ]);
-
 },{}],7:[function(require,module,exports){
 /**
  * @file Optional filter to translate string resources
@@ -1502,7 +1496,6 @@ angular.module('pipDates', [
         };
     });
 })();
-
 },{}],9:[function(require,module,exports){
 (function () {
     'use strict';
@@ -1731,7 +1724,6 @@ angular.module('pipDates', [
         $element.addClass('pip-time-range-edit');
     }]);
 })();
-
 },{}],10:[function(require,module,exports){
 (function(module) {
 try {
