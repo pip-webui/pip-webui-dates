@@ -28,7 +28,7 @@ pip-date-range {
     }
 
     md-select-label {
-      .flex();
+      @include flex();
       flex: 1;
     }
   }
@@ -100,7 +100,7 @@ pip-date-range {
         min-width: 1.6em !important;
 
         span {
-          min-width: ~"calc(100% - 7px)" !important;
+          min-width: calc(100% - 7px) !important;
         }
 
         span.md-select-icon {
@@ -119,7 +119,7 @@ pip-date-range {
         min-width: 2.6em !important;
 
         span {
-          min-width: ~"calc(100% - 7px)" !important;
+          min-width: calc(100% - 7px) !important;
         }
         span.md-select-icon {
           width: 12px !important;
@@ -137,7 +137,7 @@ pip-date-range {
         min-width: 2.6em !important;
 
         span {
-          min-width: ~"calc(100% - 7px)" !important;
+          min-width: calc(100% - 7px) !important;
         }
         span.md-select-icon {
           width: 12px !important;
@@ -155,7 +155,7 @@ pip-date-range {
         min-width: 2.7em !important;
 
         span {
-          min-width: ~"calc(100% - 7px)" !important;
+          min-width: calc(100% - 7px) !important;
         }
         span.md-select-icon {
           width: 12px !important;
