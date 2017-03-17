@@ -951,7 +951,7 @@ angular
     var thisModule = angular.module('pipDate', ['pipDates.Templates']);
     thisModule.directive('pipDate', function () {
         return {
-            restrict: 'EA',
+            restrict: 'E',
             require: 'ngModel',
             scope: {
                 timeMode: '@pipTimeMode',
@@ -1087,7 +1087,7 @@ angular
     var thisModule = angular.module('pipDateRange', ['pipDates.Templates']);
     thisModule.directive('pipDateRange', function () {
         return {
-            restrict: 'EA',
+            restrict: 'E',
             require: 'ngModel',
             scope: {
                 timeMode: '@pipTimeMode',
@@ -1446,7 +1446,7 @@ angular.module('pipDates', [
     var thisModule = angular.module('pipTimeRange', []);
     thisModule.directive('pipTimeRange', function () {
         return {
-            restrict: 'EA',
+            restrict: 'E',
             scope: {
                 pipStartDate: '=',
                 pipEndDate: '='

@@ -8,7 +8,7 @@
     thisModule.directive('pipDate',
         function () {
             return {
-                restrict: 'EA',
+                restrict: 'E',
                 require: 'ngModel',
                 scope: {
                     timeMode: '@pipTimeMode',

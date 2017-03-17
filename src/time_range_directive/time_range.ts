@@ -8,7 +8,7 @@
     thisModule.directive('pipTimeRange',
         function () {
             return {
-                restrict: 'EA',
+                restrict: 'E',
                 scope: {
                     pipStartDate: '=',
                     pipEndDate: '='

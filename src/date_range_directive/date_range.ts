@@ -7,7 +7,7 @@
     thisModule.directive('pipDateRange',
         function () {
             return {
-                restrict: 'EA',
+                restrict: 'E',
                 require: 'ngModel',
                 scope: {
                     timeMode: '@pipTimeMode',
