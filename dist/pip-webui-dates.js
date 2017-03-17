@@ -1082,6 +1082,323 @@ angular
     }]);
 })();
 },{}],5:[function(require,module,exports){
+var DateRange = (function () {
+    function DateRange($scope, $element, $mdMedia, $rootScope, $injector, $timeout) {
+        var _this = this;
+        this.$mdMedia = $mdMedia;
+        this.$timeout = $timeout;
+        this.prevState = {};
+        this.currentState = {};
+        this.localeDate = moment.localeData();
+        this.momentMonths = angular.isArray(this.localeDate._months) ? this.localeDate._months : this.localeDate._months.format;
+        this.momentDays = angular.isArray(this.localeDate._weekdays) ? this.localeDate._weekdays : this.localeDate._weekdays.format;
+        this.momentShortDays = this.localeDate._weekdaysMin;
+        this.momentFirstDayOfWeek = this.localeDate._week.dow;
+        this.currentDate = new Date();
+        this.currentYear = this.currentDate.getUTCFullYear();
+        this.currentMonth = this.currentDate.getUTCMonth() + 1;
+        this.currentDay = this.currentDate.getUTCDate();
+        this.init();
+        this.disableControls = this.disabled ? this.disabled() : false;
+        $scope.$watch('model', function (newValue, oldValue) {
+            if (newValue !== oldValue) {
+                _this.getValue(newValue);
+            }
+        });
+        $scope.$watch('$ctrl.disabled', function (newValue) {
+            _this.disableControls = newValue ? true : false;
+        });
+        $scope.$watch('pipDateRangeType', function (newValue, oldValue) {
+            if (newValue !== oldValue && oldValue) {
+                _this.init();
+            }
+        });
+    }
+    DateRange.prototype.onMonthChanged = function () {
+        if (this.pipDateRangeType === 'weekly') {
+            var date = void 0, dayOfWeek = void 0;
+            date = new Date(Date.UTC(this.year, this.month - 1, 1));
+            dayOfWeek = date.getUTCDay() ? date.getUTCDay() : 7;
+            this.week = this.getWeekByDate(dayOfWeek, this.month - 1, this.year);
+            this.correctWeek();
+            this.adjustWeek();
+        }
+        else {
+            this.adjustDay();
+        }
+        this.setValue();
+    };
+    DateRange.prototype.onYearChanged = function () {
+        var date, dayOfWeek;
+        date = new Date(Date.UTC(this.year, this.month - 1, 1));
+        dayOfWeek = date.getUTCDay() ? date.getUTCDay() : 7;
+        if (this.pipDateRangeType === 'weekly') {
+            this.week = this.getWeekByDate(dayOfWeek, this.month - 1, this.year);
+            this.adjustWeek();
+            this.correctWeek();
+        }
+        else {
+            this.adjustDay();
+        }
+        this.setValue();
+    };
+    ;
+    DateRange.prototype.onWeekChange = function () {
+        if (this.pipDateRangeType === 'weekly') {
+            this.adjustWeek();
+            this.correctWeek();
+        }
+        else {
+            this.adjustDay();
+        }
+        this.setValue();
+    };
+    ;
+    DateRange.prototype.isDay = function () {
+        return this.pipDateRangeType === 'daily';
+    };
+    ;
+    DateRange.prototype.isWeek = function () {
+        return this.pipDateRangeType === 'weekly';
+    };
+    ;
+    DateRange.prototype.isMonth = function () {
+        return this.pipDateRangeType === 'daily' ||
+            this.pipDateRangeType === 'weekly' ||
+            this.pipDateRangeType === 'monthly';
+    };
+    ;
+    DateRange.prototype.onChange = function () {
+        var _this = this;
+        if (this.pipChanged) {
+            this.$timeout(function () {
+                _this.pipChanged();
+            }, 0);
+        }
+    };
+    ;
+    DateRange.prototype.setCurrent = function () {
+        this.currentState.day = this.day;
+        this.currentState.month = this.month;
+        this.currentState.year = this.year;
+        this.currentState.week = this.week;
+        this.currentState.dateRangeType = this.pipDateRangeType;
+        this.currentState.model = this.model;
+    };
+    DateRange.prototype.fillLists = function () {
+        this.days = this.dayList(this.month, this.year);
+        this.weeks = this.weekList(this.month, this.year);
+        this.months = this.monthList();
+        this.shortMonths = this.monthList();
+        this.years = this.yearList();
+    };
+    DateRange.prototype.correctWeek = function () {
+        if (!this.prevState.model || this.prevState.model && this.prevState.model.getTime() >= this.model.getTime()) {
+            if (this.weeks && this.weeks[this.week] && this.weeks[this.week].id <= 0) {
+                if (this.month < 12) {
+                    this.month += 1;
+                }
+                else {
+                    this.month = 1;
+                    this.year += 1;
+                }
+                this.fillLists();
+            }
+        }
+    };
+    DateRange.prototype.init = function () {
+        var value;
+        value = this.model ? new Date(this.model) : null;
+        this.day = value ? value.getUTCDate() : null;
+        this.month = value ? value.getUTCMonth() + 1 : null;
+        this.year = value ? value.getUTCFullYear() : null;
+        this.week = value ? this.getWeekByDate(this.day, this.month - 1, this.year) : null;
+        this.fillLists();
+        if (this.pipDateRangeType === 'weekly') {
+            this.correctWeek();
+        }
+        this.adjustWeek();
+        this.setValue();
+    };
+    DateRange.prototype.onYearClick = function () {
+        if (!this.year) {
+            this.year = this.currentYear;
+        }
+    };
+    ;
+    DateRange.prototype.onMonthClick = function () {
+        if (!this.month) {
+            this.month = this.currentMonth;
+        }
+    };
+    ;
+    DateRange.prototype.onDayClick = function () {
+        if (!this.year) {
+            this.day = this.currentDay;
+        }
+    };
+    ;
+    DateRange.prototype.getCountDay = function (month, year) {
+        var count = 31;
+        if (month === 4 || month === 6 || month === 9 || month === 11) {
+            count = 30;
+            return count;
+        }
+        if (month === 2) {
+            if (year) {
+                count = year % 4 === 0 ? 29 : 28;
+                return count;
+            }
+            count = 28;
+        }
+        return count;
+    };
+    DateRange.prototype.dayList = function (month, year) {
+        var count, days;
+        count = this.getCountDay(month, year);
+        this.nameDays = [];
+        this.days = [];
+        for (var i = 1; i <= count; i++) {
+            this.days.push(i);
+            this.nameDays.push(this.momentShortDays[moment([year, month - 1, i]).weekday()]);
+        }
+        return days;
+    };
+    DateRange.prototype.getWeekByDate = function (day, month, year) {
+        var date, dayOfWeek, startWeek;
+        date = new Date(Date.UTC(year, month, day));
+        dayOfWeek = date.getUTCDay() ? date.getUTCDay() : 7;
+        if (dayOfWeek === 1) {
+            startWeek = day;
+        }
+        else {
+            startWeek = day + 1 - dayOfWeek;
+        }
+        return startWeek;
+    };
+    DateRange.prototype.getWeek = function (day, countDay, countPrevMonthDay) {
+        var endDay, startDay;
+        endDay = day + 6 > countDay ? countDay - day - 6 : day + 6;
+        startDay = day > 0 ? day : countPrevMonthDay + day;
+        return startDay.toString() + ' - ' + (Math.abs(endDay)).toString();
+    };
+    DateRange.prototype.weekList = function (month, year) {
+        var weeks, countDay, countPrevMonthDay, startWeek;
+        weeks = [];
+        countDay = this.getCountDay(month, year);
+        startWeek = this.getWeekByDate(1, month - 1, year);
+        countPrevMonthDay = month - 1 ? this.getCountDay(month - 1, year) : this.getCountDay(12, year - 1);
+        while (startWeek < countDay + 1) {
+            weeks.push({
+                id: startWeek,
+                name: this.getWeek(startWeek, countDay, countPrevMonthDay)
+            });
+            startWeek = startWeek + 7;
+        }
+        return weeks;
+    };
+    DateRange.prototype.monthList = function () {
+        var months = [];
+        for (var i = 1; i <= 12; i++) {
+            months.push({
+                id: i,
+                name: this.momentMonths[i - 1]
+            });
+        }
+        return months;
+    };
+    DateRange.prototype.yearList = function () {
+        var startYear, endYear, years = [];
+        switch (this.timeMode) {
+            case 'future':
+                startYear = this.currentYear;
+                endYear = this.currentYear + 100;
+                break;
+            case 'past':
+                startYear = this.currentYear - 100;
+                endYear = this.currentYear;
+                break;
+            case 'now':
+                startYear = this.currentYear - 50;
+                endYear = this.currentYear + 100;
+                break;
+            default:
+                startYear = this.currentYear - 50;
+                endYear = this.currentYear + 50;
+                break;
+        }
+        if (this.timeMode === 'future') {
+            for (var i = startYear; i <= endYear; i++) {
+                years.push(i);
+            }
+        }
+        else {
+            for (var i = endYear; i >= startYear; i--) {
+                years.push(i);
+            }
+        }
+        return years;
+    };
+    DateRange.prototype.adjustDay = function () {
+        var days = this.dayList(this.month, this.year);
+        switch (this.pipDateRangeType) {
+            case 'monthly':
+                this.day = 1;
+                break;
+            case 'yearly':
+                this.month = 1;
+                this.day = 1;
+                break;
+            default:
+                if (this.days.length !== days.length) {
+                    if (this.day > days.length) {
+                        this.day = days.length;
+                    }
+                }
+                break;
+        }
+        this.days = days;
+    };
+    DateRange.prototype.adjustWeek = function () {
+        var weeks = this.weekList(this.month, this.year);
+        this.week = this.getWeekByDate(this.week, this.month - 1, this.year);
+        this.weeks = weeks;
+    };
+    DateRange.prototype.getValue = function (v) {
+        var value, day, month, year, week;
+        value = v ? new Date(v) : null;
+        day = value ? value.getUTCDate() : null;
+        month = value ? value.getUTCMonth() + 1 : null;
+        year = value ? value.getUTCFullYear() : null;
+        week = value ? this.getWeekByDate(day, month - 1, year) : null;
+        if (this.day === day && this.month === month && this.year === year && this.week === week) {
+            return;
+        }
+        this.day = day;
+        this.month = month;
+        this.year = year;
+        this.week = week;
+        this.days = this.dayList(this.month, this.year);
+        this.weeks = this.weekList(this.month, this.year);
+    };
+    DateRange.prototype.setValue = function () {
+        var value;
+        if (this.pipDateRangeType === 'weekly') {
+            value = new Date(this.year, this.month - 1, this.week, 0, 0, 0, 0);
+            value = new Date(value.getTime() - value.getTimezoneOffset() * 60000);
+            this.model = value;
+        }
+        else {
+            value = new Date(this.year, this.month - 1, this.day, 0, 0, 0, 0);
+            value = new Date(value.getTime() - value.getTimezoneOffset() * 60000);
+            this.model = value;
+        }
+        this.prevState = _.cloneDeep(this.currentState);
+        this.setCurrent();
+        this.onChange();
+    };
+    return DateRange;
+}());
 (function () {
     'use strict';
     var thisModule = angular.module('pipDateRange', ['pipDates.Templates']);
@@ -1745,7 +2062,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('date_range_directive/date_range.html',
-    '<div class="pip-date-range layout-row flex" tabindex="-1"><md-input-container ng-show="isDay()" class="input-container pip-day flex" ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}"><md-select class="select-day" ng-class="{\'pip-no-line\' : pipNoLine}" ng-disable="{{disableControls}}" md-on-open="onDayClick()" ng-model="day" ng-change="onDayChanged()" placeholder="{{dayLabel}}" aria-label="DAY"><md-option ng-value="opt" ng-repeat="opt in days track by opt">{{nameDays[$index]}} {{ opt }}</md-option></md-select></md-input-container><md-input-container ng-show="isWeek()" class="input-container flex" ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}"><md-select class="select-week" ng-class="{\'pip-no-line\' : pipNoLine}" ng-disable="{{disableControls}}" ng-model="week" ng-change="onWeekChange()" placeholder="{{weekLabel}}" aria-label="WEEK"><md-option ng-value="opt.id" ng-repeat="opt in weeks track by opt.id">{{ opt.name }}</md-option></md-select></md-input-container><div class="flex-fixed" ng-class="{\'space16\': $mdMedia(\'gt-xs\'), \'space8\': $mdMedia(\'xs\')}" ng-show="isDay() || isWeek()"></div><md-input-container ng-show="isMonth() && !monthFormatShort" class="input-container flex" ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}"><md-select class="select-month" ng-class="{\'pip-no-line\' : pipNoLine}" ng-disable="{{disableControls}}" md-on-open="onMonthClick()" ng-model="month" ng-change="onMonthChanged()" placeholder="{{monthLabel}}" aria-label="MONTH"><md-option ng-value="opt.id" ng-repeat="opt in months track by opt.id">{{ opt.name }}</md-option></md-select></md-input-container><md-input-container ng-show="isMonth() && monthFormatShort" class="flex input-container" ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}"><md-select class="select-month" ng-class="{\'pip-no-line\' : pipNoLine}" ng-disable="{{disableControls}}" md-on-open="onMonthClick()" ng-model="month" ng-change="onMonthChanged()" placeholder="{{monthLabel}}" aria-label="MONTH"><md-option ng-value="opt.id" ng-repeat="opt in shortMonths track by opt.id">{{ opt.name }}</md-option></md-select></md-input-container><div class="flex-fixed" ng-class="{\'space16\': $mdMedia(\'gt-xs\'), \'space8\': $mdMedia(\'xs\')}" ng-show="isMonth()"></div><md-input-container class="input-container flex" ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}"><md-select class="select-year" ng-class="{\'pip-no-line\' : pipNoLine}" ng-disable="{{disableControls}}" md-on-open="onYearClick()" ng-model="year" ng-change="onYearChanged()" placeholder="{{yearLabel}}" aria-label="YEAR"><md-option ng-value="opt" ng-repeat="opt in years track by opt">{{ opt }}</md-option></md-select></md-input-container></div>');
+    '<div class="pip-date-range layout-row flex" tabindex="-1"><md-input-container ng-show="isDay()" class="input-container pip-day flex" ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}"><md-select class="select-day" ng-class="{\'pip-no-line\' : pipNoLine}" ng-disable="{{disableControls}}" md-on-open="onDayClick()" ng-model="day" ng-change="setValue()" placeholder="{{dayLabel}}" aria-label="DAY"><md-option ng-value="opt" ng-repeat="opt in days track by opt">{{nameDays[$index]}} {{ opt }}</md-option></md-select></md-input-container><md-input-container ng-show="isWeek()" class="input-container flex" ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}"><md-select class="select-week" ng-class="{\'pip-no-line\' : pipNoLine}" ng-disable="{{disableControls}}" ng-model="week" ng-change="onWeekChange()" placeholder="{{weekLabel}}" aria-label="WEEK"><md-option ng-value="opt.id" ng-repeat="opt in weeks track by opt.id">{{ opt.name }}</md-option></md-select></md-input-container><div class="flex-fixed" ng-class="{\'space16\': $mdMedia(\'gt-xs\'), \'space8\': $mdMedia(\'xs\')}" ng-show="isDay() || isWeek()"></div><md-input-container ng-show="isMonth() && !monthFormatShort" class="input-container flex" ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}"><md-select class="select-month" ng-class="{\'pip-no-line\' : pipNoLine}" ng-disable="{{disableControls}}" md-on-open="onMonthClick()" ng-model="month" ng-change="onMonthChanged()" placeholder="{{monthLabel}}" aria-label="MONTH"><md-option ng-value="opt.id" ng-repeat="opt in months track by opt.id">{{ opt.name }}</md-option></md-select></md-input-container><md-input-container ng-show="isMonth() && monthFormatShort" class="flex input-container" ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}"><md-select class="select-month" ng-class="{\'pip-no-line\' : pipNoLine}" ng-disable="{{disableControls}}" md-on-open="onMonthClick()" ng-model="month" ng-change="onMonthChanged()" placeholder="{{monthLabel}}" aria-label="MONTH"><md-option ng-value="opt.id" ng-repeat="opt in shortMonths track by opt.id">{{ opt.name }}</md-option></md-select></md-input-container><div class="flex-fixed" ng-class="{\'space16\': $mdMedia(\'gt-xs\'), \'space8\': $mdMedia(\'xs\')}" ng-show="isMonth()"></div><md-input-container class="input-container flex" ng-class="{\'flex-fixed\' : $mdMedia(\'gt-xs\')}"><md-select class="select-year" ng-class="{\'pip-no-line\' : pipNoLine}" ng-disable="{{disableControls}}" md-on-open="onYearClick()" ng-model="year" ng-change="onYearChanged()" placeholder="{{yearLabel}}" aria-label="YEAR"><md-option ng-value="opt" ng-repeat="opt in years track by opt">{{ opt }}</md-option></md-select></md-input-container></div>');
 }]);
 })();
 

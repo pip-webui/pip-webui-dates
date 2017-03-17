@@ -101,6 +101,63 @@ export interface IDateTimeProvider extends IDateTimeService, ng.IServiceProvider
 }
 
 
+class DateRange {
+    $mdMedia: angular.material.IMedia;
+    private $timeout;
+    private currentDate;
+    private currentYear;
+    private currentMonth;
+    private currentDay;
+    private prevState;
+    private currentState;
+    private localeDate;
+    private momentMonths;
+    private momentDays;
+    private momentShortDays;
+    private momentFirstDayOfWeek;
+    pipDateRangeType: string;
+    pipChanged: Function;
+    year: number;
+    month: number;
+    week: any;
+    day: number;
+    shortMonths: string[];
+    days: number[];
+    weeks: any[];
+    months: number[];
+    years: number[];
+    nameDays: string[];
+    model: any;
+    disabled: Function;
+    disableControls: boolean;
+    timeMode: string;
+    constructor($scope: ng.IScope, $element: any, $mdMedia: angular.material.IMedia, $rootScope: ng.IRootScopeService, $injector: angular.auto.IInjectorService, $timeout: ng.ITimeoutService);
+    onMonthChanged(): void;
+    onYearChanged(): void;
+    onWeekChange(): void;
+    isDay(): boolean;
+    isWeek(): boolean;
+    isMonth(): boolean;
+    onChange(): void;
+    private setCurrent();
+    private fillLists();
+    private correctWeek();
+    private init();
+    onYearClick(): void;
+    onMonthClick(): void;
+    onDayClick(): void;
+    getCountDay(month: number, year: number): number;
+    private dayList(month, year);
+    getWeekByDate(day: any, month: any, year: any): any;
+    getWeek(day: number, countDay: number, countPrevMonthDay: any): string;
+    weekList(month: number, year: number): any[];
+    private monthList();
+    private yearList();
+    private adjustDay();
+    private adjustWeek();
+    private getValue(v);
+    setValue(): void;
+}
 
 
 
