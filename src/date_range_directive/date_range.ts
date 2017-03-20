@@ -13,7 +13,7 @@ class DateRange {
     private momentShortDays: any;
     private momentFirstDayOfWeek: any;
 
-    public pipDateRangeType: string;
+    public pipDateRangeType: any;
     public pipChanged: Function;
     public year: number;
     public month: number;
@@ -65,6 +65,7 @@ class DateRange {
         });
 
         $scope.$watch('$ctrl.pipDateRangeType', (newValue, oldValue) => {
+            console.log('a',newValue);
             if (newValue !== oldValue && oldValue) {
                 this.init();
             }

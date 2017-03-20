@@ -115,7 +115,7 @@ class DateRange {
     private momentDays;
     private momentShortDays;
     private momentFirstDayOfWeek;
-    pipDateRangeType: string;
+    pipDateRangeType: any;
     pipChanged: Function;
     year: number;
     month: number;

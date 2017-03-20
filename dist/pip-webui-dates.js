@@ -1109,6 +1109,7 @@ var DateRange = (function () {
             _this.disableControls = newValue ? true : false;
         });
         $scope.$watch('$ctrl.pipDateRangeType', function (newValue, oldValue) {
+            console.log('a', newValue);
             if (newValue !== oldValue && oldValue) {
                 _this.init();
             }
@@ -1412,7 +1413,7 @@ var DateRange = (function () {
             pipChanged: '&',
             pipDateRangeType: '@',
             pipDateFormat: '@',
-            pipNoLine: '='
+            pipNoLine: '@'
         },
         templateUrl: 'date_range_directive/date_range.html',
         controller: DateRange
