@@ -65,6 +65,17 @@ export interface IDateTimeProvider extends IDateTimeService, ng.IServiceProvider
 
 
 
+interface IDateRangeBindings {
+    [key: string]: any;
+    timeMode: any;
+    disabled: any;
+    model: any;
+    pipChanged: any;
+    type: any;
+    pipDateFormat: any;
+    pipNoLine: any;
+}
+const DateRangeBindings: IDateRangeBindings;
 class DateRange {
     $mdMedia: angular.material.IMedia;
     private $timeout;
@@ -79,7 +90,7 @@ class DateRange {
     private momentDays;
     private momentShortDays;
     private momentFirstDayOfWeek;
-    pipDateRangeType: any;
+    type: any;
     pipChanged: Function;
     year: number;
     month: number;

@@ -1089,6 +1089,15 @@ angular.module('pipDateTime', [
     }]);
 })();
 },{}],7:[function(require,module,exports){
+var DateRangeBindings = {
+    timeMode: '@pipTimeMode',
+    disabled: '&ngDisabled',
+    model: '=ngModel',
+    pipChanged: '&',
+    type: '@pipDateRangeType',
+    pipDateFormat: '@',
+    pipNoLine: '@'
+};
 var DateRange = (function () {
     function DateRange($mdMedia, $timeout, $scope, $element, $rootScope, $injector) {
         var _this = this;
@@ -1115,7 +1124,7 @@ var DateRange = (function () {
         $scope.$watch('$ctrl.disabled', function (newValue) {
             _this.disableControls = newValue ? true : false;
         });
-        $scope.$watch('$ctrl.pipDateRangeType', function (newValue, oldValue) {
+        $scope.$watch('$ctrl.type', function (newValue, oldValue) {
             console.log('a', newValue);
             if (newValue !== oldValue && oldValue) {
                 _this.init();
@@ -1126,7 +1135,7 @@ var DateRange = (function () {
         console.log(changes);
     };
     DateRange.prototype.onMonthChanged = function () {
-        if (this.pipDateRangeType === 'weekly') {
+        if (this.type === 'weekly') {
             var date = void 0, dayOfWeek = void 0;
             date = new Date(Date.UTC(this.year, this.month - 1, 1));
             dayOfWeek = date.getUTCDay() ? date.getUTCDay() : 7;
@@ -1143,7 +1152,7 @@ var DateRange = (function () {
         var date, dayOfWeek;
         date = new Date(Date.UTC(this.year, this.month - 1, 1));
         dayOfWeek = date.getUTCDay() ? date.getUTCDay() : 7;
-        if (this.pipDateRangeType === 'weekly') {
+        if (this.type === 'weekly') {
             this.week = this.getWeekByDate(dayOfWeek, this.month - 1, this.year);
             this.adjustWeek();
             this.correctWeek();
@@ -1155,7 +1164,7 @@ var DateRange = (function () {
     };
     ;
     DateRange.prototype.onWeekChange = function () {
-        if (this.pipDateRangeType === 'weekly') {
+        if (this.type === 'weekly') {
             this.adjustWeek();
             this.correctWeek();
         }
@@ -1166,17 +1175,17 @@ var DateRange = (function () {
     };
     ;
     DateRange.prototype.isDay = function () {
-        return this.pipDateRangeType === 'daily';
+        return this.type === 'daily';
     };
     ;
     DateRange.prototype.isWeek = function () {
-        return this.pipDateRangeType === 'weekly';
+        return this.type === 'weekly';
     };
     ;
     DateRange.prototype.isMonth = function () {
-        return this.pipDateRangeType === 'daily' ||
-            this.pipDateRangeType === 'weekly' ||
-            this.pipDateRangeType === 'monthly';
+        return this.type === 'daily' ||
+            this.type === 'weekly' ||
+            this.type === 'monthly';
     };
     ;
     DateRange.prototype.onChange = function () {
@@ -1193,7 +1202,7 @@ var DateRange = (function () {
         this.currentState.month = this.month;
         this.currentState.year = this.year;
         this.currentState.week = this.week;
-        this.currentState.dateRangeType = this.pipDateRangeType;
+        this.currentState.dateRangeType = this.type;
         this.currentState.model = this.model;
     };
     DateRange.prototype.fillLists = function () {
@@ -1225,7 +1234,7 @@ var DateRange = (function () {
         this.year = value ? value.getUTCFullYear() : null;
         this.week = value ? this.getWeekByDate(this.day, this.month - 1, this.year) : null;
         this.fillLists();
-        if (this.pipDateRangeType === 'weekly') {
+        if (this.type === 'weekly') {
             this.correctWeek();
         }
         this.adjustWeek();
@@ -1352,7 +1361,7 @@ var DateRange = (function () {
     };
     DateRange.prototype.adjustDay = function () {
         var days = this.dayList(this.month, this.year);
-        switch (this.pipDateRangeType) {
+        switch (this.type) {
             case 'monthly':
                 this.day = 1;
                 break;
@@ -1394,7 +1403,7 @@ var DateRange = (function () {
     };
     DateRange.prototype.setValue = function () {
         var value;
-        if (this.pipDateRangeType === 'weekly') {
+        if (this.type === 'weekly') {
             value = new Date(this.year, this.month - 1, this.week, 0, 0, 0, 0);
             value = new Date(value.getTime() - value.getTimezoneOffset() * 60000);
             this.model = value;
@@ -1413,15 +1422,7 @@ var DateRange = (function () {
 (function () {
     'use strict';
     var daterange = {
-        bindings: {
-            timeMode: '@pipTimeMode',
-            disabled: '&ngDisabled',
-            model: '=ngModel',
-            pipChanged: '&',
-            pipDateRangeType: '@',
-            pipDateFormat: '@',
-            pipNoLine: '@'
-        },
+        bindings: DateRangeBindings,
         templateUrl: 'date_range_directive/DateRange.html',
         controller: DateRange
     };

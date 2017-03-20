@@ -1,5 +1,27 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
+interface IDateRangeBindings {
+    [key: string]: any;
+
+    timeMode: any;
+    disabled: any;
+    model: any;
+    pipChanged: any;
+    type: any;
+    pipDateFormat: any;
+    pipNoLine: any;
+}
+
+const DateRangeBindings: IDateRangeBindings = {
+    timeMode: '@pipTimeMode',
+    disabled: '&ngDisabled',
+    model: '=ngModel',
+    pipChanged: '&',
+    type: '@pipDateRangeType',
+    pipDateFormat: '@',
+    pipNoLine: '@'
+}
+
 class DateRange {
     private currentDate: Date;
     private currentYear: number;
@@ -13,7 +35,7 @@ class DateRange {
     private momentShortDays: any;
     private momentFirstDayOfWeek: any;
 
-    public pipDateRangeType: any;
+    public type: any;
     public pipChanged: Function;
     public year: number;
     public month: number;
@@ -64,7 +86,7 @@ class DateRange {
             this.disableControls = newValue ? true : false;
         });
 
-        $scope.$watch('$ctrl.pipDateRangeType', (newValue, oldValue) => {
+        $scope.$watch('$ctrl.type', (newValue, oldValue) => {
             console.log('a',newValue);
             if (newValue !== oldValue && oldValue) {
                 this.init();
@@ -78,7 +100,7 @@ class DateRange {
     }
 
     public onMonthChanged(): void {
-        if (this.pipDateRangeType === 'weekly') {
+        if (this.type === 'weekly') {
             let date: Date, dayOfWeek: number;
             date = new Date(Date.UTC(this.year, this.month - 1, 1));
             dayOfWeek = date.getUTCDay() ? date.getUTCDay() : 7;
@@ -95,7 +117,7 @@ class DateRange {
         let date: Date, dayOfWeek: number;
         date = new Date(Date.UTC(this.year, this.month - 1, 1));
         dayOfWeek = date.getUTCDay() ? date.getUTCDay() : 7;
-        if (this.pipDateRangeType === 'weekly') {
+        if (this.type === 'weekly') {
             this.week = this.getWeekByDate(dayOfWeek, this.month - 1, this.year);
             this.adjustWeek();
             this.correctWeek();
@@ -106,7 +128,7 @@ class DateRange {
     };
 
     public onWeekChange() {
-        if (this.pipDateRangeType === 'weekly') {
+        if (this.type === 'weekly') {
             this.adjustWeek();
             this.correctWeek();
         } else {
@@ -116,17 +138,17 @@ class DateRange {
     };
 
     public isDay(): boolean {
-        return this.pipDateRangeType === 'daily';
+        return this.type === 'daily';
     };
 
     public isWeek(): boolean {
-        return this.pipDateRangeType === 'weekly';
+        return this.type === 'weekly';
     };
 
     public isMonth(): boolean {
-        return this.pipDateRangeType === 'daily' ||
-            this.pipDateRangeType === 'weekly' ||
-            this.pipDateRangeType === 'monthly';
+        return this.type === 'daily' ||
+            this.type === 'weekly' ||
+            this.type === 'monthly';
     };
 
     public onChange() {
@@ -142,7 +164,7 @@ class DateRange {
         this.currentState.month = this.month;
         this.currentState.year = this.year;
         this.currentState.week = this.week;
-        this.currentState.dateRangeType = this.pipDateRangeType;
+        this.currentState.dateRangeType = this.type;
         this.currentState.model = this.model;
     }
 
@@ -180,7 +202,7 @@ class DateRange {
 
         this.fillLists();
 
-        if (this.pipDateRangeType === 'weekly') {
+        if (this.type === 'weekly') {
             this.correctWeek();
         }
         this.adjustWeek();
@@ -333,7 +355,7 @@ class DateRange {
     private adjustDay() {
         let days = this.dayList(this.month, this.year);
 
-        switch (this.pipDateRangeType) {
+        switch (this.type) {
             case 'monthly':
                 this.day = 1;
                 break;
@@ -385,7 +407,7 @@ class DateRange {
     public setValue() {
         let value;
 
-        if (this.pipDateRangeType === 'weekly') {
+        if (this.type === 'weekly') {
             value = new Date(this.year, this.month - 1, this.week, 0, 0, 0, 0);
             value = new Date(value.getTime() - value.getTimezoneOffset() * 60000);
             this.model = value;
@@ -406,15 +428,7 @@ class DateRange {
     'use strict';
 
     const daterange: ng.IComponentOptions = {
-        bindings: {
-            timeMode: '@pipTimeMode',
-            disabled: '&ngDisabled',
-            model: '=ngModel',
-            pipChanged: '&',
-            pipDateRangeType: '@',
-            pipDateFormat: '@',
-            pipNoLine: '@'
-        },
+        bindings: DateRangeBindings,
         templateUrl: 'date_range_directive/DateRange.html',
         controller: DateRange //'pipDateRangeController'
 
