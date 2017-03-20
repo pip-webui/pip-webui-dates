@@ -1,48 +1,12 @@
 declare module pip.dates {
 
 
-function formatTimeFilter(pipDateTime: any): (value: any, format: string) => string;
-function formatDateOptionalFilter(pipDateTime: any): (value: any, format: string) => string;
-function formatLongDateFilter(pipDateTime: any): (value: any) => string;
-function formatShortDateFilter(pipDateTime: any): (value: any) => string;
-function formatMiddleDateFilter(pipDateTime: any): (value: any) => string;
-function formatMonthFilter(pipDateTime: any): (value: any) => any;
-function formatLongMonthFilter(pipDateTime: any): (value: any) => string;
-function formatYearFilter(pipDateTime: any): (value: any) => string;
-function formatWeekFilter(pipDateTime: any): (value: any) => string;
-function formatShortWeekFilter(pipDateTime: any): (value: any) => string;
-function formatShortDateTimeFilter(pipDateTime: any): (value: any) => string;
-function formatMiddleDateTimeFilter(pipDateTime: any): (value: any) => string;
-function formatLongDateTimeFilter(pipDateTime: any): (value: any) => string;
-function formatShortDateLongTimeFilter(pipDateTime: any): (value: any, firstTime: boolean) => string;
-function formatMiddleDateLongTimeFilter(pipDateTime: any): (value: any, firstTime: boolean) => string;
-function formatLongDateLongTimeFilter(pipDateTime: any): (value: any, firstTime: boolean) => string;
-function bbFormatDateLongTimeFilter(pipDateTime: any): (value: any, firstTime: boolean) => string;
-function formatFullDateTimeFilter(pipDateTime: any): (value: any) => string;
-function formatShortTimeFilter(pipDateTime: any): (value: any) => string;
-function formatLongTimeFilter(pipDateTime: any): (value: any) => string;
-function formatShortDayOfWeekFilter(pipDateTime: any): (value: any) => string;
-function formatLongDayOfWeekFilter(pipDateTime: any): (value: any) => string;
-function formatLongMonthDayFilter(pipDateTime: any): (value: any) => string;
-function formatShortMonthDayFilter(pipDateTime: any): (value: any) => string;
-function formatDateRangeFilter(pipDateTime: any): (value1: any, value2: any) => string;
-function formatDateTimeRangeFilter(pipDateTime: any): (value1: any, value2: any) => string;
-function formatISOWeekFilter(pipDateTime: any): (value: any) => string;
-function formatShortISOWeekFilter(pipDateTime: any): (value: any) => string;
-function formatISOWeekOrdinalFilter(pipDateTime: any): (value: any) => string;
-function formatDateYFilter(pipDateTime: any): (value: any) => string;
-function formatLongDateYFilter(pipDateTime: any): (value: any) => string;
-function formatTodayDateLongTimeLongFilter(pipDateTime: any): (value: any) => string;
-function formatTodayDateShortTimeLongFilter(pipDateTime: any): (value: any) => string;
-function formatTodayDateLongTimeShortFilter(pipDateTime: any): (value: any) => string;
-function formatTodayDateShortTimeShortFilter(pipDateTime: any): (value: any) => string;
-function formatMillisecondsToSecondsFilter(pipDateTime: any): (value: any) => string;
-function formatElapsedIntervalFilter(pipDateTime: any): (value: any, start: any) => string;
-function getDateJSONFilter(pipDateTime: any): (value: any) => string;
+
 
 export class DateTimeConfig {
     timeZone: number;
 }
+
 export interface IDateTimeService {
     readonly config: DateTimeConfig;
     useTimeZone(offset: number): any;

@@ -415,9 +415,11 @@ class DateRange {
             pipDateFormat: '@',
             pipNoLine: '@'
         },
-        templateUrl: 'date_range_directive/date_range.html',
+        templateUrl: 'date_range_directive/DateRange.html',
         controller: DateRange //'pipDateRangeController'
 
     };
-    angular.module('pipDateRange', ['pipDates.Templates']).component('pipDateRange', daterange)
+    angular
+        .module('pipDateRange', ['pipDates.Templates'])
+        .component('pipDateRange', daterange)
 })();

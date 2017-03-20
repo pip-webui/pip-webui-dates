@@ -1,10 +1,5 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}(g.pip || (g.pip = {})).dates = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-'use strict';
-angular.module('pipDateTime', [
-    'pipDateTime.Service', 'pipDateTime.Filter'
-]);
-},{}],2:[function(require,module,exports){
-'use strict';
+"use strict";
 formatTimeFilter.$inject = ['pipDateTime'];
 formatDateOptionalFilter.$inject = ['pipDateTime'];
 formatLongDateFilter.$inject = ['pipDateTime'];
@@ -43,6 +38,7 @@ formatTodayDateShortTimeShortFilter.$inject = ['pipDateTime'];
 formatMillisecondsToSecondsFilter.$inject = ['pipDateTime'];
 formatElapsedIntervalFilter.$inject = ['pipDateTime'];
 getDateJSONFilter.$inject = ['pipDateTime'];
+Object.defineProperty(exports, "__esModule", { value: true });
 function formatTimeFilter(pipDateTime) {
     "ngInject";
     return function (value, format) {
@@ -310,8 +306,8 @@ angular
     .filter('formatTodayDateShortTimeShort', formatTodayDateShortTimeShortFilter)
     .filter('formatMillisecondsToSeconds', formatMillisecondsToSecondsFilter)
     .filter('formatElapsedInterval', formatElapsedIntervalFilter);
-},{}],3:[function(require,module,exports){
-'use strict';
+},{}],2:[function(require,module,exports){
+"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -323,12 +319,6 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var DateTimeConfig = (function () {
-    function DateTimeConfig() {
-    }
-    return DateTimeConfig;
-}());
-exports.DateTimeConfig = DateTimeConfig;
 var DateTime = (function () {
     function DateTime(config) {
         this._momentRanged = new Array('year', 'month', 'week', 'isoweek', 'day');
@@ -945,7 +935,24 @@ var DateTimeProvider = (function (_super) {
 angular
     .module('pipDateTime.Service', [])
     .provider('pipDateTime', DateTimeProvider);
+},{}],3:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var DateTimeConfig = (function () {
+    function DateTimeConfig() {
+    }
+    return DateTimeConfig;
+}());
+exports.DateTimeConfig = DateTimeConfig;
 },{}],4:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+},{}],5:[function(require,module,exports){
+'use strict';
+angular.module('pipDateTime', [
+    'pipDateTime.Service', 'pipDateTime.Filter'
+]);
+},{}],6:[function(require,module,exports){
 (function () {
     'use strict';
     var thisModule = angular.module('pipDate', ['pipDates.Templates']);
@@ -1081,7 +1088,7 @@ angular
         });
     }]);
 })();
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 var DateRange = (function () {
     function DateRange($mdMedia, $timeout, $scope, $element, $rootScope, $injector) {
         var _this = this;
@@ -1415,13 +1422,14 @@ var DateRange = (function () {
             pipDateFormat: '@',
             pipNoLine: '@'
         },
-        templateUrl: 'date_range_directive/date_range.html',
+        templateUrl: 'date_range_directive/DateRange.html',
         controller: DateRange
     };
-    angular.module('pipDateRange', ['pipDates.Templates']).component('pipDateRange', daterange);
+    angular
+        .module('pipDateRange', ['pipDates.Templates'])
+        .component('pipDateRange', daterange);
 })();
-},{}],6:[function(require,module,exports){
-'use strict';
+},{}],8:[function(require,module,exports){
 angular.module('pipDates', [
     'pipDate',
     'pipTimeRange',
@@ -1430,7 +1438,7 @@ angular.module('pipDates', [
     'pipDateRange',
     'pipDates.Translate'
 ]);
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /**
  * @file Optional filter to translate string resources
  * @copyright Digital Living Software Corp. 2014-2016
@@ -1454,7 +1462,7 @@ angular.module('pipDates', [
 
 })();
 
-},{}],8:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 (function () {
     'use strict';
     var thisModule = angular.module('pipTimeRange', []);
@@ -1510,7 +1518,7 @@ angular.module('pipDates', [
         };
     });
 })();
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 (function () {
     'use strict';
     var thisModule = angular.module('pipTimeRangeEdit', []);
@@ -1738,7 +1746,7 @@ angular.module('pipDates', [
         $element.addClass('pip-time-range-edit');
     }]);
 })();
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 (function(module) {
 try {
   module = angular.module('pipDates.Templates');
@@ -1758,7 +1766,7 @@ try {
   module = angular.module('pipDates.Templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('date_range_directive/date_range.html',
+  $templateCache.put('date_range_directive/DateRange.html',
     '<div class="pip-date-range layout-row flex" tabindex="-1"><md-input-container ng-show="$ctrl.isDay()" class="input-container pip-day flex" ng-class="{\'flex-fixed\' : $ctrl.$mdMedia(\'gt-xs\')}"><md-select class="select-day" ng-class="{\'pip-no-line\' : $ctrl.pipNoLine}" ng-disable="{{$ctrl.disableControls}}" md-on-open="$ctrl.onDayClick()" ng-model="$ctrl.day" ng-change="$ctrl.setValue()" placeholder="{{$ctrl.dayLabel}}" aria-label="DAY"><md-option ng-value="opt" ng-repeat="opt in $ctrl.days track by opt">{{$ctrl.nameDays[$index]}} {{ opt }}</md-option></md-select></md-input-container><md-input-container ng-show="$ctrl.isWeek()" class="input-container flex" ng-class="{\'flex-fixed\' : $ctrl.$mdMedia(\'gt-xs\')}"><md-select class="select-week" ng-class="{\'pip-no-line\' : $ctrl.pipNoLine}" ng-disable="{{$ctrl.disableControls}}" ng-model="$ctrl.week" ng-change="$ctrl.onWeekChange()" placeholder="{{$ctrl.weekLabel}}" aria-label="WEEK"><md-option ng-value="opt.id" ng-repeat="opt in $ctrl.weeks track by opt.id">{{ opt.name }}</md-option></md-select></md-input-container><div class="flex-fixed" ng-class="{\'space16\': $ctrl.$mdMedia(\'gt-xs\'), \'space8\': $ctrl.$mdMedia(\'xs\')}" ng-show="$ctrl.isDay() || $ctrl.isWeek()"></div><md-input-container ng-show="$ctrl.isMonth() && !$ctrl.monthFormatShort" class="input-container flex" ng-class="{\'flex-fixed\' : $ctrl.$mdMedia(\'gt-xs\')}"><md-select class="select-month" ng-class="{\'pip-no-line\' : $ctrl.pipNoLine}" ng-disable="{{$ctrl.disableControls}}" md-on-open="$ctrl.onMonthClick()" ng-model="$ctrl.month" ng-change="$ctrl.onMonthChanged()" placeholder="{{$ctrl.monthLabel}}" aria-label="MONTH"><md-option ng-value="opt.id" ng-repeat="opt in $ctrl.months track by opt.id">{{ opt.name }}</md-option></md-select></md-input-container><md-input-container ng-show="$ctrl.isMonth() && $ctrl.monthFormatShort" class="flex input-container" ng-class="{\'flex-fixed\' : $ctrl.$mdMedia(\'gt-xs\')}"><md-select class="select-month" ng-class="{\'pip-no-line\' : $ctrl.pipNoLine}" ng-disable="{{$ctrl.disableControls}}" md-on-open="$ctrl.onMonthClick()" ng-model="$ctrl.month" ng-change="$ctrl.onMonthChanged()" placeholder="{{$ctrl.monthLabel}}" aria-label="MONTH"><md-option ng-value="opt.id" ng-repeat="opt in $ctrl.shortMonths track by opt.id">{{ opt.name }}</md-option></md-select></md-input-container><div class="flex-fixed" ng-class="{\'space16\': $ctrl.$mdMedia(\'gt-xs\'), \'space8\': $ctrl.$mdMedia(\'xs\')}" ng-show="$ctrl.isMonth()"></div><md-input-container class="input-container flex" ng-class="{\'flex-fixed\' : $ctrl.$mdMedia(\'gt-xs\')}"><md-select class="select-year" ng-class="{\'pip-no-line\' : $ctrl.pipNoLine}" ng-disable="{{$ctrl.disableControls}}" md-on-open="$ctrl.onYearClick()" ng-model="$ctrl.year" ng-change="$ctrl.onYearChanged()" placeholder="{{$ctrl.yearLabel}}" aria-label="YEAR"><md-option ng-value="opt" ng-repeat="opt in $ctrl.years track by opt">{{ opt }}</md-option></md-select></md-input-container></div>');
 }]);
 })();
@@ -1789,7 +1797,7 @@ module.run(['$templateCache', function($templateCache) {
 
 
 
-},{}]},{},[10,7,4,5,2,3,1,6,8,9])(10)
+},{}]},{},[12,9,6,7,5,1,2,3,4,8,10,11])(12)
 });
 
 //# sourceMappingURL=pip-webui-dates.js.map
