@@ -1,11 +1,26 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
-(function () {
-    'use strict';
+class DateController {
+    private value: any;
+    private localeDate: moment.MomentLanguageData = moment.localeData();
+    private momentMonths: any;
+    private momentDays: any;
+    private momentShortDays: any;
+    private momentFirstDayOfWeek: any;
+    constructor($injector: angular.auto.IInjectorService) {
+        this.momentMonths = angular.isArray(this.localeDate['_months']) ? this.localeDate['_months'] : this.localeDate['_months'].format;
+        this.momentDays = angular.isArray(this.localeDate['_weekdays']) ? this.localeDate['_weekdays'] : this.localeDate['_weekdays'].format;
+        this.momentShortDays = this.localeDate['_weekdaysMin'];
+        this.momentFirstDayOfWeek = this.localeDate['_week'].dow;
 
-    var thisModule = angular.module('pipDate', ['pipDates.Templates']);
+    }
 
-    thisModule.directive('pipDate',
+}
+
+(() => {
+
+    angular.module('pipDate', ['pipDates.Templates'])
+        .directive('pipDate',
         function () {
             return {
                 restrict: 'E',
@@ -20,10 +35,8 @@
                 controller: 'pipDateController'
             };
         }
-    );
-
-    // Todo: Remove dependency on Translate. Use moment localization
-    thisModule.controller('pipDateController',
+    )
+    .controller('pipDateController',
         function ($scope, $element, $injector) { //pipTranslate
             var value,
                 localeDate: any = moment.localeData(),
