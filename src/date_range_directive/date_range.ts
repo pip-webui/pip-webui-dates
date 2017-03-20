@@ -227,9 +227,9 @@ class DateRange {
 
         count = this.getCountDay(month, year);
         this.nameDays = [];
-        this.days = [];
+        days = [];
         for (let i: number = 1; i <= count; i++) {
-            this.days.push(i);
+            days.push(i);
             this.nameDays.push(this.momentShortDays[moment([year, month - 1, i]).weekday()]);
         }
 
@@ -400,14 +400,9 @@ class DateRange {
 
 (() => {
     'use strict';
-    var thisModule = angular.module('pipDateRange', ['pipDates.Templates']);
 
-    thisModule.directive('pipDateRange',
-        function () {
-            return {
-                restrict: 'E',
-                require: 'ngModel',
-                scope: {
+    const daterange: ng.IComponentOptions = {
+                bindings: {
                     timeMode: '@pipTimeMode',
                     disabled: '&ngDisabled',
                     model: '=ngModel',
@@ -417,9 +412,12 @@ class DateRange {
                     pipNoLine: '@'
                 },
                 templateUrl: 'date_range_directive/date_range.html',
-                controller: 'pipDateRangeController'
-            };
-        });
+                controller: DateRange //'pipDateRangeController'
+            
+        };
+    var thisModule = angular.module('pipDateRange', ['pipDates.Templates']);
+
+    thisModule.component('pipDateRange', daterange);
 
     // Todo: Remove dependency on Translate. Use moment localization
     thisModule.controller('pipDateRangeController',
