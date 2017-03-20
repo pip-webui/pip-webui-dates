@@ -1,72 +1,5 @@
-'use strict';
-
-export class DateTimeConfig {
-    timeZone: number;
-}
-
-export interface IDateTimeService {
-    readonly config: DateTimeConfig;
-    useTimeZone(offset: number);
-
-    bbFormatDateLongTime(value: any, firstTime?: boolean): string; 
-    
-    formatTime(value: any, format: string): string;
-    formatDateOptional(value: any, format: string): string;
-    formatShortDate(value: any): string;
-    formatMiddleDate(value: any): string;
-    formatLongDate(value: any): string;
-    formatMonth(value: any): string;
-    formatLongMonth(value: any): string;
-    formatYear(value: any): string;
-    formatWeek(value: any): string;
-    formatShortWeek(value: any): string;
-    formatShortDateTime(value: any): string;
-    formatMiddleDateTime(value: any): string;    
-    formatLongDateTime(value: any): string;
-    formatFullDateTime(value: any): string;
-    formatShortDateLongTime(value: any, firstTime?: boolean): string;
-    formatMiddleDateLongTime(value: any, firstTime?: boolean): string;    
-    formatLongDateLongTime(value: any, firstTime?: boolean): string;    
-    formatShortTime(value: any): string;
-    formatLongTime(value: any): string;
-    formatShortDayOfWeek(value: any): string;
-    formatLongDayOfWeek(value: any): string;
-    formatLongMonthDay(value: any): string;
-    formatShortMonthDay(value: any): string;
-    formatDateRange(value1: any, value2: any): string;
-    formatDateTimeRange(value1: any, value2: any): string;
-    formatISOWeek(value: any): string;
-    formatShortISOWeek(value: any): string;
-    formatISOWeekOrdinal(value: any): string;
-    formatDateY(value: any): string;
-    formatLongDateY(value: any): string;
-    formatTodayDateLongTimeLong(value: any): string;
-    formatTodayDateShortTimeLong(value: any): string;
-    formatTodayDateLongTimeShort(value: any): string;
-    formatTodayDateShortTimeShort(value: any): string;
-    formatMillisecondsToSeconds(value: any): string;
-    formatElapsedInterval(value: any, start: any): string;
-
-    getDateJSON(date: any): string;
-    getNextStart(value: any, category: string): any;
-    getPrevStart(value: any, category: string): any;
-    getNowStart(category: string): any;
-
-    addHours(value: any, hours: number): any;
-    toStartDay(value: any): any;
-    toEndDay(value: any, offset: number): any;
-    toStartWeek(value: any): any;
-    toEndWeek(value: any, offset: number): any;
-    toStartMonth(value: any): any;
-    toEndMonth(value: any, offset: number): any;
-    toStartYear(value: any): any;
-    toEndYear(value: any, offset: number): any;
- 
-}
-
-export interface IDateTimeProvider extends IDateTimeService, ng.IServiceProvider {
-
-}
+import { IDateTimeService, IDateTimeProvider } from './IDateService';
+import { DateTimeConfig } from './DateTimeConfig';
 
 class DateTime implements IDateTimeService {
     private _config: DateTimeConfig;
@@ -119,7 +52,7 @@ class DateTime implements IDateTimeService {
         } else {
             date = moment(value);
         }
-        
+
         if (!date.isValid()) {
             return '';
         }
@@ -143,7 +76,7 @@ class DateTime implements IDateTimeService {
         } else {
             date = moment(value);
         }
-        
+
         if (!date.isValid()) {
             return '';
         }
@@ -172,7 +105,7 @@ class DateTime implements IDateTimeService {
         } else {
             date = moment(value);
         }
-        
+
         if (!date.isValid()) {
             return '';
         }
@@ -195,7 +128,7 @@ class DateTime implements IDateTimeService {
         } else {
             date = moment(value);
         }
-        
+
         if (!date.isValid()) {
             return '';
         }
@@ -203,7 +136,7 @@ class DateTime implements IDateTimeService {
         return date.format(formatYearlessLL);
     }
 
-//  use timezone not testing
+    //  use timezone not testing
     private formatRange(value1: any, value2: any, basicFormat: string): string {
         var dateStart: any,
             dateEnd: any,
@@ -212,12 +145,12 @@ class DateTime implements IDateTimeService {
         if (this.isUndefinedOrNull(value1)) {
             dateStart = null;
         } else {
-            dateStart = (this._config.timeZone != undefined && this._config.timeZone != null) ?  moment(value1).utcOffset(this._config.timeZone) : moment(value1);
+            dateStart = (this._config.timeZone != undefined && this._config.timeZone != null) ? moment(value1).utcOffset(this._config.timeZone) : moment(value1);
         }
         if (this.isUndefinedOrNull(value2)) {
             dateEnd = null;
         } else {
-            dateEnd = (this._config.timeZone != undefined && this._config.timeZone != null) ?  moment(value2).utcOffset(this._config.timeZone) : moment(value2);
+            dateEnd = (this._config.timeZone != undefined && this._config.timeZone != null) ? moment(value2).utcOffset(this._config.timeZone) : moment(value2);
         }
 
         if (dateStart === null && dateEnd === null) return '';
@@ -351,7 +284,7 @@ class DateTime implements IDateTimeService {
         return result;
     }
 
-    public constructor(config: DateTimeConfig) { 
+    public constructor(config: DateTimeConfig) {
         this._config = config || { timeZone: null };
     };
 
@@ -380,7 +313,7 @@ class DateTime implements IDateTimeService {
     }
 
     public bbFormatDateLongTime(value: any, firstTime?: boolean): string {
-        return this.toDateWithTime(value, 'MM/DD/YY', 'LTS', firstTime); 
+        return this.toDateWithTime(value, 'MM/DD/YY', 'LTS', firstTime);
     }
 
     public formatMiddleDate(value: any): string {
@@ -412,7 +345,7 @@ class DateTime implements IDateTimeService {
     }
 
     public formatShortDateTime(value: any): string {
-        return this.toDateWithTime(value, 'L', 'LT'); 
+        return this.toDateWithTime(value, 'L', 'LT');
     }
 
     public formatMiddleDateTime(value: any): string {
@@ -428,7 +361,7 @@ class DateTime implements IDateTimeService {
     }
 
     public formatShortDateLongTime(value: any, firstTime?: boolean): string {
-        return this.toDateWithTime(value, 'L', 'LTS', firstTime); 
+        return this.toDateWithTime(value, 'L', 'LTS', firstTime);
     }
 
     public formatMiddleDateLongTime(value: any, firstTime?: boolean): string {
@@ -678,7 +611,7 @@ class DateTimeService {
     public constructor(
         datetime: DateTime,
     ) {
-        this._config = { timeZone: null};
+        this._config = { timeZone: null };
         this._datetime = datetime;
     }
 
@@ -824,25 +757,25 @@ class DateTimeService {
     // September 4 1986 8:30:25 PM or 8:30:25 PM
     public formatTodayDateLongTimeLong(value: any): string {
         return this._datetime.formatTodayDateLongTimeLong(value);
-    }    
+    }
 
     // date displays if the current date  is not equal now 
     // Sep 4 1986 8:30:25 PM or 8:30:25 PM
     public formatTodayDateShortTimeLong(value: any): string {
         return this._datetime.formatTodayDateShortTimeLong(value);
-    }     
+    }
 
     // date displays if the current date  is not equal now 
     // September 4 1986 8:30 PM or 8:30 PM
     public formatTodayDateLongTimeShort(value: any): string {
         return this._datetime.formatTodayDateLongTimeShort(value);
-    }     
+    }
 
     // date displays if the current date  is not equal now 
     // Sep 4 1986 8:30 PM or 8:30 PM
     public formatTodayDateShortTimeShort(value: any): string {
         return this._datetime.formatTodayDateShortTimeShort(value);
-    }     
+    }
 
     // todo
     public formatMillisecondsToSeconds(value: any) {
