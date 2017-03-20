@@ -1114,6 +1114,9 @@ var DateRange = (function () {
             }
         });
     }
+    DateRange.prototype.$onChanges = function (changes) {
+        console.log(changes);
+    };
     DateRange.prototype.onMonthChanged = function () {
         if (this.pipDateRangeType === 'weekly') {
             var date = void 0, dayOfWeek = void 0;
@@ -1409,7 +1412,7 @@ var DateRange = (function () {
             pipChanged: '&',
             pipDateRangeType: '@',
             pipDateFormat: '@',
-            pipNoLine: '@'
+            pipNoLine: '='
         },
         templateUrl: 'date_range_directive/date_range.html',
         controller: DateRange

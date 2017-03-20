@@ -49,7 +49,6 @@ class DateRange {
         this.currentMonth = this.currentDate.getUTCMonth() + 1;
         this.currentDay = this.currentDate.getUTCDate();
 
-
         this.init();
 
         this.disableControls = this.disabled ? this.disabled() : false;
@@ -73,6 +72,10 @@ class DateRange {
 
     }
 
+    public $onChanges(changes) {
+        console.log(changes);
+    }
+
     public onMonthChanged(): void {
         if (this.pipDateRangeType === 'weekly') {
             let date: Date, dayOfWeek: number;
@@ -87,7 +90,7 @@ class DateRange {
         this.setValue();
     }
 
-    public onYearChanged() {
+    public onYearChanged(): void {
         let date: Date, dayOfWeek: number;
         date = new Date(Date.UTC(this.year, this.month - 1, 1));
         dayOfWeek = date.getUTCDay() ? date.getUTCDay() : 7;
@@ -402,18 +405,18 @@ class DateRange {
     'use strict';
 
     const daterange: ng.IComponentOptions = {
-                bindings: {
-                    timeMode: '@pipTimeMode',
-                    disabled: '&ngDisabled',
-                    model: '=ngModel',
-                    pipChanged: '&',
-                    pipDateRangeType: '@',
-                    pipDateFormat: '@',
-                    pipNoLine: '@'
-                },
-                templateUrl: 'date_range_directive/date_range.html',
-                controller: DateRange //'pipDateRangeController'
-            
-        };
+        bindings: {
+            timeMode: '@pipTimeMode',
+            disabled: '&ngDisabled',
+            model: '=ngModel',
+            pipChanged: '&',
+            pipDateRangeType: '@',
+            pipDateFormat: '@',
+            pipNoLine: '@'
+        },
+        templateUrl: 'date_range_directive/date_range.html',
+        controller: DateRange //'pipDateRangeController'
+
+    };
     angular.module('pipDateRange', ['pipDates.Templates']).component('pipDateRange', daterange)
 })();
