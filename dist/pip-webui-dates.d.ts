@@ -2,7 +2,6 @@ declare module pip.dates {
 
 
 
-
 export class DateTimeConfig {
     timeZone: number;
 }
@@ -63,6 +62,7 @@ export interface IDateTimeService {
 }
 export interface IDateTimeProvider extends IDateTimeService, ng.IServiceProvider {
 }
+
 
 
 class DateRange {
