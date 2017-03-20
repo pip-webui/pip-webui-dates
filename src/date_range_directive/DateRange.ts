@@ -22,6 +22,19 @@ const DateRangeBindings: IDateRangeBindings = {
     pipNoLine: '@'
 }
 
+
+class DateRangeChanges implements ng.IOnChangesObject,  IDateRangeBindings {
+    [key: string]: ng.IChangesObject<any>;
+
+    timeMode: ng.IChangesObject<string>;
+    disabled: ng.IChangesObject<()=> void>;
+    model: ng.IChangesObject<any>;
+    pipChanged: ng.IChangesObject<()=> void>;
+    type: ng.IChangesObject<string>;
+    pipDateFormat: ng.IChangesObject<any>;
+    pipNoLine: ng.IChangesObject<any>;
+}
+
 class DateRange {
     private currentDate: Date;
     private currentYear: number;
@@ -35,7 +48,7 @@ class DateRange {
     private momentShortDays: any;
     private momentFirstDayOfWeek: any;
 
-    public type: any;
+    public type: string;
     public pipChanged: Function;
     public year: number;
     public month: number;
@@ -76,7 +89,7 @@ class DateRange {
         this.disableControls = this.disabled ? this.disabled() : false;
 
         // React on changes
-        $scope.$watch('$ctrl.model', (newValue, oldValue) => {
+        /*$scope.$watch('$ctrl.model', (newValue, oldValue) => {
             if (newValue !== oldValue) {
                 this.getValue(newValue);
             }
@@ -91,12 +104,30 @@ class DateRange {
             if (newValue !== oldValue && oldValue) {
                 this.init();
             }
-        });
+        });*/
 
     }
 
-    public $onChanges(changes) {
+    public $onChanges(changes: DateRangeChanges) {
         console.log(changes);
+        if (changes.type && changes.type.currentValue) {
+            this.type = changes.type.currentValue; 
+            this.init();
+        }
+
+         /*if (changes.type && changes.type.currentValue && changes.type.currentValue != changes.type.previousValue) {
+            this.type = changes.type.currentValue; 
+            this.init();
+        }
+
+        if (changes.disabled && changes.disabled.currentValue) {
+             this.disableControls = changes.disabled.currentValue();
+        }
+
+        if (changes.model && changes.model.currentValue) {
+              this.getValue(changes.model.currentValue);
+        }*/
+
     }
 
     public onMonthChanged(): void {
@@ -423,6 +454,7 @@ class DateRange {
     }
 
 }
+
 
 (() => {
     'use strict';

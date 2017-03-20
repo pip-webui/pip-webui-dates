@@ -1098,9 +1098,13 @@ var DateRangeBindings = {
     pipDateFormat: '@',
     pipNoLine: '@'
 };
+var DateRangeChanges = (function () {
+    function DateRangeChanges() {
+    }
+    return DateRangeChanges;
+}());
 var DateRange = (function () {
     function DateRange($mdMedia, $timeout, $scope, $element, $rootScope, $injector) {
-        var _this = this;
         this.$mdMedia = $mdMedia;
         this.$timeout = $timeout;
         this.prevState = {};
@@ -1116,23 +1120,13 @@ var DateRange = (function () {
         this.currentDay = this.currentDate.getUTCDate();
         this.init();
         this.disableControls = this.disabled ? this.disabled() : false;
-        $scope.$watch('$ctrl.model', function (newValue, oldValue) {
-            if (newValue !== oldValue) {
-                _this.getValue(newValue);
-            }
-        });
-        $scope.$watch('$ctrl.disabled', function (newValue) {
-            _this.disableControls = newValue ? true : false;
-        });
-        $scope.$watch('$ctrl.type', function (newValue, oldValue) {
-            console.log('a', newValue);
-            if (newValue !== oldValue && oldValue) {
-                _this.init();
-            }
-        });
     }
     DateRange.prototype.$onChanges = function (changes) {
         console.log(changes);
+        if (changes.type && changes.type.currentValue) {
+            this.type = changes.type.currentValue;
+            this.init();
+        }
     };
     DateRange.prototype.onMonthChanged = function () {
         if (this.type === 'weekly') {

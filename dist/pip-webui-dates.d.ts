@@ -76,6 +76,16 @@ interface IDateRangeBindings {
     pipNoLine: any;
 }
 const DateRangeBindings: IDateRangeBindings;
+class DateRangeChanges implements ng.IOnChangesObject, IDateRangeBindings {
+    [key: string]: ng.IChangesObject<any>;
+    timeMode: ng.IChangesObject<string>;
+    disabled: ng.IChangesObject<() => void>;
+    model: ng.IChangesObject<any>;
+    pipChanged: ng.IChangesObject<() => void>;
+    type: ng.IChangesObject<string>;
+    pipDateFormat: ng.IChangesObject<any>;
+    pipNoLine: ng.IChangesObject<any>;
+}
 class DateRange {
     $mdMedia: angular.material.IMedia;
     private $timeout;
@@ -90,7 +100,7 @@ class DateRange {
     private momentDays;
     private momentShortDays;
     private momentFirstDayOfWeek;
-    type: any;
+    type: string;
     pipChanged: Function;
     year: number;
     month: number;
@@ -107,7 +117,7 @@ class DateRange {
     disableControls: boolean;
     timeMode: string;
     constructor($mdMedia: angular.material.IMedia, $timeout: ng.ITimeoutService, $scope: ng.IScope, $element: any, $rootScope: ng.IRootScopeService, $injector: angular.auto.IInjectorService);
-    $onChanges(changes: any): void;
+    $onChanges(changes: DateRangeChanges): void;
     onMonthChanged(): void;
     onYearChanged(): void;
     onWeekChange(): void;
