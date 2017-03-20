@@ -31,12 +31,12 @@ class DateRange {
     public timeMode: string;
 
     constructor(
-        $scope: ng.IScope, 
-        $element, 
-        public $mdMedia: angular.material.IMedia, 
-        $rootScope: ng.IRootScopeService, 
-        $injector: angular.auto.IInjectorService, 
-        private $timeout: ng.ITimeoutService) {
+        public $mdMedia: angular.material.IMedia,
+        private $timeout: ng.ITimeoutService,
+        $scope: ng.IScope,
+        $element,
+        $rootScope: ng.IRootScopeService,
+        $injector: angular.auto.IInjectorService) {
 
         this.localeDate = moment.localeData();
         this.momentMonths = angular.isArray(this.localeDate._months) ? this.localeDate._months : this.localeDate._months.format;
@@ -54,7 +54,7 @@ class DateRange {
 
         this.disableControls = this.disabled ? this.disabled() : false;
 
-            // React on changes
+        // React on changes
         $scope.$watch('model', (newValue, oldValue) => {
             if (newValue !== oldValue) {
                 this.getValue(newValue);
@@ -121,8 +121,8 @@ class DateRange {
 
     public isMonth(): boolean {
         return this.pipDateRangeType === 'daily' ||
-               this.pipDateRangeType === 'weekly' ||
-               this.pipDateRangeType === 'monthly';
+            this.pipDateRangeType === 'weekly' ||
+            this.pipDateRangeType === 'monthly';
     };
 
     public onChange() {
@@ -200,7 +200,7 @@ class DateRange {
             this.day = this.currentDay;
         }
     };
-            // ---------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------
 
     public getCountDay(month: number, year: number): number {
         let count = 31;
@@ -217,9 +217,9 @@ class DateRange {
             }
             count = 28;
         }
-    
+
         return count;
-       
+
     }
 
     private dayList(month: number, year: number): number[] {
@@ -285,7 +285,7 @@ class DateRange {
         for (let i: number = 1; i <= 12; i++) {
             months.push({
                 id: i,
-                name: this.momentMonths[i-1]
+                name: this.momentMonths[i - 1]
             });
         }
 
@@ -312,16 +312,16 @@ class DateRange {
                 startYear = this.currentYear - 50;
                 endYear = this.currentYear + 50;
                 break;
+        }
+        if (this.timeMode === 'future') {
+            for (let i: number = startYear; i <= endYear; i++) {
+                years.push(i);
             }
-            if (this.timeMode === 'future') {
-                for (let i: number = startYear; i <= endYear; i++) {
-                    years.push(i);
-                }
-            } else {
-                for (let i: number = endYear; i >= startYear; i--) {
-                    years.push(i);
-                }
+        } else {
+            for (let i: number = endYear; i >= startYear; i--) {
+                years.push(i);
             }
+        }
 
         return years;
     }
@@ -344,7 +344,7 @@ class DateRange {
                     }
                 }
                 break;
-            }
+        }
         this.days = days;
     }
 
@@ -396,9 +396,9 @@ class DateRange {
         this.onChange();
     }
 
-} 
+}
 
-(function () {
+(() => {
     'use strict';
     var thisModule = angular.module('pipDateRange', ['pipDates.Templates']);
 
@@ -428,7 +428,7 @@ class DateRange {
                 currentYear,
                 currentMonth,
                 currentDay,
-                prevState: any = {}, 
+                prevState: any = {},
                 currentState: any = {},
                 localeDate: any = moment.localeData(),
                 momentMonths = angular.isArray(localeDate._months) ? localeDate._months : localeDate._months.format,
@@ -522,7 +522,7 @@ class DateRange {
 
             $scope.onChange = function () {
                 if ($scope.pipChanged) {
-                    $timeout(function() {
+                    $timeout(() => {
                         $scope.pipChanged();
                     }, 0);
                 }
@@ -644,7 +644,7 @@ class DateRange {
             function dayList(month, year) {
                 var count, days, i, ln;
 
-              //  ln = $rootScope.$language || 'en';
+                //  ln = $rootScope.$language || 'en';
                 count = getCountDay(month, year);
                 $scope.nameDays = [];
                 days = [];
@@ -705,7 +705,7 @@ class DateRange {
                 for (i = 1; i <= 12; i++) {
                     months.push({
                         id: i,
-                        name: momentMonths[i-1]
+                        name: momentMonths[i - 1]
                     });
                 }
 

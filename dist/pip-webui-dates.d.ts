@@ -131,7 +131,7 @@ class DateRange {
     disabled: Function;
     disableControls: boolean;
     timeMode: string;
-    constructor($scope: ng.IScope, $element: any, $mdMedia: angular.material.IMedia, $rootScope: ng.IRootScopeService, $injector: angular.auto.IInjectorService, $timeout: ng.ITimeoutService);
+    constructor($mdMedia: angular.material.IMedia, $timeout: ng.ITimeoutService, $scope: ng.IScope, $element: any, $rootScope: ng.IRootScopeService, $injector: angular.auto.IInjectorService);
     onMonthChanged(): void;
     onYearChanged(): void;
     onWeekChange(): void;

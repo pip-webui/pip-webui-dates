@@ -1083,7 +1083,7 @@ angular
 })();
 },{}],5:[function(require,module,exports){
 var DateRange = (function () {
-    function DateRange($scope, $element, $mdMedia, $rootScope, $injector, $timeout) {
+    function DateRange($mdMedia, $timeout, $scope, $element, $rootScope, $injector) {
         var _this = this;
         this.$mdMedia = $mdMedia;
         this.$timeout = $timeout;
