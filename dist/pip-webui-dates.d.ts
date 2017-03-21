@@ -64,6 +64,24 @@ export interface IDateTimeProvider extends IDateTimeService, ng.IServiceProvider
 }
 
 
+class DateController {
+    private value;
+    private localeDate;
+    private momentMonths;
+    private momentDays;
+    private momentShortDays;
+    private momentFirstDayOfWeek;
+    timeMode: string;
+    day: number;
+    month: number;
+    year: number;
+    days: number[];
+    constructor($injector: angular.auto.IInjectorService);
+    private dayList(month, year);
+    private monthList();
+    private yearList();
+    private adjustDay();
+}
 
 interface IDateRangeBindings {
     [key: string]: any;

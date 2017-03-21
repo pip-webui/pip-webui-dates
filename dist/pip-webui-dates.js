@@ -953,10 +953,72 @@ angular.module('pipDateTime', [
     'pipDateTime.Filter'
 ]);
 },{}],6:[function(require,module,exports){
+var DateController = (function () {
+    function DateController($injector) {
+        this.localeDate = moment.localeData();
+        this.momentMonths = angular.isArray(this.localeDate['_months']) ? this.localeDate['_months'] : this.localeDate['_months'].format;
+        this.momentDays = angular.isArray(this.localeDate['_weekdays']) ? this.localeDate['_weekdays'] : this.localeDate['_weekdays'].format;
+        this.momentShortDays = this.localeDate['_weekdaysMin'];
+        this.momentFirstDayOfWeek = this.localeDate['_week'].dow;
+    }
+    DateController.prototype.dayList = function (month, year) {
+        var count = 31, days = [];
+        if (month === 4 || month === 6 || month === 9 || month === 11) {
+            count = 30;
+        }
+        else {
+            if (month === 2) {
+                if (year) {
+                    count = year % 4 === 0 ? 29 : 28;
+                }
+                else {
+                    count = 28;
+                }
+            }
+        }
+        for (var i = 1; i <= count; i++) {
+            days.push(i);
+        }
+        return days;
+    };
+    DateController.prototype.monthList = function () {
+        var months = [];
+        for (var i = 1; i <= 12; i++) {
+            months.push({
+                id: i,
+                name: this.momentMonths[i - 1]
+            });
+        }
+        return months;
+    };
+    DateController.prototype.yearList = function () {
+        var currentYear = new Date().getFullYear(), startYear = this.timeMode === 'future' ? currentYear : currentYear - 100, endYear = this.timeMode === 'past' ? currentYear : currentYear + 100, years = [];
+        if (this.timeMode === 'past') {
+            for (var i = endYear; i >= startYear; i--) {
+                years.push(i);
+            }
+        }
+        else {
+            for (var i = startYear; i <= endYear; i++) {
+                years.push(i);
+            }
+        }
+        return years;
+    };
+    DateController.prototype.adjustDay = function () {
+        var days = this.dayList(this.month, this.year);
+        if (this.days.length !== days.length) {
+            if (this.day > days.length) {
+                this.day = days.length;
+            }
+            this.days = days;
+        }
+    };
+    return DateController;
+}());
 (function () {
-    'use strict';
-    var thisModule = angular.module('pipDate', ['pipDates.Templates']);
-    thisModule.directive('pipDate', function () {
+    angular.module('pipDate', ['pipDates.Templates'])
+        .directive('pipDate', function () {
         return {
             restrict: 'E',
             require: 'ngModel',
@@ -969,8 +1031,8 @@ angular.module('pipDateTime', [
             templateUrl: 'date_directive/date.html',
             controller: 'pipDateController'
         };
-    });
-    thisModule.controller('pipDateController', ['$scope', '$element', '$injector', function ($scope, $element, $injector) {
+    })
+        .controller('pipDateController', ['$scope', '$element', '$injector', function ($scope, $element, $injector) {
         var value, localeDate = moment.localeData(), momentMonths = angular.isArray(localeDate._months) ? localeDate._months : localeDate._months.format, momentDays = angular.isArray(localeDate._weekdays) ? localeDate._weekdays : localeDate._weekdays.format, momentShortDays = localeDate._weekdaysMin, momentFirstDayOfWeek = localeDate._week.dow;
         var pipTranslate = $injector.has('pipTranslate') ? $injector.get('pipTranslate') : null;
         if (pipTranslate) {

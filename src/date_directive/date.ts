@@ -3,10 +3,19 @@
 class DateController {
     private value: any;
     private localeDate: moment.MomentLanguageData = moment.localeData();
-    private momentMonths: any;
-    private momentDays: any;
+    private momentMonths: any[];
+    private momentDays: any[];
     private momentShortDays: any;
     private momentFirstDayOfWeek: any;
+
+    public timeMode: string;
+    public day: number;
+    public month: number;
+    public year: number;
+
+    public days: number[];
+
+
     constructor($injector: angular.auto.IInjectorService) {
         this.momentMonths = angular.isArray(this.localeDate['_months']) ? this.localeDate['_months'] : this.localeDate['_months'].format;
         this.momentDays = angular.isArray(this.localeDate['_weekdays']) ? this.localeDate['_weekdays'] : this.localeDate['_weekdays'].format;
@@ -14,6 +23,73 @@ class DateController {
         this.momentFirstDayOfWeek = this.localeDate['_week'].dow;
 
     }
+
+    private dayList(month: number, year: number): number[] {
+        let count: number = 31, days: number[] = [];
+
+        if (month === 4 || month === 6 || month === 9 || month === 11) {
+            count = 30;
+        } else {
+            if (month === 2) {
+                if (year) {
+                    // Calculate leap year (primitive)
+                    count = year % 4 === 0 ? 29 : 28;
+                } else {
+                    count = 28;
+                }
+            }
+        }
+        for (let i: number = 1; i <= count; i++) {
+            days.push(i);
+        }
+
+        return days;
+    }
+
+    private monthList() {
+        let months: any[] = [];
+
+        for (let i: number = 1; i <= 12; i++) {
+            months.push({
+                id: i,
+                name: this.momentMonths[i - 1]
+            });
+        }
+
+        return months;
+    }
+
+    private yearList(): number[] {
+        let currentYear: number = new Date().getFullYear(),
+            startYear: number = this.timeMode === 'future' ? currentYear : currentYear - 100,
+            endYear: number = this.timeMode === 'past' ? currentYear : currentYear + 100,
+            years = [];
+
+        if (this.timeMode === 'past') {
+            for (let i: number = endYear; i >= startYear; i--) {
+                years.push(i);
+            }
+        } else {
+            for (let i: number = startYear; i <= endYear; i++) {
+                years.push(i);
+            }
+        }
+
+        return years;
+    }
+
+    private adjustDay() {
+        let days = this.dayList(this.month, this.year);
+
+        if (this.days.length !== days.length) {
+            if (this.day > days.length) {
+                this.day = days.length;
+            }
+
+            this.days = days;
+        }
+    }
+
 
 }
 
@@ -35,8 +111,8 @@ class DateController {
                 controller: 'pipDateController'
             };
         }
-    )
-    .controller('pipDateController',
+        )
+        .controller('pipDateController',
         function ($scope, $element, $injector) { //pipTranslate
             var value,
                 localeDate: any = moment.localeData(),
@@ -56,14 +132,14 @@ class DateController {
                 pipTranslate.setTranslations('ru', {
                     DAY: 'День',
                     MONTH: 'Месяц',
-                    YEAR: 'Год'                    
+                    YEAR: 'Год'
                 });
                 $scope.dayLabel = pipTranslate.translate('DAY');
                 $scope.monthLabel = pipTranslate.translate('MONTH');
                 $scope.yearLabel = pipTranslate.translate('YEAR');
             } else {
                 $scope.dayLabel = 'Day';
-                $scope.monthLabel = 'Month';                
+                $scope.monthLabel = 'Month';
                 $scope.yearLabel = 'Year';
 
             }
@@ -95,7 +171,7 @@ class DateController {
                 for (i = 1; i <= 12; i++) {
                     months.push({
                         id: i,
-                        name: momentMonths[i-1]
+                        name: momentMonths[i - 1]
                     });
                 }
 
@@ -198,7 +274,7 @@ class DateController {
                 $scope.disableControls = newValue;
             });
         }
-    );
+        );
 
 })();
 
