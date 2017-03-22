@@ -1404,29 +1404,19 @@ var DateRange = (function () {
         .component('pipDateRange', daterange);
 })();
 },{}],8:[function(require,module,exports){
-/**
- * @file Optional filter to translate string resources
- * @copyright Digital Living Software Corp. 2014-2016
- */
- 
-/* global angular */
-
-(function () {
-    'use strict';
-
-    var thisModule = angular.module('pipDates.Translate', []);
-
-    thisModule.filter('translate', ['$injector', function ($injector) {
-        var pipTranslate = $injector.has('pipTranslate') 
+{
+    translateFilter.$inject = ['$injector'];
+    function translateFilter($injector) {
+        var pipTranslate = $injector.has('pipTranslate')
             ? $injector.get('pipTranslate') : null;
-
         return function (key) {
-            return pipTranslate  ? pipTranslate.translate(key) || key : key;
-        }
-    }]);
-
-})();
-
+            return pipTranslate ? pipTranslate.translate(key) || key : key;
+        };
+    }
+    angular
+        .module('pipDates.Translate', [])
+        .filter('translate', translateFilter);
+}
 },{}],9:[function(require,module,exports){
 angular.module('pipDates', [
     'pipDate',
@@ -1771,7 +1761,7 @@ module.run(['$templateCache', function($templateCache) {
 
 
 
-},{}]},{},[12,8,6,7,1,2,3,4,5,9,10,11])(12)
+},{}]},{},[12,6,7,1,2,3,4,5,8,9,10,11])(12)
 });
 
 //# sourceMappingURL=pip-webui-dates.js.map
