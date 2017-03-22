@@ -196,9 +196,10 @@ class TimeRangeData {
 }
 class TimeRangeController {
     data: TimeRangeData;
-    pipStartDate: Date;
-    pipEndDate: Date;
-    constructor($scope: any, $attrs: any, $element: any);
+    start: Date;
+    end: Date;
+    constructor($scope: ng.IScope, $attrs: ng.IAttributes, $element: JQuery);
+    $onChanges(changes: any): void;
     private getDateJSON(value);
     private defineStartDate();
     private defineEndDate();

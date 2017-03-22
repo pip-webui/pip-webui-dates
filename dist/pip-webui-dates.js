@@ -1436,35 +1436,36 @@ var TimeRangeController = (function () {
     TimeRangeController.$inject = ['$scope', '$attrs', '$element'];
     function TimeRangeController($scope, $attrs, $element) {
         var _this = this;
-        console.log(this.pipEndDate, this.pipStartDate);
         this.data = new TimeRangeData();
         this.defineStartDate();
         this.defineEndDate();
         if (this.toBoolean($attrs.pipRebind)) {
-            $scope.$watch('$ctrl.pipStartDate', function () {
+            $scope.$watch('$ctrl.start', function () {
                 _this.data.start = null;
                 _this.defineStartDate();
             });
-            $scope.$watch('$ctrl.pipEndDate', function () {
+            $scope.$watch('$ctrl.end', function () {
                 _this.data.end = null;
                 _this.defineEndDate();
             });
         }
         $element.addClass('pip-time-range');
     }
+    TimeRangeController.prototype.$onChanges = function (changes) {
+    };
     TimeRangeController.prototype.getDateJSON = function (value) {
         return value ? new Date(value) : null;
     };
     TimeRangeController.prototype.defineStartDate = function () {
-        if (this.pipStartDate !== null && this.pipStartDate !== undefined) {
-            this.data.start = _.isDate(this.pipStartDate) ? this.pipStartDate
-                : this.getDateJSON(this.pipStartDate);
+        if (this.start !== null && this.start !== undefined) {
+            this.data.start = _.isDate(this.start) ? this.start
+                : this.getDateJSON(this.start);
         }
     };
     TimeRangeController.prototype.defineEndDate = function () {
-        if (this.pipEndDate !== null && this.pipEndDate !== undefined) {
-            this.data.end = _.isDate(this.pipEndDate) ? this.pipEndDate
-                : this.getDateJSON(this.pipEndDate);
+        if (this.end !== null && this.end !== undefined) {
+            this.data.end = _.isDate(this.end) ? this.end
+                : this.getDateJSON(this.end);
         }
     };
     TimeRangeController.prototype.toBoolean = function (value) {
@@ -1481,8 +1482,8 @@ var TimeRangeController = (function () {
     angular.module('pipTimeRange', [])
         .component('pipTimeRange', {
         bindings: {
-            pipStartDate: '=',
-            pipEndDate: '='
+            start: '=pipDateStart',
+            end: '=pipDateEnd'
         },
         templateUrl: 'time_range_directive/TimeRange.html',
         controller: TimeRangeController,
