@@ -3,6 +3,25 @@ class TimeRangeData {
     end: Date;
 }
 
+interface ITimeRangeBindings {
+    [key: string]: any;
+
+    start: any;
+    end: any;
+}
+
+const TimeRangeBindings: ITimeRangeBindings = {
+    start: '<pipStartDate',
+    end: '<pipEndDate'
+}
+
+class TimeRangeChanges implements ng.IOnChangesObject, ITimeRangeBindings {
+    [key: string]: ng.IChangesObject<any>;
+
+    start: ng.IChangesObject<Date>;
+    end: ng.IChangesObject<Date>;
+}
+
 class TimeRangeController {
     public data: TimeRangeData;
     public start: Date;
@@ -13,27 +32,18 @@ class TimeRangeController {
         this.defineStartDate();
         this.defineEndDate();
 
-        if (this.toBoolean((<any>$attrs).pipRebind)) {
-            $scope.$watch('$ctrl.start',
-                () => {
-                    this.data.start = null;
-                    this.defineStartDate();
-                }
-            );
-            $scope.$watch('$ctrl.end',
-                () => {
-                    this.data.end = null;
-                    this.defineEndDate();
-                }
-            );
-        }
-
-        // Add class
         $element.addClass('pip-time-range');
     }
 
-    public $onChanges(changes) {
-
+    public $onChanges(changes: TimeRangeChanges) {
+        if (changes.start && changes.start.currentValue) {
+            this.data.start = null;
+            this.defineStartDate();
+        }
+        if (changes.end && changes.end.currentValue) {
+            this.data.end = null;
+            this.defineEndDate();
+        }
     }
 
     private getDateJSON(value: any): Date {
@@ -63,19 +73,13 @@ class TimeRangeController {
 }
 
 (() => {
+    const TimeRangeComponent: ng.IComponentOptions = {
+        bindings: TimeRangeBindings,
+        templateUrl: 'time_range_directive/TimeRange.html',
+        controller: TimeRangeController
+    }
 
     angular.module('pipTimeRange', [])
-        .component('pipTimeRange', {
-
-            bindings: {
-                start: '=pipDateStart',
-                end: '=pipDateEnd'
-            },
-            templateUrl: 'time_range_directive/TimeRange.html',
-            controller: TimeRangeController,
-            controllerAs: '$ctrl'
-        }
-
-        );
+        .component('pipTimeRange', TimeRangeComponent);
 
 })();

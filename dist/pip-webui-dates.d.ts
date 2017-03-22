@@ -194,12 +194,23 @@ class TimeRangeData {
     start: Date;
     end: Date;
 }
+interface ITimeRangeBindings {
+    [key: string]: any;
+    start: any;
+    end: any;
+}
+const TimeRangeBindings: ITimeRangeBindings;
+class TimeRangeChanges implements ng.IOnChangesObject, ITimeRangeBindings {
+    [key: string]: ng.IChangesObject<any>;
+    start: ng.IChangesObject<Date>;
+    end: ng.IChangesObject<Date>;
+}
 class TimeRangeController {
     data: TimeRangeData;
     start: Date;
     end: Date;
     constructor($scope: ng.IScope, $attrs: ng.IAttributes, $element: JQuery);
-    $onChanges(changes: any): void;
+    $onChanges(changes: TimeRangeChanges): void;
     private getDateJSON(value);
     private defineStartDate();
     private defineEndDate();

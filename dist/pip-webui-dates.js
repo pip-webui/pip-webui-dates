@@ -1432,26 +1432,32 @@ var TimeRangeData = (function () {
     }
     return TimeRangeData;
 }());
+var TimeRangeBindings = {
+    start: '<pipStartDate',
+    end: '<pipEndDate'
+};
+var TimeRangeChanges = (function () {
+    function TimeRangeChanges() {
+    }
+    return TimeRangeChanges;
+}());
 var TimeRangeController = (function () {
     TimeRangeController.$inject = ['$scope', '$attrs', '$element'];
     function TimeRangeController($scope, $attrs, $element) {
-        var _this = this;
         this.data = new TimeRangeData();
         this.defineStartDate();
         this.defineEndDate();
-        if (this.toBoolean($attrs.pipRebind)) {
-            $scope.$watch('$ctrl.start', function () {
-                _this.data.start = null;
-                _this.defineStartDate();
-            });
-            $scope.$watch('$ctrl.end', function () {
-                _this.data.end = null;
-                _this.defineEndDate();
-            });
-        }
         $element.addClass('pip-time-range');
     }
     TimeRangeController.prototype.$onChanges = function (changes) {
+        if (changes.start && changes.start.currentValue) {
+            this.data.start = null;
+            this.defineStartDate();
+        }
+        if (changes.end && changes.end.currentValue) {
+            this.data.end = null;
+            this.defineEndDate();
+        }
     };
     TimeRangeController.prototype.getDateJSON = function (value) {
         return value ? new Date(value) : null;
@@ -1481,10 +1487,7 @@ var TimeRangeController = (function () {
 (function () {
     angular.module('pipTimeRange', [])
         .component('pipTimeRange', {
-        bindings: {
-            start: '=pipDateStart',
-            end: '=pipDateEnd'
-        },
+        bindings: TimeRangeBindings,
         templateUrl: 'time_range_directive/TimeRange.html',
         controller: TimeRangeController,
         controllerAs: '$ctrl'

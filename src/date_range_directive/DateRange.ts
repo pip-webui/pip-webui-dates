@@ -1,5 +1,3 @@
-/// <reference path="../../typings/tsd.d.ts" />
-
 interface IDateRangeBindings {
     [key: string]: any;
 
