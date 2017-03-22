@@ -217,6 +217,47 @@ class TimeRangeController {
     private toBoolean(value);
 }
 
+class TimeRangeEditData {
+    endTime: number;
+    startTime: number;
+    startDate: Date;
+    endDate: Date;
+    duration: number;
+    bind: boolean;
+}
+class TimeRangeEditController {
+    private $injector;
+    private pipDateTime;
+    private $scope;
+    startLabel: string;
+    endLabel: string;
+    pipStartLabel: string;
+    pipEndLabel: string;
+    pipEndDate: Date;
+    pipStartDate: Date;
+    pipHideTime: boolean;
+    showTime: boolean;
+    data: TimeRangeEditData;
+    intervalTimeCollection: any;
+    disabled: () => boolean;
+    pipChanged: () => void;
+    constructor($injector: angular.auto.IInjectorService, pipDateTime: any, $scope: ng.IScope, $element: JQuery);
+    private translate();
+    private getDateJSON(value);
+    private setDuration();
+    private validateStartDate();
+    private validateEndDate();
+    private setDate();
+    private defineDate();
+    private getTimeInterval();
+    private toBoolean(value);
+    private initDate();
+    onChangeStartDate(newV: any): void;
+    onChangeEndDate(): void;
+    onChangeStartTime(): void;
+    onChangeEndTime(): void;
+    isDisabled(): boolean;
+}
 
 }
 

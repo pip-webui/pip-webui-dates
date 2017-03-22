@@ -1493,11 +1493,234 @@ var TimeRangeController = (function () {
         .component('pipTimeRange', TimeRangeComponent);
 })();
 },{}],11:[function(require,module,exports){
+var TimeRangeEditData = (function () {
+    function TimeRangeEditData() {
+    }
+    return TimeRangeEditData;
+}());
+var TimeRangeEditController = (function () {
+    function TimeRangeEditController($injector, pipDateTime, $scope, $element) {
+        this.$injector = $injector;
+        this.pipDateTime = pipDateTime;
+        this.$scope = $scope;
+        this.startLabel = 'Start time';
+        this.endLabel = 'End time';
+        this.translate();
+        this.intervalTimeCollection = this.getTimeInterval();
+        this.data = new TimeRangeEditData();
+        this.initDate();
+        this.defineDate();
+        $scope.$watchGroup([this.pipStartDate, this.pipEndDate], function () {
+            if (this.data.bind) {
+                this.initDate();
+                this.defineDate();
+            }
+        });
+        $scope.$watch(this.disabled, function (newValue) {
+            this.disableControls = newValue;
+        });
+        $element.addClass('pip-time-range-edit');
+    }
+    TimeRangeEditController.prototype.translate = function () {
+        var pipTranslate = this.$injector.has('pipTranslate') ? this.$injector.get('pipTranslate') : null;
+        if (pipTranslate) {
+            pipTranslate.setTranslations('en', {
+                EVENT_NEW_START_TIME: 'Start time',
+                EVENT_NEW_END_TIME: 'End time'
+            });
+            pipTranslate.setTranslations('ru', {
+                EVENT_NEW_START_TIME: 'Начало',
+                EVENT_NEW_END_TIME: 'Конец'
+            });
+            this.startLabel = this.pipStartLabel ? pipTranslate.translate(this.pipStartLabel)
+                : pipTranslate.translate('EVENT_NEW_START_TIME');
+            this.endLabel = this.pipEndLabel ? pipTranslate.translate(this.pipEndLabel)
+                : pipTranslate.translate('EVENT_NEW_END_TIME');
+        }
+    };
+    TimeRangeEditController.prototype.getDateJSON = function (value) {
+        return value ? new Date(value) : null;
+    };
+    TimeRangeEditController.prototype.setDuration = function () {
+        var start, end;
+        if (!this.data.startDate || !this.data.endDate) {
+            return null;
+        }
+        start = new Date(this.data.startDate.getTime() + this.data.startTime * 60 * 1000);
+        end = new Date(this.data.endDate.getTime() + this.data.endTime * 60 * 1000);
+        return end - start;
+    };
+    TimeRangeEditController.prototype.validateStartDate = function () {
+        var date, start, end, endTime, startTime;
+        if (!this.data.startDate) {
+            this.data.startTime = null;
+            return;
+        }
+        if (_.isUndefined(this.data.startTime) || _.isNull(this.data.startTime)) {
+            if (!this.data.endTime) {
+                start = new Date();
+                startTime = date.getTime() - this.pipDateTime.toStartDay(date);
+                this.data.startTime = Math.floor(startTime / (30 * 60 * 1000)) * 30;
+            }
+            else {
+                this.data.startTime = this.data.endTime === 0 ? 0 : this.data.endTime - 30;
+            }
+        }
+        start = new Date(this.data.startDate.getTime() + this.data.startTime * 60 * 1000);
+        if (this.data.duration) {
+            end = new Date(start.getTime() + this.data.duration);
+            this.data.endDate = this.pipDateTime.toStartDay(end);
+            endTime = end.getTime() - this.data.endDate.getTime();
+            this.data.endTime = Math.floor(endTime / (30 * 60 * 1000)) * 30;
+        }
+        else {
+            end = new Date(this.data.endDate.getTime() + this.data.endTime * 60 * 1000);
+            if (start >= end) {
+                this.data.endDate = this.pipDateTime.toStartDay(new Date(start.getTime() + 30 * 60000));
+                this.data.endTime = (this.data.startTime + 30) % 1440;
+            }
+        }
+        this.data.startTime = Math.round(this.data.startTime / 30) * 30;
+    };
+    TimeRangeEditController.prototype.validateEndDate = function () {
+        var date, start, end;
+        if (!this.data.endDate) {
+            this.data.endTime = null;
+            return;
+        }
+        if (_.isUndefined(this.data.endTime) || _.isNull(this.data.endTime)) {
+            if (!this.data.startTime) {
+                date = new Date();
+                date = date.getTime() - this.pipDateTime.toStartDay(date);
+                this.data.endTime = Math.floor(date / (30 * 60 * 1000)) * 30;
+            }
+            else {
+                this.data.endTime = this.data.startTime === 1410 ? 1410 : this.data.startTime + 30;
+            }
+        }
+        start = new Date(this.data.startDate.getTime() + this.data.startTime * 60 * 1000);
+        end = new Date(this.data.endDate.getTime() + this.data.endTime * 60 * 1000);
+        if (start >= end) {
+            this.data.startDate = this.pipDateTime.toStartDay(new Date(end.getTime() - 30 * 60000));
+            this.data.startTime = this.data.endTime % 1440 === 0 ? 1410 : this.data.endTime - 30;
+        }
+        this.data.endTime = Math.round(this.data.endTime / 30) * 30;
+        this.data.duration = this.setDuration();
+    };
+    TimeRangeEditController.prototype.setDate = function () {
+        var time;
+        this.data.bind = false;
+        if (this.data.startDate) {
+            time = this.data.startTime ? this.data.startTime * 60 * 1000 : 0;
+            this.pipStartDate = new Date(this.data.startDate.getTime() + time);
+        }
+        if (this.data.endDate) {
+            time = this.data.endTime ? this.data.endTime * 60 * 1000 : 0;
+            this.pipEndDate = new Date(this.data.endDate.getTime() + time);
+        }
+        this.data.bind = true;
+    };
+    TimeRangeEditController.prototype.defineDate = function () {
+        var start, end;
+        if (this.pipStartDate !== null && this.pipStartDate !== undefined) {
+            start = _.isDate(this.pipStartDate) ? this.pipStartDate : null;
+            if (!start) {
+                start = this.getDateJSON(this.pipStartDate);
+            }
+            this.data.startDate = this.pipDateTime.toStartDay(start);
+            this.data.startTime = (new Date(start) - this.data.startDate) / (60 * 1000);
+        }
+        if (this.pipEndDate !== null && this.pipEndDate !== undefined) {
+            end = _.isDate(this.pipEndDate) ? this.pipEndDate : null;
+            if (!start) {
+                end = this.getDateJSON(this.pipEndDate);
+            }
+            this.data.endDate = this.pipDateTime.toStartDay(end);
+            this.data.endTime = (new Date(end) - this.data.endDate) / (60 * 1000);
+        }
+        this.validateStartDate();
+        this.validateEndDate();
+        this.data.duration = this.setDuration();
+        this.setDate();
+    };
+    TimeRangeEditController.prototype.getTimeInterval = function () {
+        var result, minutes;
+        result = [];
+        for (var i = 0; i < 24; i++) {
+            for (var j = 0; j < 2; j++) {
+                minutes = j * 30;
+                result.push({
+                    id: i * 60 + minutes,
+                    time: _.pad(i.toString(), 3, '0').substr(0, 2) + ':' + _.pad(minutes.toString(), 2, '0')
+                });
+            }
+        }
+        return result;
+    };
+    TimeRangeEditController.prototype.toBoolean = function (value) {
+        if (value == null)
+            return false;
+        if (!value)
+            return false;
+        value = value.toString().toLowerCase();
+        return value == '1' || value == 'true';
+    };
+    TimeRangeEditController.prototype.initDate = function () {
+        this.data.startDate = null;
+        this.data.startTime = null;
+        this.data.endDate = null;
+        this.data.endTime = null;
+        this.data.duration = null;
+        this.showTime = !this.toBoolean(this.pipHideTime);
+    };
+    TimeRangeEditController.prototype.onChangeStartDate = function (newV) {
+        this.validateStartDate();
+        this.data.duration = this.setDuration();
+        this.setDate();
+        this.pipChanged();
+    };
+    ;
+    TimeRangeEditController.prototype.onChangeEndDate = function () {
+        this.validateEndDate();
+        this.data.duration = this.setDuration();
+        this.setDate();
+        this.pipChanged();
+    };
+    ;
+    TimeRangeEditController.prototype.onChangeStartTime = function () {
+        if (!this.data.startDate) {
+            this.data.startDate = this.pipDateTime.toStartDay(new Date());
+        }
+        this.validateStartDate();
+        this.data.duration = this.setDuration();
+        this.setDate();
+        this.pipChanged();
+    };
+    ;
+    TimeRangeEditController.prototype.onChangeEndTime = function () {
+        if (!this.data.endDate) {
+            this.data.endDate = this.pipDateTime.toStartDay(new Date());
+        }
+        this.validateEndDate();
+        this.data.duration = this.setDuration();
+        this.setDate();
+        this.pipChanged();
+    };
+    ;
+    TimeRangeEditController.prototype.isDisabled = function () {
+        if (this.disabled) {
+            return this.disabled();
+        }
+        return false;
+    };
+    ;
+    return TimeRangeEditController;
+}());
 (function () {
     angular.module('pipTimeRangeEdit', [])
         .directive('pipTimeRangeEdit', function () {
         return {
-            restrict: 'EA',
+            restrict: 'E',
             scope: {
                 pipStartDate: '=',
                 pipChanged: '&',
