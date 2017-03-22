@@ -1508,7 +1508,7 @@ var TimeRangeController = (function () {
                 pipHideTime: '=',
                 pipSize: '='
             },
-            templateUrl: 'time_range_edit_directive/time_range_edit.html',
+            templateUrl: 'time_range_edit_directive/TimeRangeEdit.html',
             controller: 'pipTimeRangeEditController'
         };
     })
