@@ -336,9 +336,7 @@ var DateTime = (function () {
         if (index < 0) {
             return 'day';
         }
-        else {
-            return this._momentRanged[index];
-        }
+        return this._momentRanged[index];
     };
     DateTime.prototype.getOperationRange = function (value) {
         if (this.isUndefinedOrNull(value)) {
@@ -348,9 +346,7 @@ var DateTime = (function () {
         if (index < 0) {
             return 'day';
         }
-        else {
-            return this._momentRanged[index];
-        }
+        return this._momentRanged[index];
     };
     DateTime.prototype.formatDateTime = function (value, basicFormat) {
         var date, formatTpl;
@@ -441,7 +437,7 @@ var DateTime = (function () {
         if (dateStart === null) {
             return dateEnd.format(basicFormat);
         }
-        else if (dateEnd === null || dateStart.isSame(dateEnd)) {
+        if (dateEnd === null || dateStart.isSame(dateEnd)) {
             return dateStart.format(basicFormat);
             ;
         }
@@ -452,18 +448,14 @@ var DateTime = (function () {
             if (dateStart.month() == dateEnd.month()) {
                 return this.formatDay(dateStart, basicFormat) + '-' + dateEnd.format(basicFormat);
             }
-            else {
-                return this.formatMonthDay(dateStart, basicFormat) + '-' + dateEnd.format(basicFormat);
-            }
+            return this.formatMonthDay(dateStart, basicFormat) + '-' + dateEnd.format(basicFormat);
         }
-        else {
-            return dateStart.format(basicFormat) + '-' + dateEnd.format(basicFormat);
-        }
+        return dateStart.format(basicFormat) + '-' + dateEnd.format(basicFormat);
     };
     DateTime.prototype.toStartRange = function (value, range) {
         var date;
         if (this.isUndefinedOrNull(value)) {
-            return '';
+            throw new Error('toStartRange - value is undefined or null');
         }
         if (this._config.timeZone != undefined && this._config.timeZone != null) {
             date = moment(value).utcOffset(this._config.timeZone);
@@ -472,7 +464,7 @@ var DateTime = (function () {
             date = moment(value);
         }
         if (!date.isValid()) {
-            return '';
+            throw new Error('toStartRange - date is invalid');
         }
         return date.startOf(range).toDate();
     };
@@ -702,11 +694,11 @@ var DateTime = (function () {
     DateTime.prototype.getPrevStart = function (value, category) {
         var date, range, result;
         if (this.isUndefinedOrNull(value)) {
-            return '';
+            throw new Error('getPrevStart - value is undefined or null');
         }
         date = moment(value);
         if (!date.isValid()) {
-            return '';
+            throw new Error('getPrevStart - date is invalid');
         }
         range = this.getRange(category);
         result = moment(date).startOf(range).add(-1, this.getOperationRange(range));
@@ -716,7 +708,7 @@ var DateTime = (function () {
         var date, range, result;
         date = moment();
         if (!date.isValid()) {
-            return '';
+            throw new Error('getNowStart - date is invalid');
         }
         range = this.getRange(category);
         result = moment(date).startOf(range);
@@ -725,11 +717,11 @@ var DateTime = (function () {
     DateTime.prototype.addHours = function (value, hours) {
         var date;
         if (this.isUndefinedOrNull(value) || !angular.isNumber(hours)) {
-            return '';
+            throw new Error('addHours - value is undefined or null or hours is not a number');
         }
         date = moment(value);
         if (!date.isValid()) {
-            return '';
+            throw new Error('addHours - date is invalid');
         }
         return date.add(hours, 'hours').toDate();
     };
@@ -1069,7 +1061,7 @@ var DateController = (function () {
 (function () {
     var DateComponent = {
         bindings: DateBindings,
-        templateUrl: 'date_directive/date.html',
+        templateUrl: 'date_directive/Date.html',
         controller: DateController
     };
     angular.module('pipDate', ['pipDates.Templates'])
@@ -1736,7 +1728,7 @@ try {
   module = angular.module('pipDates.Templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('date_directive/date.html',
+  $templateCache.put('date_directive/Date.html',
     '<div class="pip-date layout-row flex" tabindex="-1"><md-input-container class="input-container flex"><md-select class="pip-date-day flex" ng-disabled="$ctrl.disableControls" ng-model="$ctrl.day" placeholder="{{$ctrl.dayLabel}}" ng-change="$ctrl.setValue()"><md-option ng-value="opt" ng-repeat="opt in $ctrl.days track by opt">{{:: opt }}</md-option></md-select></md-input-container><div class="input-container-separator flex-fixed"></div><md-input-container class="input-container flex"><md-select class="pip-date-monthflex" ng-disabled="$ctrl.disableControls" ng-model="$ctrl.month" placeholder="{{$ctrl.monthLabel}}" ng-change="$ctrl.onMonthChanged()"><md-option ng-value="opt.id" ng-repeat="opt in $ctrl.months track by opt.id">{{:: opt.name }}</md-option></md-select></md-input-container><div class="input-container-separator flex-fixed"></div><md-input-container class="input-container flex"><md-select class="pip-date-year flex" ng-disabled="$ctrl.disableControls" ng-model="$ctrl.year" placeholder="{{$ctrl.yearLabel}}" ng-change="$ctrl.onYearChanged()"><md-option ng-value="opt" ng-repeat="opt in $ctrl.years track by opt">{{:: opt }}</md-option></md-select></md-input-container></div>');
 }]);
 })();

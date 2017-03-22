@@ -3,8 +3,8 @@ import { DateTimeConfig } from './DateTimeConfig';
 
 class DateTime implements IDateTimeService {
     private _config: DateTimeConfig;
-    protected _momentRanged = new Array('year', 'month', 'week', 'isoweek', 'day');
-    protected _defaultFormat = 'LL'
+    protected _momentRanged: string[] = new Array('year', 'month', 'week', 'isoweek', 'day');
+    protected _defaultFormat: string = 'LL'
 
     private isUndefinedOrNull(value: any): boolean {
         return angular.isUndefined(value) || value === null;
@@ -19,9 +19,8 @@ class DateTime implements IDateTimeService {
 
         if (index < 0) {
             return 'day'
-        } else {
-            return this._momentRanged[index];
         }
+        return this._momentRanged[index];
     }
 
     private getOperationRange(value: string): string {
@@ -34,13 +33,13 @@ class DateTime implements IDateTimeService {
 
         if (index < 0) {
             return 'day'
-        } else {
-            return this._momentRanged[index];
         }
+        return this._momentRanged[index];
+
     }
 
     private formatDateTime(value: any, basicFormat: string): string {
-        var date: any,
+        let date: moment.Moment,
             formatTpl: string;
 
         if (this.isUndefinedOrNull(value)) {
@@ -63,8 +62,8 @@ class DateTime implements IDateTimeService {
     }
 
     private formatDateTimeY(value: any, basicFormat: string): string {
-        var date: any,
-            nowDate: any,
+        let date: moment.Moment,
+            nowDate: moment.Moment,
             formatMoment: string;
 
         if (this.isUndefinedOrNull(value)) {
@@ -92,7 +91,7 @@ class DateTime implements IDateTimeService {
     }
 
     private formatDay(value: any, basicFormat: string): string {
-        var date: any,
+        let date: moment.Moment,
             format = moment.localeData().longDateFormat(basicFormat ? basicFormat : this._defaultFormat),
             formatMonthYearless = format.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '').replace(/M/g, '');
 
@@ -114,7 +113,7 @@ class DateTime implements IDateTimeService {
     }
 
     private formatMonthDay(value: any, basicFormat: string): string {
-        var date: any,
+        let date: moment.Moment,
             format = basicFormat ? basicFormat : this._defaultFormat,
             formatLL = moment.localeData().longDateFormat(format),
             formatYearlessLL = formatLL.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '');
@@ -138,8 +137,8 @@ class DateTime implements IDateTimeService {
 
     //  use timezone not testing
     private formatRange(value1: any, value2: any, basicFormat: string): string {
-        var dateStart: any,
-            dateEnd: any,
+        let dateStart: moment.Moment,
+            dateEnd: moment.Moment,
             format = basicFormat ? basicFormat : this._defaultFormat;
 
         if (this.isUndefinedOrNull(value1)) {
@@ -157,7 +156,8 @@ class DateTime implements IDateTimeService {
 
         if (dateStart === null) {
             return dateEnd.format(basicFormat);
-        } else if (dateEnd === null || dateStart.isSame(dateEnd)) {
+        }
+        if (dateEnd === null || dateStart.isSame(dateEnd)) {
             return dateStart.format(basicFormat);;
         }
 
@@ -169,19 +169,19 @@ class DateTime implements IDateTimeService {
         if (dateStart.year() == dateEnd.year()) {
             if (dateStart.month() == dateEnd.month()) {
                 return this.formatDay(dateStart, basicFormat) + '-' + dateEnd.format(basicFormat);
-            } else {
-                return this.formatMonthDay(dateStart, basicFormat) + '-' + dateEnd.format(basicFormat);
             }
-        } else {
-            return dateStart.format(basicFormat) + '-' + dateEnd.format(basicFormat);
+            return this.formatMonthDay(dateStart, basicFormat) + '-' + dateEnd.format(basicFormat);
+
         }
+        return dateStart.format(basicFormat) + '-' + dateEnd.format(basicFormat);
+
     }
 
-    private toStartRange(value: any, range: string): any {
-        var date: any;
+    private toStartRange(value: any, range: string): Date {
+        let date: moment.Moment;
 
         if (this.isUndefinedOrNull(value)) {
-            return '';
+               throw new Error('toStartRange - value is undefined or null');
         }
 
         if (this._config.timeZone != undefined && this._config.timeZone != null) {
@@ -190,14 +190,14 @@ class DateTime implements IDateTimeService {
             date = moment(value);
         }
         if (!date.isValid()) {
-            return '';
+               throw new Error('toStartRange - date is invalid');
         }
 
         return date.startOf(range).toDate();
     }
 
     private toEndRange(value: any, range: string, offset: number): any {
-        var date: any,
+        let date: any,
             result: any,
             mssOffset: number;
 
@@ -228,9 +228,9 @@ class DateTime implements IDateTimeService {
     }
 
     private toDateWithTime(value: any, formatDate: string, formatTime: string, firstTime?: boolean): any {
-        var date: any,
+        let date: moment.Moment,
             result: string,
-            nowDate: any;
+            nowDate: moment.Moment;
 
         if (this.isUndefinedOrNull(value)) {
             return '';
@@ -256,7 +256,7 @@ class DateTime implements IDateTimeService {
     }
 
     private toTodayDate(value: any, formatDate: string, formatTime: string): any {
-        var date: any,
+        let date: moment.Moment,
             result: string,
             nowDate: any;
 
@@ -298,11 +298,10 @@ class DateTime implements IDateTimeService {
     // formating functions 
     // -------------------
 
-    // todo Optional
     public formatTime(value: any, format: string): string {
         return this.formatDateTime(value, 'LLL');
     }
-    // todo Optional
+
     public formatDateOptional(value: any, format: string): string {
         return this.formatDateTime(value, 'L');
     }
@@ -470,9 +469,8 @@ class DateTime implements IDateTimeService {
         return '';
     }
 
-    // todo
     public formatElapsedInterval(value: any, start: any): string {
-        var date: any,
+        let date: moment.Moment,
             nowDate: any;
 
         if (this.isUndefinedOrNull(value)) {
@@ -500,7 +498,7 @@ class DateTime implements IDateTimeService {
     // ------------------
 
     public getNextStart(value: any, category: string): any {
-        var date: any,
+        let date: moment.Moment,
             range: string,
             result: any;
 
@@ -519,18 +517,18 @@ class DateTime implements IDateTimeService {
         return result.toDate();
     }
 
-    public getPrevStart(value: any, category: string): any {
-        var date: any,
+    public getPrevStart(value: any, category: string): Date {
+        let date: moment.Moment,
             range: string,
-            result: any;
+            result: moment.Moment;
 
         if (this.isUndefinedOrNull(value)) {
-            return '';
+            throw new Error('getPrevStart - value is undefined or null');
         }
 
         date = moment(value);
         if (!date.isValid()) {
-            return '';
+            throw new Error('getPrevStart - date is invalid');
         }
 
         range = this.getRange(category);
@@ -539,14 +537,14 @@ class DateTime implements IDateTimeService {
         return result.toDate();
     }
 
-    public getNowStart(category: string): any {
-        var date: any,
+    public getNowStart(category: string): Date {
+        let date: moment.Moment,
             range: string,
-            result: any;
+            result: moment.Moment;
 
         date = moment();
         if (!date.isValid()) {
-            return '';
+            throw new Error('getNowStart - date is invalid');
         }
 
         range = this.getRange(category)
@@ -555,50 +553,50 @@ class DateTime implements IDateTimeService {
         return result.toDate();
     }
 
-    public addHours(value: any, hours: number): any {
-        var date: any;
+    public addHours(value: any, hours: number): Date {
+        let date: moment.Moment;
 
         if (this.isUndefinedOrNull(value) || !angular.isNumber(hours)) {
-            return '';
+            throw new Error('addHours - value is undefined or null or hours is not a number');
         }
 
         date = moment(value);
         if (!date.isValid()) {
-            return '';
+            throw new Error('addHours - date is invalid');
         }
 
         return date.add(hours, 'hours').toDate();
     }
 
-    public toStartDay(value: any): any {
+    public toStartDay(value: any): Date {
         return this.toStartRange(value, 'day');
     }
 
-    public toEndDay(value: any, offset: number): any {
+    public toEndDay(value: any, offset: number): Date {
         return this.toEndRange(value, 'day', offset);
     }
 
-    public toStartWeek(value: any): any {
+    public toStartWeek(value: any): Date {
         return this.toStartRange(value, 'week');
     }
 
-    public toEndWeek(value: any, offset: number): any {
+    public toEndWeek(value: any, offset: number): Date {
         return this.toEndRange(value, 'week', offset);
     }
 
-    public toStartMonth(value: any): any {
+    public toStartMonth(value: any): Date {
         return this.toStartRange(value, 'month');
     }
 
-    public toEndMonth(value: any, offset: number): any {
+    public toEndMonth(value: any, offset: number): Date {
         return this.toEndRange(value, 'month', offset);
     }
 
-    public toStartYear(value: any): any {
+    public toStartYear(value: any): Date {
         return this.toStartRange(value, 'year');
     }
 
-    public toEndYear(value: any, offset: number): any {
+    public toEndYear(value: any, offset: number): Date{
         return this.toEndRange(value, 'year', offset);
     }
 
@@ -777,12 +775,10 @@ class DateTimeService {
         return this._datetime.formatTodayDateShortTimeShort(value);
     }
 
-    // todo
     public formatMillisecondsToSeconds(value: any) {
         return this._datetime.formatMillisecondsToSeconds(value);
     }
 
-    // todo
     public formatElapsedInterval(value: any, start: any): string {
         return this._datetime.formatElapsedInterval(value, start);
     }

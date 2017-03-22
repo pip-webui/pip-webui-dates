@@ -47,18 +47,18 @@ export interface IDateTimeService {
     formatMillisecondsToSeconds(value: any): string;
     formatElapsedInterval(value: any, start: any): string;
     getDateJSON(date: any): string;
-    getNextStart(value: any, category: string): any;
-    getPrevStart(value: any, category: string): any;
-    getNowStart(category: string): any;
-    addHours(value: any, hours: number): any;
-    toStartDay(value: any): any;
-    toEndDay(value: any, offset: number): any;
-    toStartWeek(value: any): any;
-    toEndWeek(value: any, offset: number): any;
-    toStartMonth(value: any): any;
-    toEndMonth(value: any, offset: number): any;
-    toStartYear(value: any): any;
-    toEndYear(value: any, offset: number): any;
+    getNextStart(value: any, category: string): Date;
+    getPrevStart(value: any, category: string): Date;
+    getNowStart(category: string): Date;
+    addHours(value: any, hours: number): Date;
+    toStartDay(value: any): Date;
+    toEndDay(value: any, offset: number): Date;
+    toStartWeek(value: any): Date;
+    toEndWeek(value: any, offset: number): Date;
+    toStartMonth(value: any): Date;
+    toEndMonth(value: any, offset: number): Date;
+    toStartYear(value: any): Date;
+    toEndYear(value: any, offset: number): Date;
 }
 export interface IDateTimeProvider extends IDateTimeService, ng.IServiceProvider {
 }
