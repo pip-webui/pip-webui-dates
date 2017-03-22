@@ -190,6 +190,20 @@ class DateRange {
 }
 
 
+class TimeRangeData {
+    start: Date;
+    end: Date;
+}
+class TimeRangeController {
+    data: TimeRangeData;
+    pipStartDate: Date;
+    pipEndDate: Date;
+    constructor($scope: any, $attrs: any, $element: any);
+    private getDateJSON(value);
+    private defineStartDate();
+    private defineEndDate();
+    private toBoolean(value);
+}
 
 
 }

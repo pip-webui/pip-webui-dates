@@ -1,5 +1,5 @@
 <p>
-    <span ng-if="data.start != null">{{data.start | formatLongDateTime}}</span>
-    <span  class="separator" ng-if="data.start && data.end"> - </span>
-    <span ng-if="data.end != null">{{data.end | formatLongDateTime}}</span>
+    <span ng-if="$ctrl.data.start != null">{{$ctrl.data.start | formatLongDateTime}}</span>
+    <span  class="separator" ng-if="$ctrl.data.start && $ctrl.data.end"> - </span>
+    <span ng-if="$ctrl.data.end != null">{{$ctrl.data.end | formatLongDateTime}}</span>
 </p>
