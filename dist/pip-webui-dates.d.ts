@@ -64,6 +64,21 @@ export interface IDateTimeProvider extends IDateTimeService, ng.IServiceProvider
 }
 
 
+interface IDateBindings {
+    [key: string]: any;
+    timeMode: any;
+    disabled: any;
+    model: any;
+    ngChange: any;
+}
+const DateBindings: IDateBindings;
+class DateChanges implements ng.IOnChangesObject, IDateBindings {
+    [key: string]: ng.IChangesObject<any>;
+    timeMode: ng.IChangesObject<string>;
+    disabled: ng.IChangesObject<() => boolean>;
+    model: ng.IChangesObject<Date>;
+    ngChange: ng.IChangesObject<(date: Date) => void>;
+}
 class DateController {
     private value;
     private localeDate;
@@ -76,13 +91,14 @@ class DateController {
     month: number;
     year: number;
     model: Date;
-    ngChange: () => void;
+    ngChange: (date: Date) => void;
     days: number[];
     months: any[];
     years: number[];
     disabled: () => boolean;
     disableControls: boolean;
     constructor($injector: angular.auto.IInjectorService, $scope: ng.IScope);
+    $onChanges(changes: DateChanges): void;
     private dayList(month, year);
     private monthList();
     private yearList();

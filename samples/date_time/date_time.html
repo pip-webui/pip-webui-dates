@@ -1,11 +1,12 @@
 <h2 class="text-title">{{:: dateLabel | translate}}:</h2>
-<pip-date  pip-time-mode="past" ng-model="specialDate" >
+<pip-date  pip-time-mode="past" ng-model="specialDate" ng-change="changeDate">
 </pip-date>
 <p class="text-body1">{{:: valueLabel | translate }}: {{ specialDate || 'NULL'  }}</p>
 
 <pre class="text-body1 color-window-bg">
 <h3 class="text-subhead2 ">{{:: codeLabel | translate}}</h3>
-<code class="language-markup">&lt;pip-date  pip-time-mode="past" ng-model="specialDate"&gt;
+<code class="language-markup">&lt;pip-date  pip-time-mode="past" ng-change="changeDate()" ng-model="specialDate"&gt;
+
 &lt;/pip-date&gt;
 </code>
 </pre>

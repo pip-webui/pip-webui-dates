@@ -953,9 +953,19 @@ angular.module('pipDateTime', [
     'pipDateTime.Filter'
 ]);
 },{}],6:[function(require,module,exports){
+var DateBindings = {
+    timeMode: '@pipTimeMode',
+    disabled: '&ngDisabled',
+    model: '<ngModel',
+    ngChange: '<'
+};
+var DateChanges = (function () {
+    function DateChanges() {
+    }
+    return DateChanges;
+}());
 var DateController = (function () {
     function DateController($injector, $scope) {
-        var _this = this;
         this.localeDate = moment.localeData();
         this.momentMonths = angular.isArray(this.localeDate['_months']) ? this.localeDate['_months'] : this.localeDate['_months'].format;
         this.momentDays = angular.isArray(this.localeDate['_weekdays']) ? this.localeDate['_weekdays'] : this.localeDate['_weekdays'].format;
@@ -969,13 +979,13 @@ var DateController = (function () {
         this.months = this.monthList();
         this.years = this.yearList();
         this.disableControls = this.disabled ? this.disabled() : false;
-        $scope.$watch('model', function (newValue) {
-            _this.getValue(newValue);
-        });
-        $scope.$watch(this.disabled, function (newValue) {
-            _this.disableControls = newValue;
-        });
     }
+    DateController.prototype.$onChanges = function (changes) {
+        if (changes.model && changes.model.currentValue) {
+            this.model = changes.model.currentValue;
+            this.getValue(this.model);
+        }
+    };
     DateController.prototype.dayList = function (month, year) {
         var count = 31, days = [];
         if (month === 4 || month === 6 || month === 9 || month === 11) {
@@ -1043,7 +1053,7 @@ var DateController = (function () {
         if (this.day && this.month && this.year) {
             value = new Date(this.year, this.month - 1, this.day, 0, 0, 0, 0);
             this.model = value;
-            this.ngChange();
+            this.ngChange(this.model);
         }
     };
     DateController.prototype.onMonthChanged = function () {
@@ -1057,138 +1067,13 @@ var DateController = (function () {
     return DateController;
 }());
 (function () {
+    var DateComponent = {
+        bindings: DateBindings,
+        templateUrl: 'date_directive/date.html',
+        controller: DateController
+    };
     angular.module('pipDate', ['pipDates.Templates'])
-        .directive('pipDate', function () {
-        return {
-            restrict: 'E',
-            require: 'ngModel',
-            scope: {
-                timeMode: '@pipTimeMode',
-                disabled: '&ngDisabled',
-                model: '=ngModel',
-                ngChange: '&'
-            },
-            templateUrl: 'date_directive/date.html',
-            controller: 'pipDateController'
-        };
-    })
-        .controller('pipDateController', ['$scope', '$element', '$injector', function ($scope, $element, $injector) {
-        var value, localeDate = moment.localeData(), momentMonths = angular.isArray(localeDate._months) ? localeDate._months : localeDate._months.format, momentDays = angular.isArray(localeDate._weekdays) ? localeDate._weekdays : localeDate._weekdays.format, momentShortDays = localeDate._weekdaysMin, momentFirstDayOfWeek = localeDate._week.dow;
-        var pipTranslate = $injector.has('pipTranslate') ? $injector.get('pipTranslate') : null;
-        if (pipTranslate) {
-            pipTranslate.setTranslations('en', {
-                DAY: 'Day',
-                MONTH: 'Month',
-                YEAR: 'Year'
-            });
-            pipTranslate.setTranslations('ru', {
-                DAY: 'День',
-                MONTH: 'Месяц',
-                YEAR: 'Год'
-            });
-            $scope.dayLabel = pipTranslate.translate('DAY');
-            $scope.monthLabel = pipTranslate.translate('MONTH');
-            $scope.yearLabel = pipTranslate.translate('YEAR');
-        }
-        else {
-            $scope.dayLabel = 'Day';
-            $scope.monthLabel = 'Month';
-            $scope.yearLabel = 'Year';
-        }
-        function dayList(month, year) {
-            var count = 31, days = [], i;
-            if (month === 4 || month === 6 || month === 9 || month === 11) {
-                count = 30;
-            }
-            else if (month === 2) {
-                if (year) {
-                    count = year % 4 === 0 ? 29 : 28;
-                }
-                else {
-                    count = 28;
-                }
-            }
-            for (i = 1; i <= count; i++) {
-                days.push(i);
-            }
-            return days;
-        }
-        function monthList() {
-            var months = [], i;
-            for (i = 1; i <= 12; i++) {
-                months.push({
-                    id: i,
-                    name: momentMonths[i - 1]
-                });
-            }
-            return months;
-        }
-        function yearList() {
-            var i, currentYear = new Date().getFullYear(), startYear = $scope.timeMode === 'future' ? currentYear : currentYear - 100, endYear = $scope.timeMode === 'past' ? currentYear : currentYear + 100, years = [];
-            if ($scope.timeMode === 'past') {
-                for (i = endYear; i >= startYear; i--) {
-                    years.push(i);
-                }
-            }
-            else {
-                for (i = startYear; i <= endYear; i++) {
-                    years.push(i);
-                }
-            }
-            return years;
-        }
-        function adjustDay() {
-            var days = dayList($scope.month, $scope.year);
-            if ($scope.days.length !== days.length) {
-                if ($scope.day > days.length) {
-                    $scope.day = days.length;
-                }
-                $scope.days = days;
-            }
-        }
-        function getValue(v) {
-            var value = v ? _.isDate(v) ? v : new Date(v) : null, day = value ? value.getDate() : null, month = value ? value.getMonth() + 1 : null, year = value ? value.getFullYear() : null;
-            if ($scope.month !== month && $scope.year !== year) {
-                $scope.days = dayList($scope.month, $scope.year);
-            }
-            $scope.day = day;
-            $scope.month = month;
-            $scope.year = year;
-        }
-        function setValue() {
-            var value;
-            if ($scope.day && $scope.month && $scope.year) {
-                value = new Date($scope.year, $scope.month - 1, $scope.day, 0, 0, 0, 0);
-                $scope.model = value;
-                $scope.ngChange();
-            }
-        }
-        $scope.onDayChanged = function () {
-            setValue();
-        };
-        $scope.onMonthChanged = function () {
-            adjustDay();
-            setValue();
-        };
-        $scope.onYearChanged = function () {
-            adjustDay();
-            setValue();
-        };
-        value = $scope.model ? _.isDate($scope.model) ? $scope.model : new Date($scope.model) : null;
-        $scope.day = value ? value.getDate() : null;
-        $scope.month = value ? value.getMonth() + 1 : null;
-        $scope.year = value ? value.getFullYear() : null;
-        $scope.days = dayList($scope.month, $scope.year);
-        $scope.months = monthList();
-        $scope.years = yearList();
-        $scope.disableControls = $scope.disabled ? $scope.disabled() : false;
-        $scope.$watch('model', function (newValue) {
-            getValue(newValue);
-        });
-        $scope.$watch($scope.disabled, function (newValue) {
-            $scope.disableControls = newValue;
-        });
-    }]);
+        .component('pipDate', DateComponent);
 })();
 },{}],7:[function(require,module,exports){
 var DateRangeBindings = {
@@ -1852,7 +1737,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('date_directive/date.html',
-    '<div class="pip-date layout-row flex" tabindex="-1"><md-input-container class="input-container flex"><md-select class="pip-date-day flex" ng-disabled="disableControls" ng-model="day" placeholder="{{dayLabel}}" ng-change="setValue()"><md-option ng-value="opt" ng-repeat="opt in days track by opt">{{:: opt }}</md-option></md-select></md-input-container><div class="input-container-separator flex-fixed"></div><md-input-container class="input-container flex"><md-select class="pip-date-monthflex" ng-disabled="disableControls" ng-model="month" placeholder="{{monthLabel}}" ng-change="onMonthChanged()"><md-option ng-value="opt.id" ng-repeat="opt in months track by opt.id">{{:: opt.name }}</md-option></md-select></md-input-container><div class="input-container-separator flex-fixed"></div><md-input-container class="input-container flex"><md-select class="pip-date-year flex" ng-disabled="disableControls" ng-model="year" placeholder="{{yearLabel}}" ng-change="onYearChanged()"><md-option ng-value="opt" ng-repeat="opt in years track by opt">{{:: opt }}</md-option></md-select></md-input-container></div>');
+    '<div class="pip-date layout-row flex" tabindex="-1"><md-input-container class="input-container flex"><md-select class="pip-date-day flex" ng-disabled="$ctrl.disableControls" ng-model="$ctrl.day" placeholder="{{$ctrl.dayLabel}}" ng-change="$ctrl.setValue()"><md-option ng-value="opt" ng-repeat="opt in $ctrl.days track by opt">{{:: opt }}</md-option></md-select></md-input-container><div class="input-container-separator flex-fixed"></div><md-input-container class="input-container flex"><md-select class="pip-date-monthflex" ng-disabled="$ctrl.disableControls" ng-model="$ctrl.month" placeholder="{{$ctrl.monthLabel}}" ng-change="$ctrl.onMonthChanged()"><md-option ng-value="opt.id" ng-repeat="opt in $ctrl.months track by opt.id">{{:: opt.name }}</md-option></md-select></md-input-container><div class="input-container-separator flex-fixed"></div><md-input-container class="input-container flex"><md-select class="pip-date-year flex" ng-disabled="$ctrl.disableControls" ng-model="$ctrl.year" placeholder="{{$ctrl.yearLabel}}" ng-change="$ctrl.onYearChanged()"><md-option ng-value="opt" ng-repeat="opt in $ctrl.years track by opt">{{:: opt }}</md-option></md-select></md-input-container></div>');
 }]);
 })();
 

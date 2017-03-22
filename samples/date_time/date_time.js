@@ -102,7 +102,7 @@
             }
 
 
-            $scope.specialDate = new Date('1975-04-08T00:00:00.000Z');
+            $scope.specialDate =  new Date(Date.UTC(2016, 10, 1, 0, 0, 0));
             $scope.specialDateDisabled = false;
 
             $scope.startDate = new Date('1975-04-08T00:20:00.000Z');
@@ -122,6 +122,10 @@
 
             $scope.onChangeWeekly = function() {
                 console.log('$scope.weekly', $scope.weekly);
+            }
+
+            $scope.changeDate = function(date) {
+                $scope.specialDate = date;
             }
         }
     );
