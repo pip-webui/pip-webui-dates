@@ -75,12 +75,22 @@ class DateController {
     day: number;
     month: number;
     year: number;
+    model: Date;
+    ngChange: () => void;
     days: number[];
-    constructor($injector: angular.auto.IInjectorService);
+    months: any[];
+    years: number[];
+    disabled: () => boolean;
+    disableControls: boolean;
+    constructor($injector: angular.auto.IInjectorService, $scope: ng.IScope);
     private dayList(month, year);
     private monthList();
     private yearList();
     private adjustDay();
+    private getValue(v);
+    setValue(): void;
+    onMonthChanged(): void;
+    onYearChanged(): void;
 }
 
 interface IDateRangeBindings {

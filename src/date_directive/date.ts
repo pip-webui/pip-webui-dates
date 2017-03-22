@@ -13,15 +13,45 @@ class DateController {
     public month: number;
     public year: number;
 
+    public model: Date;
+    public ngChange: () => void;
+
     public days: number[];
+    public months: any[];
+    public years: number[];
+    public disabled: () => boolean;
+    public disableControls: boolean;
 
-
-    constructor($injector: angular.auto.IInjectorService) {
+    constructor(
+        $injector: angular.auto.IInjectorService,
+        $scope: ng.IScope) {
         this.momentMonths = angular.isArray(this.localeDate['_months']) ? this.localeDate['_months'] : this.localeDate['_months'].format;
         this.momentDays = angular.isArray(this.localeDate['_weekdays']) ? this.localeDate['_weekdays'] : this.localeDate['_weekdays'].format;
         this.momentShortDays = this.localeDate['_weekdaysMin'];
         this.momentFirstDayOfWeek = this.localeDate['_week'].dow;
 
+
+        let value = this.model ? _.isDate(this.model) ? this.model : new Date(this.model) : null;
+        this.day = value ? value.getDate() : null;
+        this.month = value ? value.getMonth() + 1 : null;
+        this.year = value ? value.getFullYear() : null;
+
+
+
+        this.days = this.dayList(this.month, this.year);
+        this.months = this.monthList();
+        this.years = this.yearList();
+
+        this.disableControls = this.disabled ? this.disabled() : false;
+
+        // React on changes
+        $scope.$watch('model', (newValue) => {
+            this.getValue(newValue);
+        });
+
+        $scope.$watch(this.disabled, (newValue) => {
+            this.disableControls = newValue;
+        });
     }
 
     private dayList(month: number, year: number): number[] {
@@ -89,6 +119,44 @@ class DateController {
             this.days = days;
         }
     }
+
+    private getValue(v: any) {
+        let value: Date = v ? _.isDate(v) ? v : new Date(v) : null,
+            day: number = value ? value.getDate() : null,
+            month: number = value ? value.getMonth() + 1 : null,
+            year: number = value ? value.getFullYear() : null;
+
+        // Update day list if month and year were changed
+        if (this.month !== month && this.year !== year) {
+            this.days = this.dayList(this.month, this.year);
+        }
+
+        // Assign values to scope
+        this.day = day;
+        this.month = month;
+        this.year = year;
+    }
+
+    public setValue() {
+        let value: Date;
+
+        if (this.day && this.month && this.year) {
+            value = new Date(this.year, this.month - 1, this.day, 0, 0, 0, 0);
+            this.model = value;
+            this.ngChange();
+        }
+    }
+
+    public onMonthChanged() {
+        this.adjustDay();
+        this.setValue();
+    }
+
+    public onYearChanged() {
+        this.adjustDay();
+        this.setValue();
+    }
+
 
 
 }

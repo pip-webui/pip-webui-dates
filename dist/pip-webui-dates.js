@@ -954,12 +954,27 @@ angular.module('pipDateTime', [
 ]);
 },{}],6:[function(require,module,exports){
 var DateController = (function () {
-    function DateController($injector) {
+    function DateController($injector, $scope) {
+        var _this = this;
         this.localeDate = moment.localeData();
         this.momentMonths = angular.isArray(this.localeDate['_months']) ? this.localeDate['_months'] : this.localeDate['_months'].format;
         this.momentDays = angular.isArray(this.localeDate['_weekdays']) ? this.localeDate['_weekdays'] : this.localeDate['_weekdays'].format;
         this.momentShortDays = this.localeDate['_weekdaysMin'];
         this.momentFirstDayOfWeek = this.localeDate['_week'].dow;
+        var value = this.model ? _.isDate(this.model) ? this.model : new Date(this.model) : null;
+        this.day = value ? value.getDate() : null;
+        this.month = value ? value.getMonth() + 1 : null;
+        this.year = value ? value.getFullYear() : null;
+        this.days = this.dayList(this.month, this.year);
+        this.months = this.monthList();
+        this.years = this.yearList();
+        this.disableControls = this.disabled ? this.disabled() : false;
+        $scope.$watch('model', function (newValue) {
+            _this.getValue(newValue);
+        });
+        $scope.$watch(this.disabled, function (newValue) {
+            _this.disableControls = newValue;
+        });
     }
     DateController.prototype.dayList = function (month, year) {
         var count = 31, days = [];
@@ -1013,6 +1028,31 @@ var DateController = (function () {
             }
             this.days = days;
         }
+    };
+    DateController.prototype.getValue = function (v) {
+        var value = v ? _.isDate(v) ? v : new Date(v) : null, day = value ? value.getDate() : null, month = value ? value.getMonth() + 1 : null, year = value ? value.getFullYear() : null;
+        if (this.month !== month && this.year !== year) {
+            this.days = this.dayList(this.month, this.year);
+        }
+        this.day = day;
+        this.month = month;
+        this.year = year;
+    };
+    DateController.prototype.setValue = function () {
+        var value;
+        if (this.day && this.month && this.year) {
+            value = new Date(this.year, this.month - 1, this.day, 0, 0, 0, 0);
+            this.model = value;
+            this.ngChange();
+        }
+    };
+    DateController.prototype.onMonthChanged = function () {
+        this.adjustDay();
+        this.setValue();
+    };
+    DateController.prototype.onYearChanged = function () {
+        this.adjustDay();
+        this.setValue();
     };
     return DateController;
 }());
@@ -1812,7 +1852,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('date_directive/date.html',
-    '<div class="pip-date layout-row flex" tabindex="-1"><md-input-container class="input-container flex"><md-select class="pip-date-day flex" ng-disabled="disableControls" ng-model="day" placeholder="{{dayLabel}}" ng-change="onDayChanged()"><md-option ng-value="opt" ng-repeat="opt in days track by opt">{{:: opt }}</md-option></md-select></md-input-container><div class="input-container-separator flex-fixed"></div><md-input-container class="input-container flex"><md-select class="pip-date-monthflex" ng-disabled="disableControls" ng-model="month" placeholder="{{monthLabel}}" ng-change="onMonthChanged()"><md-option ng-value="opt.id" ng-repeat="opt in months track by opt.id">{{:: opt.name }}</md-option></md-select></md-input-container><div class="input-container-separator flex-fixed"></div><md-input-container class="input-container flex"><md-select class="pip-date-year flex" ng-disabled="disableControls" ng-model="year" placeholder="{{yearLabel}}" ng-change="onYearChanged()"><md-option ng-value="opt" ng-repeat="opt in years track by opt">{{:: opt }}</md-option></md-select></md-input-container></div>');
+    '<div class="pip-date layout-row flex" tabindex="-1"><md-input-container class="input-container flex"><md-select class="pip-date-day flex" ng-disabled="disableControls" ng-model="day" placeholder="{{dayLabel}}" ng-change="setValue()"><md-option ng-value="opt" ng-repeat="opt in days track by opt">{{:: opt }}</md-option></md-select></md-input-container><div class="input-container-separator flex-fixed"></div><md-input-container class="input-container flex"><md-select class="pip-date-monthflex" ng-disabled="disableControls" ng-model="month" placeholder="{{monthLabel}}" ng-change="onMonthChanged()"><md-option ng-value="opt.id" ng-repeat="opt in months track by opt.id">{{:: opt.name }}</md-option></md-select></md-input-container><div class="input-container-separator flex-fixed"></div><md-input-container class="input-container flex"><md-select class="pip-date-year flex" ng-disabled="disableControls" ng-model="year" placeholder="{{yearLabel}}" ng-change="onYearChanged()"><md-option ng-value="opt" ng-repeat="opt in years track by opt">{{:: opt }}</md-option></md-select></md-input-container></div>');
 }]);
 })();
 
