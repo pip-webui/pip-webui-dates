@@ -184,7 +184,7 @@ class DateController {
 
     const DateComponent: ng.IComponentOptions = {
         bindings: DateBindings,
-        templateUrl: 'date_directive/date.html',
+        templateUrl: 'date_directive/Date.html',
         controller: DateController
     }
 
