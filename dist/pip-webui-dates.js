@@ -1442,7 +1442,6 @@ var TimeRangeChanges = (function () {
     return TimeRangeChanges;
 }());
 var TimeRangeController = (function () {
-    TimeRangeController.$inject = ['$scope', '$attrs', '$element'];
     function TimeRangeController($scope, $attrs, $element) {
         this.data = new TimeRangeData();
         this.defineStartDate();
@@ -1485,19 +1484,18 @@ var TimeRangeController = (function () {
     return TimeRangeController;
 }());
 (function () {
-    angular.module('pipTimeRange', [])
-        .component('pipTimeRange', {
+    var TimeRangeComponent = {
         bindings: TimeRangeBindings,
         templateUrl: 'time_range_directive/TimeRange.html',
-        controller: TimeRangeController,
-        controllerAs: '$ctrl'
-    });
+        controller: TimeRangeController
+    };
+    angular.module('pipTimeRange', [])
+        .component('pipTimeRange', TimeRangeComponent);
 })();
 },{}],11:[function(require,module,exports){
 (function () {
-    'use strict';
-    var thisModule = angular.module('pipTimeRangeEdit', []);
-    thisModule.directive('pipTimeRangeEdit', function () {
+    angular.module('pipTimeRangeEdit', [])
+        .directive('pipTimeRangeEdit', function () {
         return {
             restrict: 'EA',
             scope: {
@@ -1513,8 +1511,8 @@ var TimeRangeController = (function () {
             templateUrl: 'time_range_edit_directive/time_range_edit.html',
             controller: 'pipTimeRangeEditController'
         };
-    });
-    thisModule.controller('pipTimeRangeEditController', ['$scope', '$element', '$attrs', '$injector', 'pipDateTime', function ($scope, $element, $attrs, $injector, pipDateTime) {
+    })
+        .controller('pipTimeRangeEditController', ['$scope', '$element', '$attrs', '$injector', 'pipDateTime', function ($scope, $element, $attrs, $injector, pipDateTime) {
         var pipTranslate = $injector.has('pipTranslate') ? $injector.get('pipTranslate') : null;
         if (pipTranslate) {
             pipTranslate.setTranslations('en', {
@@ -1765,7 +1763,7 @@ try {
   module = angular.module('pipDates.Templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('time_range_edit_directive/time_range_edit.html',
+  $templateCache.put('time_range_edit_directive/TimeRangeEdit.html',
     '<div class="event-edit layout-row layout-xs-column flex layout-align-start-start"><div flex="47" class="start-time-container"><p class="text-caption text-grey">{{startLabel}}</p><div class="layout-row layout-align-space-between-center"><div class="pip-datepicker-container" flex="49"><md-datepicker ng-model="data.startDate" xmd-placeholder="{{startLabel}}" ng-change="onChangeStartDate()" ng-disabled="isDisabled()" aria-label="START-DATE"></md-datepicker></div><div flex="" ng-if="showTime"><md-input-container class="input-container"><md-select aria-label="START-TIME" ng-model="data.startTime" ng-disabled="isDisabled()" ng-change="onChangeStartTime(data.startTime)"><md-option ng-value="opt.id" ng-repeat="opt in intervalTimeCollection track by opt.id">{{ opt.time }}</md-option></md-select></md-input-container></div></div></div><div flex="47" class="end-time-container"><p class="text-caption text-grey">{{endLabel}}</p><div class="layout-row layout-align-space-between-center"><div class="pip-datepicker-container flex-49"><md-datepicker ng-model="data.endDate" xmd-placeholder="{{endLabel}}" ng-disabled="isDisabled()" ng-change="onChangeEndDate()" aria-label="END-DATE"></md-datepicker></div><div flex="" ng-if="showTime"><md-input-container class="input-container"><md-select aria-label="END-TIME" ng-model="data.endTime" ng-change="onChangeEndTime()" ng-disabled="isDisabled()"><md-option ng-value="opt.id" ng-repeat="opt in intervalTimeCollection track by opt.id">{{ opt.time }}</md-option></md-select></md-input-container></div></div></div></div>');
 }]);
 })();

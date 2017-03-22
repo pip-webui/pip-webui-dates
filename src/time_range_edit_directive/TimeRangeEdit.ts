@@ -1,11 +1,6 @@
-/// <reference path="../../typings/tsd.d.ts" />
-
-(function () {
-    'use strict';
-
-    var thisModule = angular.module('pipTimeRangeEdit', []);
-
-    thisModule.directive('pipTimeRangeEdit',
+(() => {
+    angular.module('pipTimeRangeEdit', [])
+        .directive('pipTimeRangeEdit',
         function () {
             return {
                 restrict: 'EA',
@@ -23,10 +18,8 @@
                 controller: 'pipTimeRangeEditController'
             };
         }
-    );
-
-    // Todo: Remove dependency on Translate. Use moment localization
-    thisModule.controller('pipTimeRangeEditController',
+    )
+    .controller('pipTimeRangeEditController',
         function ($scope, $element, $attrs, $injector, pipDateTime) { //pipTranslate
 
             var pipTranslate = $injector.has('pipTranslate') ? $injector.get('pipTranslate') : null;
