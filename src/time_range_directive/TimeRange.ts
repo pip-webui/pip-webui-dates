@@ -1,11 +1,8 @@
-/// <reference path="../../typings/tsd.d.ts" />
 
-(function () {
-    'use strict';
+(() => {
 
-    var thisModule = angular.module('pipTimeRange', []);
-
-    thisModule.directive('pipTimeRange',
+    angular.module('pipTimeRange', [])
+        .directive('pipTimeRange',
         function () {
             return {
                 restrict: 'E',
@@ -13,7 +10,7 @@
                     pipStartDate: '=',
                     pipEndDate: '='
                 },
-                templateUrl: 'time_range_directive/time_range.html',
+                templateUrl: 'time_range_directive/TimeRange.html',
                 link: function ($scope: any, $element, $attrs) {
 
                     function getDateJSON(value) {
