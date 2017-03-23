@@ -1,6 +1,9 @@
+export const IntervalTimeRange = 30;
+export const MinutesInHour = 60;
+export const HoursInDay = 24;
+export const MillisecondsInSecond = 1000;
 
 {
-
     class TimeRangeEditData {
         endTime: number;
         startTime: number;
@@ -126,8 +129,8 @@
                 return null;
             }
 
-            start = new Date(this.data.startDate.getTime() + this.data.startTime * 60 * 1000);
-            end = new Date(this.data.endDate.getTime() + this.data.endTime * 60 * 1000);
+            start = new Date(this.data.startDate.getTime() + this.data.startTime * MinutesInHour * MillisecondsInSecond);
+            end = new Date(this.data.endDate.getTime() + this.data.endTime * MinutesInHour * MillisecondsInSecond);
 
             return end - start;
         }
@@ -146,31 +149,31 @@
                 if (!this.data.endTime) {
                     start = new Date();
                     startTime = date.getTime() - this.pipDateTime.toStartDay(date);
-                    this.data.startTime = Math.floor(startTime / (30 * 60 * 1000)) * 30;
+                    this.data.startTime = Math.floor(startTime / (IntervalTimeRange * MinutesInHour * MillisecondsInSecond)) * IntervalTimeRange;
                 } else {
-                    this.data.startTime = this.data.endTime === 0 ? 0 : this.data.endTime - 30;
+                    this.data.startTime = this.data.endTime === 0 ? 0 : this.data.endTime - IntervalTimeRange;
                 }
             }
 
-            start = new Date(this.data.startDate.getTime() + this.data.startTime * 60 * 1000);
+            start = new Date(this.data.startDate.getTime() + this.data.startTime * MinutesInHour * MillisecondsInSecond);
 
             // Если есть длительность, то сохраняем ее. Длительность можно изменить только изменяя конечную дату
             if (this.data.duration) {
                 end = new Date(start.getTime() + this.data.duration);
                 this.data.endDate = this.pipDateTime.toStartDay(end);
                 endTime = end.getTime() - this.data.endDate.getTime();
-                this.data.endTime = Math.floor(endTime / (30 * 60 * 1000)) * 30;
+                this.data.endTime = Math.floor(endTime / (IntervalTimeRange * MinutesInHour * MillisecondsInSecond)) * IntervalTimeRange;
             } else {
                 // Если нет длительности сравниваем даты
-                end = new Date(this.data.endDate.getTime() + this.data.endTime * 60 * 1000);
+                end = new Date(this.data.endDate.getTime() + this.data.endTime * MinutesInHour * MillisecondsInSecond);
                 if (start >= end) {
                     // Если начальная дата больше, то двигаем конечную дату
-                    this.data.endDate = this.pipDateTime.toStartDay(new Date(start.getTime() + 30 * 60000));
-                    this.data.endTime = (this.data.startTime + 30) % 1440; // минут в сутках
+                    this.data.endDate = this.pipDateTime.toStartDay(new Date(start.getTime() + IntervalTimeRange * MinutesInHour * MillisecondsInSecond));
+                    this.data.endTime = (this.data.startTime + IntervalTimeRange) % (HoursInDay * MinutesInHour); // минут в сутках
                 }
             }
 
-            this.data.startTime = Math.round(this.data.startTime / 30) * 30;
+            this.data.startTime = Math.round(this.data.startTime / IntervalTimeRange) * IntervalTimeRange;
         }
 
 
@@ -188,22 +191,22 @@
                 if (!this.data.startTime) {
                     date = new Date();
                     date = date.getTime() - this.pipDateTime.toStartDay(date);
-                    this.data.endTime = Math.floor(date / (30 * 60 * 1000)) * 30;
+                    this.data.endTime = Math.floor(date / (IntervalTimeRange * MinutesInHour * MillisecondsInSecond)) * IntervalTimeRange;
                 } else {
-                    this.data.endTime = this.data.startTime === 1410 ? 1410 : this.data.startTime + 30;
+                    this.data.endTime = this.data.startTime === (HoursInDay * MinutesInHour - IntervalTimeRange) ? (HoursInDay * MinutesInHour - IntervalTimeRange) : this.data.startTime + IntervalTimeRange;
                 }
             }
 
-            start = new Date(this.data.startDate.getTime() + this.data.startTime * 60 * 1000);
-            end = new Date(this.data.endDate.getTime() + this.data.endTime * 60 * 1000);
+            start = new Date(this.data.startDate.getTime() + this.data.startTime * MinutesInHour * MillisecondsInSecond);
+            end = new Date(this.data.endDate.getTime() + this.data.endTime * MinutesInHour * MillisecondsInSecond);
 
             if (start >= end) {
                 // Если начальная дата больше, то двигаем начальную дату
-                this.data.startDate = this.pipDateTime.toStartDay(new Date(end.getTime() - 30 * 60000));
-                this.data.startTime = this.data.endTime % 1440 === 0 ? 1410 : this.data.endTime - 30;
+                this.data.startDate = this.pipDateTime.toStartDay(new Date(end.getTime() - IntervalTimeRange * MinutesInHour * MillisecondsInSecond));
+                this.data.startTime = this.data.endTime % (HoursInDay * MinutesInHour) === 0 ? (HoursInDay * MinutesInHour - IntervalTimeRange) : this.data.endTime - IntervalTimeRange;
             }
 
-            this.data.endTime = Math.round(this.data.endTime / 30) * 30;
+            this.data.endTime = Math.round(this.data.endTime / IntervalTimeRange) * IntervalTimeRange;
             this.data.duration = this.setDuration();
         }
 
@@ -214,12 +217,12 @@
             this.data.bind = false;
 
             if (this.data.startDate) {
-                time = this.data.startTime ? this.data.startTime * 60 * 1000 : 0;
+                time = this.data.startTime ? this.data.startTime * MinutesInHour * MillisecondsInSecond : 0;
                 this.pipStartDate = new Date(this.data.startDate.getTime() + time);
             }
 
             if (this.data.endDate) {
-                time = this.data.endTime ? this.data.endTime * 60 * 1000 : 0;
+                time = this.data.endTime ? this.data.endTime * MinutesInHour * MillisecondsInSecond : 0;
                 this.pipEndDate = new Date(this.data.endDate.getTime() + time);
             }
 
@@ -227,9 +230,9 @@
         }
 
         private defineDate() {
-            var start, end;
+            let start: Date, end: Date;
 
-            if (this.pipStartDate !== null && this.pipStartDate !== undefined) {
+            if (!_.isUndefined(this.pipStartDate) && _.isNull(this.pipStartDate)) {
                 start = _.isDate(this.pipStartDate) ? this.pipStartDate : null;
 
                 if (!start) {
@@ -237,10 +240,10 @@
                 }
 
                 this.data.startDate = this.pipDateTime.toStartDay(start);
-                this.data.startTime = (<any>new Date(start) - <any>this.data.startDate) / (60 * 1000);
+                this.data.startTime = (<any>new Date(start) - <any>this.data.startDate) / (MinutesInHour * MillisecondsInSecond);
             }
 
-            if (this.pipEndDate !== null && this.pipEndDate !== undefined) {
+            if (!_.isUndefined(this.pipEndDate) && _.isNull(this.pipEndDate)) {
                 end = _.isDate(this.pipEndDate) ? this.pipEndDate : null;
 
                 if (!start) {
@@ -248,7 +251,7 @@
                 }
 
                 this.data.endDate = this.pipDateTime.toStartDay(end);
-                this.data.endTime = (<any>new Date(end) - <any>this.data.endDate) / (60 * 1000);
+                this.data.endTime = (<any>new Date(end) - <any>this.data.endDate) / (MinutesInHour * MillisecondsInSecond);
             }
 
             this.validateStartDate();
@@ -261,11 +264,11 @@
             let result, minutes: number;
 
             result = [];
-            for (let i: number = 0; i < 24; i++) {
+            for (let i: number = 0; i < HoursInDay; i++) {
                 for (let j: number = 0; j < 2; j++) {
-                    minutes = j * 30;
+                    minutes = j * IntervalTimeRange;
                     result.push({
-                        id: i * 60 + minutes,
+                        id: i * MinutesInHour + minutes,
                         time: _.pad(i.toString(), 3, '0').substr(0, 2) + ':' + _.pad(minutes.toString(), 2, '0')
                     });
                 }

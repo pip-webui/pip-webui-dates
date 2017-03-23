@@ -1494,6 +1494,12 @@ angular.module('pipDates', [
         .component('pipTimeRange', TimeRangeComponent);
 })();
 },{}],11:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.IntervalTimeRange = 30;
+exports.MinutesInHour = 60;
+exports.HoursInDay = 24;
+exports.MillisecondsInSecond = 1000;
 {
     var TimeRangeEditData_1 = (function () {
         function TimeRangeEditData_1() {
@@ -1567,8 +1573,8 @@ angular.module('pipDates', [
             if (!this.data.startDate || !this.data.endDate) {
                 return null;
             }
-            start = new Date(this.data.startDate.getTime() + this.data.startTime * 60 * 1000);
-            end = new Date(this.data.endDate.getTime() + this.data.endTime * 60 * 1000);
+            start = new Date(this.data.startDate.getTime() + this.data.startTime * exports.MinutesInHour * exports.MillisecondsInSecond);
+            end = new Date(this.data.endDate.getTime() + this.data.endTime * exports.MinutesInHour * exports.MillisecondsInSecond);
             return end - start;
         };
         TimeRangeEditController.prototype.validateStartDate = function () {
@@ -1581,27 +1587,27 @@ angular.module('pipDates', [
                 if (!this.data.endTime) {
                     start = new Date();
                     startTime = date.getTime() - this.pipDateTime.toStartDay(date);
-                    this.data.startTime = Math.floor(startTime / (30 * 60 * 1000)) * 30;
+                    this.data.startTime = Math.floor(startTime / (exports.IntervalTimeRange * exports.MinutesInHour * exports.MillisecondsInSecond)) * exports.IntervalTimeRange;
                 }
                 else {
-                    this.data.startTime = this.data.endTime === 0 ? 0 : this.data.endTime - 30;
+                    this.data.startTime = this.data.endTime === 0 ? 0 : this.data.endTime - exports.IntervalTimeRange;
                 }
             }
-            start = new Date(this.data.startDate.getTime() + this.data.startTime * 60 * 1000);
+            start = new Date(this.data.startDate.getTime() + this.data.startTime * exports.MinutesInHour * exports.MillisecondsInSecond);
             if (this.data.duration) {
                 end = new Date(start.getTime() + this.data.duration);
                 this.data.endDate = this.pipDateTime.toStartDay(end);
                 endTime = end.getTime() - this.data.endDate.getTime();
-                this.data.endTime = Math.floor(endTime / (30 * 60 * 1000)) * 30;
+                this.data.endTime = Math.floor(endTime / (exports.IntervalTimeRange * exports.MinutesInHour * exports.MillisecondsInSecond)) * exports.IntervalTimeRange;
             }
             else {
-                end = new Date(this.data.endDate.getTime() + this.data.endTime * 60 * 1000);
+                end = new Date(this.data.endDate.getTime() + this.data.endTime * exports.MinutesInHour * exports.MillisecondsInSecond);
                 if (start >= end) {
-                    this.data.endDate = this.pipDateTime.toStartDay(new Date(start.getTime() + 30 * 60000));
-                    this.data.endTime = (this.data.startTime + 30) % 1440;
+                    this.data.endDate = this.pipDateTime.toStartDay(new Date(start.getTime() + exports.IntervalTimeRange * exports.MinutesInHour * exports.MillisecondsInSecond));
+                    this.data.endTime = (this.data.startTime + exports.IntervalTimeRange) % (exports.HoursInDay * exports.MinutesInHour);
                 }
             }
-            this.data.startTime = Math.round(this.data.startTime / 30) * 30;
+            this.data.startTime = Math.round(this.data.startTime / exports.IntervalTimeRange) * exports.IntervalTimeRange;
         };
         TimeRangeEditController.prototype.validateEndDate = function () {
             var date, start, end;
@@ -1613,19 +1619,19 @@ angular.module('pipDates', [
                 if (!this.data.startTime) {
                     date = new Date();
                     date = date.getTime() - this.pipDateTime.toStartDay(date);
-                    this.data.endTime = Math.floor(date / (30 * 60 * 1000)) * 30;
+                    this.data.endTime = Math.floor(date / (exports.IntervalTimeRange * exports.MinutesInHour * exports.MillisecondsInSecond)) * exports.IntervalTimeRange;
                 }
                 else {
-                    this.data.endTime = this.data.startTime === 1410 ? 1410 : this.data.startTime + 30;
+                    this.data.endTime = this.data.startTime === (exports.HoursInDay * exports.MinutesInHour - exports.IntervalTimeRange) ? (exports.HoursInDay * exports.MinutesInHour - exports.IntervalTimeRange) : this.data.startTime + exports.IntervalTimeRange;
                 }
             }
-            start = new Date(this.data.startDate.getTime() + this.data.startTime * 60 * 1000);
-            end = new Date(this.data.endDate.getTime() + this.data.endTime * 60 * 1000);
+            start = new Date(this.data.startDate.getTime() + this.data.startTime * exports.MinutesInHour * exports.MillisecondsInSecond);
+            end = new Date(this.data.endDate.getTime() + this.data.endTime * exports.MinutesInHour * exports.MillisecondsInSecond);
             if (start >= end) {
-                this.data.startDate = this.pipDateTime.toStartDay(new Date(end.getTime() - 30 * 60000));
-                this.data.startTime = this.data.endTime % 1440 === 0 ? 1410 : this.data.endTime - 30;
+                this.data.startDate = this.pipDateTime.toStartDay(new Date(end.getTime() - exports.IntervalTimeRange * exports.MinutesInHour * exports.MillisecondsInSecond));
+                this.data.startTime = this.data.endTime % (exports.HoursInDay * exports.MinutesInHour) === 0 ? (exports.HoursInDay * exports.MinutesInHour - exports.IntervalTimeRange) : this.data.endTime - exports.IntervalTimeRange;
             }
-            this.data.endTime = Math.round(this.data.endTime / 30) * 30;
+            this.data.endTime = Math.round(this.data.endTime / exports.IntervalTimeRange) * exports.IntervalTimeRange;
             this.data.duration = this.setDuration();
         };
         TimeRangeEditController.prototype.setDate = function () {
@@ -1634,32 +1640,32 @@ angular.module('pipDates', [
                 this.data = new TimeRangeEditData_1();
             this.data.bind = false;
             if (this.data.startDate) {
-                time = this.data.startTime ? this.data.startTime * 60 * 1000 : 0;
+                time = this.data.startTime ? this.data.startTime * exports.MinutesInHour * exports.MillisecondsInSecond : 0;
                 this.pipStartDate = new Date(this.data.startDate.getTime() + time);
             }
             if (this.data.endDate) {
-                time = this.data.endTime ? this.data.endTime * 60 * 1000 : 0;
+                time = this.data.endTime ? this.data.endTime * exports.MinutesInHour * exports.MillisecondsInSecond : 0;
                 this.pipEndDate = new Date(this.data.endDate.getTime() + time);
             }
             this.data.bind = true;
         };
         TimeRangeEditController.prototype.defineDate = function () {
             var start, end;
-            if (this.pipStartDate !== null && this.pipStartDate !== undefined) {
+            if (!_.isUndefined(this.pipStartDate) && _.isNull(this.pipStartDate)) {
                 start = _.isDate(this.pipStartDate) ? this.pipStartDate : null;
                 if (!start) {
                     start = this.getDateJSON(this.pipStartDate);
                 }
                 this.data.startDate = this.pipDateTime.toStartDay(start);
-                this.data.startTime = (new Date(start) - this.data.startDate) / (60 * 1000);
+                this.data.startTime = (new Date(start) - this.data.startDate) / (exports.MinutesInHour * exports.MillisecondsInSecond);
             }
-            if (this.pipEndDate !== null && this.pipEndDate !== undefined) {
+            if (!_.isUndefined(this.pipEndDate) && _.isNull(this.pipEndDate)) {
                 end = _.isDate(this.pipEndDate) ? this.pipEndDate : null;
                 if (!start) {
                     end = this.getDateJSON(this.pipEndDate);
                 }
                 this.data.endDate = this.pipDateTime.toStartDay(end);
-                this.data.endTime = (new Date(end) - this.data.endDate) / (60 * 1000);
+                this.data.endTime = (new Date(end) - this.data.endDate) / (exports.MinutesInHour * exports.MillisecondsInSecond);
             }
             this.validateStartDate();
             this.validateEndDate();
@@ -1669,11 +1675,11 @@ angular.module('pipDates', [
         TimeRangeEditController.prototype.getTimeInterval = function () {
             var result, minutes;
             result = [];
-            for (var i = 0; i < 24; i++) {
+            for (var i = 0; i < exports.HoursInDay; i++) {
                 for (var j = 0; j < 2; j++) {
-                    minutes = j * 30;
+                    minutes = j * exports.IntervalTimeRange;
                     result.push({
-                        id: i * 60 + minutes,
+                        id: i * exports.MinutesInHour + minutes,
                         time: _.pad(i.toString(), 3, '0').substr(0, 2) + ':' + _.pad(minutes.toString(), 2, '0')
                     });
                 }
