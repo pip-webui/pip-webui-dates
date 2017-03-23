@@ -225,7 +225,8 @@ pip-date-range {
       display: none; }
     .pip-time-range-edit .pip-datepicker-container md-datepicker .md-datepicker-input-container {
       margin-left: 0px !important;
-      width: 100%; }
+      width: 100%;
+      margin-top: 3px; }
   .pip-time-range-edit .pip-datepicker-container md-datepicker[disabled] .md-datepicker-input-container {
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0.26) 0, rgba(0, 0, 0, 0.26) 33%, transparent 0);
     background-image: -ms-linear-gradient(left, transparent 0, rgba(0, 0, 0, 0.26) 100%);
@@ -255,5 +256,8 @@ pip-date-range {
 
 .pip-time-range-edit .end-time-container {
   width: 100% !important; }
+
+.md-datepicker-input {
+  font-size: 16px; }
 
 /*# sourceMappingURL=pip-webui-dates.css.map */

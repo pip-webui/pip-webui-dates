@@ -1603,7 +1603,7 @@ exports.MillisecondsInSecond = 1000;
             else {
                 end = new Date(this.data.endDate.getTime() + this.data.endTime * exports.MinutesInHour * exports.MillisecondsInSecond);
                 if (start >= end) {
-                    this.data.endDate = this.pipDateTime.toStartDay(new Date(start.getTime() + exports.IntervalTimeRange * exports.MinutesInHour * exports.MillisecondsInSecond));
+                    this.data.endDate = this.pipDateTime.toStartDay(new Date(start.getTime() + (exports.IntervalTimeRange * exports.MinutesInHour * exports.MillisecondsInSecond)));
                     this.data.endTime = (this.data.startTime + exports.IntervalTimeRange) % (exports.HoursInDay * exports.MinutesInHour);
                 }
             }
@@ -1651,7 +1651,7 @@ exports.MillisecondsInSecond = 1000;
         };
         TimeRangeEditController.prototype.defineDate = function () {
             var start, end;
-            if (!_.isUndefined(this.pipStartDate) && _.isNull(this.pipStartDate)) {
+            if (this.pipStartDate !== null && this.pipStartDate !== undefined) {
                 start = _.isDate(this.pipStartDate) ? this.pipStartDate : null;
                 if (!start) {
                     start = this.getDateJSON(this.pipStartDate);
@@ -1659,7 +1659,7 @@ exports.MillisecondsInSecond = 1000;
                 this.data.startDate = this.pipDateTime.toStartDay(start);
                 this.data.startTime = (new Date(start) - this.data.startDate) / (exports.MinutesInHour * exports.MillisecondsInSecond);
             }
-            if (!_.isUndefined(this.pipEndDate) && _.isNull(this.pipEndDate)) {
+            if (this.pipEndDate !== null && this.pipEndDate !== undefined) {
                 end = _.isDate(this.pipEndDate) ? this.pipEndDate : null;
                 if (!start) {
                     end = this.getDateJSON(this.pipEndDate);
@@ -1675,7 +1675,7 @@ exports.MillisecondsInSecond = 1000;
         TimeRangeEditController.prototype.getTimeInterval = function () {
             var result, minutes;
             result = [];
-            for (var i = 0; i < exports.HoursInDay; i++) {
+            for (var i = 0; i < 24; i++) {
                 for (var j = 0; j < 2; j++) {
                     minutes = j * exports.IntervalTimeRange;
                     result.push({

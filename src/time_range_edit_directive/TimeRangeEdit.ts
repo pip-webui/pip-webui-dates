@@ -168,7 +168,7 @@ export const MillisecondsInSecond = 1000;
                 end = new Date(this.data.endDate.getTime() + this.data.endTime * MinutesInHour * MillisecondsInSecond);
                 if (start >= end) {
                     // Если начальная дата больше, то двигаем конечную дату
-                    this.data.endDate = this.pipDateTime.toStartDay(new Date(start.getTime() + IntervalTimeRange * MinutesInHour * MillisecondsInSecond));
+                    this.data.endDate = this.pipDateTime.toStartDay(new Date(start.getTime() + (IntervalTimeRange * MinutesInHour * MillisecondsInSecond)));
                     this.data.endTime = (this.data.startTime + IntervalTimeRange) % (HoursInDay * MinutesInHour); // минут в сутках
                 }
             }
@@ -232,7 +232,7 @@ export const MillisecondsInSecond = 1000;
         private defineDate() {
             let start: Date, end: Date;
 
-            if (!_.isUndefined(this.pipStartDate) && _.isNull(this.pipStartDate)) {
+            if (this.pipStartDate !== null && this.pipStartDate !== undefined) {
                 start = _.isDate(this.pipStartDate) ? this.pipStartDate : null;
 
                 if (!start) {
@@ -243,7 +243,7 @@ export const MillisecondsInSecond = 1000;
                 this.data.startTime = (<any>new Date(start) - <any>this.data.startDate) / (MinutesInHour * MillisecondsInSecond);
             }
 
-            if (!_.isUndefined(this.pipEndDate) && _.isNull(this.pipEndDate)) {
+            if (this.pipEndDate !== null && this.pipEndDate !== undefined) {
                 end = _.isDate(this.pipEndDate) ? this.pipEndDate : null;
 
                 if (!start) {
@@ -264,7 +264,7 @@ export const MillisecondsInSecond = 1000;
             let result, minutes: number;
 
             result = [];
-            for (let i: number = 0; i < HoursInDay; i++) {
+            for (let i: number = 0; i < 24; i++) {
                 for (let j: number = 0; j < 2; j++) {
                     minutes = j * IntervalTimeRange;
                     result.push({
