@@ -182,11 +182,12 @@
 
     const DateComponent: ng.IComponentOptions = {
         bindings: DateBindings,
-        templateUrl: 'date_directive/Date.html',
+        templateUrl: 'date/Date.html',
         controller: DateController
     }
 
-    angular.module('pipDate', ['pipDates.Templates'])
+    angular
+        .module('pipDate', ['pipDates.Templates'])
         .component('pipDate', DateComponent)
 })();
 

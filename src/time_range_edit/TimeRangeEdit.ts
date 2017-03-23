@@ -340,7 +340,7 @@ export const MillisecondsInSecond = 1000;
 
     const TimeRangeEditComponent: ng.IComponentOptions = {
         bindings: TimeRangeEditBindings,
-        templateUrl: 'time_range_edit_directive/TimeRangeEdit.html',
+        templateUrl: 'time_range_edit/TimeRangeEdit.html',
         controller: TimeRangeEditController
     };
     angular.module('pipTimeRangeEdit', [])

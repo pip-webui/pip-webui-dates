@@ -1,5 +1,4 @@
-import { IDateTimeService, IDateTimeProvider } from './IDateService';
-import { DateTimeConfig } from './DateTimeConfig';
+import { DateTimeConfig, IDateTimeService, IDateTimeProvider } from './IDateService';
 
 (() => {
     class DateTime implements IDateTimeService {
@@ -296,6 +295,7 @@ import { DateTimeConfig } from './DateTimeConfig';
         public useTimeZone(offset: number) {
             this._config.timeZone = offset;
         }
+        
         // formating functions 
         // -------------------
 

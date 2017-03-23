@@ -1,9 +1,6 @@
-﻿// @file Composition of basic controls CSS styles
-// @copyright Digital Living Software Corp. 2014-2016
+﻿@import "css_light/index";
 
-@import "css_light/css_light";
-
-@import "date_directive/Date";
-@import "date_range_directive/DateRange";
-@import "time_range_directive/TimeRange";
-@import "time_range_edit_directive/TimeRangeEdit";
+@import "date/Date";
+@import "date_range/DateRange";
+@import "time_range/TimeRange";
+@import "time_range_edit/TimeRangeEdit";

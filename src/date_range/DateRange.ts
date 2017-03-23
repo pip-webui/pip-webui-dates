@@ -457,7 +457,7 @@
 
     const daterange: ng.IComponentOptions = {
         bindings: DateRangeBindings,
-        templateUrl: 'date_range_directive/DateRange.html',
+        templateUrl: 'date_range/DateRange.html',
         controller: DateRangeController 
 
     };

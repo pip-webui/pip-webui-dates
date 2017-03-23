@@ -76,7 +76,7 @@
 
     const TimeRangeComponent: ng.IComponentOptions = {
         bindings: TimeRangeBindings,
-        templateUrl: 'time_range_directive/TimeRange.html',
+        templateUrl: 'time_range/TimeRange.html',
         controller: TimeRangeController
     }
 

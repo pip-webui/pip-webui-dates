@@ -1,4 +1,6 @@
-import {DateTimeConfig} from './DateTimeConfig';
+export class DateTimeConfig {
+    timeZone: number;
+}
 
 export interface IDateTimeService {
     readonly config: DateTimeConfig;
