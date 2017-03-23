@@ -215,6 +215,12 @@ pip-date-range {
     margin-left: 4px !important;
     margin-right: 4px !important; }
 
+.pip-time-range-edit .md-datepicker-input {
+  font-size: 16px; }
+
+.pip-time-range-edit .md-datepicker-expand-triangle {
+  margin-top: -3px !important; }
+
 .pip-time-range-edit .pip-datepicker-container {
   height: 52px;
   padding-top: 4px;
@@ -233,7 +239,7 @@ pip-date-range {
     background-position: 0 bottom;
     background-repeat: repeat-x;
     background-size: 4px 1px;
-    margin-top: 2px; }
+    margin-top: 4px; }
 
 .pip-time-range-edit .text-caption {
   margin-top: 0px !important; }
@@ -256,8 +262,5 @@ pip-date-range {
 
 .pip-time-range-edit .end-time-container {
   width: 100% !important; }
-
-.md-datepicker-input {
-  font-size: 16px; }
 
 /*# sourceMappingURL=pip-webui-dates.css.map */

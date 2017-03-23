@@ -2,6 +2,15 @@
 // @copyright Digital Living Software Corp. 2014-2016
 
 .pip-time-range-edit {
+  
+  .md-datepicker-input {
+      font-size: 16px;
+  }
+
+  .md-datepicker-expand-triangle{
+    margin-top: -3px !important;
+  }
+
   .pip-datepicker-container {
     height: 52px;
     padding-top: 4px;
@@ -29,7 +38,7 @@
         background-position: 0 bottom;
         background-repeat: repeat-x;
         background-size: 4px 1px;
-        margin-top: 2px;
+        margin-top: 4px;
       }
     }
   }
