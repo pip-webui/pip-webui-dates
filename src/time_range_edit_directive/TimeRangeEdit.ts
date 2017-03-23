@@ -307,8 +307,7 @@ class TimeRangeEditController {
                     pipSize: '='
                 },
                 templateUrl: 'time_range_edit_directive/TimeRangeEdit.html',
-                controller: TimeRangeEditController,
-                controllerAs: '$ctrl'
+                controller: TimeRangeEditController
             }
         )
        
