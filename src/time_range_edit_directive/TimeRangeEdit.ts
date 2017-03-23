@@ -1,5 +1,5 @@
 
-(() => {
+{
 
     class TimeRangeEditData {
         endTime: number;
@@ -336,11 +336,11 @@
     }
 
     const TimeRangeEditComponent: ng.IComponentOptions = {
-        bindings: TimeRangeBindings,
+        bindings: TimeRangeEditBindings,
         templateUrl: 'time_range_edit_directive/TimeRangeEdit.html',
         controller: TimeRangeEditController
     };
     angular.module('pipTimeRangeEdit', [])
         .component('pipTimeRangeEdit', TimeRangeEditComponent)
 
-})();
+}
