@@ -2,7 +2,7 @@ export class DateTimeConfig {
     timeZone: number;
 }
 
-export interface IDateTimeFormatService {
+export interface IDateFormatService {
     readonly config: DateTimeConfig;
     useTimeZone(offset: number);
 
@@ -47,4 +47,4 @@ export interface IDateTimeFormatService {
 
 }
 
-export interface IDateTimeFormatProvider extends IDateTimeFormatService, ng.IServiceProvider {}
+export interface IDateFormatProvider extends IDateFormatService, ng.IServiceProvider {}

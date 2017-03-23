@@ -122,6 +122,7 @@
         .module('pipDate', ['pipDates.Templates'])
         .component('pipDate', DateComponent);
 })();
+
 },{}],2:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
@@ -492,294 +493,295 @@ Object.defineProperty(exports, "__esModule", { value: true });
         };
         return DateTimeConvertService;
     }());
-    var DateTimeConvertProvider = (function (_super) {
-        __extends(DateTimeConvertProvider, _super);
-        function DateTimeConvertProvider() {
+    var DateConvertProvider = (function (_super) {
+        __extends(DateConvertProvider, _super);
+        function DateConvertProvider() {
             return _super.call(this, { timeZone: null }) || this;
         }
-        DateTimeConvertProvider.prototype.$get = function () {
+        DateConvertProvider.prototype.$get = function () {
             "ngInject";
             if (this._service == null)
                 this._service = new DateTimeConvertService(this);
             return this._service;
         };
-        return DateTimeConvertProvider;
+        return DateConvertProvider;
     }(DateTimeConvert));
     angular
-        .module('pipDateTime.ConvertService', [])
-        .provider('pipDateTimeConvert', DateTimeConvertProvider);
+        .module('pipDate.Convert', [])
+        .provider('pipDateConvert', DateConvertProvider);
 })();
+
 },{}],3:[function(require,module,exports){
 "use strict";
-formatTimeFilter.$inject = ['pipDateTimeFormat'];
-formatDateOptionalFilter.$inject = ['pipDateTimeFormat'];
-formatLongDateFilter.$inject = ['pipDateTimeFormat'];
-formatShortDateFilter.$inject = ['pipDateTimeFormat'];
-formatMiddleDateFilter.$inject = ['pipDateTimeFormat'];
-formatMonthFilter.$inject = ['pipDateTimeFormat'];
-formatLongMonthFilter.$inject = ['pipDateTimeFormat'];
-formatYearFilter.$inject = ['pipDateTimeFormat'];
-formatWeekFilter.$inject = ['pipDateTimeFormat'];
-formatShortWeekFilter.$inject = ['pipDateTimeFormat'];
-formatShortDateTimeFilter.$inject = ['pipDateTimeFormat'];
-formatMiddleDateTimeFilter.$inject = ['pipDateTimeFormat'];
-formatLongDateTimeFilter.$inject = ['pipDateTimeFormat'];
-formatShortDateLongTimeFilter.$inject = ['pipDateTimeFormat'];
-formatMiddleDateLongTimeFilter.$inject = ['pipDateTimeFormat'];
-formatLongDateLongTimeFilter.$inject = ['pipDateTimeFormat'];
-bbFormatDateLongTimeFilter.$inject = ['pipDateTimeFormat'];
-formatFullDateTimeFilter.$inject = ['pipDateTimeFormat'];
-formatShortTimeFilter.$inject = ['pipDateTimeFormat'];
-formatLongTimeFilter.$inject = ['pipDateTimeFormat'];
-formatShortDayOfWeekFilter.$inject = ['pipDateTimeFormat'];
-formatLongDayOfWeekFilter.$inject = ['pipDateTimeFormat'];
-formatLongMonthDayFilter.$inject = ['pipDateTimeFormat'];
-formatShortMonthDayFilter.$inject = ['pipDateTimeFormat'];
-formatDateRangeFilter.$inject = ['pipDateTimeFormat'];
-formatDateTimeRangeFilter.$inject = ['pipDateTimeFormat'];
-formatISOWeekFilter.$inject = ['pipDateTimeFormat'];
-formatShortISOWeekFilter.$inject = ['pipDateTimeFormat'];
-formatISOWeekOrdinalFilter.$inject = ['pipDateTimeFormat'];
-formatDateYFilter.$inject = ['pipDateTimeFormat'];
-formatLongDateYFilter.$inject = ['pipDateTimeFormat'];
-formatTodayDateLongTimeLongFilter.$inject = ['pipDateTimeFormat'];
-formatTodayDateShortTimeLongFilter.$inject = ['pipDateTimeFormat'];
-formatTodayDateLongTimeShortFilter.$inject = ['pipDateTimeFormat'];
-formatTodayDateShortTimeShortFilter.$inject = ['pipDateTimeFormat'];
-formatMillisecondsToSecondsFilter.$inject = ['pipDateTimeFormat'];
-formatElapsedIntervalFilter.$inject = ['pipDateTimeFormat'];
-getDateJSONFilter.$inject = ['pipDateTimeConvert'];
+formatTimeFilter.$inject = ['pipDateFormat'];
+formatDateOptionalFilter.$inject = ['pipDateFormat'];
+formatLongDateFilter.$inject = ['pipDateFormat'];
+formatShortDateFilter.$inject = ['pipDateFormat'];
+formatMiddleDateFilter.$inject = ['pipDateFormat'];
+formatMonthFilter.$inject = ['pipDateFormat'];
+formatLongMonthFilter.$inject = ['pipDateFormat'];
+formatYearFilter.$inject = ['pipDateFormat'];
+formatWeekFilter.$inject = ['pipDateFormat'];
+formatShortWeekFilter.$inject = ['pipDateFormat'];
+formatShortDateTimeFilter.$inject = ['pipDateFormat'];
+formatMiddleDateTimeFilter.$inject = ['pipDateFormat'];
+formatLongDateTimeFilter.$inject = ['pipDateFormat'];
+formatShortDateLongTimeFilter.$inject = ['pipDateFormat'];
+formatMiddleDateLongTimeFilter.$inject = ['pipDateFormat'];
+formatLongDateLongTimeFilter.$inject = ['pipDateFormat'];
+bbFormatDateLongTimeFilter.$inject = ['pipDateFormat'];
+formatFullDateTimeFilter.$inject = ['pipDateFormat'];
+formatShortTimeFilter.$inject = ['pipDateFormat'];
+formatLongTimeFilter.$inject = ['pipDateFormat'];
+formatShortDayOfWeekFilter.$inject = ['pipDateFormat'];
+formatLongDayOfWeekFilter.$inject = ['pipDateFormat'];
+formatLongMonthDayFilter.$inject = ['pipDateFormat'];
+formatShortMonthDayFilter.$inject = ['pipDateFormat'];
+formatDateRangeFilter.$inject = ['pipDateFormat'];
+formatDateTimeRangeFilter.$inject = ['pipDateFormat'];
+formatISOWeekFilter.$inject = ['pipDateFormat'];
+formatShortISOWeekFilter.$inject = ['pipDateFormat'];
+formatISOWeekOrdinalFilter.$inject = ['pipDateFormat'];
+formatDateYFilter.$inject = ['pipDateFormat'];
+formatLongDateYFilter.$inject = ['pipDateFormat'];
+formatTodayDateLongTimeLongFilter.$inject = ['pipDateFormat'];
+formatTodayDateShortTimeLongFilter.$inject = ['pipDateFormat'];
+formatTodayDateLongTimeShortFilter.$inject = ['pipDateFormat'];
+formatTodayDateShortTimeShortFilter.$inject = ['pipDateFormat'];
+formatMillisecondsToSecondsFilter.$inject = ['pipDateFormat'];
+formatElapsedIntervalFilter.$inject = ['pipDateFormat'];
+getDateJSONFilter.$inject = ['pipDateConvert'];
 Object.defineProperty(exports, "__esModule", { value: true });
-function formatTimeFilter(pipDateTimeFormat) {
+function formatTimeFilter(pipDateFormat) {
     "ngInject";
     return function (value, format) {
-        return pipDateTimeFormat.formatTime(value, format);
+        return pipDateFormat.formatTime(value, format);
     };
 }
-function formatDateOptionalFilter(pipDateTimeFormat) {
+function formatDateOptionalFilter(pipDateFormat) {
     "ngInject";
     return function (value, format) {
-        return pipDateTimeFormat.formatDateOptional(value, format);
+        return pipDateFormat.formatDateOptional(value, format);
     };
 }
-function formatLongDateFilter(pipDateTimeFormat) {
+function formatLongDateFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatLongDate(value);
+        return pipDateFormat.formatLongDate(value);
     };
 }
-function formatShortDateFilter(pipDateTimeFormat) {
+function formatShortDateFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatShortDate(value);
+        return pipDateFormat.formatShortDate(value);
     };
 }
-function formatMiddleDateFilter(pipDateTimeFormat) {
+function formatMiddleDateFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatMiddleDate(value);
+        return pipDateFormat.formatMiddleDate(value);
     };
 }
-function formatMonthFilter(pipDateTimeFormat) {
+function formatMonthFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatMonth(value);
+        return pipDateFormat.formatMonth(value);
     };
 }
-function formatLongMonthFilter(pipDateTimeFormat) {
+function formatLongMonthFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatLongMonth(value);
+        return pipDateFormat.formatLongMonth(value);
     };
 }
-function formatYearFilter(pipDateTimeFormat) {
+function formatYearFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatYear(value);
+        return pipDateFormat.formatYear(value);
     };
 }
-function formatWeekFilter(pipDateTimeFormat) {
+function formatWeekFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatWeek(value);
+        return pipDateFormat.formatWeek(value);
     };
 }
-function formatShortWeekFilter(pipDateTimeFormat) {
+function formatShortWeekFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatShortWeek(value);
+        return pipDateFormat.formatShortWeek(value);
     };
 }
-function formatShortDateTimeFilter(pipDateTimeFormat) {
+function formatShortDateTimeFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatShortDateTime(value);
+        return pipDateFormat.formatShortDateTime(value);
     };
 }
-function formatMiddleDateTimeFilter(pipDateTimeFormat) {
+function formatMiddleDateTimeFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatMiddleDateTime(value);
+        return pipDateFormat.formatMiddleDateTime(value);
     };
 }
-function formatLongDateTimeFilter(pipDateTimeFormat) {
+function formatLongDateTimeFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatLongDateTime(value);
+        return pipDateFormat.formatLongDateTime(value);
     };
 }
-function formatShortDateLongTimeFilter(pipDateTimeFormat) {
+function formatShortDateLongTimeFilter(pipDateFormat) {
     "ngInject";
     return function (value, firstTime) {
-        return pipDateTimeFormat.formatShortDateLongTime(value, firstTime);
+        return pipDateFormat.formatShortDateLongTime(value, firstTime);
     };
 }
-function formatMiddleDateLongTimeFilter(pipDateTimeFormat) {
+function formatMiddleDateLongTimeFilter(pipDateFormat) {
     "ngInject";
     return function (value, firstTime) {
-        return pipDateTimeFormat.formatMiddleDateLongTime(value, firstTime);
+        return pipDateFormat.formatMiddleDateLongTime(value, firstTime);
     };
 }
-function formatLongDateLongTimeFilter(pipDateTimeFormat) {
+function formatLongDateLongTimeFilter(pipDateFormat) {
     "ngInject";
     return function (value, firstTime) {
-        return pipDateTimeFormat.formatLongDateLongTime(value, firstTime);
+        return pipDateFormat.formatLongDateLongTime(value, firstTime);
     };
 }
-function bbFormatDateLongTimeFilter(pipDateTimeFormat) {
+function bbFormatDateLongTimeFilter(pipDateFormat) {
     "ngInject";
     return function (value, firstTime) {
-        return pipDateTimeFormat.bbFormatDateLongTime(value, firstTime);
+        return pipDateFormat.bbFormatDateLongTime(value, firstTime);
     };
 }
-function formatFullDateTimeFilter(pipDateTimeFormat) {
+function formatFullDateTimeFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatFullDateTime(value);
+        return pipDateFormat.formatFullDateTime(value);
     };
 }
-function formatShortTimeFilter(pipDateTimeFormat) {
+function formatShortTimeFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatShortTime(value);
+        return pipDateFormat.formatShortTime(value);
     };
 }
-function formatLongTimeFilter(pipDateTimeFormat) {
+function formatLongTimeFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatLongTime(value);
+        return pipDateFormat.formatLongTime(value);
     };
 }
-function formatShortDayOfWeekFilter(pipDateTimeFormat) {
+function formatShortDayOfWeekFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatShortDayOfWeek(value);
+        return pipDateFormat.formatShortDayOfWeek(value);
     };
 }
-function formatLongDayOfWeekFilter(pipDateTimeFormat) {
+function formatLongDayOfWeekFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatLongDayOfWeek(value);
+        return pipDateFormat.formatLongDayOfWeek(value);
     };
 }
-function formatLongMonthDayFilter(pipDateTimeFormat) {
+function formatLongMonthDayFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatLongMonthDay(value);
+        return pipDateFormat.formatLongMonthDay(value);
     };
 }
-function formatShortMonthDayFilter(pipDateTimeFormat) {
+function formatShortMonthDayFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatShortMonthDay(value);
+        return pipDateFormat.formatShortMonthDay(value);
     };
 }
-function formatDateRangeFilter(pipDateTimeFormat) {
+function formatDateRangeFilter(pipDateFormat) {
     "ngInject";
     return function (value1, value2) {
-        return pipDateTimeFormat.formatDateRange(value1, value2);
+        return pipDateFormat.formatDateRange(value1, value2);
     };
 }
-function formatDateTimeRangeFilter(pipDateTimeFormat) {
+function formatDateTimeRangeFilter(pipDateFormat) {
     "ngInject";
     return function (value1, value2) {
-        return pipDateTimeFormat.formatDateTimeRange(value1, value2);
+        return pipDateFormat.formatDateTimeRange(value1, value2);
     };
 }
-function formatISOWeekFilter(pipDateTimeFormat) {
+function formatISOWeekFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatISOWeek(value);
+        return pipDateFormat.formatISOWeek(value);
     };
 }
-function formatShortISOWeekFilter(pipDateTimeFormat) {
+function formatShortISOWeekFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatShortISOWeek(value);
+        return pipDateFormat.formatShortISOWeek(value);
     };
 }
-function formatISOWeekOrdinalFilter(pipDateTimeFormat) {
+function formatISOWeekOrdinalFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatISOWeekOrdinal(value);
+        return pipDateFormat.formatISOWeekOrdinal(value);
     };
 }
-function formatDateYFilter(pipDateTimeFormat) {
+function formatDateYFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatDateY(value);
+        return pipDateFormat.formatDateY(value);
     };
 }
-function formatLongDateYFilter(pipDateTimeFormat) {
+function formatLongDateYFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatLongDateY(value);
+        return pipDateFormat.formatLongDateY(value);
     };
 }
-function formatTodayDateLongTimeLongFilter(pipDateTimeFormat) {
+function formatTodayDateLongTimeLongFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatTodayDateLongTimeLong(value);
+        return pipDateFormat.formatTodayDateLongTimeLong(value);
     };
 }
-function formatTodayDateShortTimeLongFilter(pipDateTimeFormat) {
+function formatTodayDateShortTimeLongFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatTodayDateShortTimeLong(value);
+        return pipDateFormat.formatTodayDateShortTimeLong(value);
     };
 }
-function formatTodayDateLongTimeShortFilter(pipDateTimeFormat) {
+function formatTodayDateLongTimeShortFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatTodayDateLongTimeShort(value);
+        return pipDateFormat.formatTodayDateLongTimeShort(value);
     };
 }
-function formatTodayDateShortTimeShortFilter(pipDateTimeFormat) {
+function formatTodayDateShortTimeShortFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatTodayDateShortTimeShort(value);
+        return pipDateFormat.formatTodayDateShortTimeShort(value);
     };
 }
-function formatMillisecondsToSecondsFilter(pipDateTimeFormat) {
+function formatMillisecondsToSecondsFilter(pipDateFormat) {
     "ngInject";
     return function (value) {
-        return pipDateTimeFormat.formatMillisecondsToSeconds(value);
+        return pipDateFormat.formatMillisecondsToSeconds(value);
     };
 }
-function formatElapsedIntervalFilter(pipDateTimeFormat) {
+function formatElapsedIntervalFilter(pipDateFormat) {
     "ngInject";
     return function (value, start) {
-        return pipDateTimeFormat.formatElapsedInterval(value, start);
+        return pipDateFormat.formatElapsedInterval(value, start);
     };
 }
-function getDateJSONFilter(pipDateTimeConvert) {
+function getDateJSONFilter(pipDateConvert) {
     "ngInject";
     return function (value) {
-        return pipDateTimeConvert.getDateJSON(value);
+        return pipDateConvert.getDateJSON(value);
     };
 }
 angular
-    .module('pipDateTime.Filter', [])
+    .module('pipDate.Filter', [])
     .filter('formatTime', formatTimeFilter)
     .filter('formatDateOptional', formatDateOptionalFilter)
     .filter('bbFormatDateLongTime', bbFormatDateLongTimeFilter)
@@ -817,6 +819,7 @@ angular
     .filter('formatTodayDateShortTimeShort', formatTodayDateShortTimeShortFilter)
     .filter('formatMillisecondsToSeconds', formatMillisecondsToSecondsFilter)
     .filter('formatElapsedInterval', formatElapsedIntervalFilter);
+
 },{}],4:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
@@ -831,16 +834,16 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 (function () {
-    var DateTimeFormat = (function () {
-        function DateTimeFormat(config) {
+    var DateFormatService = (function () {
+        function DateFormatService(config) {
             this._momentRanged = new Array('year', 'month', 'week', 'isoweek', 'day');
             this._defaultFormat = 'LL';
             this._config = config || { timeZone: null };
         }
-        DateTimeFormat.prototype.isUndefinedOrNull = function (value) {
+        DateFormatService.prototype.isUndefinedOrNull = function (value) {
             return angular.isUndefined(value) || value === null;
         };
-        DateTimeFormat.prototype.formatDateTime = function (value, basicFormat) {
+        DateFormatService.prototype.formatDateTime = function (value, basicFormat) {
             var date, formatTpl;
             if (this.isUndefinedOrNull(value)) {
                 return '';
@@ -857,7 +860,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
             formatTpl = basicFormat ? basicFormat : this._defaultFormat;
             return date.format(formatTpl);
         };
-        DateTimeFormat.prototype.formatDateTimeY = function (value, basicFormat) {
+        DateFormatService.prototype.formatDateTimeY = function (value, basicFormat) {
             var date, nowDate, formatMoment;
             if (this.isUndefinedOrNull(value)) {
                 return '';
@@ -878,7 +881,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
             }
             return date.format(formatMoment);
         };
-        DateTimeFormat.prototype.formatDay = function (value, basicFormat) {
+        DateFormatService.prototype.formatDay = function (value, basicFormat) {
             var date, format = moment.localeData().longDateFormat(basicFormat ? basicFormat : this._defaultFormat), formatMonthYearless = format.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '').replace(/M/g, '');
             if (this.isUndefinedOrNull(value)) {
                 return '';
@@ -894,7 +897,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
             }
             return date.format(formatMonthYearless);
         };
-        DateTimeFormat.prototype.formatMonthDay = function (value, basicFormat) {
+        DateFormatService.prototype.formatMonthDay = function (value, basicFormat) {
             var date, format = basicFormat ? basicFormat : this._defaultFormat, formatLL = moment.localeData().longDateFormat(format), formatYearlessLL = formatLL.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '');
             if (this.isUndefinedOrNull(value)) {
                 return '';
@@ -910,7 +913,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
             }
             return date.format(formatYearlessLL);
         };
-        DateTimeFormat.prototype.formatRange = function (value1, value2, basicFormat) {
+        DateFormatService.prototype.formatRange = function (value1, value2, basicFormat) {
             var dateStart, dateEnd, format = basicFormat ? basicFormat : this._defaultFormat;
             if (this.isUndefinedOrNull(value1)) {
                 dateStart = null;
@@ -944,7 +947,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
             }
             return dateStart.format(basicFormat) + '-' + dateEnd.format(basicFormat);
         };
-        DateTimeFormat.prototype.toDateWithTime = function (value, formatDate, formatTime, firstTime) {
+        DateFormatService.prototype.toDateWithTime = function (value, formatDate, formatTime, firstTime) {
             var date, result, nowDate;
             if (this.isUndefinedOrNull(value)) {
                 return '';
@@ -967,7 +970,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
             }
             return result;
         };
-        DateTimeFormat.prototype.toTodayDate = function (value, formatDate, formatTime) {
+        DateFormatService.prototype.toTodayDate = function (value, formatDate, formatTime) {
             var date, result, nowDate;
             if (this.isUndefinedOrNull(value)) {
                 return '';
@@ -991,125 +994,125 @@ Object.defineProperty(exports, "__esModule", { value: true });
             return result;
         };
         ;
-        Object.defineProperty(DateTimeFormat.prototype, "config", {
+        Object.defineProperty(DateFormatService.prototype, "config", {
             get: function () {
                 return this._config;
             },
             enumerable: true,
             configurable: true
         });
-        DateTimeFormat.prototype.useTimeZone = function (offset) {
+        DateFormatService.prototype.useTimeZone = function (offset) {
             this._config.timeZone = offset;
         };
-        DateTimeFormat.prototype.formatTime = function (value, format) {
+        DateFormatService.prototype.formatTime = function (value, format) {
             return this.formatDateTime(value, 'LLL');
         };
-        DateTimeFormat.prototype.formatDateOptional = function (value, format) {
+        DateFormatService.prototype.formatDateOptional = function (value, format) {
             return this.formatDateTime(value, 'L');
         };
-        DateTimeFormat.prototype.formatShortDate = function (value) {
+        DateFormatService.prototype.formatShortDate = function (value) {
             return this.formatDateTime(value, 'L');
         };
-        DateTimeFormat.prototype.bbFormatDateLongTime = function (value, firstTime) {
+        DateFormatService.prototype.bbFormatDateLongTime = function (value, firstTime) {
             return this.toDateWithTime(value, 'MM/DD/YY', 'LTS', firstTime);
         };
-        DateTimeFormat.prototype.formatMiddleDate = function (value) {
+        DateFormatService.prototype.formatMiddleDate = function (value) {
             return this.formatDateTime(value, 'll');
         };
-        DateTimeFormat.prototype.formatLongDate = function (value) {
+        DateFormatService.prototype.formatLongDate = function (value) {
             return this.formatDateTime(value, 'LL');
         };
-        DateTimeFormat.prototype.formatMonth = function (value) {
+        DateFormatService.prototype.formatMonth = function (value) {
             return this.formatDateTime(value, 'MM');
         };
-        DateTimeFormat.prototype.formatLongMonth = function (value) {
+        DateFormatService.prototype.formatLongMonth = function (value) {
             return this.formatDateTime(value, 'MMMM');
         };
-        DateTimeFormat.prototype.formatYear = function (value) {
+        DateFormatService.prototype.formatYear = function (value) {
             return this.formatDateTime(value, 'YYYY');
         };
-        DateTimeFormat.prototype.formatWeek = function (value) {
+        DateFormatService.prototype.formatWeek = function (value) {
             return this.formatDateTime(value, 'ww');
         };
-        DateTimeFormat.prototype.formatShortWeek = function (value) {
+        DateFormatService.prototype.formatShortWeek = function (value) {
             return this.formatDateTime(value, 'w');
         };
-        DateTimeFormat.prototype.formatShortDateTime = function (value) {
+        DateFormatService.prototype.formatShortDateTime = function (value) {
             return this.toDateWithTime(value, 'L', 'LT');
         };
-        DateTimeFormat.prototype.formatMiddleDateTime = function (value) {
+        DateFormatService.prototype.formatMiddleDateTime = function (value) {
             return this.formatDateTime(value, 'lll');
         };
-        DateTimeFormat.prototype.formatLongDateTime = function (value) {
+        DateFormatService.prototype.formatLongDateTime = function (value) {
             return this.formatDateTime(value, 'LLL');
         };
-        DateTimeFormat.prototype.formatFullDateTime = function (value) {
+        DateFormatService.prototype.formatFullDateTime = function (value) {
             return this.formatDateTime(value, 'LLLL');
         };
-        DateTimeFormat.prototype.formatShortDateLongTime = function (value, firstTime) {
+        DateFormatService.prototype.formatShortDateLongTime = function (value, firstTime) {
             return this.toDateWithTime(value, 'L', 'LTS', firstTime);
         };
-        DateTimeFormat.prototype.formatMiddleDateLongTime = function (value, firstTime) {
+        DateFormatService.prototype.formatMiddleDateLongTime = function (value, firstTime) {
             return this.toDateWithTime(value, 'll', 'LTS', firstTime);
         };
-        DateTimeFormat.prototype.formatLongDateLongTime = function (value, firstTime) {
+        DateFormatService.prototype.formatLongDateLongTime = function (value, firstTime) {
             return this.toDateWithTime(value, 'LL', 'LTS', firstTime);
         };
-        DateTimeFormat.prototype.formatShortTime = function (value) {
+        DateFormatService.prototype.formatShortTime = function (value) {
             return this.formatDateTime(value, 'LT');
         };
-        DateTimeFormat.prototype.formatLongTime = function (value) {
+        DateFormatService.prototype.formatLongTime = function (value) {
             return this.formatDateTime(value, 'LTS');
         };
-        DateTimeFormat.prototype.formatShortDayOfWeek = function (value) {
+        DateFormatService.prototype.formatShortDayOfWeek = function (value) {
             return this.formatDateTime(value, 'dd');
         };
-        DateTimeFormat.prototype.formatLongDayOfWeek = function (value) {
+        DateFormatService.prototype.formatLongDayOfWeek = function (value) {
             return this.formatDateTime(value, 'dddd');
         };
-        DateTimeFormat.prototype.formatLongMonthDay = function (value) {
+        DateFormatService.prototype.formatLongMonthDay = function (value) {
             return this.formatMonthDay(value, 'LL');
         };
-        DateTimeFormat.prototype.formatShortMonthDay = function (value) {
+        DateFormatService.prototype.formatShortMonthDay = function (value) {
             return this.formatMonthDay(value, 'L');
         };
-        DateTimeFormat.prototype.formatDateRange = function (value1, value2) {
+        DateFormatService.prototype.formatDateRange = function (value1, value2) {
             return this.formatRange(value1, value2, 'LL');
         };
-        DateTimeFormat.prototype.formatDateTimeRange = function (value1, value2) {
+        DateFormatService.prototype.formatDateTimeRange = function (value1, value2) {
             return this.formatRange(value1, value2, 'LLL');
         };
-        DateTimeFormat.prototype.formatISOWeek = function (value) {
+        DateFormatService.prototype.formatISOWeek = function (value) {
             return this.formatDateTime(value, 'WW');
         };
-        DateTimeFormat.prototype.formatShortISOWeek = function (value) {
+        DateFormatService.prototype.formatShortISOWeek = function (value) {
             return this.formatDateTime(value, 'W');
         };
-        DateTimeFormat.prototype.formatISOWeekOrdinal = function (value) {
+        DateFormatService.prototype.formatISOWeekOrdinal = function (value) {
             return this.formatDateTime(value, 'Wo');
         };
-        DateTimeFormat.prototype.formatDateY = function (value) {
+        DateFormatService.prototype.formatDateY = function (value) {
             return this.formatDateTimeY(value, 'L');
         };
-        DateTimeFormat.prototype.formatLongDateY = function (value) {
+        DateFormatService.prototype.formatLongDateY = function (value) {
             return this.formatDateTimeY(value, 'LL');
         };
-        DateTimeFormat.prototype.formatTodayDateLongTimeLong = function (value) {
+        DateFormatService.prototype.formatTodayDateLongTimeLong = function (value) {
             return this.toTodayDate(value, 'LL', 'LTS');
         };
-        DateTimeFormat.prototype.formatTodayDateShortTimeLong = function (value) {
+        DateFormatService.prototype.formatTodayDateShortTimeLong = function (value) {
             return this.toTodayDate(value, 'LL', 'LTS');
         };
-        DateTimeFormat.prototype.formatTodayDateLongTimeShort = function (value) {
+        DateFormatService.prototype.formatTodayDateLongTimeShort = function (value) {
             return this.toTodayDate(value, 'LL', 'LT');
         };
-        DateTimeFormat.prototype.formatTodayDateShortTimeShort = function (value) {
+        DateFormatService.prototype.formatTodayDateShortTimeShort = function (value) {
             return this.toTodayDate(value, 'll', 'LT');
         };
-        DateTimeFormat.prototype.formatMillisecondsToSeconds = function (value) {
+        DateFormatService.prototype.formatMillisecondsToSeconds = function (value) {
             return '';
         };
-        DateTimeFormat.prototype.formatElapsedInterval = function (value, start) {
+        DateFormatService.prototype.formatElapsedInterval = function (value, start) {
             var date, nowDate;
             if (this.isUndefinedOrNull(value)) {
                 return '';
@@ -1126,10 +1129,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
             }
             return moment(date).fromNow(nowDate);
         };
-        DateTimeFormat.prototype.getDateJSON = function (date) {
+        DateFormatService.prototype.getDateJSON = function (date) {
             return JSON.stringify(moment(date));
         };
-        return DateTimeFormat;
+        return DateFormatService;
     }());
     var DateTimeFormatService = (function () {
         function DateTimeFormatService(datetime) {
@@ -1255,23 +1258,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
         };
         return DateTimeFormatService;
     }());
-    var DateTimeFormatProvider = (function (_super) {
-        __extends(DateTimeFormatProvider, _super);
-        function DateTimeFormatProvider() {
+    var DateFormatProvider = (function (_super) {
+        __extends(DateFormatProvider, _super);
+        function DateFormatProvider() {
             return _super.call(this, { timeZone: null }) || this;
         }
-        DateTimeFormatProvider.prototype.$get = function () {
+        DateFormatProvider.prototype.$get = function () {
             "ngInject";
             if (this._service == null)
                 this._service = new DateTimeFormatService(this);
             return this._service;
         };
-        return DateTimeFormatProvider;
-    }(DateTimeFormat));
+        return DateFormatProvider;
+    }(DateFormatService));
     angular
-        .module('pipDateTime.FormatService', [])
-        .provider('pipDateTimeFormat', DateTimeFormatProvider);
+        .module('pipDate.Format', [])
+        .provider('pipDateFormat', DateFormatProvider);
 })();
+
 },{}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -1281,6 +1285,7 @@ var DateTimeConfig = (function () {
     return DateTimeConfig;
 }());
 exports.DateTimeConfig = DateTimeConfig;
+
 },{}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -1290,12 +1295,14 @@ var DateTimeConfig = (function () {
     return DateTimeConfig;
 }());
 exports.DateTimeConfig = DateTimeConfig;
+
 },{}],7:[function(require,module,exports){
-angular.module('pipDateTime', [
-    'pipDateTime.ConvertService',
-    'pipDateTime.FormatService',
-    'pipDateTime.Filter'
+angular.module('pipDate', [
+    'pipDate.Convert',
+    'pipDate.Format',
+    'pipDate.Filter'
 ]);
+
 },{}],8:[function(require,module,exports){
 (function () {
     var DateRangeBindings = {
@@ -1337,7 +1344,6 @@ angular.module('pipDateTime', [
             });
         }
         DateRangeController.prototype.$onChanges = function (changes) {
-            console.log(changes);
             if (changes.type && changes.type.currentValue) {
                 this.type = changes.type.currentValue;
                 this.init();
@@ -1637,6 +1643,7 @@ angular.module('pipDateTime', [
         .module('pipDateRange', ['pipDates.Templates'])
         .component('pipDateRange', daterange);
 })();
+
 },{}],9:[function(require,module,exports){
 {
     translateFilter.$inject = ['$injector'];
@@ -1651,15 +1658,17 @@ angular.module('pipDateTime', [
         .module('pipDates.Translate', [])
         .filter('translate', translateFilter);
 }
+
 },{}],10:[function(require,module,exports){
 angular.module('pipDates', [
     'pipDate',
-    'pipDateTime',
+    'pipDate',
     'pipTimeRange',
     'pipTimeRangeEdit',
     'pipDateRange',
     'pipDates.Translate'
 ]);
+
 },{}],11:[function(require,module,exports){
 (function () {
     var TimeRangeData = (function () {
@@ -1726,6 +1735,7 @@ angular.module('pipDates', [
     angular.module('pipTimeRange', [])
         .component('pipTimeRange', TimeRangeComponent);
 })();
+
 },{}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -1756,9 +1766,9 @@ exports.MillisecondsInSecond = 1000;
         return TimeRangeEditChanges;
     }());
     var TimeRangeEditController = (function () {
-        function TimeRangeEditController($injector, pipDateTimeConvert, $scope, $element) {
+        function TimeRangeEditController($injector, pipDateConvert, $scope, $element) {
             this.$injector = $injector;
-            this.pipDateTimeConvert = pipDateTimeConvert;
+            this.pipDateConvert = pipDateConvert;
             this.$scope = $scope;
             this.startLabel = 'Start time';
             this.endLabel = 'End time';
@@ -1819,7 +1829,7 @@ exports.MillisecondsInSecond = 1000;
             if (_.isUndefined(this.data.startTime) || _.isNull(this.data.startTime)) {
                 if (!this.data.endTime) {
                     start = new Date();
-                    startTime = date.getTime() - this.pipDateTimeConvert.toStartDay(date);
+                    startTime = date.getTime() - this.pipDateConvert.toStartDay(date);
                     this.data.startTime = Math.floor(startTime / (exports.IntervalTimeRange * exports.MinutesInHour * exports.MillisecondsInSecond)) * exports.IntervalTimeRange;
                 }
                 else {
@@ -1829,14 +1839,14 @@ exports.MillisecondsInSecond = 1000;
             start = new Date(this.data.startDate.getTime() + this.data.startTime * exports.MinutesInHour * exports.MillisecondsInSecond);
             if (this.data.duration) {
                 end = new Date(start.getTime() + this.data.duration);
-                this.data.endDate = this.pipDateTimeConvert.toStartDay(end);
+                this.data.endDate = this.pipDateConvert.toStartDay(end);
                 endTime = end.getTime() - this.data.endDate.getTime();
                 this.data.endTime = Math.floor(endTime / (exports.IntervalTimeRange * exports.MinutesInHour * exports.MillisecondsInSecond)) * exports.IntervalTimeRange;
             }
             else {
                 end = new Date(this.data.endDate.getTime() + this.data.endTime * exports.MinutesInHour * exports.MillisecondsInSecond);
                 if (start >= end) {
-                    this.data.endDate = this.pipDateTimeConvert.toStartDay(new Date(start.getTime() + (exports.IntervalTimeRange * exports.MinutesInHour * exports.MillisecondsInSecond)));
+                    this.data.endDate = this.pipDateConvert.toStartDay(new Date(start.getTime() + (exports.IntervalTimeRange * exports.MinutesInHour * exports.MillisecondsInSecond)));
                     this.data.endTime = (this.data.startTime + exports.IntervalTimeRange) % (exports.HoursInDay * exports.MinutesInHour);
                 }
             }
@@ -1851,7 +1861,7 @@ exports.MillisecondsInSecond = 1000;
             if (_.isUndefined(this.data.endTime) || _.isNull(this.data.endTime)) {
                 if (!this.data.startTime) {
                     date = new Date();
-                    date = date.getTime() - this.pipDateTimeConvert.toStartDay(date);
+                    date = date.getTime() - this.pipDateConvert.toStartDay(date);
                     this.data.endTime = Math.floor(date / (exports.IntervalTimeRange * exports.MinutesInHour * exports.MillisecondsInSecond)) * exports.IntervalTimeRange;
                 }
                 else {
@@ -1861,7 +1871,7 @@ exports.MillisecondsInSecond = 1000;
             start = new Date(this.data.startDate.getTime() + this.data.startTime * exports.MinutesInHour * exports.MillisecondsInSecond);
             end = new Date(this.data.endDate.getTime() + this.data.endTime * exports.MinutesInHour * exports.MillisecondsInSecond);
             if (start >= end) {
-                this.data.startDate = this.pipDateTimeConvert.toStartDay(new Date(end.getTime() - exports.IntervalTimeRange * exports.MinutesInHour * exports.MillisecondsInSecond));
+                this.data.startDate = this.pipDateConvert.toStartDay(new Date(end.getTime() - exports.IntervalTimeRange * exports.MinutesInHour * exports.MillisecondsInSecond));
                 this.data.startTime = this.data.endTime % (exports.HoursInDay * exports.MinutesInHour) === 0 ? (exports.HoursInDay * exports.MinutesInHour - exports.IntervalTimeRange) : this.data.endTime - exports.IntervalTimeRange;
             }
             this.data.endTime = Math.round(this.data.endTime / exports.IntervalTimeRange) * exports.IntervalTimeRange;
@@ -1889,7 +1899,7 @@ exports.MillisecondsInSecond = 1000;
                 if (!start) {
                     start = this.getDateJSON(this.pipStartDate);
                 }
-                this.data.startDate = this.pipDateTimeConvert.toStartDay(start);
+                this.data.startDate = this.pipDateConvert.toStartDay(start);
                 this.data.startTime = (new Date(start) - this.data.startDate) / (exports.MinutesInHour * exports.MillisecondsInSecond);
             }
             if (this.pipEndDate !== null && this.pipEndDate !== undefined) {
@@ -1897,7 +1907,7 @@ exports.MillisecondsInSecond = 1000;
                 if (!start) {
                     end = this.getDateJSON(this.pipEndDate);
                 }
-                this.data.endDate = this.pipDateTimeConvert.toStartDay(end);
+                this.data.endDate = this.pipDateConvert.toStartDay(end);
                 this.data.endTime = (new Date(end) - this.data.endDate) / (exports.MinutesInHour * exports.MillisecondsInSecond);
             }
             this.validateStartDate();
@@ -1951,7 +1961,7 @@ exports.MillisecondsInSecond = 1000;
         ;
         TimeRangeEditController.prototype.onChangeStartTime = function () {
             if (!this.data.startDate) {
-                this.data.startDate = this.pipDateTimeConvert.toStartDay(new Date());
+                this.data.startDate = this.pipDateConvert.toStartDay(new Date());
             }
             this.validateStartDate();
             this.data.duration = this.setDuration();
@@ -1961,7 +1971,7 @@ exports.MillisecondsInSecond = 1000;
         ;
         TimeRangeEditController.prototype.onChangeEndTime = function () {
             if (!this.data.endDate) {
-                this.data.endDate = this.pipDateTimeConvert.toStartDay(new Date());
+                this.data.endDate = this.pipDateConvert.toStartDay(new Date());
             }
             this.validateEndDate();
             this.data.duration = this.setDuration();
@@ -1986,6 +1996,7 @@ exports.MillisecondsInSecond = 1000;
     angular.module('pipTimeRangeEdit', [])
         .component('pipTimeRangeEdit', TimeRangeEditComponent);
 }
+
 },{}],13:[function(require,module,exports){
 (function(module) {
 try {

@@ -7,7 +7,7 @@ declare module pip.dates {
 export class DateTimeConfig {
     timeZone: number;
 }
-export interface IDateTimeConvertService {
+export interface IDateConvertService {
     readonly config: DateTimeConfig;
     useTimeZone(offset: number): any;
     getDateJSON(date: any): string;
@@ -24,13 +24,13 @@ export interface IDateTimeConvertService {
     toStartYear(value: any): Date;
     toEndYear(value: any, offset: number): Date;
 }
-export interface IDateTimeConvertProvider extends IDateTimeConvertService, ng.IServiceProvider {
+export interface IDateConvertProvider extends IDateConvertService, ng.IServiceProvider {
 }
 
 export class DateTimeConfig {
     timeZone: number;
 }
-export interface IDateTimeFormatService {
+export interface IDateFormatService {
     readonly config: DateTimeConfig;
     useTimeZone(offset: number): any;
     bbFormatDateLongTime(value: any, firstTime?: boolean): string;
@@ -71,7 +71,7 @@ export interface IDateTimeFormatService {
     formatMillisecondsToSeconds(value: any): string;
     formatElapsedInterval(value: any, start: any): string;
 }
-export interface IDateTimeFormatProvider extends IDateTimeFormatService, ng.IServiceProvider {
+export interface IDateFormatProvider extends IDateFormatService, ng.IServiceProvider {
 }
 
 

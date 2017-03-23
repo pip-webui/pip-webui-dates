@@ -1,6 +1,6 @@
 angular.module('pipDates', [
     'pipDate',
-    'pipDateTime',
+    'pipDate',
     'pipTimeRange',
     'pipTimeRangeEdit',
     'pipDateRange',

@@ -1,7 +1,7 @@
-import { DateTimeConfig, IDateTimeConvertService, IDateTimeConvertProvider } from './IDateConvertService';
+import { DateTimeConfig, IDateConvertService, IDateConvertProvider } from './IDateConvertService';
 
 (() => {
-    class DateTimeConvert implements IDateTimeConvertService {
+    class DateTimeConvert implements IDateConvertService {
         private _config: DateTimeConfig;
         protected _momentRanged: string[] = new Array('year', 'month', 'week', 'isoweek', 'day');
         protected _defaultFormat: string = 'LL'
@@ -485,7 +485,7 @@ import { DateTimeConfig, IDateTimeConvertService, IDateTimeConvertProvider } fro
 
     }
 
-    class DateTimeConvertProvider extends DateTimeConvert implements IDateTimeConvertProvider {
+    class DateConvertProvider extends DateTimeConvert implements IDateConvertProvider {
         private _translation: DateTimeConvert;
         private _service: DateTimeConvertService;
 
@@ -503,6 +503,6 @@ import { DateTimeConfig, IDateTimeConvertService, IDateTimeConvertProvider } fro
     }
 
     angular
-        .module('pipDateTime.ConvertService', [])
-        .provider('pipDateTimeConvert', DateTimeConvertProvider);
+        .module('pipDate.Convert', [])
+        .provider('pipDateConvert', DateConvertProvider);
 })();

@@ -1,7 +1,7 @@
-import { DateTimeConfig, IDateTimeFormatService, IDateTimeFormatProvider } from './IDateFormatService';
+import { DateTimeConfig, IDateFormatService, IDateFormatProvider } from './IDateFormatService';
 
 (() => {
-    class DateTimeFormat implements IDateTimeFormatService {
+    class DateFormatService implements IDateFormatService {
         private _config: DateTimeConfig;
         protected _momentRanged: string[] = new Array('year', 'month', 'week', 'isoweek', 'day');
         protected _defaultFormat: string = 'LL'
@@ -422,11 +422,11 @@ import { DateTimeConfig, IDateTimeFormatService, IDateTimeFormatProvider } from 
     }
 
     class DateTimeFormatService {
-        private _datetime: DateTimeFormat;
+        private _datetime: DateFormatService;
         private _config: DateTimeConfig;
 
         public constructor(
-            datetime: DateTimeFormat,
+            datetime: DateFormatService,
         ) {
             this._config = { timeZone: null };
             this._datetime = datetime;
@@ -608,8 +608,8 @@ import { DateTimeConfig, IDateTimeFormatService, IDateTimeFormatProvider } from 
 
     }
 
-    class DateTimeFormatProvider extends DateTimeFormat implements IDateTimeFormatProvider {
-        private _translation: DateTimeFormat;
+    class DateFormatProvider extends DateFormatService implements IDateFormatProvider {
+        private _translation: DateFormatService;
         private _service: DateTimeFormatService;
 
         public constructor() {
@@ -626,6 +626,6 @@ import { DateTimeConfig, IDateTimeFormatService, IDateTimeFormatProvider } from 
     }
 
     angular
-        .module('pipDateTime.FormatService', [])
-        .provider('pipDateTimeFormat', DateTimeFormatProvider);
+        .module('pipDate.Format', [])
+        .provider('pipDateFormat', DateFormatProvider);
 })();
