@@ -3,10 +3,34 @@ declare module pip.dates {
 
 
 
+
 export class DateTimeConfig {
     timeZone: number;
 }
-export interface IDateTimeService {
+export interface IDateTimeConvertService {
+    readonly config: DateTimeConfig;
+    useTimeZone(offset: number): any;
+    getDateJSON(date: any): string;
+    getNextStart(value: any, category: string): Date;
+    getPrevStart(value: any, category: string): Date;
+    getNowStart(category: string): Date;
+    addHours(value: any, hours: number): Date;
+    toStartDay(value: any): Date;
+    toEndDay(value: any, offset: number): Date;
+    toStartWeek(value: any): Date;
+    toEndWeek(value: any, offset: number): Date;
+    toStartMonth(value: any): Date;
+    toEndMonth(value: any, offset: number): Date;
+    toStartYear(value: any): Date;
+    toEndYear(value: any, offset: number): Date;
+}
+export interface IDateTimeConvertProvider extends IDateTimeConvertService, ng.IServiceProvider {
+}
+
+export class DateTimeConfig {
+    timeZone: number;
+}
+export interface IDateTimeFormatService {
     readonly config: DateTimeConfig;
     useTimeZone(offset: number): any;
     bbFormatDateLongTime(value: any, firstTime?: boolean): string;
@@ -46,21 +70,8 @@ export interface IDateTimeService {
     formatTodayDateShortTimeShort(value: any): string;
     formatMillisecondsToSeconds(value: any): string;
     formatElapsedInterval(value: any, start: any): string;
-    getDateJSON(date: any): string;
-    getNextStart(value: any, category: string): Date;
-    getPrevStart(value: any, category: string): Date;
-    getNowStart(category: string): Date;
-    addHours(value: any, hours: number): Date;
-    toStartDay(value: any): Date;
-    toEndDay(value: any, offset: number): Date;
-    toStartWeek(value: any): Date;
-    toEndWeek(value: any, offset: number): Date;
-    toStartMonth(value: any): Date;
-    toEndMonth(value: any, offset: number): Date;
-    toStartYear(value: any): Date;
-    toEndYear(value: any, offset: number): Date;
 }
-export interface IDateTimeProvider extends IDateTimeService, ng.IServiceProvider {
+export interface IDateTimeFormatProvider extends IDateTimeFormatService, ng.IServiceProvider {
 }
 
 

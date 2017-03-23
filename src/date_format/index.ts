@@ -1,5 +1,6 @@
 
 angular.module('pipDateTime', [
-    'pipDateTime.Service',
+    'pipDateTime.ConvertService',
+    'pipDateTime.FormatService',
     'pipDateTime.Filter'
 ]);

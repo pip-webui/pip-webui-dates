@@ -71,7 +71,7 @@ export const MillisecondsInSecond = 1000;
 
         constructor(
             private $injector: angular.auto.IInjectorService,
-            private pipDateTime,
+            private pipDateTimeConvert,
             private $scope: ng.IScope,
             $element: JQuery) {
 
@@ -148,7 +148,7 @@ export const MillisecondsInSecond = 1000;
             if (_.isUndefined(this.data.startTime) || _.isNull(this.data.startTime)) {
                 if (!this.data.endTime) {
                     start = new Date();
-                    startTime = date.getTime() - this.pipDateTime.toStartDay(date);
+                    startTime = date.getTime() - this.pipDateTimeConvert.toStartDay(date);
                     this.data.startTime = Math.floor(startTime / (IntervalTimeRange * MinutesInHour * MillisecondsInSecond)) * IntervalTimeRange;
                 } else {
                     this.data.startTime = this.data.endTime === 0 ? 0 : this.data.endTime - IntervalTimeRange;
@@ -160,7 +160,7 @@ export const MillisecondsInSecond = 1000;
             // Если есть длительность, то сохраняем ее. Длительность можно изменить только изменяя конечную дату
             if (this.data.duration) {
                 end = new Date(start.getTime() + this.data.duration);
-                this.data.endDate = this.pipDateTime.toStartDay(end);
+                this.data.endDate = this.pipDateTimeConvert.toStartDay(end);
                 endTime = end.getTime() - this.data.endDate.getTime();
                 this.data.endTime = Math.floor(endTime / (IntervalTimeRange * MinutesInHour * MillisecondsInSecond)) * IntervalTimeRange;
             } else {
@@ -168,7 +168,7 @@ export const MillisecondsInSecond = 1000;
                 end = new Date(this.data.endDate.getTime() + this.data.endTime * MinutesInHour * MillisecondsInSecond);
                 if (start >= end) {
                     // Если начальная дата больше, то двигаем конечную дату
-                    this.data.endDate = this.pipDateTime.toStartDay(new Date(start.getTime() + (IntervalTimeRange * MinutesInHour * MillisecondsInSecond)));
+                    this.data.endDate = this.pipDateTimeConvert.toStartDay(new Date(start.getTime() + (IntervalTimeRange * MinutesInHour * MillisecondsInSecond)));
                     this.data.endTime = (this.data.startTime + IntervalTimeRange) % (HoursInDay * MinutesInHour); // минут в сутках
                 }
             }
@@ -190,7 +190,7 @@ export const MillisecondsInSecond = 1000;
             if (_.isUndefined(this.data.endTime) || _.isNull(this.data.endTime)) {
                 if (!this.data.startTime) {
                     date = new Date();
-                    date = date.getTime() - this.pipDateTime.toStartDay(date);
+                    date = date.getTime() - this.pipDateTimeConvert.toStartDay(date);
                     this.data.endTime = Math.floor(date / (IntervalTimeRange * MinutesInHour * MillisecondsInSecond)) * IntervalTimeRange;
                 } else {
                     this.data.endTime = this.data.startTime === (HoursInDay * MinutesInHour - IntervalTimeRange) ? (HoursInDay * MinutesInHour - IntervalTimeRange) : this.data.startTime + IntervalTimeRange;
@@ -202,7 +202,7 @@ export const MillisecondsInSecond = 1000;
 
             if (start >= end) {
                 // Если начальная дата больше, то двигаем начальную дату
-                this.data.startDate = this.pipDateTime.toStartDay(new Date(end.getTime() - IntervalTimeRange * MinutesInHour * MillisecondsInSecond));
+                this.data.startDate = this.pipDateTimeConvert.toStartDay(new Date(end.getTime() - IntervalTimeRange * MinutesInHour * MillisecondsInSecond));
                 this.data.startTime = this.data.endTime % (HoursInDay * MinutesInHour) === 0 ? (HoursInDay * MinutesInHour - IntervalTimeRange) : this.data.endTime - IntervalTimeRange;
             }
 
@@ -239,7 +239,7 @@ export const MillisecondsInSecond = 1000;
                     start = this.getDateJSON(this.pipStartDate);
                 }
 
-                this.data.startDate = this.pipDateTime.toStartDay(start);
+                this.data.startDate = this.pipDateTimeConvert.toStartDay(start);
                 this.data.startTime = (<any>new Date(start) - <any>this.data.startDate) / (MinutesInHour * MillisecondsInSecond);
             }
 
@@ -250,7 +250,7 @@ export const MillisecondsInSecond = 1000;
                     end = this.getDateJSON(this.pipEndDate);
                 }
 
-                this.data.endDate = this.pipDateTime.toStartDay(end);
+                this.data.endDate = this.pipDateTimeConvert.toStartDay(end);
                 this.data.endTime = (<any>new Date(end) - <any>this.data.endDate) / (MinutesInHour * MillisecondsInSecond);
             }
 
@@ -309,7 +309,7 @@ export const MillisecondsInSecond = 1000;
 
         public onChangeStartTime() {
             if (!this.data.startDate) {
-                this.data.startDate = this.pipDateTime.toStartDay(new Date());
+                this.data.startDate = this.pipDateTimeConvert.toStartDay(new Date());
             }
             this.validateStartDate();
             this.data.duration = this.setDuration();
@@ -319,7 +319,7 @@ export const MillisecondsInSecond = 1000;
 
         public onChangeEndTime() {
             if (!this.data.endDate) {
-                this.data.endDate = this.pipDateTime.toStartDay(new Date());
+                this.data.endDate = this.pipDateTimeConvert.toStartDay(new Date());
             }
 
             this.validateEndDate();

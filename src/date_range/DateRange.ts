@@ -88,28 +88,16 @@
 
             this.disableControls = this.disabled ? this.disabled() : false;
 
-            // React on changes
-            /*$scope.$watch('$ctrl.model', (newValue, oldValue) => {
-                if (newValue !== oldValue) {
-                    this.getValue(newValue);
-                }
-            });
-    
-            $scope.$watch('$ctrl.disabled', (newValue) => {
-                this.disableControls = newValue ? true : false;
-            });
-    
+
             $scope.$watch('$ctrl.type', (newValue, oldValue) => {
-                console.log('a',newValue);
                 if (newValue !== oldValue && oldValue) {
                     this.init();
                 }
-            });*/
+            });
 
         }
 
         public $onChanges(changes: DateRangeChanges) {
-            console.log(changes);
             if (changes.type && changes.type.currentValue) {
                 this.type = changes.type.currentValue;
                 this.init();

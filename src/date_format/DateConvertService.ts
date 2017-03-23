@@ -1,7 +1,7 @@
-import { DateTimeConfig, IDateTimeService, IDateTimeProvider } from './IDateService';
+import { DateTimeConfig, IDateTimeConvertService, IDateTimeConvertProvider } from './IDateConvertService';
 
 (() => {
-    class DateTime implements IDateTimeService {
+    class DateTimeConvert implements IDateTimeConvertService {
         private _config: DateTimeConfig;
         protected _momentRanged: string[] = new Array('year', 'month', 'week', 'isoweek', 'day');
         protected _defaultFormat: string = 'LL'
@@ -296,200 +296,7 @@ import { DateTimeConfig, IDateTimeService, IDateTimeProvider } from './IDateServ
             this._config.timeZone = offset;
         }
         
-        // formating functions 
-        // -------------------
-
-        public formatTime(value: any, format: string): string {
-            return this.formatDateTime(value, 'LLL');
-        }
-
-        public formatDateOptional(value: any, format: string): string {
-            return this.formatDateTime(value, 'L');
-        }
-
-        // date formats
-        public formatShortDate(value: any): string {
-            return this.formatDateTime(value, 'L');
-        }
-
-        public bbFormatDateLongTime(value: any, firstTime?: boolean): string {
-            return this.toDateWithTime(value, 'MM/DD/YY', 'LTS', firstTime);
-        }
-
-        public formatMiddleDate(value: any): string {
-            return this.formatDateTime(value, 'll');
-        }
-
-        public formatLongDate(value: any): string {
-            return this.formatDateTime(value, 'LL');
-        }
-
-        public formatMonth(value: any): string {
-            return this.formatDateTime(value, 'MM');
-        }
-
-        public formatLongMonth(value: any): string {
-            return this.formatDateTime(value, 'MMMM');
-        }
-
-        public formatYear(value: any): string {
-            return this.formatDateTime(value, 'YYYY');
-        }
-
-        public formatWeek(value: any): string {
-            return this.formatDateTime(value, 'ww');
-        }
-
-        public formatShortWeek(value: any): string {
-            return this.formatDateTime(value, 'w');
-        }
-
-        public formatShortDateTime(value: any): string {
-            return this.toDateWithTime(value, 'L', 'LT');
-        }
-
-        public formatMiddleDateTime(value: any): string {
-            return this.formatDateTime(value, 'lll');
-        }
-
-        public formatLongDateTime(value: any): string {
-            return this.formatDateTime(value, 'LLL');
-        }
-
-        public formatFullDateTime(value: any): string {
-            return this.formatDateTime(value, 'LLLL');
-        }
-
-        public formatShortDateLongTime(value: any, firstTime?: boolean): string {
-            return this.toDateWithTime(value, 'L', 'LTS', firstTime);
-        }
-
-        public formatMiddleDateLongTime(value: any, firstTime?: boolean): string {
-            return this.toDateWithTime(value, 'll', 'LTS', firstTime);
-        }
-
-        public formatLongDateLongTime(value: any, firstTime?: boolean): string {
-            return this.toDateWithTime(value, 'LL', 'LTS', firstTime);
-        }
-
-        public formatShortTime(value: any): string {
-            return this.formatDateTime(value, 'LT');
-        }
-
-        public formatLongTime(value: any): string {
-            return this.formatDateTime(value, 'LTS');
-        }
-
-        public formatShortDayOfWeek(value: any): string {
-            return this.formatDateTime(value, 'dd');
-        }
-
-        public formatLongDayOfWeek(value: any): string {
-            return this.formatDateTime(value, 'dddd');
-        }
-
-        // public formatTimeNumber(value: any): string {
-        //     return this.formatDateTime(value, 'LLL');
-        // }
-
-        // public formatLongTimeNumber(value: any): string {
-        //     return this.formatDateTime(value, 'LLLL');
-        // }
-
-        ///-----------------
-
-        public formatLongMonthDay(value: any): string {
-            return this.formatMonthDay(value, 'LL');
-        }
-
-        public formatShortMonthDay(value: any): string {
-            return this.formatMonthDay(value, 'L');
-        }
-
-        public formatDateRange(value1: any, value2: any): string {
-            return this.formatRange(value1, value2, 'LL');
-        }
-
-        public formatDateTimeRange(value1: any, value2: any): string {
-            return this.formatRange(value1, value2, 'LLL');
-        }
-
-        // iso function
-        // --------------
-
-        public formatISOWeek(value: any): string {
-            return this.formatDateTime(value, 'WW');
-        }
-
-        public formatShortISOWeek(value: any): string {
-            return this.formatDateTime(value, 'W');
-        }
-
-        public formatISOWeekOrdinal(value: any): string {
-            return this.formatDateTime(value, 'Wo');
-        }
-        // special formats 
-        // --------------
-
-        // year option displays if the current year is not equal to, the date of 
-        public formatDateY(value: any): string {
-            return this.formatDateTimeY(value, 'L');
-        }
-
-        // year option displays if the current year is not equal to, the date of
-        public formatLongDateY(value: any): string {
-            return this.formatDateTimeY(value, 'LL');
-        }
-
-        // date displays if the current date  is not equal now 
-        // September 4 1986 8:30:25 PM or 8:30:25 PM
-        public formatTodayDateLongTimeLong(value: any): string {
-            return this.toTodayDate(value, 'LL', 'LTS')
-        }
-
-        // date displays if the current date  is not equal now 
-        // Sep 4 1986 8:30:25 PM or 8:30:25 PM
-        public formatTodayDateShortTimeLong(value: any): string {
-            return this.toTodayDate(value, 'LL', 'LTS')
-        }
-
-        // date displays if the current date  is not equal now 
-        // September 4 1986 8:30 PM or 8:30 PM
-        public formatTodayDateLongTimeShort(value: any): string {
-            return this.toTodayDate(value, 'LL', 'LT')
-        }
-
-        // date displays if the current date  is not equal now 
-        // Sep 4 1986 8:30 PM or 8:30 PM
-        public formatTodayDateShortTimeShort(value: any): string {
-            return this.toTodayDate(value, 'll', 'LT')
-        }
-
-        // todo
-        public formatMillisecondsToSeconds(value: any): string {
-            return '';
-        }
-
-        public formatElapsedInterval(value: any, start: any): string {
-            let date: moment.Moment,
-                nowDate: any;
-
-            if (this.isUndefinedOrNull(value)) {
-                return '';
-            }
-            if (this.isUndefinedOrNull(start)) {
-                nowDate = moment();
-            } else {
-                nowDate = moment(start);
-            }
-
-            date = moment(value);
-            if (!date.isValid() || !nowDate.isValid()) {
-                return '';
-            }
-
-            return moment(date).fromNow(nowDate);
-        }
+      
 
         public getDateJSON(date: any): string {
             return JSON.stringify(moment(date));
@@ -603,12 +410,12 @@ import { DateTimeConfig, IDateTimeService, IDateTimeProvider } from './IDateServ
 
     }
 
-    class DateTimeService {
-        private _datetime: DateTime;
+    class DateTimeConvertService {
+        private _datetime: DateTimeConvert;
         private _config: DateTimeConfig;
 
         public constructor(
-            datetime: DateTime,
+            datetime: DateTimeConvert,
         ) {
             this._config = { timeZone: null };
             this._datetime = datetime;
@@ -619,170 +426,7 @@ import { DateTimeConfig, IDateTimeService, IDateTimeProvider } from './IDateServ
             return this._datetime.useTimeZone(offset);
         }
 
-        // todo Optional
-        public formatTime(value: any, format: string): string {
-            return this._datetime.formatTime(value, format);
-        }
-
-        // todo Optional
-        public formatDateOptional(value: any, format: string): string {
-            return this._datetime.formatDateOptional(value, format);
-        }
-
-        public formatShortDate(value: any): string {
-            return this._datetime.formatShortDate(value);
-        }
-
-        public formatMiddleDate(value: any): string {
-            return this._datetime.formatMiddleDate(value);
-        }
-
-        public formatLongDate(value: any): string {
-            return this._datetime.formatLongDate(value);
-        }
-
-        public formatMonth(value: any): string {
-            return this._datetime.formatMonth(value);
-        }
-
-        public formatLongMonth(value: any): string {
-            return this._datetime.formatLongMonth(value);
-        }
-
-        public formatYear(value: any): string {
-            return this._datetime.formatYear(value);
-        }
-
-        public formatWeek(value: any): string {
-            return this._datetime.formatWeek(value);
-        }
-
-        public formatShortWeek(value: any): string {
-            return this._datetime.formatShortWeek(value);
-        }
-
-        public formatShortDateTime(value: any): string {
-            return this._datetime.formatShortDateTime(value);
-        }
-
-        public formatMiddleDateTime(value: any): string {
-            return this._datetime.formatMiddleDateTime(value);
-        }
-
-        public formatLongDateTime(value: any): string {
-            return this._datetime.formatLongDateTime(value);
-        }
-
-        public formatFullDateTime(value: any): string {
-            return this._datetime.formatFullDateTime(value);
-        }
-
-        public formatShortDateLongTime(value: any, firstTime?: boolean): string {
-            return this._datetime.formatShortDateLongTime(value, firstTime);
-        }
-
-        public formatMiddleDateLongTime(value: any, firstTime?: boolean): string {
-            return this._datetime.formatMiddleDateLongTime(value, firstTime);
-        }
-
-        public formatLongDateLongTime(value: any, firstTime?: boolean): string {
-            return this._datetime.formatLongDateLongTime(value, firstTime);
-        }
-
-        public bbFormatDateLongTime(value: any, firstTime?: boolean): string {
-            return this._datetime.bbFormatDateLongTime(value, firstTime);
-        }
-
-        public formatShortTime(value: any): string {
-            return this._datetime.formatShortTime(value);
-        }
-
-        public formatLongTime(value: any): string {
-            return this._datetime.formatLongTime(value);
-        }
-
-        public formatShortDayOfWeek(value: any): string {
-            return this._datetime.formatShortDayOfWeek(value);
-        }
-
-        public formatLongDayOfWeek(value: any): string {
-            return this._datetime.formatLongDayOfWeek(value);
-        }
-
-        public formatLongMonthDay(value: any): string {
-            return this._datetime.formatLongMonthDay(value);
-        }
-
-        public formatShortMonthDay(value: any): string {
-            return this._datetime.formatShortMonthDay(value);
-        }
-
-        public formatDateRange(value1: any, value2: any): string {
-            return this._datetime.formatDateRange(value1, value2);
-        }
-
-        public formatDateTimeRange(value1: any, value2: any): string {
-            return this._datetime.formatDateTimeRange(value1, value2);
-        }
-
-        // iso function
-        // --------------
-
-        public formatISOWeek(value: any): string {
-            return this._datetime.formatISOWeek(value);
-        }
-
-        public formatShortISOWeek(value: any): string {
-            return this._datetime.formatShortISOWeek(value);
-        }
-
-        public formatISOWeekOrdinal(value: any): string {
-            return this._datetime.formatISOWeekOrdinal(value);
-        }
-        // special formats 
-        // --------------
-
-        // year option displays if the current year is not equal to, the date of 
-        public formatDateY(value: any): string {
-            return this._datetime.formatDateY(value);
-        }
-
-        // year option displays if the current year is not equal to, the date of
-        public formatLongDateY(value: any): string {
-            return this._datetime.formatLongDateY(value);
-        }
-
-        // date displays if the current date  is not equal now 
-        // September 4 1986 8:30:25 PM or 8:30:25 PM
-        public formatTodayDateLongTimeLong(value: any): string {
-            return this._datetime.formatTodayDateLongTimeLong(value);
-        }
-
-        // date displays if the current date  is not equal now 
-        // Sep 4 1986 8:30:25 PM or 8:30:25 PM
-        public formatTodayDateShortTimeLong(value: any): string {
-            return this._datetime.formatTodayDateShortTimeLong(value);
-        }
-
-        // date displays if the current date  is not equal now 
-        // September 4 1986 8:30 PM or 8:30 PM
-        public formatTodayDateLongTimeShort(value: any): string {
-            return this._datetime.formatTodayDateLongTimeShort(value);
-        }
-
-        // date displays if the current date  is not equal now 
-        // Sep 4 1986 8:30 PM or 8:30 PM
-        public formatTodayDateShortTimeShort(value: any): string {
-            return this._datetime.formatTodayDateShortTimeShort(value);
-        }
-
-        public formatMillisecondsToSeconds(value: any) {
-            return this._datetime.formatMillisecondsToSeconds(value);
-        }
-
-        public formatElapsedInterval(value: any, start: any): string {
-            return this._datetime.formatElapsedInterval(value, start);
-        }
+     
 
         public getDateJSON(date: any): string {
             return this._datetime.getDateJSON(date);
@@ -841,9 +485,9 @@ import { DateTimeConfig, IDateTimeService, IDateTimeProvider } from './IDateServ
 
     }
 
-    class DateTimeProvider extends DateTime implements IDateTimeProvider {
-        private _translation: DateTime;
-        private _service: DateTimeService;
+    class DateTimeConvertProvider extends DateTimeConvert implements IDateTimeConvertProvider {
+        private _translation: DateTimeConvert;
+        private _service: DateTimeConvertService;
 
         public constructor() {
             super({ timeZone: null });
@@ -853,12 +497,12 @@ import { DateTimeConfig, IDateTimeService, IDateTimeProvider } from './IDateServ
             "ngInject";
 
             if (this._service == null)
-                this._service = new DateTimeService(this);
+                this._service = new DateTimeConvertService(this);
             return this._service;
         }
     }
 
     angular
-        .module('pipDateTime.Service', [])
-        .provider('pipDateTime', DateTimeProvider);
+        .module('pipDateTime.ConvertService', [])
+        .provider('pipDateTimeConvert', DateTimeConvertProvider);
 })();

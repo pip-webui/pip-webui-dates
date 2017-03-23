@@ -1,306 +1,307 @@
-import { IDateTimeService } from './IDateService';
+import { IDateTimeFormatService } from './IDateFormatService';
+import { IDateTimeConvertService } from './IDateConvertService';
 
-function formatTimeFilter(pipDateTime: IDateTimeService) {
+function formatTimeFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any, format: string): string => {
-        return pipDateTime.formatTime(value, format);
+        return pipDateTimeFormat.formatTime(value, format);
     }
 }
 
-function formatDateOptionalFilter(pipDateTime: IDateTimeService) {
+function formatDateOptionalFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any, format: string): string => {
-        return pipDateTime.formatDateOptional(value, format);
+        return pipDateTimeFormat.formatDateOptional(value, format);
     }
 }
 
-function formatLongDateFilter(pipDateTime: IDateTimeService) {
+function formatLongDateFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatLongDate(value);
+        return pipDateTimeFormat.formatLongDate(value);
     }
 }
 
-function formatShortDateFilter(pipDateTime: IDateTimeService) {
+function formatShortDateFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatShortDate(value);
+        return pipDateTimeFormat.formatShortDate(value);
     }
 }
 
-function formatMiddleDateFilter(pipDateTime: IDateTimeService) {
+function formatMiddleDateFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatMiddleDate(value);
+        return pipDateTimeFormat.formatMiddleDate(value);
     }
 }
 
-function formatMonthFilter(pipDateTime: IDateTimeService) {
+function formatMonthFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any) => {
-        return pipDateTime.formatMonth(value);
+        return pipDateTimeFormat.formatMonth(value);
     }
 }
 
-function formatLongMonthFilter(pipDateTime: IDateTimeService) {
+function formatLongMonthFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatLongMonth(value);
+        return pipDateTimeFormat.formatLongMonth(value);
     }
 }
 
-function formatYearFilter(pipDateTime: IDateTimeService) {
+function formatYearFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatYear(value);
+        return pipDateTimeFormat.formatYear(value);
     }
 }
 
-function formatWeekFilter(pipDateTime: IDateTimeService) {
+function formatWeekFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatWeek(value);
+        return pipDateTimeFormat.formatWeek(value);
     }
 }
 
-function formatShortWeekFilter(pipDateTime: IDateTimeService) {
+function formatShortWeekFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatShortWeek(value);
+        return pipDateTimeFormat.formatShortWeek(value);
     }
 }
 
-function formatShortDateTimeFilter(pipDateTime: IDateTimeService) {
+function formatShortDateTimeFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatShortDateTime(value);
+        return pipDateTimeFormat.formatShortDateTime(value);
     }
 }
 
-function formatMiddleDateTimeFilter(pipDateTime: IDateTimeService) {
+function formatMiddleDateTimeFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatMiddleDateTime(value);
+        return pipDateTimeFormat.formatMiddleDateTime(value);
     }
 }
 
-function formatLongDateTimeFilter(pipDateTime: IDateTimeService) {
+function formatLongDateTimeFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatLongDateTime(value);
+        return pipDateTimeFormat.formatLongDateTime(value);
     }
 }
 
-function formatShortDateLongTimeFilter(pipDateTime: IDateTimeService) {
+function formatShortDateLongTimeFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any, firstTime: boolean): string => {
-        return pipDateTime.formatShortDateLongTime(value, firstTime);
+        return pipDateTimeFormat.formatShortDateLongTime(value, firstTime);
     }
 }
 
-function formatMiddleDateLongTimeFilter(pipDateTime: IDateTimeService) {
+function formatMiddleDateLongTimeFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any, firstTime: boolean): string => {
-        return pipDateTime.formatMiddleDateLongTime(value, firstTime);
+        return pipDateTimeFormat.formatMiddleDateLongTime(value, firstTime);
     }
 }
 
-function formatLongDateLongTimeFilter(pipDateTime: IDateTimeService) {
+function formatLongDateLongTimeFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any, firstTime: boolean): string => {
-        return pipDateTime.formatLongDateLongTime(value, firstTime);
+        return pipDateTimeFormat.formatLongDateLongTime(value, firstTime);
     }
 }
 
-function bbFormatDateLongTimeFilter(pipDateTime: IDateTimeService) {
+function bbFormatDateLongTimeFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any, firstTime: boolean): string => {
-        return pipDateTime.bbFormatDateLongTime(value, firstTime);
+        return pipDateTimeFormat.bbFormatDateLongTime(value, firstTime);
     }
 }
 
-function formatFullDateTimeFilter(pipDateTime: IDateTimeService) {
+function formatFullDateTimeFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatFullDateTime(value);
+        return pipDateTimeFormat.formatFullDateTime(value);
     }
 }
 
-function formatShortTimeFilter(pipDateTime: IDateTimeService) {
+function formatShortTimeFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatShortTime(value);
+        return pipDateTimeFormat.formatShortTime(value);
     }
 }
 
-function formatLongTimeFilter(pipDateTime: IDateTimeService) {
+function formatLongTimeFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatLongTime(value);
+        return pipDateTimeFormat.formatLongTime(value);
     }
 }
 
-function formatShortDayOfWeekFilter(pipDateTime: IDateTimeService) {
+function formatShortDayOfWeekFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatShortDayOfWeek(value);
+        return pipDateTimeFormat.formatShortDayOfWeek(value);
     }
 }
 
-function formatLongDayOfWeekFilter(pipDateTime: IDateTimeService) {
+function formatLongDayOfWeekFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatLongDayOfWeek(value);
+        return pipDateTimeFormat.formatLongDayOfWeek(value);
     }
 }
 
-function formatLongMonthDayFilter(pipDateTime: IDateTimeService) {
+function formatLongMonthDayFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatLongMonthDay(value);
+        return pipDateTimeFormat.formatLongMonthDay(value);
     }
 }
 
-function formatShortMonthDayFilter(pipDateTime: IDateTimeService) {
+function formatShortMonthDayFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatShortMonthDay(value);
+        return pipDateTimeFormat.formatShortMonthDay(value);
     }
 }
 
-function formatDateRangeFilter(pipDateTime: IDateTimeService) {
+function formatDateRangeFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value1: any, value2: any): string => {
-        return pipDateTime.formatDateRange(value1, value2);
+        return pipDateTimeFormat.formatDateRange(value1, value2);
     }
 }
 
-function formatDateTimeRangeFilter(pipDateTime: IDateTimeService) {
+function formatDateTimeRangeFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value1: any, value2: any): string => {
-        return pipDateTime.formatDateTimeRange(value1, value2);
+        return pipDateTimeFormat.formatDateTimeRange(value1, value2);
     }
 }
 
-function formatISOWeekFilter(pipDateTime: IDateTimeService) {
+function formatISOWeekFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatISOWeek(value);
+        return pipDateTimeFormat.formatISOWeek(value);
     }
 }
 
-function formatShortISOWeekFilter(pipDateTime: IDateTimeService) {
+function formatShortISOWeekFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatShortISOWeek(value);
+        return pipDateTimeFormat.formatShortISOWeek(value);
     }
 }
 
-function formatISOWeekOrdinalFilter(pipDateTime: IDateTimeService) {
+function formatISOWeekOrdinalFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatISOWeekOrdinal(value);
+        return pipDateTimeFormat.formatISOWeekOrdinal(value);
     }
 }
 
-function formatDateYFilter(pipDateTime: IDateTimeService) {
+function formatDateYFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatDateY(value);
+        return pipDateTimeFormat.formatDateY(value);
     }
 }
 
-function formatLongDateYFilter(pipDateTime: IDateTimeService) {
+function formatLongDateYFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatLongDateY(value);
+        return pipDateTimeFormat.formatLongDateY(value);
     }
 }
 
-function formatTodayDateLongTimeLongFilter(pipDateTime: IDateTimeService) {
+function formatTodayDateLongTimeLongFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatTodayDateLongTimeLong(value);
+        return pipDateTimeFormat.formatTodayDateLongTimeLong(value);
     }
 }
 
-function formatTodayDateShortTimeLongFilter(pipDateTime: IDateTimeService) {
+function formatTodayDateShortTimeLongFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatTodayDateShortTimeLong(value);
+        return pipDateTimeFormat.formatTodayDateShortTimeLong(value);
     }
 }
 
-function formatTodayDateLongTimeShortFilter(pipDateTime: IDateTimeService) {
+function formatTodayDateLongTimeShortFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatTodayDateLongTimeShort(value);
+        return pipDateTimeFormat.formatTodayDateLongTimeShort(value);
     }
 }
 
-function formatTodayDateShortTimeShortFilter(pipDateTime: IDateTimeService) {
+function formatTodayDateShortTimeShortFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatTodayDateShortTimeShort(value);
+        return pipDateTimeFormat.formatTodayDateShortTimeShort(value);
     }
 }
 
-function formatMillisecondsToSecondsFilter(pipDateTime: IDateTimeService) {
+function formatMillisecondsToSecondsFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.formatMillisecondsToSeconds(value);
+        return pipDateTimeFormat.formatMillisecondsToSeconds(value);
     }
 }
 
-function formatElapsedIntervalFilter(pipDateTime: IDateTimeService) {
+function formatElapsedIntervalFilter(pipDateTimeFormat: IDateTimeFormatService) {
     "ngInject";
 
     return (value: any, start: any): string => {
-        return pipDateTime.formatElapsedInterval(value, start);
+        return pipDateTimeFormat.formatElapsedInterval(value, start);
     }
 }
 
-function getDateJSONFilter(pipDateTime: IDateTimeService) {
+function getDateJSONFilter(pipDateTimeConvert: IDateTimeConvertService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateTime.getDateJSON(value);
+        return pipDateTimeConvert.getDateJSON(value);
     }
 }
 
