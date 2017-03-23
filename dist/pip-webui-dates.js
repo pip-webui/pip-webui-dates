@@ -1499,8 +1499,22 @@ var TimeRangeEditData = (function () {
     }
     return TimeRangeEditData;
 }());
+var TimeRangeEditBindings = {
+    pipStartDate: '<',
+    pipChanged: '=',
+    pipEndDate: '<',
+    pipStartLabel: '@',
+    pipEndLabel: '@',
+    disabled: '&ngDisabled',
+    pipHideTime: '=',
+    pipSize: '='
+};
+var TimeRangeEditChanges = (function () {
+    function TimeRangeEditChanges() {
+    }
+    return TimeRangeEditChanges;
+}());
 var TimeRangeEditController = (function () {
-    TimeRangeEditController.$inject = ['$injector', 'pipDateTime', '$scope', '$element'];
     function TimeRangeEditController($injector, pipDateTime, $scope, $element) {
         this.$injector = $injector;
         this.pipDateTime = pipDateTime;
@@ -1724,22 +1738,13 @@ var TimeRangeEditController = (function () {
     return TimeRangeEditController;
 }());
 (function () {
-    angular.module('pipTimeRangeEdit', [])
-        .component('pipTimeRangeEdit', {
-        bindings: {
-            pipStartDate: '<',
-            pipChanged: '=',
-            pipEndDate: '<',
-            pipStartLabel: '@',
-            pipEndLabel: '@',
-            disabled: '&ngDisabled',
-            pipHideTime: '=',
-            pipSize: '='
-        },
+    var TimeRangeEditComponent = {
+        bindings: TimeRangeBindings,
         templateUrl: 'time_range_edit_directive/TimeRangeEdit.html',
-        controller: TimeRangeEditController,
-        controllerAs: '$ctrl'
-    });
+        controller: TimeRangeEditController
+    };
+    angular.module('pipTimeRangeEdit', [])
+        .component('pipTimeRangeEdit', TimeRangeEditComponent);
 })();
 },{}],12:[function(require,module,exports){
 (function(module) {

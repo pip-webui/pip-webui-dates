@@ -225,6 +225,29 @@ class TimeRangeEditData {
     duration: number;
     bind: boolean;
 }
+interface ITimeRangeEditBindings {
+    [key: string]: any;
+    pipStartDate: any;
+    pipChanged: any;
+    pipEndDate: any;
+    pipStartLabel: any;
+    pipEndLabel: any;
+    disabled: any;
+    pipHideTime: any;
+    pipSize: any;
+}
+const TimeRangeEditBindings: ITimeRangeEditBindings;
+class TimeRangeEditChanges implements ng.IOnChangesObject, ITimeRangeEditBindings {
+    [key: string]: ng.IChangesObject<any>;
+    pipStartDate: ng.IChangesObject<Date>;
+    pipChanged: ng.IChangesObject<(start: Date, end: Date) => void>;
+    pipEndDate: ng.IChangesObject<Date>;
+    pipStartLabel: ng.IChangesObject<string>;
+    pipEndLabel: ng.IChangesObject<string>;
+    disabled: ng.IChangesObject<() => void>;
+    pipHideTime: ng.IChangesObject<boolean>;
+    pipSize: ng.IChangesObject<any>;
+}
 class TimeRangeEditController {
     private $injector;
     private pipDateTime;
@@ -243,7 +266,7 @@ class TimeRangeEditController {
     disabled: () => boolean;
     pipChanged: (start: Date, end: Date) => void;
     constructor($injector: angular.auto.IInjectorService, pipDateTime: any, $scope: ng.IScope, $element: JQuery);
-    $onChanges(changes: any): void;
+    $onChanges(changes: TimeRangeEditChanges): void;
     private translate();
     private getDateJSON(value);
     private setDuration();
