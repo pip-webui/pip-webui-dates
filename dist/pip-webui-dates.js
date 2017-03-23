@@ -1,4 +1,128 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}(g.pip || (g.pip = {})).dates = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function () {
+    var DateBindings = {
+        timeMode: '@pipTimeMode',
+        disabled: '&ngDisabled',
+        model: '<ngModel',
+        ngChange: '<'
+    };
+    var DateChanges = (function () {
+        function DateChanges() {
+        }
+        return DateChanges;
+    }());
+    var DateController = (function () {
+        function DateController($injector, $scope) {
+            this.localeDate = moment.localeData();
+            this.momentMonths = angular.isArray(this.localeDate['_months']) ? this.localeDate['_months'] : this.localeDate['_months'].format;
+            this.momentDays = angular.isArray(this.localeDate['_weekdays']) ? this.localeDate['_weekdays'] : this.localeDate['_weekdays'].format;
+            this.momentShortDays = this.localeDate['_weekdaysMin'];
+            this.momentFirstDayOfWeek = this.localeDate['_week'].dow;
+            var value = this.model ? _.isDate(this.model) ? this.model : new Date(this.model) : null;
+            this.day = value ? value.getDate() : null;
+            this.month = value ? value.getMonth() + 1 : null;
+            this.year = value ? value.getFullYear() : null;
+            this.days = this.dayList(this.month, this.year);
+            this.months = this.monthList();
+            this.years = this.yearList();
+            this.disableControls = this.disabled ? this.disabled() : false;
+        }
+        DateController.prototype.$onChanges = function (changes) {
+            if (changes.model && changes.model.currentValue) {
+                this.model = changes.model.currentValue;
+                this.getValue(this.model);
+            }
+        };
+        DateController.prototype.dayList = function (month, year) {
+            var count = 31, days = [];
+            if (month === 4 || month === 6 || month === 9 || month === 11) {
+                count = 30;
+            }
+            else {
+                if (month === 2) {
+                    if (year) {
+                        count = year % 4 === 0 ? 29 : 28;
+                    }
+                    else {
+                        count = 28;
+                    }
+                }
+            }
+            for (var i = 1; i <= count; i++) {
+                days.push(i);
+            }
+            return days;
+        };
+        DateController.prototype.monthList = function () {
+            var months = [];
+            for (var i = 1; i <= 12; i++) {
+                months.push({
+                    id: i,
+                    name: this.momentMonths[i - 1]
+                });
+            }
+            return months;
+        };
+        DateController.prototype.yearList = function () {
+            var currentYear = new Date().getFullYear(), startYear = this.timeMode === 'future' ? currentYear : currentYear - 100, endYear = this.timeMode === 'past' ? currentYear : currentYear + 100, years = [];
+            if (this.timeMode === 'past') {
+                for (var i = endYear; i >= startYear; i--) {
+                    years.push(i);
+                }
+            }
+            else {
+                for (var i = startYear; i <= endYear; i++) {
+                    years.push(i);
+                }
+            }
+            return years;
+        };
+        DateController.prototype.adjustDay = function () {
+            var days = this.dayList(this.month, this.year);
+            if (this.days.length !== days.length) {
+                if (this.day > days.length) {
+                    this.day = days.length;
+                }
+                this.days = days;
+            }
+        };
+        DateController.prototype.getValue = function (v) {
+            var value = v ? _.isDate(v) ? v : new Date(v) : null, day = value ? value.getDate() : null, month = value ? value.getMonth() + 1 : null, year = value ? value.getFullYear() : null;
+            if (this.month !== month && this.year !== year) {
+                this.days = this.dayList(this.month, this.year);
+            }
+            this.day = day;
+            this.month = month;
+            this.year = year;
+        };
+        DateController.prototype.setValue = function () {
+            var value;
+            if (this.day && this.month && this.year) {
+                value = new Date(this.year, this.month - 1, this.day, 0, 0, 0, 0);
+                this.model = value;
+                this.ngChange(this.model);
+            }
+        };
+        DateController.prototype.onMonthChanged = function () {
+            this.adjustDay();
+            this.setValue();
+        };
+        DateController.prototype.onYearChanged = function () {
+            this.adjustDay();
+            this.setValue();
+        };
+        return DateController;
+    }());
+    var DateComponent = {
+        bindings: DateBindings,
+        templateUrl: 'date/Date.html',
+        controller: DateController
+    };
+    angular
+        .module('pipDate', ['pipDates.Templates'])
+        .component('pipDate', DateComponent);
+})();
+},{}],2:[function(require,module,exports){
 "use strict";
 formatTimeFilter.$inject = ['pipDateTime'];
 formatDateOptionalFilter.$inject = ['pipDateTime'];
@@ -306,7 +430,7 @@ angular
     .filter('formatTodayDateShortTimeShort', formatTodayDateShortTimeShortFilter)
     .filter('formatMillisecondsToSeconds', formatMillisecondsToSecondsFilter)
     .filter('formatElapsedInterval', formatElapsedIntervalFilter);
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -929,7 +1053,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
         .module('pipDateTime.Service', [])
         .provider('pipDateTime', DateTimeProvider);
 })();
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var DateTimeConfig = (function () {
@@ -938,138 +1062,12 @@ var DateTimeConfig = (function () {
     return DateTimeConfig;
 }());
 exports.DateTimeConfig = DateTimeConfig;
-},{}],4:[function(require,module,exports){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 },{}],5:[function(require,module,exports){
 angular.module('pipDateTime', [
     'pipDateTime.Service',
     'pipDateTime.Filter'
 ]);
 },{}],6:[function(require,module,exports){
-(function () {
-    var DateBindings = {
-        timeMode: '@pipTimeMode',
-        disabled: '&ngDisabled',
-        model: '<ngModel',
-        ngChange: '<'
-    };
-    var DateChanges = (function () {
-        function DateChanges() {
-        }
-        return DateChanges;
-    }());
-    var DateController = (function () {
-        function DateController($injector, $scope) {
-            this.localeDate = moment.localeData();
-            this.momentMonths = angular.isArray(this.localeDate['_months']) ? this.localeDate['_months'] : this.localeDate['_months'].format;
-            this.momentDays = angular.isArray(this.localeDate['_weekdays']) ? this.localeDate['_weekdays'] : this.localeDate['_weekdays'].format;
-            this.momentShortDays = this.localeDate['_weekdaysMin'];
-            this.momentFirstDayOfWeek = this.localeDate['_week'].dow;
-            var value = this.model ? _.isDate(this.model) ? this.model : new Date(this.model) : null;
-            this.day = value ? value.getDate() : null;
-            this.month = value ? value.getMonth() + 1 : null;
-            this.year = value ? value.getFullYear() : null;
-            this.days = this.dayList(this.month, this.year);
-            this.months = this.monthList();
-            this.years = this.yearList();
-            this.disableControls = this.disabled ? this.disabled() : false;
-        }
-        DateController.prototype.$onChanges = function (changes) {
-            if (changes.model && changes.model.currentValue) {
-                this.model = changes.model.currentValue;
-                this.getValue(this.model);
-            }
-        };
-        DateController.prototype.dayList = function (month, year) {
-            var count = 31, days = [];
-            if (month === 4 || month === 6 || month === 9 || month === 11) {
-                count = 30;
-            }
-            else {
-                if (month === 2) {
-                    if (year) {
-                        count = year % 4 === 0 ? 29 : 28;
-                    }
-                    else {
-                        count = 28;
-                    }
-                }
-            }
-            for (var i = 1; i <= count; i++) {
-                days.push(i);
-            }
-            return days;
-        };
-        DateController.prototype.monthList = function () {
-            var months = [];
-            for (var i = 1; i <= 12; i++) {
-                months.push({
-                    id: i,
-                    name: this.momentMonths[i - 1]
-                });
-            }
-            return months;
-        };
-        DateController.prototype.yearList = function () {
-            var currentYear = new Date().getFullYear(), startYear = this.timeMode === 'future' ? currentYear : currentYear - 100, endYear = this.timeMode === 'past' ? currentYear : currentYear + 100, years = [];
-            if (this.timeMode === 'past') {
-                for (var i = endYear; i >= startYear; i--) {
-                    years.push(i);
-                }
-            }
-            else {
-                for (var i = startYear; i <= endYear; i++) {
-                    years.push(i);
-                }
-            }
-            return years;
-        };
-        DateController.prototype.adjustDay = function () {
-            var days = this.dayList(this.month, this.year);
-            if (this.days.length !== days.length) {
-                if (this.day > days.length) {
-                    this.day = days.length;
-                }
-                this.days = days;
-            }
-        };
-        DateController.prototype.getValue = function (v) {
-            var value = v ? _.isDate(v) ? v : new Date(v) : null, day = value ? value.getDate() : null, month = value ? value.getMonth() + 1 : null, year = value ? value.getFullYear() : null;
-            if (this.month !== month && this.year !== year) {
-                this.days = this.dayList(this.month, this.year);
-            }
-            this.day = day;
-            this.month = month;
-            this.year = year;
-        };
-        DateController.prototype.setValue = function () {
-            var value;
-            if (this.day && this.month && this.year) {
-                value = new Date(this.year, this.month - 1, this.day, 0, 0, 0, 0);
-                this.model = value;
-                this.ngChange(this.model);
-            }
-        };
-        DateController.prototype.onMonthChanged = function () {
-            this.adjustDay();
-            this.setValue();
-        };
-        DateController.prototype.onYearChanged = function () {
-            this.adjustDay();
-            this.setValue();
-        };
-        return DateController;
-    }());
-    var DateComponent = {
-        bindings: DateBindings,
-        templateUrl: 'date_directive/Date.html',
-        controller: DateController
-    };
-    angular.module('pipDate', ['pipDates.Templates'])
-        .component('pipDate', DateComponent);
-})();
-},{}],7:[function(require,module,exports){
 (function () {
     var DateRangeBindings = {
         timeMode: '@pipTimeMode',
@@ -1397,14 +1395,14 @@ angular.module('pipDateTime', [
     }());
     var daterange = {
         bindings: DateRangeBindings,
-        templateUrl: 'date_range_directive/DateRange.html',
+        templateUrl: 'date_range/DateRange.html',
         controller: DateRangeController
     };
     angular
         .module('pipDateRange', ['pipDates.Templates'])
         .component('pipDateRange', daterange);
 })();
-},{}],8:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 {
     translateFilter.$inject = ['$injector'];
     function translateFilter($injector) {
@@ -1418,7 +1416,7 @@ angular.module('pipDateTime', [
         .module('pipDates.Translate', [])
         .filter('translate', translateFilter);
 }
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 angular.module('pipDates', [
     'pipDate',
     'pipTimeRange',
@@ -1427,7 +1425,7 @@ angular.module('pipDates', [
     'pipDateRange',
     'pipDates.Translate'
 ]);
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 (function () {
     var TimeRangeData = (function () {
         function TimeRangeData() {
@@ -1487,13 +1485,13 @@ angular.module('pipDates', [
     }());
     var TimeRangeComponent = {
         bindings: TimeRangeBindings,
-        templateUrl: 'time_range_directive/TimeRange.html',
+        templateUrl: 'time_range/TimeRange.html',
         controller: TimeRangeController
     };
     angular.module('pipTimeRange', [])
         .component('pipTimeRange', TimeRangeComponent);
 })();
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IntervalTimeRange = 30;
@@ -1747,13 +1745,13 @@ exports.MillisecondsInSecond = 1000;
     }());
     var TimeRangeEditComponent = {
         bindings: TimeRangeEditBindings,
-        templateUrl: 'time_range_edit_directive/TimeRangeEdit.html',
+        templateUrl: 'time_range_edit/TimeRangeEdit.html',
         controller: TimeRangeEditController
     };
     angular.module('pipTimeRangeEdit', [])
         .component('pipTimeRangeEdit', TimeRangeEditComponent);
 }
-},{}],12:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 (function(module) {
 try {
   module = angular.module('pipDates.Templates');
@@ -1761,7 +1759,7 @@ try {
   module = angular.module('pipDates.Templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('date_directive/Date.html',
+  $templateCache.put('date/Date.html',
     '<div class="pip-date layout-row flex" tabindex="-1"><md-input-container class="input-container flex"><md-select class="pip-date-day flex" ng-disabled="$ctrl.disableControls" ng-model="$ctrl.day" placeholder="{{$ctrl.dayLabel}}" ng-change="$ctrl.setValue()"><md-option ng-value="opt" ng-repeat="opt in $ctrl.days track by opt">{{:: opt }}</md-option></md-select></md-input-container><div class="input-container-separator flex-fixed"></div><md-input-container class="input-container flex"><md-select class="pip-date-monthflex" ng-disabled="$ctrl.disableControls" ng-model="$ctrl.month" placeholder="{{$ctrl.monthLabel}}" ng-change="$ctrl.onMonthChanged()"><md-option ng-value="opt.id" ng-repeat="opt in $ctrl.months track by opt.id">{{:: opt.name }}</md-option></md-select></md-input-container><div class="input-container-separator flex-fixed"></div><md-input-container class="input-container flex"><md-select class="pip-date-year flex" ng-disabled="$ctrl.disableControls" ng-model="$ctrl.year" placeholder="{{$ctrl.yearLabel}}" ng-change="$ctrl.onYearChanged()"><md-option ng-value="opt" ng-repeat="opt in $ctrl.years track by opt">{{:: opt }}</md-option></md-select></md-input-container></div>');
 }]);
 })();
@@ -1773,7 +1771,7 @@ try {
   module = angular.module('pipDates.Templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('date_range_directive/DateRange.html',
+  $templateCache.put('date_range/DateRange.html',
     '<div class="pip-date-range layout-row flex" tabindex="-1"><md-input-container ng-show="$ctrl.isDay()" class="input-container pip-day flex" ng-class="{\'flex-fixed\' : $ctrl.$mdMedia(\'gt-xs\')}"><md-select class="select-day" ng-class="{\'pip-no-line\' : $ctrl.pipNoLine}" ng-disable="{{$ctrl.disableControls}}" md-on-open="$ctrl.onDayClick()" ng-model="$ctrl.day" ng-change="$ctrl.setValue()" placeholder="{{$ctrl.dayLabel}}" aria-label="DAY"><md-option ng-value="opt" ng-repeat="opt in $ctrl.days track by opt">{{$ctrl.nameDays[$index]}} {{ opt }}</md-option></md-select></md-input-container><md-input-container ng-show="$ctrl.isWeek()" class="input-container flex" ng-class="{\'flex-fixed\' : $ctrl.$mdMedia(\'gt-xs\')}"><md-select class="select-week" ng-class="{\'pip-no-line\' : $ctrl.pipNoLine}" ng-disable="{{$ctrl.disableControls}}" ng-model="$ctrl.week" ng-change="$ctrl.onWeekChange()" placeholder="{{$ctrl.weekLabel}}" aria-label="WEEK"><md-option ng-value="opt.id" ng-repeat="opt in $ctrl.weeks track by opt.id">{{ opt.name }}</md-option></md-select></md-input-container><div class="flex-fixed" ng-class="{\'space16\': $ctrl.$mdMedia(\'gt-xs\'), \'space8\': $ctrl.$mdMedia(\'xs\')}" ng-show="$ctrl.isDay() || $ctrl.isWeek()"></div><md-input-container ng-show="$ctrl.isMonth() && !$ctrl.monthFormatShort" class="input-container flex" ng-class="{\'flex-fixed\' : $ctrl.$mdMedia(\'gt-xs\')}"><md-select class="select-month" ng-class="{\'pip-no-line\' : $ctrl.pipNoLine}" ng-disable="{{$ctrl.disableControls}}" md-on-open="$ctrl.onMonthClick()" ng-model="$ctrl.month" ng-change="$ctrl.onMonthChanged()" placeholder="{{$ctrl.monthLabel}}" aria-label="MONTH"><md-option ng-value="opt.id" ng-repeat="opt in $ctrl.months track by opt.id">{{ opt.name }}</md-option></md-select></md-input-container><md-input-container ng-show="$ctrl.isMonth() && $ctrl.monthFormatShort" class="flex input-container" ng-class="{\'flex-fixed\' : $ctrl.$mdMedia(\'gt-xs\')}"><md-select class="select-month" ng-class="{\'pip-no-line\' : $ctrl.pipNoLine}" ng-disable="{{$ctrl.disableControls}}" md-on-open="$ctrl.onMonthClick()" ng-model="$ctrl.month" ng-change="$ctrl.onMonthChanged()" placeholder="{{$ctrl.monthLabel}}" aria-label="MONTH"><md-option ng-value="opt.id" ng-repeat="opt in $ctrl.shortMonths track by opt.id">{{ opt.name }}</md-option></md-select></md-input-container><div class="flex-fixed" ng-class="{\'space16\': $ctrl.$mdMedia(\'gt-xs\'), \'space8\': $ctrl.$mdMedia(\'xs\')}" ng-show="$ctrl.isMonth()"></div><md-input-container class="input-container flex" ng-class="{\'flex-fixed\' : $ctrl.$mdMedia(\'gt-xs\')}"><md-select class="select-year" ng-class="{\'pip-no-line\' : $ctrl.pipNoLine}" ng-disable="{{$ctrl.disableControls}}" md-on-open="$ctrl.onYearClick()" ng-model="$ctrl.year" ng-change="$ctrl.onYearChanged()" placeholder="{{$ctrl.yearLabel}}" aria-label="YEAR"><md-option ng-value="opt" ng-repeat="opt in $ctrl.years track by opt">{{ opt }}</md-option></md-select></md-input-container></div>');
 }]);
 })();
@@ -1785,7 +1783,7 @@ try {
   module = angular.module('pipDates.Templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('time_range_directive/TimeRange.html',
+  $templateCache.put('time_range/TimeRange.html',
     '<p><span ng-if="$ctrl.data.start != null">{{$ctrl.data.start | formatLongDateTime}}</span> <span class="separator" ng-if="$ctrl.data.start && $ctrl.data.end">-</span> <span ng-if="$ctrl.data.end != null">{{$ctrl.data.end | formatLongDateTime}}</span></p>');
 }]);
 })();
@@ -1797,14 +1795,14 @@ try {
   module = angular.module('pipDates.Templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('time_range_edit_directive/TimeRangeEdit.html',
+  $templateCache.put('time_range_edit/TimeRangeEdit.html',
     '<div class="event-edit layout-row layout-xs-column flex layout-align-start-start"><div flex="47" class="start-time-container"><p class="text-caption text-grey">{{$ctrl.startLabel}}</p><div class="layout-row layout-align-space-between-center"><div class="pip-datepicker-container" flex="49"><md-datepicker ng-model="$ctrl.data.startDate" xmd-placeholder="{{$ctrl.startLabel}}" ng-change="$ctrl.onChangeStartDate()" ng-disabled="$ctrl.isDisabled()" aria-label="START-DATE"></md-datepicker></div><div flex="" ng-if="$ctrl.showTime"><md-input-container class="input-container"><md-select aria-label="START-TIME" ng-model="$ctrl.data.startTime" ng-disabled="$ctrl.isDisabled()" ng-change="$ctrl.onChangeStartTime($ctrl.data.startTime)"><md-option ng-value="opt.id" ng-repeat="opt in $ctrl.intervalTimeCollection track by opt.id">{{ opt.time }}</md-option></md-select></md-input-container></div></div></div><div flex="47" class="end-time-container"><p class="text-caption text-grey">{{$ctrl.endLabel}}</p><div class="layout-row layout-align-space-between-center"><div class="pip-datepicker-container flex-49"><md-datepicker ng-model="$ctrl.data.endDate" xmd-placeholder="{{$ctrl.endLabel}}" ng-disabled="$ctrl.isDisabled()" ng-change="$ctrl.onChangeEndDate()" aria-label="END-DATE"></md-datepicker></div><div flex="" ng-if="$ctrl.showTime"><md-input-container class="input-container"><md-select aria-label="END-TIME" ng-model="$ctrl.data.endTime" ng-change="$ctrl.onChangeEndTime()" ng-disabled="$ctrl.isDisabled()"><md-option ng-value="opt.id" ng-repeat="opt in $ctrl.intervalTimeCollection track by opt.id">{{ opt.time }}</md-option></md-select></md-input-container></div></div></div></div>');
 }]);
 })();
 
 
 
-},{}]},{},[12,6,7,1,2,3,4,5,8,9,10,11])(12)
+},{}]},{},[11,2,3,4,5,6,1,7,8,10,9])(11)
 });
 
 //# sourceMappingURL=pip-webui-dates.js.map

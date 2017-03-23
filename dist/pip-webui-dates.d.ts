@@ -2,10 +2,10 @@ declare module pip.dates {
 
 
 
+
 export class DateTimeConfig {
     timeZone: number;
 }
-
 export interface IDateTimeService {
     readonly config: DateTimeConfig;
     useTimeZone(offset: number): any;
@@ -62,7 +62,6 @@ export interface IDateTimeService {
 }
 export interface IDateTimeProvider extends IDateTimeService, ng.IServiceProvider {
 }
-
 
 
 
