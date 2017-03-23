@@ -127,6 +127,11 @@
             $scope.changeDate = function(date) {
                 $scope.specialDate = date;
             }
+
+            $scope.timeChange = function(start, end) {
+                $scope.startDate = start;
+                $scope.endDate = end;
+            }
         }
     );
 

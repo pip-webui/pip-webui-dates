@@ -5,22 +5,22 @@
 
 <div class="event-edit layout-row layout-xs-column flex layout-align-start-start">
     <div flex="47" class="start-time-container ">
-        <p class="text-caption text-grey">{{startLabel}}</p>
+        <p class="text-caption text-grey">{{$ctrl.startLabel}}</p>
 
         <div class="layout-row layout-align-space-between-center">
             <div class="pip-datepicker-container" flex="49">
-                <md-datepicker ng-model="data.startDate"
-                               xmd-placeholder="{{startLabel}}"
-                               ng-change="onChangeStartDate()"
-                               ng-disabled="isDisabled()"
+                <md-datepicker ng-model="$ctrl.data.startDate"
+                               xmd-placeholder="{{$ctrl.startLabel}}"
+                               ng-change="$ctrl.onChangeStartDate()"
+                               ng-disabled="$ctrl.isDisabled()"
                                aria-label="START-DATE">
                 </md-datepicker>
             </div>
-            <div flex ng-if="showTime">
+            <div flex ng-if="$ctrl.showTime">
                 <md-input-container class="input-container">
-                    <md-select aria-label="START-TIME" ng-model="data.startTime" ng-disabled="isDisabled()"
-                               ng-change="onChangeStartTime(data.startTime)">
-                        <md-option ng-value="opt.id" ng-repeat="opt in intervalTimeCollection track by opt.id">{{ opt.time }}
+                    <md-select aria-label="START-TIME" ng-model="$ctrl.data.startTime" ng-disabled="$ctrl.isDisabled()"
+                               ng-change="$ctrl.onChangeStartTime($ctrl.data.startTime)">
+                        <md-option ng-value="opt.id" ng-repeat="opt in $ctrl.intervalTimeCollection track by opt.id">{{ opt.time }}
                         </md-option>
                     </md-select>
                 </md-input-container>
@@ -28,22 +28,22 @@
         </div>
     </div>
     <div flex="47" class="end-time-container">
-        <p class="text-caption text-grey">{{endLabel}}</p>
+        <p class="text-caption text-grey">{{$ctrl.endLabel}}</p>
 
         <div class="layout-row layout-align-space-between-center">
             <div class="pip-datepicker-container flex-49">
-                <md-datepicker ng-model="data.endDate"
-                               xmd-placeholder="{{endLabel}}"
-                               ng-disabled="isDisabled()"
-                               ng-change="onChangeEndDate()"
+                <md-datepicker ng-model="$ctrl.data.endDate"
+                               xmd-placeholder="{{$ctrl.endLabel}}"
+                               ng-disabled="$ctrl.isDisabled()"
+                               ng-change="$ctrl.onChangeEndDate()"
                                aria-label="END-DATE">
                 </md-datepicker>
             </div>
-            <div flex ng-if="showTime">
+            <div flex ng-if="$ctrl.showTime">
                 <md-input-container class="input-container">
-                    <md-select aria-label="END-TIME" ng-model="data.endTime" ng-change="onChangeEndTime()"
-                               ng-disabled="isDisabled()">
-                        <md-option ng-value="opt.id" ng-repeat="opt in intervalTimeCollection track by opt.id">
+                    <md-select aria-label="END-TIME" ng-model="$ctrl.data.endTime" ng-change="$ctrl.onChangeEndTime()"
+                               ng-disabled="$ctrl.isDisabled()">
+                        <md-option ng-value="opt.id" ng-repeat="opt in $ctrl.intervalTimeCollection track by opt.id">
                             {{ opt.time }}
                         </md-option>
                     </md-select>

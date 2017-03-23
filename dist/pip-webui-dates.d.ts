@@ -236,12 +236,14 @@ class TimeRangeEditController {
     pipEndDate: Date;
     pipStartDate: Date;
     pipHideTime: boolean;
+    pipSize: any;
     showTime: boolean;
     data: TimeRangeEditData;
     intervalTimeCollection: any;
     disabled: () => boolean;
-    pipChanged: () => void;
+    pipChanged: (start: Date, end: Date) => void;
     constructor($injector: angular.auto.IInjectorService, pipDateTime: any, $scope: ng.IScope, $element: JQuery);
+    $onChanges(changes: any): void;
     private translate();
     private getDateJSON(value);
     private setDuration();
