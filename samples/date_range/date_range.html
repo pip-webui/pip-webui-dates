@@ -1,0 +1,55 @@
+
+<h2 class="text-title ">{{:: dateRangeLabel | translate }}:</h2>
+<h3 class="text-subhead2">{{:: dailyLabel| translate }}: </h3>
+<pip-date-range pip-date-range-type="daily" ng-model="daily"></pip-date-range>
+<p class="text-body1 tm16 bm16">{{:: valueLabel | translate }}: {{ daily }}</p>
+
+<pre class="text-body1 color-window-bg">
+<h3 class="text-subhead2">{{:: codeLabel | translate}}</h3>
+<code class="language-markup">&lt;pip-date-range pip-date-range-type="daily" ng-model="daily"&gt;
+&lt;/pip-date-range&gt;
+</code>
+</pre>
+
+<md-divider class=" pip-list-divider"></md-divider>
+
+<h3 class="text-subhead2">{{:: weeklyLabel | translate}}: </h3>
+<pip-date-range pip-date-range-type="weekly" ng-model="weekly" pip-changed="onChangeWeekly()"></pip-date-range>
+<p class="text-body1 tm16 bm16">{{:: valueLabel | translate }}: {{ weekly }}</p>
+<md-button class="l md-raised md-accent flat" ng-click="onNextWeek()">
+    {{:: nextWeekLabel | translate }}
+</md-button>
+
+<pre class="text-body1 color-window-bg">
+<h3 class="text-subhead2">{{:: codeLabel | translate}}</h3>
+<code class="language-markup">&lt;pip-date-range pip-date-range-type="weekly" ng-model="weekly"&gt;
+&lt;/pip-date-range&gt;
+</code>
+</pre>
+
+<md-divider class=" pip-list-divider"></md-divider>
+
+<h3 class="text-subhead2">{{:: monthlyLabel | translate }}: </h3>
+<pip-date-range pip-date-range-type="monthly" ng-model="monthly"></pip-date-range>
+<p class="text-body1 tm16 bm16">{{:: valueLabel | translate }}: {{ monthly }}</p>
+
+<h3 class="text-subhead2">{{:: codeLabel | translate}}</h3>
+<pre class="text-body1 color-window-bg">
+<h3 class="text-subhead2">{{:: codeLabel | translate}}</h3>
+<code class="language-markup">&lt;pip-date-range pip-date-range-type="monthly" ng-model="monthly"&gt;
+&lt;/pip-date-range&gt;
+</code>
+</pre>
+
+<md-divider class=" pip-list-divider"></md-divider>
+
+<h3 class="text-subhead2">{{:: yearlyLabel | translate}}: </h3>
+<pip-date-range pip-date-range-type="yearly" ng-model="yearly"></pip-date-range>
+<p class="text-body1 tm16 bm16">{{:: valueLabel | translate }}: {{ yearly }}</p>
+
+<pre class="text-body1 color-window-bg">
+<h3 class="text-subhead2">{{:: codeLabel | translate}}</h3>
+<code class="language-markup">&lt;pip-date-range pip-date-range-type="yearly" ng-model="yearly"&gt;
+&lt;/pip-date-range&gt;
+</code>
+</pre>

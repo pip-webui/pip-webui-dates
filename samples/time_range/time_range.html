@@ -1,0 +1,33 @@
+
+<h2 class="text-title ">{{:: teimeEditLabek | translate }}:</h2>
+
+<pip-time-range-edit pip-start-date="startDate" pip-end-date="endDate" pip-changed="timeChange"></pip-time-range-edit>
+
+<h2 class="text-title ">{{:: teimeEditLabek | translate }}: without time</h2>
+<pip-time-range-edit pip-start-date="startDate" pip-end-date="endDate" pip-hide-time="true" pip-changed="timeChange"></pip-time-range-edit>
+
+<pre class="text-body1 color-window-bg">
+<h3 class="text-subhead2">{{:: codeLabel | translate}}</h3>
+<code class="language-markup">&lt;pip-time-range-edit pip-start-date="startDate" pip-end-date="endDate"&gt;
+&lt;/pip-time-range-edit&gt;
+</code>
+</pre>
+
+<pip-time-range pip-start-date="startDate" pip-end-date="endDate" pip-rebind="true"></pip-time-range>
+
+<pre class="text-body1 color-window-bg">
+<h3 class="text-subhead2">{{:: codeLabel | translate}}</h3>
+<code class="language-markup">&lt;pip-time-range pip-start-date="startDate" pip-end-date="endDate" pip-rebind="true"&gt;
+&lt;/pip-time-range&gt;
+</code>
+</pre>
+<h3 class="text-subhead2">{{:: disabledLabel | translate }}</h3>
+<pip-time-range-edit pip-start-date="startDate" pip-end-date="endDate" ng-disabled="true"></pip-time-range-edit>
+
+<pre class="text-body1 color-window-bg">
+<h3 class="text-subhead2">{{:: codeLabel | translate}}</h3>
+<code class="language-markup">&lt;pip-time-range-edit pip-start-date="startDate" pip-end-date="endDate" ng-disabled="true"&gt;
+&lt;/pip-time-range-edit&gt;
+</code>
+</pre>
+
