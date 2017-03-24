@@ -7,9 +7,9 @@ export interface IDateConvertService {
     useTimeZone(offset: number);
    
     getDateJSON(date: any): string;
-    getNextStart(date: any, category: string): Date;
-    getPrevStart(date: any, category: string): Date;
-    getNowStart(category: string): Date;
+    toNextRange(date: any, type: string): Date;
+    toPrevRange(date: any, type: string): Date;
+    toCurrentRange(type: string): Date;
 
     addHours(date: any, hours: number): Date;
     toStartDay(date: any): Date;

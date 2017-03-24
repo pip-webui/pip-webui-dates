@@ -343,7 +343,7 @@ MomentRange.All = ['year', 'month', 'week', 'isoweek', 'day'];
         DateTimeConvert.prototype.getDateJSON = function (localDate) {
             return JSON.stringify(moment(localDate));
         };
-        DateTimeConvert.prototype.getNextStart = function (date, offset) {
+        DateTimeConvert.prototype.toNextRange = function (date, type) {
             var localDate, range, result;
             if (this.isUndefinedOrNull(date)) {
                 return '';
@@ -352,30 +352,30 @@ MomentRange.All = ['year', 'month', 'week', 'isoweek', 'day'];
             if (!localDate.isValid()) {
                 return '';
             }
-            range = this.getRange(offset);
+            range = this.getRange(type);
             result = moment(localDate).startOf(range).add(this.getOperationRange(range));
             return result.toDate();
         };
-        DateTimeConvert.prototype.getPrevStart = function (date, offset) {
+        DateTimeConvert.prototype.toPrevRange = function (date, type) {
             var localDate, range, result;
             if (this.isUndefinedOrNull(date)) {
-                throw new Error('getPrevStart - date is undefined or null');
+                throw new Error('toPrevRange- date is undefined or null');
             }
             localDate = moment(date);
             if (!localDate.isValid()) {
-                throw new Error('getPrevStart - localDate is invalid');
+                throw new Error('toPrevRange - localDate is invalid');
             }
-            range = this.getRange(offset);
+            range = this.getRange(type);
             result = moment(localDate).startOf(range).add(-1, this.getOperationRange(range));
             return result.toDate();
         };
-        DateTimeConvert.prototype.getNowStart = function (offset) {
+        DateTimeConvert.prototype.toCurrentRange = function (type) {
             var localDate, range, result;
             localDate = moment();
             if (!localDate.isValid()) {
-                throw new Error('getNowStart - localDate is invalid');
+                throw new Error('toCurrentRange - localDate is invalid');
             }
-            range = this.getRange(offset);
+            range = this.getRange(type);
             result = moment(localDate).startOf(range);
             return result.toDate();
         };
@@ -427,14 +427,14 @@ MomentRange.All = ['year', 'month', 'week', 'isoweek', 'day'];
         DateTimeConvertService.prototype.getDateJSON = function (localDate) {
             return this._localDatetime.getDateJSON(localDate);
         };
-        DateTimeConvertService.prototype.getNextStart = function (date, offset) {
-            return this._localDatetime.getNextStart(date, offset);
+        DateTimeConvertService.prototype.toNextRange = function (date, type) {
+            return this._localDatetime.toNextRange(date, type);
         };
-        DateTimeConvertService.prototype.getPrevStart = function (date, offset) {
-            return this._localDatetime.getPrevStart(date, offset);
+        DateTimeConvertService.prototype.toPrevRange = function (date, type) {
+            return this._localDatetime.toPrevRange(date, type);
         };
-        DateTimeConvertService.prototype.getNowStart = function (offset) {
-            return this._localDatetime.getNowStart(offset);
+        DateTimeConvertService.prototype.toCurrentRange = function (type) {
+            return this._localDatetime.toCurrentRange(type);
         };
         DateTimeConvertService.prototype.addHours = function (date, hours) {
             return this._localDatetime.addHours(date, hours);
