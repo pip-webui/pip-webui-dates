@@ -27,9 +27,6 @@ export interface IDateConvertService {
 export interface IDateConvertProvider extends IDateConvertService, ng.IServiceProvider {
 }
 
-export class DateTimeConfig {
-    timeZone: number;
-}
 export interface IDateFormatService {
     readonly config: DateTimeConfig;
     useTimeZone(offset: number): any;
