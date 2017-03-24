@@ -122,7 +122,6 @@
         .module('pipDate', ['pipDates.Templates'])
         .component('pipDate', DateComponent);
 })();
-
 },{}],2:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
@@ -510,7 +509,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
         .module('pipDate.Convert', [])
         .provider('pipDateConvert', DateConvertProvider);
 })();
-
 },{}],3:[function(require,module,exports){
 "use strict";
 formatTimeFilter.$inject = ['pipDateFormat'];
@@ -819,7 +817,6 @@ angular
     .filter('formatTodayDateShortTimeShort', formatTodayDateShortTimeShortFilter)
     .filter('formatMillisecondsToSeconds', formatMillisecondsToSecondsFilter)
     .filter('formatElapsedInterval', formatElapsedIntervalFilter);
-
 },{}],4:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
@@ -1275,7 +1272,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
         .module('pipDate.Format', [])
         .provider('pipDateFormat', DateFormatProvider);
 })();
-
 },{}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -1285,7 +1281,6 @@ var DateTimeConfig = (function () {
     return DateTimeConfig;
 }());
 exports.DateTimeConfig = DateTimeConfig;
-
 },{}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -1295,14 +1290,12 @@ var DateTimeConfig = (function () {
     return DateTimeConfig;
 }());
 exports.DateTimeConfig = DateTimeConfig;
-
 },{}],7:[function(require,module,exports){
-angular.module('pipDate', [
+angular.module('pipDate.Common', [
     'pipDate.Convert',
     'pipDate.Format',
     'pipDate.Filter'
 ]);
-
 },{}],8:[function(require,module,exports){
 (function () {
     var DateRangeBindings = {
@@ -1643,7 +1636,6 @@ angular.module('pipDate', [
         .module('pipDateRange', ['pipDates.Templates'])
         .component('pipDateRange', daterange);
 })();
-
 },{}],9:[function(require,module,exports){
 {
     translateFilter.$inject = ['$injector'];
@@ -1658,17 +1650,15 @@ angular.module('pipDate', [
         .module('pipDates.Translate', [])
         .filter('translate', translateFilter);
 }
-
 },{}],10:[function(require,module,exports){
 angular.module('pipDates', [
     'pipDate',
-    'pipDate',
+    'pipDate.Common',
     'pipTimeRange',
     'pipTimeRangeEdit',
     'pipDateRange',
     'pipDates.Translate'
 ]);
-
 },{}],11:[function(require,module,exports){
 (function () {
     var TimeRangeData = (function () {
@@ -1735,7 +1725,6 @@ angular.module('pipDates', [
     angular.module('pipTimeRange', [])
         .component('pipTimeRange', TimeRangeComponent);
 })();
-
 },{}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -1996,7 +1985,6 @@ exports.MillisecondsInSecond = 1000;
     angular.module('pipTimeRangeEdit', [])
         .component('pipTimeRangeEdit', TimeRangeEditComponent);
 }
-
 },{}],13:[function(require,module,exports){
 (function(module) {
 try {
