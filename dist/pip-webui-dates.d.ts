@@ -3,14 +3,17 @@ declare module pip.dates {
 
 
 
-
-export class DateTimeConfig {
-    timeZone: number;
+export class DateRangeType {
+    static Year: string;
+    static Month: string;
+    static Week: string;
+    static IsWeek: string;
+    static Day: string;
+    static All: string[];
 }
 export interface IDateConvertService {
-    readonly config: DateTimeConfig;
-    useTimeZone(offset: number): any;
-    getDateJSON(date: any): string;
+    defaultTimeZoneOffset: number;
+    toJson(date: any): string;
     toNextRange(date: any, type: string): Date;
     toPrevRange(date: any, type: string): Date;
     toCurrentRange(type: string): Date;
@@ -28,8 +31,7 @@ export interface IDateConvertProvider extends IDateConvertService, ng.IServicePr
 }
 
 export interface IDateFormatService {
-    readonly config: DateTimeConfig;
-    useTimeZone(offset: number): any;
+    defaultTimeZoneOffset: number;
     bbFormatDateLongTime(value: any, firstTime?: boolean): string;
     formatTime(value: any, format: string): string;
     formatDateOptional(value: any, format: string): string;
@@ -70,6 +72,7 @@ export interface IDateFormatService {
 }
 export interface IDateFormatProvider extends IDateFormatService, ng.IServiceProvider {
 }
+
 
 
 
