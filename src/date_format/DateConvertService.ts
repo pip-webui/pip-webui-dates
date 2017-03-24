@@ -46,59 +46,7 @@ class MomentRange {
             return this._momentRanged[index];
 
         }
-
-        private formatDateTime(date: any, basicFormat: string): string {
-            let localDate: moment.Moment,
-                formatTpl: string;
-
-            if (this.isUndefinedOrNull(date)) {
-                return '';
-            }
-
-            if (this._config.timeZone != undefined && this._config.timeZone != null) {
-                localDate = moment(date).utcOffset(this._config.timeZone);
-            } else {
-                localDate = moment(date);
-            }
-
-            if (!localDate.isValid()) {
-                return '';
-            }
-
-            formatTpl = basicFormat ? basicFormat : this._defaultFormat;
-
-            return localDate.format(formatTpl);
-        }
-
-        private formatDateTimeY(date: any, basicFormat: string): string {
-            let localDate: moment.Moment,
-                nowDate: moment.Moment,
-                formatMoment: string;
-
-            if (this.isUndefinedOrNull(date)) {
-                return '';
-            }
-
-            if (this._config.timeZone != undefined && this._config.timeZone != null) {
-                localDate = moment(date).utcOffset(this._config.timeZone);
-            } else {
-                localDate = moment(date);
-            }
-
-            if (!localDate.isValid()) {
-                return '';
-            }
-
-            nowDate = moment();
-            formatMoment = moment.localeData().longDateFormat(basicFormat ? basicFormat : this._defaultFormat);
-
-            if (nowDate.year() == localDate.year()) {
-                formatMoment = formatMoment.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '');
-            }
-
-            return localDate.format(formatMoment);
-        }
-
+  
         private formatDay(date: any, basicFormat: string): string {
             let localDate: moment.Moment,
                 format = moment.localeData().longDateFormat(basicFormat ? basicFormat : this._defaultFormat),

@@ -176,44 +176,6 @@ MomentRange.All = ['year', 'month', 'week', 'isoweek', 'day'];
             }
             return this._momentRanged[index];
         };
-        DateTimeConvert.prototype.formatDateTime = function (date, basicFormat) {
-            var localDate, formatTpl;
-            if (this.isUndefinedOrNull(date)) {
-                return '';
-            }
-            if (this._config.timeZone != undefined && this._config.timeZone != null) {
-                localDate = moment(date).utcOffset(this._config.timeZone);
-            }
-            else {
-                localDate = moment(date);
-            }
-            if (!localDate.isValid()) {
-                return '';
-            }
-            formatTpl = basicFormat ? basicFormat : this._defaultFormat;
-            return localDate.format(formatTpl);
-        };
-        DateTimeConvert.prototype.formatDateTimeY = function (date, basicFormat) {
-            var localDate, nowDate, formatMoment;
-            if (this.isUndefinedOrNull(date)) {
-                return '';
-            }
-            if (this._config.timeZone != undefined && this._config.timeZone != null) {
-                localDate = moment(date).utcOffset(this._config.timeZone);
-            }
-            else {
-                localDate = moment(date);
-            }
-            if (!localDate.isValid()) {
-                return '';
-            }
-            nowDate = moment();
-            formatMoment = moment.localeData().longDateFormat(basicFormat ? basicFormat : this._defaultFormat);
-            if (nowDate.year() == localDate.year()) {
-                formatMoment = formatMoment.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '');
-            }
-            return localDate.format(formatMoment);
-        };
         DateTimeConvert.prototype.formatDay = function (date, basicFormat) {
             var localDate, format = moment.localeData().longDateFormat(basicFormat ? basicFormat : this._defaultFormat), formatMonthYearless = format.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '').replace(/M/g, '');
             if (this.isUndefinedOrNull(date)) {
