@@ -6,16 +6,16 @@ import { DateTimeConfig, IDateConvertService, IDateConvertProvider } from './IDa
         protected _momentRanged: string[] = new Array('year', 'month', 'week', 'isoweek', 'day');
         protected _defaultFormat: string = 'LL'
 
-        private isUndefinedOrNull(value: any): boolean {
-            return angular.isUndefined(value) || value === null;
+        private isUndefinedOrNull(date: any): boolean {
+            return angular.isUndefined(date) || date === null;
         }
 
-        private getRange(value: string): string {
-            if (this.isUndefinedOrNull(value)) {
+        private getRange(date: string): string {
+            if (this.isUndefinedOrNull(date)) {
                 return 'day';
             }
 
-            let index = this._momentRanged.indexOf(value)
+            let index = this._momentRanged.indexOf(date)
 
             if (index < 0) {
                 return 'day'
@@ -23,12 +23,12 @@ import { DateTimeConfig, IDateConvertService, IDateConvertProvider } from './IDa
             return this._momentRanged[index];
         }
 
-        private getOperationRange(value: string): string {
-            if (this.isUndefinedOrNull(value)) {
+        private getOperationRange(date: string): string {
+            if (this.isUndefinedOrNull(date)) {
                 return 'day';
             }
 
-            let range = value == 'isoweek' ? 'week' : value,
+            let range = date == 'isoweek' ? 'week' : date,
                 index = this._momentRanged.indexOf(range)
 
             if (index < 0) {
@@ -38,170 +38,170 @@ import { DateTimeConfig, IDateConvertService, IDateConvertProvider } from './IDa
 
         }
 
-        private formatDateTime(value: any, basicFormat: string): string {
-            let date: moment.Moment,
+        private formatDateTime(date: any, basicFormat: string): string {
+            let localDate: moment.Moment,
                 formatTpl: string;
 
-            if (this.isUndefinedOrNull(value)) {
+            if (this.isUndefinedOrNull(date)) {
                 return '';
             }
 
             if (this._config.timeZone != undefined && this._config.timeZone != null) {
-                date = moment(value).utcOffset(this._config.timeZone);
+                localDate = moment(date).utcOffset(this._config.timeZone);
             } else {
-                date = moment(value);
+                localDate = moment(date);
             }
 
-            if (!date.isValid()) {
+            if (!localDate.isValid()) {
                 return '';
             }
 
             formatTpl = basicFormat ? basicFormat : this._defaultFormat;
 
-            return date.format(formatTpl);
+            return localDate.format(formatTpl);
         }
 
-        private formatDateTimeY(value: any, basicFormat: string): string {
-            let date: moment.Moment,
+        private formatDateTimeY(date: any, basicFormat: string): string {
+            let localDate: moment.Moment,
                 nowDate: moment.Moment,
                 formatMoment: string;
 
-            if (this.isUndefinedOrNull(value)) {
+            if (this.isUndefinedOrNull(date)) {
                 return '';
             }
 
             if (this._config.timeZone != undefined && this._config.timeZone != null) {
-                date = moment(value).utcOffset(this._config.timeZone);
+                localDate = moment(date).utcOffset(this._config.timeZone);
             } else {
-                date = moment(value);
+                localDate = moment(date);
             }
 
-            if (!date.isValid()) {
+            if (!localDate.isValid()) {
                 return '';
             }
 
             nowDate = moment();
             formatMoment = moment.localeData().longDateFormat(basicFormat ? basicFormat : this._defaultFormat);
 
-            if (nowDate.year() == date.year()) {
+            if (nowDate.year() == localDate.year()) {
                 formatMoment = formatMoment.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '');
             }
 
-            return date.format(formatMoment);
+            return localDate.format(formatMoment);
         }
 
-        private formatDay(value: any, basicFormat: string): string {
-            let date: moment.Moment,
+        private formatDay(date: any, basicFormat: string): string {
+            let localDate: moment.Moment,
                 format = moment.localeData().longDateFormat(basicFormat ? basicFormat : this._defaultFormat),
                 formatMonthYearless = format.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '').replace(/M/g, '');
 
-            if (this.isUndefinedOrNull(value)) {
+            if (this.isUndefinedOrNull(date)) {
                 return '';
             }
 
             if (this._config.timeZone != undefined && this._config.timeZone != null) {
-                date = moment(value).utcOffset(this._config.timeZone);
+                localDate = moment(date).utcOffset(this._config.timeZone);
             } else {
-                date = moment(value);
+                localDate = moment(date);
             }
 
-            if (!date.isValid()) {
+            if (!localDate.isValid()) {
                 return '';
             }
 
-            return date.format(formatMonthYearless);
+            return localDate.format(formatMonthYearless);
         }
 
-        private formatMonthDay(value: any, basicFormat: string): string {
-            let date: moment.Moment,
+        private formatMonthDay(date: any, basicFormat: string): string {
+            let localDate: moment.Moment,
                 format = basicFormat ? basicFormat : this._defaultFormat,
                 formatLL = moment.localeData().longDateFormat(format),
                 formatYearlessLL = formatLL.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '');
 
-            if (this.isUndefinedOrNull(value)) {
+            if (this.isUndefinedOrNull(date)) {
                 return '';
             }
 
             if (this._config.timeZone != undefined && this._config.timeZone != null) {
-                date = moment(value).utcOffset(this._config.timeZone);
+                localDate = moment(date).utcOffset(this._config.timeZone);
             } else {
-                date = moment(value);
+                localDate = moment(date);
             }
 
-            if (!date.isValid()) {
+            if (!localDate.isValid()) {
                 return '';
             }
 
-            return date.format(formatYearlessLL);
+            return localDate.format(formatYearlessLL);
         }
 
         //  use timezone not testing
-        private formatRange(value1: any, value2: any, basicFormat: string): string {
-            let dateStart: moment.Moment,
-                dateEnd: moment.Moment,
+        private formatRange(date1: any, date2: any, basicFormat: string): string {
+            let localDateStart: moment.Moment,
+                localDateEnd: moment.Moment,
                 format = basicFormat ? basicFormat : this._defaultFormat;
 
-            if (this.isUndefinedOrNull(value1)) {
-                dateStart = null;
+            if (this.isUndefinedOrNull(date1)) {
+                localDateStart = null;
             } else {
-                dateStart = (this._config.timeZone != undefined && this._config.timeZone != null) ? moment(value1).utcOffset(this._config.timeZone) : moment(value1);
+                localDateStart = (this._config.timeZone != undefined && this._config.timeZone != null) ? moment(date1).utcOffset(this._config.timeZone) : moment(date1);
             }
-            if (this.isUndefinedOrNull(value2)) {
-                dateEnd = null;
+            if (this.isUndefinedOrNull(date2)) {
+                localDateEnd = null;
             } else {
-                dateEnd = (this._config.timeZone != undefined && this._config.timeZone != null) ? moment(value2).utcOffset(this._config.timeZone) : moment(value2);
+                localDateEnd = (this._config.timeZone != undefined && this._config.timeZone != null) ? moment(date2).utcOffset(this._config.timeZone) : moment(date2);
             }
 
-            if (dateStart === null && dateEnd === null) return '';
+            if (localDateStart === null && localDateEnd === null) return '';
 
-            if (dateStart === null) {
-                return dateEnd.format(basicFormat);
+            if (localDateStart === null) {
+                return localDateEnd.format(basicFormat);
             }
-            if (dateEnd === null || dateStart.isSame(dateEnd)) {
-                return dateStart.format(basicFormat);;
+            if (localDateEnd === null || localDateStart.isSame(localDateEnd)) {
+                return localDateStart.format(basicFormat);;
             }
 
-            if (dateStart.isAfter(dateEnd)) {
+            if (localDateStart.isAfter(localDateEnd)) {
                 // todo localization
-                throw new Error('Date range error. Start date is more than end date.');
+                throw new Error('Date range error. Start localDate is more than end localDate.');
             }
 
-            if (dateStart.year() == dateEnd.year()) {
-                if (dateStart.month() == dateEnd.month()) {
-                    return this.formatDay(dateStart, basicFormat) + '-' + dateEnd.format(basicFormat);
+            if (localDateStart.year() == localDateEnd.year()) {
+                if (localDateStart.month() == localDateEnd.month()) {
+                    return this.formatDay(localDateStart, basicFormat) + '-' + localDateEnd.format(basicFormat);
                 }
-                return this.formatMonthDay(dateStart, basicFormat) + '-' + dateEnd.format(basicFormat);
+                return this.formatMonthDay(localDateStart, basicFormat) + '-' + localDateEnd.format(basicFormat);
 
             }
-            return dateStart.format(basicFormat) + '-' + dateEnd.format(basicFormat);
+            return localDateStart.format(basicFormat) + '-' + localDateEnd.format(basicFormat);
 
         }
 
-        private toStartRange(value: any, range: string): Date {
-            let date: moment.Moment;
+        private toStartRange(date: any, range: string): Date {
+            let localDate: moment.Moment;
 
-            if (this.isUndefinedOrNull(value)) {
-                throw new Error('toStartRange - value is undefined or null');
+            if (this.isUndefinedOrNull(date)) {
+                throw new Error('toStartRange - date is undefined or null');
             }
 
             if (this._config.timeZone != undefined && this._config.timeZone != null) {
-                date = moment(value).utcOffset(this._config.timeZone);
+                localDate = moment(date).utcOffset(this._config.timeZone);
             } else {
-                date = moment(value);
+                localDate = moment(date);
             }
-            if (!date.isValid()) {
-                throw new Error('toStartRange - date is invalid');
+            if (!localDate.isValid()) {
+                throw new Error('toStartRange - localDate is invalid');
             }
 
-            return date.startOf(range).toDate();
+            return localDate.startOf(range).toDate();
         }
 
-        private toEndRange(value: any, range: string, offset: number): any {
-            let date: any,
+        private toEndRange(date: any, range: string, offset: number): any {
+            let localDate: any,
                 result: any,
                 mssOffset: number;
 
-            if (this.isUndefinedOrNull(value)) {
+            if (this.isUndefinedOrNull(date)) {
                 return '';
             }
 
@@ -210,75 +210,75 @@ import { DateTimeConfig, IDateConvertService, IDateConvertProvider } from './IDa
             }
 
             if (this._config.timeZone != undefined && this._config.timeZone != null) {
-                date = moment(value).utcOffset(this._config.timeZone);
+                localDate = moment(date).utcOffset(this._config.timeZone);
             } else {
-                date = moment(value);
+                localDate = moment(date);
             }
-            if (!date.isValid()) {
+            if (!localDate.isValid()) {
                 return '';
             }
 
             if (mssOffset) {
-                result = date.startOf(range).add(mssOffset, 'milliseconds');
+                result = localDate.startOf(range).add(mssOffset, 'milliseconds');
             } else {
-                result = date.startOf(range);
+                result = localDate.startOf(range);
             }
 
-            return date.startOf(range).toDate();
+            return localDate.startOf(range).toDate();
         }
 
-        private toDateWithTime(value: any, formatDate: string, formatTime: string, firstTime?: boolean): any {
-            let date: moment.Moment,
+        private toDateWithTime(date: any, formatDate: string, formatTime: string, firstTime?: boolean): any {
+            let localDate: moment.Moment,
                 result: string,
                 nowDate: moment.Moment;
 
-            if (this.isUndefinedOrNull(value)) {
+            if (this.isUndefinedOrNull(date)) {
                 return '';
             }
 
             if (this._config.timeZone != undefined && this._config.timeZone != null) {
-                date = moment(value).utcOffset(this._config.timeZone);
+                localDate = moment(date).utcOffset(this._config.timeZone);
             } else {
-                date = moment(value);
+                localDate = moment(date);
             }
-            if (!date.isValid()) {
+            if (!localDate.isValid()) {
                 return '';
             }
 
             nowDate = moment();
             if (firstTime) {
-                result = date.format(formatTime) + ' ' + date.format(formatDate);
+                result = localDate.format(formatTime) + ' ' + localDate.format(formatDate);
             } else {
-                result = date.format(formatDate) + ' ' + date.format(formatTime);
+                result = localDate.format(formatDate) + ' ' + localDate.format(formatTime);
             }
 
             return result;
         }
 
-        private toTodayDate(value: any, formatDate: string, formatTime: string): any {
-            let date: moment.Moment,
+        private toTodayDate(date: any, formatDate: string, formatTime: string): any {
+            let localDate: moment.Moment,
                 result: string,
                 nowDate: any;
 
-            if (this.isUndefinedOrNull(value)) {
+            if (this.isUndefinedOrNull(date)) {
                 return '';
             }
 
             if (this._config.timeZone != undefined && this._config.timeZone != null) {
-                date = moment(value).utcOffset(this._config.timeZone);
+                localDate = moment(date).utcOffset(this._config.timeZone);
             } else {
-                date = moment(value);
+                localDate = moment(date);
             }
-            if (!date.isValid()) {
+            if (!localDate.isValid()) {
                 return '';
             }
 
             nowDate = moment();
 
-            if (nowDate.year() == date.year() && nowDate.month() == date.month() && nowDate.day() == date.day()) {
-                result = date.format(formatTime);
+            if (nowDate.year() == localDate.year() && nowDate.month() == localDate.month() && nowDate.day() == localDate.day()) {
+                result = localDate.format(formatTime);
             } else {
-                result = date.format(formatDate) + ' ' + date.format(formatTime);
+                result = localDate.format(formatDate) + ' ' + localDate.format(formatTime);
             }
 
             return result;
@@ -298,189 +298,189 @@ import { DateTimeConfig, IDateConvertService, IDateConvertProvider } from './IDa
         
       
 
-        public getDateJSON(date: any): string {
-            return JSON.stringify(moment(date));
+        public getDateJSON(localDate: any): string {
+            return JSON.stringify(moment(localDate));
         }
 
         // navigation functions 
         // ------------------
 
-        public getNextStart(value: any, category: string): any {
-            let date: moment.Moment,
+        public getNextStart(date: any, category: string): any {
+            let localDate: moment.Moment,
                 range: string,
                 result: any;
 
-            if (this.isUndefinedOrNull(value)) {
+            if (this.isUndefinedOrNull(date)) {
                 return '';
             }
 
-            date = moment(value);
-            if (!date.isValid()) {
+            localDate = moment(date);
+            if (!localDate.isValid()) {
                 return '';
             }
 
             range = this.getRange(category);
-            result = moment(date).startOf(range).add(this.getOperationRange(range));
+            result = moment(localDate).startOf(range).add(this.getOperationRange(range));
 
             return result.toDate();
         }
 
-        public getPrevStart(value: any, category: string): Date {
-            let date: moment.Moment,
+        public getPrevStart(date: any, category: string): Date {
+            let localDate: moment.Moment,
                 range: string,
                 result: moment.Moment;
 
-            if (this.isUndefinedOrNull(value)) {
-                throw new Error('getPrevStart - value is undefined or null');
+            if (this.isUndefinedOrNull(date)) {
+                throw new Error('getPrevStart - date is undefined or null');
             }
 
-            date = moment(value);
-            if (!date.isValid()) {
-                throw new Error('getPrevStart - date is invalid');
+            localDate = moment(date);
+            if (!localDate.isValid()) {
+                throw new Error('getPrevStart - localDate is invalid');
             }
 
             range = this.getRange(category);
-            result = moment(date).startOf(range).add(-1, this.getOperationRange(range));
+            result = moment(localDate).startOf(range).add(-1, this.getOperationRange(range));
 
             return result.toDate();
         }
 
         public getNowStart(category: string): Date {
-            let date: moment.Moment,
+            let localDate: moment.Moment,
                 range: string,
                 result: moment.Moment;
 
-            date = moment();
-            if (!date.isValid()) {
-                throw new Error('getNowStart - date is invalid');
+            localDate = moment();
+            if (!localDate.isValid()) {
+                throw new Error('getNowStart - localDate is invalid');
             }
 
             range = this.getRange(category)
-            result = moment(date).startOf(range);
+            result = moment(localDate).startOf(range);
 
             return result.toDate();
         }
 
-        public addHours(value: any, hours: number): Date {
-            let date: moment.Moment;
+        public addHours(date: any, hours: number): Date {
+            let localDate: moment.Moment;
 
-            if (this.isUndefinedOrNull(value) || !angular.isNumber(hours)) {
-                throw new Error('addHours - value is undefined or null or hours is not a number');
+            if (this.isUndefinedOrNull(date) || !angular.isNumber(hours)) {
+                throw new Error('addHours - date is undefined or null or hours is not a number');
             }
 
-            date = moment(value);
-            if (!date.isValid()) {
-                throw new Error('addHours - date is invalid');
+            localDate = moment(date);
+            if (!localDate.isValid()) {
+                throw new Error('addHours - localDate is invalid');
             }
 
-            return date.add(hours, 'hours').toDate();
+            return localDate.add(hours, 'hours').toDate();
         }
 
-        public toStartDay(value: any): Date {
-            return this.toStartRange(value, 'day');
+        public toStartDay(date: any): Date {
+            return this.toStartRange(date, 'day');
         }
 
-        public toEndDay(value: any, offset: number): Date {
-            return this.toEndRange(value, 'day', offset);
+        public toEndDay(date: any, offset: number): Date {
+            return this.toEndRange(date, 'day', offset);
         }
 
-        public toStartWeek(value: any): Date {
-            return this.toStartRange(value, 'week');
+        public toStartWeek(date: any): Date {
+            return this.toStartRange(date, 'week');
         }
 
-        public toEndWeek(value: any, offset: number): Date {
-            return this.toEndRange(value, 'week', offset);
+        public toEndWeek(date: any, offset: number): Date {
+            return this.toEndRange(date, 'week', offset);
         }
 
-        public toStartMonth(value: any): Date {
-            return this.toStartRange(value, 'month');
+        public toStartMonth(date: any): Date {
+            return this.toStartRange(date, 'month');
         }
 
-        public toEndMonth(value: any, offset: number): Date {
-            return this.toEndRange(value, 'month', offset);
+        public toEndMonth(date: any, offset: number): Date {
+            return this.toEndRange(date, 'month', offset);
         }
 
-        public toStartYear(value: any): Date {
-            return this.toStartRange(value, 'year');
+        public toStartYear(date: any): Date {
+            return this.toStartRange(date, 'year');
         }
 
-        public toEndYear(value: any, offset: number): Date {
-            return this.toEndRange(value, 'year', offset);
+        public toEndYear(date: any, offset: number): Date {
+            return this.toEndRange(date, 'year', offset);
         }
 
     }
 
     class DateTimeConvertService {
-        private _datetime: DateTimeConvert;
+        private _localDatetime: DateTimeConvert;
         private _config: DateTimeConfig;
 
         public constructor(
-            datetime: DateTimeConvert,
+            localDatetime: DateTimeConvert,
         ) {
             this._config = { timeZone: null };
-            this._datetime = datetime;
+            this._localDatetime = localDatetime;
         }
 
         // todo Optional
         public useTimeZone(offset: number): void {
-            return this._datetime.useTimeZone(offset);
+            return this._localDatetime.useTimeZone(offset);
         }
 
      
 
-        public getDateJSON(date: any): string {
-            return this._datetime.getDateJSON(date);
+        public getDateJSON(localDate: any): string {
+            return this._localDatetime.getDateJSON(localDate);
         }
 
         // navigation functions 
         // ------------------
 
-        public getNextStart(value: any, category: string): any {
-            return this._datetime.getNextStart(value, category);
+        public getNextStart(date: any, category: string): any {
+            return this._localDatetime.getNextStart(date, category);
         }
 
-        public getPrevStart(value: any, category: string): any {
-            return this._datetime.getPrevStart(value, category);
+        public getPrevStart(date: any, category: string): any {
+            return this._localDatetime.getPrevStart(date, category);
         }
 
         public getNowStart(category: string): any {
-            return this._datetime.getNowStart(category);
+            return this._localDatetime.getNowStart(category);
         }
 
-        public addHours(value: any, hours: number): any {
-            return this._datetime.addHours(value, hours);
+        public addHours(date: any, hours: number): any {
+            return this._localDatetime.addHours(date, hours);
         }
 
-        public toStartDay(value: any): any {
-            return this._datetime.toStartDay(value);
+        public toStartDay(date: any): any {
+            return this._localDatetime.toStartDay(date);
         }
 
-        public toEndDay(value: any, offset: number): any {
-            return this._datetime.toEndDay(value, offset);
+        public toEndDay(date: any, offset: number): any {
+            return this._localDatetime.toEndDay(date, offset);
         }
 
-        public toStartWeek(value: any): any {
-            return this._datetime.toStartWeek(value);
+        public toStartWeek(date: any): any {
+            return this._localDatetime.toStartWeek(date);
         }
 
-        public toEndWeek(value: any, offset: number): any {
-            return this._datetime.toEndWeek(value, offset);
+        public toEndWeek(date: any, offset: number): any {
+            return this._localDatetime.toEndWeek(date, offset);
         }
 
-        public toStartMonth(value: any): any {
-            return this._datetime.toStartMonth(value);
+        public toStartMonth(date: any): any {
+            return this._localDatetime.toStartMonth(date);
         }
 
-        public toEndMonth(value: any, offset: number): any {
-            return this._datetime.toEndMonth(value, offset);
+        public toEndMonth(date: any, offset: number): any {
+            return this._localDatetime.toEndMonth(date, offset);
         }
 
-        public toStartYear(value: any): any {
-            return this._datetime.toStartYear(value);
+        public toStartYear(date: any): any {
+            return this._localDatetime.toStartYear(date);
         }
 
-        public toEndYear(value: any, offset: number): any {
-            return this._datetime.toEndYear(value, offset);
+        public toEndYear(date: any, offset: number): any {
+            return this._localDatetime.toEndYear(date, offset);
         }
 
     }

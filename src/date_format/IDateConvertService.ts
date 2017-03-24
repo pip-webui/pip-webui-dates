@@ -7,19 +7,19 @@ export interface IDateConvertService {
     useTimeZone(offset: number);
    
     getDateJSON(date: any): string;
-    getNextStart(value: any, category: string): Date;
-    getPrevStart(value: any, category: string): Date;
+    getNextStart(date: any, category: string): Date;
+    getPrevStart(date: any, category: string): Date;
     getNowStart(category: string): Date;
 
-    addHours(value: any, hours: number): Date;
-    toStartDay(value: any): Date;
-    toEndDay(value: any, offset: number): Date;
-    toStartWeek(value: any): Date;
-    toEndWeek(value: any, offset: number): Date;
-    toStartMonth(value: any): Date;
-    toEndMonth(value: any, offset: number): Date;
-    toStartYear(value: any): Date;
-    toEndYear(value: any, offset: number): Date;
+    addHours(date: any, hours: number): Date;
+    toStartDay(date: any): Date;
+    toEndDay(date: any, offset: number): Date;
+    toStartWeek(date: any): Date;
+    toEndWeek(date: any, offset: number): Date;
+    toStartMonth(date: any): Date;
+    toEndMonth(date: any, offset: number): Date;
+    toStartYear(date: any): Date;
+    toEndYear(date: any, offset: number): Date;
  
 }
 
