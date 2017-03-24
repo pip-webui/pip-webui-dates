@@ -164,7 +164,7 @@
 
                 var localeDate = moment.localeData();
 
-                $mdDateLocale.months = angular.isArray(localeDate._months) ? localeDate._months : localeDate._months.format;
+                $mdDateLocale.months = angular.isArray(localeDate._months) ? localeDate._months : localeDate._months.standalone;
                 $mdDateLocale.shortMonths = angular.isArray(localeDate._monthsShort) ? localeDate._monthsShort : localeDate._monthsShort.format;
                 $mdDateLocale.days = angular.isArray(localeDate._weekdays) ? localeDate._weekdays : localeDate._weekdays.format;
                 $mdDateLocale.shortDays = localeDate._weekdaysMin;

@@ -74,7 +74,7 @@
             $injector: angular.auto.IInjectorService) {
 
             this.localeDate = moment.localeData();
-            this.momentMonths = angular.isArray(this.localeDate._months) ? this.localeDate._months : this.localeDate._months.format;
+            this.momentMonths = angular.isArray(this.localeDate._months) ? this.localeDate._months : this.localeDate._months.standalone;
             this.momentDays = angular.isArray(this.localeDate._weekdays) ? this.localeDate._weekdays : this.localeDate._weekdays.format;
             this.momentShortDays = this.localeDate._weekdaysMin;
             this.momentFirstDayOfWeek = this.localeDate._week.dow;
