@@ -3,7 +3,7 @@ export class DateRangeType {
     static Month: string = 'month';
     static Week: string = 'week';
     // Todo: What is this? A WorkWeek? 
-    static IsWeek: string = 'isoweek'; 
+    static WeekFromSunday: string = 'isoweek'; 
     static Day: string = 'day';
     static All: string[] = ['year', 'month', 'week', 'isoweek', 'day'] 
 }

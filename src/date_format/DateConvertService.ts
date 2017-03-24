@@ -37,7 +37,7 @@ import { DateRangeType, IDateConvertService, IDateConvertProvider } from './IDat
                 return DateRangeType.Day;
             }
 
-            let range = date == DateRangeType.IsWeek ? DateRangeType.Week : date,
+            let range: string = date == DateRangeType.WeekFromSunday ? DateRangeType.Week : date,
                 index = this._momentRanged.indexOf(range)
 
             if (index < 0) {

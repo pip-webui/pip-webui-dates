@@ -8,7 +8,7 @@ export class DateRangeType {
     static Year: string;
     static Month: string;
     static Week: string;
-    static IsWeek: string;
+    static WeekFromSunday: string;
     static Day: string;
     static All: string[];
 }

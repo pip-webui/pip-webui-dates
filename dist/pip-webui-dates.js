@@ -169,7 +169,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
             if (this.isUndefinedOrNull(date)) {
                 return IDateConvertService_1.DateRangeType.Day;
             }
-            var range = date == IDateConvertService_1.DateRangeType.IsWeek ? IDateConvertService_1.DateRangeType.Week : date, index = this._momentRanged.indexOf(range);
+            var range = date == IDateConvertService_1.DateRangeType.WeekFromSunday ? IDateConvertService_1.DateRangeType.Week : date, index = this._momentRanged.indexOf(range);
             if (index < 0) {
                 return IDateConvertService_1.DateRangeType.Day;
             }
@@ -1122,7 +1122,7 @@ var DateRangeType = (function () {
 DateRangeType.Year = 'year';
 DateRangeType.Month = 'month';
 DateRangeType.Week = 'week';
-DateRangeType.IsWeek = 'isoweek';
+DateRangeType.WeekFromSunday = 'isoweek';
 DateRangeType.Day = 'day';
 DateRangeType.All = ['year', 'month', 'week', 'isoweek', 'day'];
 exports.DateRangeType = DateRangeType;
