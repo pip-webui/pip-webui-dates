@@ -1,10 +1,5 @@
-export class DateTimeConfig {
-    timeZone: number;
-}
-
 export interface IDateFormatService {
-    readonly config: DateTimeConfig;
-    useTimeZone(offset: number);
+    defaultTimeZoneOffset: number;
 
     bbFormatDateLongTime(value: any, firstTime?: boolean): string; 
     
@@ -44,7 +39,7 @@ export interface IDateFormatService {
     formatTodayDateShortTimeShort(value: any): string;
     formatMillisecondsToSeconds(value: any): string;
     formatElapsedInterval(value: any, start: any): string;
-
 }
 
-export interface IDateFormatProvider extends IDateFormatService, ng.IServiceProvider {}
+export interface IDateFormatProvider extends IDateFormatService, ng.IServiceProvider {
+}

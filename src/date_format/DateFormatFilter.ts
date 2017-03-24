@@ -301,7 +301,7 @@ function getDateJSONFilter(pipDateConvert: IDateConvertService) {
     "ngInject";
 
     return (value: any): string => {
-        return pipDateConvert.getDateJSON(value);
+        return pipDateConvert.toJson(value);
     }
 }
 

@@ -1,33 +1,37 @@
-import { DateTimeConfig, IDateFormatService, IDateFormatProvider } from './IDateFormatService';
+import { DateRangeType } from './IDateConvertService';
+import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
 
 (() => {
-    class DateFormatService implements IDateFormatService {
-        private _config: DateTimeConfig;
-        protected _momentRanged: string[] = new Array('year', 'month', 'week', 'isoweek', 'day');
+    class DateFormat implements IDateFormatService {
+        protected _momentRanged: string[] = DateRangeType.All;
         protected _defaultFormat: string = 'LL'
+
+        private _defaultTimeZoneOffset: number;
+
+        public get defaultTimeZoneOffset(): number {
+            return this._defaultTimeZoneOffset;
+        }
+
+        public set defaultTimeZoneOffset(value: number) {
+            this._defaultTimeZoneOffset = value;
+        }
 
         private isUndefinedOrNull(value: any): boolean {
             return angular.isUndefined(value) || value === null;
         }
 
-     
         private formatDateTime(value: any, basicFormat: string): string {
-            let date: moment.Moment,
-                formatTpl: string;
+            let date: moment.Moment;
+            let formatTpl: string;
 
-            if (this.isUndefinedOrNull(value)) {
-                return '';
-            }
+            if (this.isUndefinedOrNull(value)) return '';
 
-            if (this._config.timeZone != undefined && this._config.timeZone != null) {
-                date = moment(value).utcOffset(this._config.timeZone);
-            } else {
+            if (this._defaultTimeZoneOffset!= undefined && this._defaultTimeZoneOffset != null)
+                date = moment(value).utcOffset(this._defaultTimeZoneOffset);
+            else
                 date = moment(value);
-            }
 
-            if (!date.isValid()) {
-                return '';
-            }
+            if (!date.isValid()) return '';
 
             formatTpl = basicFormat ? basicFormat : this._defaultFormat;
 
@@ -35,188 +39,146 @@ import { DateTimeConfig, IDateFormatService, IDateFormatProvider } from './IDate
         }
 
         private formatDateTimeY(value: any, basicFormat: string): string {
-            let date: moment.Moment,
-                nowDate: moment.Moment,
-                formatMoment: string;
+            let date: moment.Moment;
+            let nowDate: moment.Moment;
+            let formatMoment: string;
 
-            if (this.isUndefinedOrNull(value)) {
-                return '';
-            }
+            if (this.isUndefinedOrNull(value)) return '';
 
-            if (this._config.timeZone != undefined && this._config.timeZone != null) {
-                date = moment(value).utcOffset(this._config.timeZone);
-            } else {
+            if (this._defaultTimeZoneOffset != undefined && this._defaultTimeZoneOffset != null)
+                date = moment(value).utcOffset(this._defaultTimeZoneOffset);
+            else
                 date = moment(value);
-            }
 
-            if (!date.isValid()) {
-                return '';
-            }
+            if (!date.isValid()) return '';
 
             nowDate = moment();
             formatMoment = moment.localeData().longDateFormat(basicFormat ? basicFormat : this._defaultFormat);
 
-            if (nowDate.year() == date.year()) {
+            if (nowDate.year() == date.year())
                 formatMoment = formatMoment.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '');
-            }
 
             return date.format(formatMoment);
         }
 
         private formatDay(value: any, basicFormat: string): string {
-            let date: moment.Moment,
-                format = moment.localeData().longDateFormat(basicFormat ? basicFormat : this._defaultFormat),
-                formatMonthYearless = format.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '').replace(/M/g, '');
+            let date: moment.Moment;
+            let format = moment.localeData().longDateFormat(basicFormat ? basicFormat : this._defaultFormat);
+            let formatMonthYearless = format.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '').replace(/M/g, '');
 
-            if (this.isUndefinedOrNull(value)) {
-                return '';
-            }
+            if (this.isUndefinedOrNull(value)) return '';
 
-            if (this._config.timeZone != undefined && this._config.timeZone != null) {
-                date = moment(value).utcOffset(this._config.timeZone);
-            } else {
+            if (this._defaultTimeZoneOffset != undefined && this._defaultTimeZoneOffset != null)
+                date = moment(value).utcOffset(this._defaultTimeZoneOffset);
+            else
                 date = moment(value);
-            }
 
-            if (!date.isValid()) {
-                return '';
-            }
+            if (!date.isValid()) return '';
 
             return date.format(formatMonthYearless);
         }
 
         private formatMonthDay(value: any, basicFormat: string): string {
-            let date: moment.Moment,
-                format = basicFormat ? basicFormat : this._defaultFormat,
-                formatLL = moment.localeData().longDateFormat(format),
-                formatYearlessLL = formatLL.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '');
+            let date: moment.Moment;
+            let format = basicFormat ? basicFormat : this._defaultFormat;
+            let formatLL = moment.localeData().longDateFormat(format);
+            let formatYearlessLL = formatLL.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '');
 
-            if (this.isUndefinedOrNull(value)) {
-                return '';
-            }
+            if (this.isUndefinedOrNull(value)) return '';
 
-            if (this._config.timeZone != undefined && this._config.timeZone != null) {
-                date = moment(value).utcOffset(this._config.timeZone);
-            } else {
+            if (this._defaultTimeZoneOffset != undefined && this._defaultTimeZoneOffset != null)
+                date = moment(value).utcOffset(this._defaultTimeZoneOffset);
+            else
                 date = moment(value);
-            }
 
-            if (!date.isValid()) {
-                return '';
-            }
+            if (!date.isValid()) return '';
 
             return date.format(formatYearlessLL);
         }
 
         //  use timezone not testing
         private formatRange(value1: any, value2: any, basicFormat: string): string {
-            let dateStart: moment.Moment,
-                dateEnd: moment.Moment,
-                format = basicFormat ? basicFormat : this._defaultFormat;
+            let dateStart: moment.Moment;
+            let dateEnd: moment.Moment;
+            let format = basicFormat ? basicFormat : this._defaultFormat;
 
-            if (this.isUndefinedOrNull(value1)) {
+            if (this.isUndefinedOrNull(value1))
                 dateStart = null;
-            } else {
-                dateStart = (this._config.timeZone != undefined && this._config.timeZone != null) ? moment(value1).utcOffset(this._config.timeZone) : moment(value1);
-            }
-            if (this.isUndefinedOrNull(value2)) {
+            else
+                dateStart = (this._defaultTimeZoneOffset != undefined && this._defaultTimeZoneOffset != null) 
+                    ? moment(value1).utcOffset(this._defaultTimeZoneOffset) : moment(value1);
+
+            if (this.isUndefinedOrNull(value2))
                 dateEnd = null;
-            } else {
-                dateEnd = (this._config.timeZone != undefined && this._config.timeZone != null) ? moment(value2).utcOffset(this._config.timeZone) : moment(value2);
-            }
+            else
+                dateEnd = (this._defaultTimeZoneOffset != undefined && this._defaultTimeZoneOffset != null) 
+                    ? moment(value2).utcOffset(this._defaultTimeZoneOffset) : moment(value2);
 
-            if (dateStart === null && dateEnd === null) return '';
-
-            if (dateStart === null) {
+            if (dateStart === null && dateEnd === null)
+                return '';
+            if (dateStart === null)
                 return dateEnd.format(basicFormat);
-            }
-            if (dateEnd === null || dateStart.isSame(dateEnd)) {
+            if (dateEnd === null || dateStart.isSame(dateEnd))
                 return dateStart.format(basicFormat);;
-            }
 
-            if (dateStart.isAfter(dateEnd)) {
-                // todo localization
+            if (dateStart.isAfter(dateEnd))
                 throw new Error('Date range error. Start date is more than end date.');
-            }
 
             if (dateStart.year() == dateEnd.year()) {
-                if (dateStart.month() == dateEnd.month()) {
+                if (dateStart.month() == dateEnd.month())
                     return this.formatDay(dateStart, basicFormat) + '-' + dateEnd.format(basicFormat);
-                }
+
                 return this.formatMonthDay(dateStart, basicFormat) + '-' + dateEnd.format(basicFormat);
-
             }
-            return dateStart.format(basicFormat) + '-' + dateEnd.format(basicFormat);
 
+            return dateStart.format(basicFormat) + '-' + dateEnd.format(basicFormat);
         }
 
         private toDateWithTime(value: any, formatDate: string, formatTime: string, firstTime?: boolean): any {
-            let date: moment.Moment,
-                result: string,
-                nowDate: moment.Moment;
+            let date: moment.Moment;
+            let result: string;
+            let nowDate: moment.Moment;
 
-            if (this.isUndefinedOrNull(value)) {
-                return '';
-            }
+            if (this.isUndefinedOrNull(value)) return '';
 
-            if (this._config.timeZone != undefined && this._config.timeZone != null) {
-                date = moment(value).utcOffset(this._config.timeZone);
-            } else {
+            if (this._defaultTimeZoneOffset != undefined && this._defaultTimeZoneOffset != null)
+                date = moment(value).utcOffset(this._defaultTimeZoneOffset);
+            else
                 date = moment(value);
-            }
-            if (!date.isValid()) {
-                return '';
-            }
+
+            if (!date.isValid()) return '';
 
             nowDate = moment();
-            if (firstTime) {
+            if (firstTime)
                 result = date.format(formatTime) + ' ' + date.format(formatDate);
-            } else {
+            else
                 result = date.format(formatDate) + ' ' + date.format(formatTime);
-            }
 
             return result;
         }
 
         private toTodayDate(value: any, formatDate: string, formatTime: string): any {
-            let date: moment.Moment,
-                result: string,
-                nowDate: any;
+            let date: moment.Moment;
+            let result: string;
+            let nowDate: any;
 
-            if (this.isUndefinedOrNull(value)) {
-                return '';
-            }
+            if (this.isUndefinedOrNull(value)) return '';
 
-            if (this._config.timeZone != undefined && this._config.timeZone != null) {
-                date = moment(value).utcOffset(this._config.timeZone);
-            } else {
+            if (this._defaultTimeZoneOffset != undefined && this._defaultTimeZoneOffset != null)
+                date = moment(value).utcOffset(this._defaultTimeZoneOffset);
+            else
                 date = moment(value);
-            }
-            if (!date.isValid()) {
-                return '';
-            }
+
+            if (!date.isValid()) return '';
 
             nowDate = moment();
 
-            if (nowDate.year() == date.year() && nowDate.month() == date.month() && nowDate.day() == date.day()) {
+            if (nowDate.year() == date.year() && nowDate.month() == date.month() && nowDate.day() == date.day())
                 result = date.format(formatTime);
-            } else {
+            else
                 result = date.format(formatDate) + ' ' + date.format(formatTime);
-            }
 
             return result;
-        }
-
-        public constructor(config: DateTimeConfig) {
-            this._config = config || { timeZone: null };
-        };
-
-        public get config(): DateTimeConfig {
-            return this._config;
-        }
-
-        public useTimeZone(offset: number) {
-            this._config.timeZone = offset;
         }
         
         // formating functions 
@@ -421,206 +383,204 @@ import { DateTimeConfig, IDateFormatService, IDateFormatProvider } from './IDate
         
     }
 
-    class DateTimeFormatService {
-        private _datetime: DateFormatService;
-        private _config: DateTimeConfig;
+    class DateFormatService implements IDateFormatService {
+        private _format: DateFormat;
 
         public constructor(
-            datetime: DateFormatService,
+            _format: DateFormat,
         ) {
-            this._config = { timeZone: null };
-            this._datetime = datetime;
+            this._format = _format;
         }
 
-        // todo Optional
-        public useTimeZone(offset: number): void {
-            return this._datetime.useTimeZone(offset);
+        public get defaultTimeZoneOffset(): number {
+            return this._format.defaultTimeZoneOffset;
+        }
+
+        public set defaultTimeZoneOffset(value: number) {
+            this._format.defaultTimeZoneOffset = value;
         }
 
         // todo Optional
         public formatTime(value: any, format: string): string {
-            return this._datetime.formatTime(value, format);
+            return this._format.formatTime(value, format);
         }
 
         // todo Optional
         public formatDateOptional(value: any, format: string): string {
-            return this._datetime.formatDateOptional(value, format);
+            return this._format.formatDateOptional(value, format);
         }
 
         public formatShortDate(value: any): string {
-            return this._datetime.formatShortDate(value);
+            return this._format.formatShortDate(value);
         }
 
         public formatMiddleDate(value: any): string {
-            return this._datetime.formatMiddleDate(value);
+            return this._format.formatMiddleDate(value);
         }
 
         public formatLongDate(value: any): string {
-            return this._datetime.formatLongDate(value);
+            return this._format.formatLongDate(value);
         }
 
         public formatMonth(value: any): string {
-            return this._datetime.formatMonth(value);
+            return this._format.formatMonth(value);
         }
 
         public formatLongMonth(value: any): string {
-            return this._datetime.formatLongMonth(value);
+            return this._format.formatLongMonth(value);
         }
 
         public formatYear(value: any): string {
-            return this._datetime.formatYear(value);
+            return this._format.formatYear(value);
         }
 
         public formatWeek(value: any): string {
-            return this._datetime.formatWeek(value);
+            return this._format.formatWeek(value);
         }
 
         public formatShortWeek(value: any): string {
-            return this._datetime.formatShortWeek(value);
+            return this._format.formatShortWeek(value);
         }
 
         public formatShortDateTime(value: any): string {
-            return this._datetime.formatShortDateTime(value);
+            return this._format.formatShortDateTime(value);
         }
 
         public formatMiddleDateTime(value: any): string {
-            return this._datetime.formatMiddleDateTime(value);
+            return this._format.formatMiddleDateTime(value);
         }
 
         public formatLongDateTime(value: any): string {
-            return this._datetime.formatLongDateTime(value);
+            return this._format.formatLongDateTime(value);
         }
 
         public formatFullDateTime(value: any): string {
-            return this._datetime.formatFullDateTime(value);
+            return this._format.formatFullDateTime(value);
         }
 
         public formatShortDateLongTime(value: any, firstTime?: boolean): string {
-            return this._datetime.formatShortDateLongTime(value, firstTime);
+            return this._format.formatShortDateLongTime(value, firstTime);
         }
 
         public formatMiddleDateLongTime(value: any, firstTime?: boolean): string {
-            return this._datetime.formatMiddleDateLongTime(value, firstTime);
+            return this._format.formatMiddleDateLongTime(value, firstTime);
         }
 
         public formatLongDateLongTime(value: any, firstTime?: boolean): string {
-            return this._datetime.formatLongDateLongTime(value, firstTime);
+            return this._format.formatLongDateLongTime(value, firstTime);
         }
 
         public bbFormatDateLongTime(value: any, firstTime?: boolean): string {
-            return this._datetime.bbFormatDateLongTime(value, firstTime);
+            return this._format.bbFormatDateLongTime(value, firstTime);
         }
 
         public formatShortTime(value: any): string {
-            return this._datetime.formatShortTime(value);
+            return this._format.formatShortTime(value);
         }
 
         public formatLongTime(value: any): string {
-            return this._datetime.formatLongTime(value);
+            return this._format.formatLongTime(value);
         }
 
         public formatShortDayOfWeek(value: any): string {
-            return this._datetime.formatShortDayOfWeek(value);
+            return this._format.formatShortDayOfWeek(value);
         }
 
         public formatLongDayOfWeek(value: any): string {
-            return this._datetime.formatLongDayOfWeek(value);
+            return this._format.formatLongDayOfWeek(value);
         }
 
         public formatLongMonthDay(value: any): string {
-            return this._datetime.formatLongMonthDay(value);
+            return this._format.formatLongMonthDay(value);
         }
 
         public formatShortMonthDay(value: any): string {
-            return this._datetime.formatShortMonthDay(value);
+            return this._format.formatShortMonthDay(value);
         }
 
         public formatDateRange(value1: any, value2: any): string {
-            return this._datetime.formatDateRange(value1, value2);
+            return this._format.formatDateRange(value1, value2);
         }
 
         public formatDateTimeRange(value1: any, value2: any): string {
-            return this._datetime.formatDateTimeRange(value1, value2);
+            return this._format.formatDateTimeRange(value1, value2);
         }
 
         // iso function
         // --------------
 
         public formatISOWeek(value: any): string {
-            return this._datetime.formatISOWeek(value);
+            return this._format.formatISOWeek(value);
         }
 
         public formatShortISOWeek(value: any): string {
-            return this._datetime.formatShortISOWeek(value);
+            return this._format.formatShortISOWeek(value);
         }
 
         public formatISOWeekOrdinal(value: any): string {
-            return this._datetime.formatISOWeekOrdinal(value);
+            return this._format.formatISOWeekOrdinal(value);
         }
         // special formats 
         // --------------
 
         // year option displays if the current year is not equal to, the date of 
         public formatDateY(value: any): string {
-            return this._datetime.formatDateY(value);
+            return this._format.formatDateY(value);
         }
 
         // year option displays if the current year is not equal to, the date of
         public formatLongDateY(value: any): string {
-            return this._datetime.formatLongDateY(value);
+            return this._format.formatLongDateY(value);
         }
 
         // date displays if the current date  is not equal now 
         // September 4 1986 8:30:25 PM or 8:30:25 PM
         public formatTodayDateLongTimeLong(value: any): string {
-            return this._datetime.formatTodayDateLongTimeLong(value);
+            return this._format.formatTodayDateLongTimeLong(value);
         }
 
         // date displays if the current date  is not equal now 
         // Sep 4 1986 8:30:25 PM or 8:30:25 PM
         public formatTodayDateShortTimeLong(value: any): string {
-            return this._datetime.formatTodayDateShortTimeLong(value);
+            return this._format.formatTodayDateShortTimeLong(value);
         }
 
         // date displays if the current date  is not equal now 
         // September 4 1986 8:30 PM or 8:30 PM
         public formatTodayDateLongTimeShort(value: any): string {
-            return this._datetime.formatTodayDateLongTimeShort(value);
+            return this._format.formatTodayDateLongTimeShort(value);
         }
 
         // date displays if the current date  is not equal now 
         // Sep 4 1986 8:30 PM or 8:30 PM
         public formatTodayDateShortTimeShort(value: any): string {
-            return this._datetime.formatTodayDateShortTimeShort(value);
+            return this._format.formatTodayDateShortTimeShort(value);
         }
 
         public formatMillisecondsToSeconds(value: any) {
-            return this._datetime.formatMillisecondsToSeconds(value);
+            return this._format.formatMillisecondsToSeconds(value);
         }
 
         public formatElapsedInterval(value: any, start: any): string {
-            return this._datetime.formatElapsedInterval(value, start);
+            return this._format.formatElapsedInterval(value, start);
         }
 
         public getDateJSON(date: any): string {
-            return this._datetime.getDateJSON(date);
+            return this._format.getDateJSON(date);
         }
 
     }
 
-    class DateFormatProvider extends DateFormatService implements IDateFormatProvider {
-        private _translation: DateFormatService;
-        private _service: DateTimeFormatService;
-
-        public constructor() {
-            super({ timeZone: null });
-        }
+    class DateFormatProvider extends DateFormat implements IDateFormatProvider {
+        private _translation: DateFormat;
+        private _service: DateFormatService;
 
         public $get(): any {
             "ngInject";
 
             if (this._service == null)
-                this._service = new DateTimeFormatService(this);
+                this._service = new DateFormatService(this);
+
             return this._service;
         }
     }

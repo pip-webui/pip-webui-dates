@@ -1,12 +1,17 @@
-export class DateTimeConfig {
-    timeZone: number;
+export class DateRangeType {
+    static Year: string = 'year';
+    static Month: string = 'month';
+    static Week: string = 'week';
+    // Todo: What is this? A WorkWeek?
+    static IsWeek: string = 'isoweek'; 
+    static Day: string = 'day';
+    static All: string[] = ['year', 'month', 'week', 'isoweek', 'day'] 
 }
 
 export interface IDateConvertService {
-    readonly config: DateTimeConfig;
-    useTimeZone(offset: number);
-   
-    getDateJSON(date: any): string;
+    defaultTimeZoneOffset: number;
+    
+    toJson(date: any): string;
     toNextRange(date: any, type: string): Date;
     toPrevRange(date: any, type: string): Date;
     toCurrentRange(type: string): Date;
@@ -20,7 +25,7 @@ export interface IDateConvertService {
     toEndMonth(date: any, offset: number): Date;
     toStartYear(date: any): Date;
     toEndYear(date: any, offset: number): Date;
- 
 }
 
-export interface IDateConvertProvider extends IDateConvertService, ng.IServiceProvider {}
+export interface IDateConvertProvider extends IDateConvertService, ng.IServiceProvider {
+}
