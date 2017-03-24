@@ -135,10 +135,21 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var MomentRange = (function () {
+    function MomentRange() {
+    }
+    return MomentRange;
+}());
+MomentRange.Year = 'year';
+MomentRange.Month = 'month';
+MomentRange.Week = 'week';
+MomentRange.IsWeek = 'isoweek';
+MomentRange.Day = 'day';
+MomentRange.All = ['year', 'month', 'week', 'isoweek', 'day'];
 (function () {
     var DateTimeConvert = (function () {
         function DateTimeConvert(config) {
-            this._momentRanged = new Array('year', 'month', 'week', 'isoweek', 'day');
+            this._momentRanged = MomentRange.All;
             this._defaultFormat = 'LL';
             this._config = config || { timeZone: null };
         }
@@ -147,21 +158,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
         };
         DateTimeConvert.prototype.getRange = function (date) {
             if (this.isUndefinedOrNull(date)) {
-                return 'day';
+                return MomentRange.Day;
             }
             var index = this._momentRanged.indexOf(date);
             if (index < 0) {
-                return 'day';
+                return MomentRange.Day;
             }
             return this._momentRanged[index];
         };
         DateTimeConvert.prototype.getOperationRange = function (date) {
             if (this.isUndefinedOrNull(date)) {
-                return 'day';
+                return MomentRange.Day;
             }
-            var range = date == 'isoweek' ? 'week' : date, index = this._momentRanged.indexOf(range);
+            var range = date == MomentRange.IsWeek ? MomentRange.Week : date, index = this._momentRanged.indexOf(range);
             if (index < 0) {
-                return 'day';
+                return MomentRange.Day;
             }
             return this._momentRanged[index];
         };
@@ -370,7 +381,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
         DateTimeConvert.prototype.getDateJSON = function (localDate) {
             return JSON.stringify(moment(localDate));
         };
-        DateTimeConvert.prototype.getNextStart = function (date, category) {
+        DateTimeConvert.prototype.getNextStart = function (date, offset) {
             var localDate, range, result;
             if (this.isUndefinedOrNull(date)) {
                 return '';
@@ -379,11 +390,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
             if (!localDate.isValid()) {
                 return '';
             }
-            range = this.getRange(category);
+            range = this.getRange(offset);
             result = moment(localDate).startOf(range).add(this.getOperationRange(range));
             return result.toDate();
         };
-        DateTimeConvert.prototype.getPrevStart = function (date, category) {
+        DateTimeConvert.prototype.getPrevStart = function (date, offset) {
             var localDate, range, result;
             if (this.isUndefinedOrNull(date)) {
                 throw new Error('getPrevStart - date is undefined or null');
@@ -392,17 +403,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
             if (!localDate.isValid()) {
                 throw new Error('getPrevStart - localDate is invalid');
             }
-            range = this.getRange(category);
+            range = this.getRange(offset);
             result = moment(localDate).startOf(range).add(-1, this.getOperationRange(range));
             return result.toDate();
         };
-        DateTimeConvert.prototype.getNowStart = function (category) {
+        DateTimeConvert.prototype.getNowStart = function (offset) {
             var localDate, range, result;
             localDate = moment();
             if (!localDate.isValid()) {
                 throw new Error('getNowStart - localDate is invalid');
             }
-            range = this.getRange(category);
+            range = this.getRange(offset);
             result = moment(localDate).startOf(range);
             return result.toDate();
         };
@@ -418,28 +429,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
             return localDate.add(hours, 'hours').toDate();
         };
         DateTimeConvert.prototype.toStartDay = function (date) {
-            return this.toStartRange(date, 'day');
+            return this.toStartRange(date, MomentRange.Day);
         };
         DateTimeConvert.prototype.toEndDay = function (date, offset) {
-            return this.toEndRange(date, 'day', offset);
+            return this.toEndRange(date, MomentRange.Day, offset);
         };
         DateTimeConvert.prototype.toStartWeek = function (date) {
-            return this.toStartRange(date, 'week');
+            return this.toStartRange(date, MomentRange.Week);
         };
         DateTimeConvert.prototype.toEndWeek = function (date, offset) {
-            return this.toEndRange(date, 'week', offset);
+            return this.toEndRange(date, MomentRange.Week, offset);
         };
         DateTimeConvert.prototype.toStartMonth = function (date) {
-            return this.toStartRange(date, 'month');
+            return this.toStartRange(date, MomentRange.Month);
         };
         DateTimeConvert.prototype.toEndMonth = function (date, offset) {
-            return this.toEndRange(date, 'month', offset);
+            return this.toEndRange(date, MomentRange.Month, offset);
         };
         DateTimeConvert.prototype.toStartYear = function (date) {
-            return this.toStartRange(date, 'year');
+            return this.toStartRange(date, MomentRange.Year);
         };
         DateTimeConvert.prototype.toEndYear = function (date, offset) {
-            return this.toEndRange(date, 'year', offset);
+            return this.toEndRange(date, MomentRange.Year, offset);
         };
         return DateTimeConvert;
     }());
@@ -454,14 +465,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
         DateTimeConvertService.prototype.getDateJSON = function (localDate) {
             return this._localDatetime.getDateJSON(localDate);
         };
-        DateTimeConvertService.prototype.getNextStart = function (date, category) {
-            return this._localDatetime.getNextStart(date, category);
+        DateTimeConvertService.prototype.getNextStart = function (date, offset) {
+            return this._localDatetime.getNextStart(date, offset);
         };
-        DateTimeConvertService.prototype.getPrevStart = function (date, category) {
-            return this._localDatetime.getPrevStart(date, category);
+        DateTimeConvertService.prototype.getPrevStart = function (date, offset) {
+            return this._localDatetime.getPrevStart(date, offset);
         };
-        DateTimeConvertService.prototype.getNowStart = function (category) {
-            return this._localDatetime.getNowStart(category);
+        DateTimeConvertService.prototype.getNowStart = function (offset) {
+            return this._localDatetime.getNowStart(offset);
         };
         DateTimeConvertService.prototype.addHours = function (date, hours) {
             return this._localDatetime.addHours(date, hours);

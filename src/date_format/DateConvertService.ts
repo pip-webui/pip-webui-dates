@@ -1,9 +1,18 @@
 import { DateTimeConfig, IDateConvertService, IDateConvertProvider } from './IDateConvertService';
 
+class MomentRange {
+    static Year: string = 'year';
+    static Month: string = 'month';
+    static Week: string = 'week';
+    static IsWeek: string = 'isoweek'; 
+    static Day: string = 'day';
+    static All: string[] = ['year', 'month', 'week', 'isoweek', 'day'] 
+}
+
 (() => {
     class DateTimeConvert implements IDateConvertService {
         private _config: DateTimeConfig;
-        protected _momentRanged: string[] = new Array('year', 'month', 'week', 'isoweek', 'day');
+        protected _momentRanged: string[] = MomentRange.All;
         protected _defaultFormat: string = 'LL'
 
         private isUndefinedOrNull(date: any): boolean {
@@ -12,27 +21,27 @@ import { DateTimeConfig, IDateConvertService, IDateConvertProvider } from './IDa
 
         private getRange(date: string): string {
             if (this.isUndefinedOrNull(date)) {
-                return 'day';
+                return MomentRange.Day;
             }
 
             let index = this._momentRanged.indexOf(date)
 
             if (index < 0) {
-                return 'day'
+                return MomentRange.Day;
             }
             return this._momentRanged[index];
         }
 
         private getOperationRange(date: string): string {
             if (this.isUndefinedOrNull(date)) {
-                return 'day';
+                return MomentRange.Day;
             }
 
-            let range = date == 'isoweek' ? 'week' : date,
+            let range = date == MomentRange.IsWeek ? MomentRange.Week : date,
                 index = this._momentRanged.indexOf(range)
 
             if (index < 0) {
-                return 'day'
+                return MomentRange.Day;
             }
             return this._momentRanged[index];
 
@@ -305,7 +314,7 @@ import { DateTimeConfig, IDateConvertService, IDateConvertProvider } from './IDa
         // navigation functions 
         // ------------------
 
-        public getNextStart(date: any, category: string): any {
+        public getNextStart(date: any, offset: string): any {
             let localDate: moment.Moment,
                 range: string,
                 result: any;
@@ -319,13 +328,13 @@ import { DateTimeConfig, IDateConvertService, IDateConvertProvider } from './IDa
                 return '';
             }
 
-            range = this.getRange(category);
+            range = this.getRange(offset);
             result = moment(localDate).startOf(range).add(this.getOperationRange(range));
 
             return result.toDate();
         }
 
-        public getPrevStart(date: any, category: string): Date {
+        public getPrevStart(date: any, offset: string): Date {
             let localDate: moment.Moment,
                 range: string,
                 result: moment.Moment;
@@ -339,13 +348,13 @@ import { DateTimeConfig, IDateConvertService, IDateConvertProvider } from './IDa
                 throw new Error('getPrevStart - localDate is invalid');
             }
 
-            range = this.getRange(category);
+            range = this.getRange(offset);
             result = moment(localDate).startOf(range).add(-1, this.getOperationRange(range));
 
             return result.toDate();
         }
 
-        public getNowStart(category: string): Date {
+        public getNowStart(offset: string): Date {
             let localDate: moment.Moment,
                 range: string,
                 result: moment.Moment;
@@ -355,7 +364,7 @@ import { DateTimeConfig, IDateConvertService, IDateConvertProvider } from './IDa
                 throw new Error('getNowStart - localDate is invalid');
             }
 
-            range = this.getRange(category)
+            range = this.getRange(offset)
             result = moment(localDate).startOf(range);
 
             return result.toDate();
@@ -377,35 +386,35 @@ import { DateTimeConfig, IDateConvertService, IDateConvertProvider } from './IDa
         }
 
         public toStartDay(date: any): Date {
-            return this.toStartRange(date, 'day');
+            return this.toStartRange(date, MomentRange.Day);
         }
 
         public toEndDay(date: any, offset: number): Date {
-            return this.toEndRange(date, 'day', offset);
+            return this.toEndRange(date, MomentRange.Day, offset);
         }
 
         public toStartWeek(date: any): Date {
-            return this.toStartRange(date, 'week');
+            return this.toStartRange(date, MomentRange.Week);
         }
 
         public toEndWeek(date: any, offset: number): Date {
-            return this.toEndRange(date, 'week', offset);
+            return this.toEndRange(date, MomentRange.Week, offset);
         }
 
         public toStartMonth(date: any): Date {
-            return this.toStartRange(date, 'month');
+            return this.toStartRange(date, MomentRange.Month);
         }
 
         public toEndMonth(date: any, offset: number): Date {
-            return this.toEndRange(date, 'month', offset);
+            return this.toEndRange(date, MomentRange.Month, offset);
         }
 
         public toStartYear(date: any): Date {
-            return this.toStartRange(date, 'year');
+            return this.toStartRange(date, MomentRange.Year);
         }
 
         public toEndYear(date: any, offset: number): Date {
-            return this.toEndRange(date, 'year', offset);
+            return this.toEndRange(date, MomentRange.Year, offset);
         }
 
     }
@@ -435,16 +444,16 @@ import { DateTimeConfig, IDateConvertService, IDateConvertProvider } from './IDa
         // navigation functions 
         // ------------------
 
-        public getNextStart(date: any, category: string): any {
-            return this._localDatetime.getNextStart(date, category);
+        public getNextStart(date: any, offset: string): any {
+            return this._localDatetime.getNextStart(date, offset);
         }
 
-        public getPrevStart(date: any, category: string): any {
-            return this._localDatetime.getPrevStart(date, category);
+        public getPrevStart(date: any, offset: string): any {
+            return this._localDatetime.getPrevStart(date, offset);
         }
 
-        public getNowStart(category: string): any {
-            return this._localDatetime.getNowStart(category);
+        public getNowStart(offset: string): any {
+            return this._localDatetime.getNowStart(offset);
         }
 
         public addHours(date: any, hours: number): any {
