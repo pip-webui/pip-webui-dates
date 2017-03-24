@@ -1,4 +1,5 @@
-import { DateTimeConfig, IDateFormatService, IDateFormatProvider } from './IDateFormatService';
+import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
+import { DateTimeConfig } from './IDateConvertService';
 
 (() => {
     class DateFormatService implements IDateFormatService {

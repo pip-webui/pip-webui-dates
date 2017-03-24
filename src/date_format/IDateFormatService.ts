@@ -1,6 +1,4 @@
-export class DateTimeConfig {
-    timeZone: number;
-}
+import { DateTimeConfig } from './IDateConvertService';
 
 export interface IDateFormatService {
     readonly config: DateTimeConfig;

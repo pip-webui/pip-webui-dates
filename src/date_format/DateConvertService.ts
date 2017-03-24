@@ -262,7 +262,7 @@ class MomentRange {
         // navigation functions 
         // ------------------
 
-        public getNextStart(date: any, offset: string): any {
+        public toNextRange(date: any, type: string): any {
             let localDate: moment.Moment,
                 range: string,
                 result: any;
@@ -276,43 +276,43 @@ class MomentRange {
                 return '';
             }
 
-            range = this.getRange(offset);
+            range = this.getRange(type);
             result = moment(localDate).startOf(range).add(this.getOperationRange(range));
 
             return result.toDate();
         }
 
-        public getPrevStart(date: any, offset: string): Date {
+        public toPrevRange(date: any, type: string): Date {
             let localDate: moment.Moment,
                 range: string,
                 result: moment.Moment;
 
             if (this.isUndefinedOrNull(date)) {
-                throw new Error('getPrevStart - date is undefined or null');
+                throw new Error('toPrevRange- date is undefined or null');
             }
 
             localDate = moment(date);
             if (!localDate.isValid()) {
-                throw new Error('getPrevStart - localDate is invalid');
+                throw new Error('toPrevRange - localDate is invalid');
             }
 
-            range = this.getRange(offset);
+            range = this.getRange(type);
             result = moment(localDate).startOf(range).add(-1, this.getOperationRange(range));
 
             return result.toDate();
         }
 
-        public getNowStart(offset: string): Date {
+        public toCurrentRange(type: string): Date {
             let localDate: moment.Moment,
                 range: string,
                 result: moment.Moment;
 
             localDate = moment();
             if (!localDate.isValid()) {
-                throw new Error('getNowStart - localDate is invalid');
+                throw new Error('toCurrentRange - localDate is invalid');
             }
 
-            range = this.getRange(offset)
+            range = this.getRange(type)
             result = moment(localDate).startOf(range);
 
             return result.toDate();
@@ -392,16 +392,16 @@ class MomentRange {
         // navigation functions 
         // ------------------
 
-        public getNextStart(date: any, offset: string): any {
-            return this._localDatetime.getNextStart(date, offset);
+        public toNextRange(date: any, type: string): any {
+            return this._localDatetime.toNextRange(date, type);
         }
 
-        public getPrevStart(date: any, offset: string): any {
-            return this._localDatetime.getPrevStart(date, offset);
+        public toPrevRange(date: any, type: string): any {
+            return this._localDatetime.toPrevRange(date, type);
         }
 
-        public getNowStart(offset: string): any {
-            return this._localDatetime.getNowStart(offset);
+        public toCurrentRange(type: string): any {
+            return this._localDatetime.toCurrentRange(type);
         }
 
         public addHours(date: any, hours: number): any {
