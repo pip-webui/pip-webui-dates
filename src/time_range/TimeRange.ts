@@ -13,8 +13,8 @@
     }
 
     const TimeRangeBindings: ITimeRangeBindings = {
-        start: '<pipStartDate',
-        end: '<pipEndDate'
+        start: '<?pipStartDate',
+        end: '<?pipEndDate'
     }
 
     class TimeRangeChanges implements ng.IOnChangesObject, ITimeRangeBindings {

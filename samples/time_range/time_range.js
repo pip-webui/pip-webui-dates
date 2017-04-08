@@ -108,6 +108,10 @@
             $scope.startDate = new Date('1975-04-08T00:20:00.000Z');
             $scope.endDate = new Date('1975-04-12T00:23:00.000Z');
 
+
+            $scope.startDateJson = '2015-04-08T00:20:00.000Z';
+            $scope.endDateJson = '2015-04-12T00:23:00.000Z';
+
             $scope.daily = new Date(Date.UTC(2016, 10, 1, 0, 0, 0));
             $scope.weekly = new Date(Date.UTC(2016, 10, 1, 0, 0, 0));
             $scope.weeklyDouble = new Date(Date.UTC(2016, 10, 1, 0, 0, 0));
