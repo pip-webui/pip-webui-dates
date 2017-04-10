@@ -1,8 +1,8 @@
 
 (() => {
     class TimeRangeData {
-        start: Date;
-        end: Date;
+        start: any;
+        end: any;
     }
 
     interface ITimeRangeBindings {
@@ -20,14 +20,14 @@
     class TimeRangeChanges implements ng.IOnChangesObject, ITimeRangeBindings {
         [key: string]: ng.IChangesObject<any>;
 
-        start: ng.IChangesObject<Date>;
-        end: ng.IChangesObject<Date>;
+        start: ng.IChangesObject<any>;
+        end: ng.IChangesObject<any>;
     }
 
     class TimeRangeController {
         public data: TimeRangeData;
-        public start: Date;
-        public end: Date;
+        public start: any;
+        public end: any;
 
         constructor($scope: ng.IScope, $attrs: ng.IAttributes, $element: JQuery) {
             this.data = new TimeRangeData();

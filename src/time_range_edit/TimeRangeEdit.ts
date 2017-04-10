@@ -41,9 +41,9 @@ export const MillisecondsInSecond = 1000;
     class TimeRangeEditChanges implements ng.IOnChangesObject, ITimeRangeEditBindings {
         [key: string]: ng.IChangesObject<any>;
 
-        pipStartDate: ng.IChangesObject<Date>;
+        pipStartDate: ng.IChangesObject<any>;
         pipChanged: ng.IChangesObject<(start: Date, end: Date) => void>
-        pipEndDate: ng.IChangesObject<Date>;
+        pipEndDate: ng.IChangesObject<any>;
         pipStartLabel: ng.IChangesObject<string>;
         pipEndLabel: ng.IChangesObject<string>;
         disabled: ng.IChangesObject<() => void>;
@@ -58,8 +58,8 @@ export const MillisecondsInSecond = 1000;
         public pipStartLabel: string;
         public pipEndLabel: string;
 
-        public pipEndDate: Date;
-        public pipStartDate: Date;
+        public pipEndDate: any;
+        public pipStartDate: any;
         public pipHideTime: boolean;
         public pipSize;
         public showTime: boolean;
@@ -231,7 +231,6 @@ export const MillisecondsInSecond = 1000;
 
         private defineDate() {
             let start: Date, end: Date;
-
             if (this.pipStartDate !== null && this.pipStartDate !== undefined) {
                 start = _.isDate(this.pipStartDate) ? this.pipStartDate : null;
 
@@ -246,7 +245,7 @@ export const MillisecondsInSecond = 1000;
             if (this.pipEndDate !== null && this.pipEndDate !== undefined) {
                 end = _.isDate(this.pipEndDate) ? this.pipEndDate : null;
 
-                if (!start) {
+                if (!end) {
                     end = this.getDateJSON(this.pipEndDate);
                 }
 
