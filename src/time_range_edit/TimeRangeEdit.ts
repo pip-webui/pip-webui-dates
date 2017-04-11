@@ -136,18 +136,18 @@ export const MillisecondsInSecond = 1000;
         }
 
         private validateStartDate() {
-            let date: Date, start: Date, end: Date, endTime: number, startTime: number;
+            let date: Date = new Date(), start: Date = new Date(), end: Date = new Date(), endTime: number, startTime: number;
             // если начальная дата не задана, обнуляем и выходим
-            if (!this.data.startDate) {
+            if (!this.data.startDate || _.isNull(this.data.startDate) || !this.data) {
                 this.data.startTime = null;
-
+                this.data.startDate = null;
                 return;
             }
 
             // еcли не задано начальное время - задаем его
             if (_.isUndefined(this.data.startTime) || _.isNull(this.data.startTime)) {
-                if (!this.data.endTime) {
-                    start = new Date();
+                if (!this.data || !this.data.endTime) {
+                    date = new Date();
                     startTime = date.getTime() - this.pipDateConvert.toStartDay(date);
                     this.data.startTime = Math.floor(startTime / (IntervalTimeRange * MinutesInHour * MillisecondsInSecond)) * IntervalTimeRange;
                 } else {
@@ -155,34 +155,37 @@ export const MillisecondsInSecond = 1000;
                 }
             }
 
-            start = new Date(this.data.startDate.getTime() + this.data.startTime * MinutesInHour * MillisecondsInSecond);
+            if (this.data && this.data.startDate) {
+                start = new Date(this.data.startDate.getTime() + this.data.startTime * MinutesInHour * MillisecondsInSecond);
 
-            // Если есть длительность, то сохраняем ее. Длительность можно изменить только изменяя конечную дату
-            if (this.data.duration) {
-                end = new Date(start.getTime() + this.data.duration);
-                this.data.endDate = this.pipDateConvert.toStartDay(end);
-                endTime = end.getTime() - this.data.endDate.getTime();
-                this.data.endTime = Math.floor(endTime / (IntervalTimeRange * MinutesInHour * MillisecondsInSecond)) * IntervalTimeRange;
-            } else {
-                // Если нет длительности сравниваем даты
-                end = new Date(this.data.endDate.getTime() + this.data.endTime * MinutesInHour * MillisecondsInSecond);
-                if (start >= end) {
-                    // Если начальная дата больше, то двигаем конечную дату
-                    this.data.endDate = this.pipDateConvert.toStartDay(new Date(start.getTime() + (IntervalTimeRange * MinutesInHour * MillisecondsInSecond)));
-                    this.data.endTime = (this.data.startTime + IntervalTimeRange) % (HoursInDay * MinutesInHour); // минут в сутках
+                // Если есть длительность, то сохраняем ее. Длительность можно изменить только изменяя конечную дату
+                if (this.data.duration) {
+                    end = new Date(start.getTime() + this.data.duration);
+                    this.data.endDate = this.pipDateConvert.toStartDay(end);
+                    endTime = end.getTime() - this.data.endDate.getTime();
+                    this.data.endTime = Math.floor(endTime / (IntervalTimeRange * MinutesInHour * MillisecondsInSecond)) * IntervalTimeRange;
+                } else {
+                    // Если нет длительности сравниваем даты
+                    end = new Date(this.data.endDate.getTime() + this.data.endTime * MinutesInHour * MillisecondsInSecond);
+                    if (start >= end) {
+                        // Если начальная дата больше, то двигаем конечную дату
+                        this.data.endDate = this.pipDateConvert.toStartDay(new Date(start.getTime() + (IntervalTimeRange * MinutesInHour * MillisecondsInSecond)));
+                        this.data.endTime = (this.data.startTime + IntervalTimeRange) % (HoursInDay * MinutesInHour); // минут в сутках
+                    }
                 }
+
+                this.data.startTime = Math.round(this.data.startTime / IntervalTimeRange) * IntervalTimeRange;
             }
 
-            this.data.startTime = Math.round(this.data.startTime / IntervalTimeRange) * IntervalTimeRange;
         }
 
 
         private validateEndDate() {
-            let date: any, start: Date, end: Date;
+            let date: any = new Date(), start: Date = new Date(), end: Date = new Date();
 
-            if (!this.data.endDate) {
+            if (!this.data.endDate ) {
                 this.data.endTime = null;
-
+                this.data.endDate = null;
                 return;
             }
 
@@ -196,9 +199,12 @@ export const MillisecondsInSecond = 1000;
                     this.data.endTime = this.data.startTime === (HoursInDay * MinutesInHour - IntervalTimeRange) ? (HoursInDay * MinutesInHour - IntervalTimeRange) : this.data.startTime + IntervalTimeRange;
                 }
             }
-
-            start = new Date(this.data.startDate.getTime() + this.data.startTime * MinutesInHour * MillisecondsInSecond);
-            end = new Date(this.data.endDate.getTime() + this.data.endTime * MinutesInHour * MillisecondsInSecond);
+            if (this.data.startDate &&  this.data.startTime) {
+                start = new Date(this.data.startDate.getTime() + this.data.startTime * MinutesInHour * MillisecondsInSecond);
+            }
+            if (this.data.endDate && this.data.endTime) {
+                end = new Date(this.data.endDate.getTime() + this.data.endTime * MinutesInHour * MillisecondsInSecond);
+            }
 
             if (start >= end) {
                 // Если начальная дата больше, то двигаем начальную дату
