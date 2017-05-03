@@ -122,6 +122,7 @@
         .module('pipDate', ['pipDates.Templates'])
         .component('pipDate', DateComponent);
 })();
+
 },{}],2:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
@@ -364,6 +365,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
         .module('pipDate.Convert', [])
         .provider('pipDateConvert', DateConvertProvider);
 })();
+
 },{"./IDateConvertService":5}],3:[function(require,module,exports){
 "use strict";
 formatTimeFilter.$inject = ['pipDateFormat'];
@@ -672,6 +674,7 @@ angular
     .filter('formatTodayDateShortTimeShort', formatTodayDateShortTimeShortFilter)
     .filter('formatMillisecondsToSeconds', formatMillisecondsToSecondsFilter)
     .filter('formatElapsedInterval', formatElapsedIntervalFilter);
+
 },{}],4:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
@@ -1111,6 +1114,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
         .module('pipDate.Format', [])
         .provider('pipDateFormat', DateFormatProvider);
 })();
+
 },{"./IDateConvertService":5}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -1126,9 +1130,11 @@ DateRangeType.WeekFromSunday = 'isoweek';
 DateRangeType.Day = 'day';
 DateRangeType.All = ['year', 'month', 'week', 'isoweek', 'day'];
 exports.DateRangeType = DateRangeType;
+
 },{}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+
 },{}],7:[function(require,module,exports){
 "use strict";
 function __export(m) {
@@ -1146,6 +1152,7 @@ require("./DateFormatService");
 require("./IDateConvertService");
 require("./IDateFormatService");
 __export(require("./IDateConvertService"));
+
 },{"./DateConvertService":2,"./DateFormatFilter":3,"./DateFormatService":4,"./IDateConvertService":5,"./IDateFormatService":6}],8:[function(require,module,exports){
 (function () {
     var DateRangeBindings = {
@@ -1486,6 +1493,7 @@ __export(require("./IDateConvertService"));
         .module('pipDateRange', ['pipDates.Templates'])
         .component('pipDateRange', daterange);
 })();
+
 },{}],9:[function(require,module,exports){
 {
     translateFilter.$inject = ['$injector'];
@@ -1500,6 +1508,7 @@ __export(require("./IDateConvertService"));
         .module('pipDates.Translate', [])
         .filter('translate', translateFilter);
 }
+
 },{}],10:[function(require,module,exports){
 angular.module('pipDates', [
     'pipDate',
@@ -1509,6 +1518,7 @@ angular.module('pipDates', [
     'pipDateRange',
     'pipDates.Translate'
 ]);
+
 },{}],11:[function(require,module,exports){
 (function () {
     var TimeRangeData = (function () {
@@ -1575,6 +1585,7 @@ angular.module('pipDates', [
     angular.module('pipTimeRange', [])
         .component('pipTimeRange', TimeRangeComponent);
 })();
+
 },{}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -1843,6 +1854,7 @@ exports.MillisecondsInSecond = 1000;
     angular.module('pipTimeRangeEdit', [])
         .component('pipTimeRangeEdit', TimeRangeEditComponent);
 }
+
 },{}],13:[function(require,module,exports){
 (function(module) {
 try {
