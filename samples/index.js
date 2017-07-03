@@ -32,7 +32,7 @@
     );
 
     thisModule.config(
-        function ($stateProvider, $urlRouterProvider, $mdIconProvider,
+        function ($stateProvider, $urlRouterProvider, $mdIconProvider, 
             $compileProvider, $httpProvider, $mdDateLocaleProvider) {
 
             $compileProvider.debugInfoEnabled(false);
@@ -64,7 +64,7 @@
             };
 
             // set relativeTime configuration
-            moment.updateLocale('en', {
+            moment.defineLocale('en', {
                 relativeTime: {
                     future: "in %s",
                     past: "%s ago",

@@ -6,3 +6,4 @@
 /// <reference path="core-js/core-js.d.ts" />
 /// <reference path="angularjs/angular-resource.d.ts" />
 /// <reference path="moment/moment.d.ts" />
+/// <reference path="node/node.d.ts" />
