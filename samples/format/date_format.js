@@ -14,7 +14,7 @@
             $scope.fewDaysAgo = new Date(new Date().getTime() - 172800000);
             $scope.fewHoursFuture = new Date($scope.currentTime.getTime() + 60000*180);
             $scope.pastTime = new Date(new Date().getTime() - 10000000000);
-            $scope.pastTime1 = new Date(new Date().getTime() - 60000*60*24*40);
+            $scope.pastTime1 = new Date(new Date().getTime() - 33 * 60 * 60 * 1000 - 3*60*1000);
             $scope.pastTime2 = new Date(new Date().getTime() - 100000000000);
 
             $scope.longDate = pipDateFormat.formatLongDate($scope.currentTime);
@@ -55,6 +55,15 @@
             $scope.dateTimeRangeDiffYear.text = pipDateFormat.formatDateTimeRange($scope.dateTimeRangeDiffYear.start, $scope.dateTimeRangeDiffYear.end);
             $scope.dateTimeRangeStart.text = pipDateFormat.formatDateTimeRange($scope.dateTimeRangeStart.start, $scope.dateTimeRangeStart.end);
             $scope.dateTimeRangeEnd.text = pipDateFormat.formatDateTimeRange($scope.dateTimeRangeEnd.start, $scope.dateTimeRangeEnd.end);
+
+            console.log('pipDateFormat', pipDateFormat.formatLongElapsed(new Date($scope.currentTime.getTime())));
+            console.log('pipDateFormat', pipDateFormat.formatLongElapsed(new Date($scope.currentTime.getTime() - 120 * 60 * 60 * 1000)));
+            console.log('pipDateFormat', pipDateFormat.formatLongElapsed(new Date($scope.currentTime.getTime() - 20 * 60 * 60 * 1000)));
+            console.log('pipDateFormat', pipDateFormat.formatLongElapsed(new Date($scope.currentTime.getTime() - 20 * 60 * 60 * 1000 - 560000)));
+            console.log('pipDateFormat', pipDateFormat.formatLongElapsed(new Date($scope.currentTime.getTime() - 3 * 60 * 60 * 1000 - 3*60*1000)));            
+            console.log('pipDateFormat', pipDateFormat.formatLongElapsed(new Date($scope.currentTime.getTime() - 20 * 60 * 60 * 1000 + 3 * 60 * 1000)));
+
+            
 
             // $scope.userAgent = $window.navigator.userAgent;
 

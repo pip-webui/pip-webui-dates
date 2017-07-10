@@ -4,7 +4,6 @@ declare module pip.dates {
 
 
 
-
 export class DateRangeType {
     static Year: string;
     static Month: string;
@@ -71,9 +70,13 @@ export interface IDateFormatService {
     formatTodayDateShortTimeShort(value: any): string;
     formatMillisecondsToSeconds(value: any): string;
     formatElapsedInterval(value: any, start: any): string;
+    formatShortElapsed(value: any, hours?: number): string;
+    formatMiddleElapsed(value: any, hours?: number): string;
+    formatLongElapsed(value: any, hours?: number): string;
 }
 export interface IDateFormatProvider extends IDateFormatService, ng.IServiceProvider {
 }
+
 
 
 

@@ -297,4 +297,16 @@
         <td><b>Filter:</b></td>
         <td>{{ pastTime | formatElapsedInterval }}</td>
     </tr>
+    <tr>
+        <td><b>formatShortElapsed</b></td>
+        <td>{{ pastTime1 | formatShortElapsed }}</td>
+    </tr>
+    <tr>
+        <td><b>formatMiddleElapsed</b></td>
+        <td>{{ pastTime1 | formatMiddleElapsed: -44  }}</td>
+    </tr>
+    <tr>
+        <td><b>formatLongElapsed</b></td>
+        <td>{{ pastTime1 | formatLongElapsed }}</td>
+    </tr>
 </table>

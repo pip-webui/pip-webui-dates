@@ -403,6 +403,9 @@ formatTodayDateLongTimeShortFilter.$inject = ['pipDateFormat'];
 formatTodayDateShortTimeShortFilter.$inject = ['pipDateFormat'];
 formatMillisecondsToSecondsFilter.$inject = ['pipDateFormat'];
 formatElapsedIntervalFilter.$inject = ['pipDateFormat'];
+formatShortElapsedFilter.$inject = ['pipDateFormat'];
+formatLongElapsedFilter.$inject = ['pipDateFormat'];
+formatMiddleElapsedFilter.$inject = ['pipDateFormat'];
 getDateJSONFilter.$inject = ['pipDateConvert'];
 Object.defineProperty(exports, "__esModule", { value: true });
 function formatTimeFilter(pipDateFormat) {
@@ -627,6 +630,24 @@ function formatElapsedIntervalFilter(pipDateFormat) {
         return pipDateFormat.formatElapsedInterval(value, start);
     };
 }
+function formatShortElapsedFilter(pipDateFormat) {
+    "ngInject";
+    return function (value, hours) {
+        return pipDateFormat.formatShortElapsed(value, hours);
+    };
+}
+function formatLongElapsedFilter(pipDateFormat) {
+    "ngInject";
+    return function (value, hours) {
+        return pipDateFormat.formatLongElapsed(value, hours);
+    };
+}
+function formatMiddleElapsedFilter(pipDateFormat) {
+    "ngInject";
+    return function (value, hours) {
+        return pipDateFormat.formatMiddleElapsed(value, hours);
+    };
+}
 function getDateJSONFilter(pipDateConvert) {
     "ngInject";
     return function (value) {
@@ -671,7 +692,10 @@ angular
     .filter('formatTodayDateLongTimeShort', formatTodayDateLongTimeShortFilter)
     .filter('formatTodayDateShortTimeShort', formatTodayDateShortTimeShortFilter)
     .filter('formatMillisecondsToSeconds', formatMillisecondsToSecondsFilter)
-    .filter('formatElapsedInterval', formatElapsedIntervalFilter);
+    .filter('formatElapsedInterval', formatElapsedIntervalFilter)
+    .filter('formatShortElapsed', formatShortElapsedFilter)
+    .filter('formatMiddleElapsed', formatMiddleElapsedFilter)
+    .filter('formatLongElapsed', formatLongElapsedFilter);
 },{}],4:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
@@ -687,8 +711,10 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var IDateConvertService_1 = require("./IDateConvertService");
 (function () {
+    declarePipDateResources.$inject = ['$injector'];
     var DateFormat = (function () {
-        function DateFormat() {
+        function DateFormat($injector) {
+            this.$injector = $injector;
             this._momentRanged = IDateConvertService_1.DateRangeType.All;
             this._defaultFormat = 'LL';
         }
@@ -959,157 +985,221 @@ var IDateConvertService_1 = require("./IDateConvertService");
             }
             return moment(date).fromNow(nowDate);
         };
+        DateFormat.prototype.formatShortElapsed = function (value, hours) {
+            var date, nowDate = moment(), borderDate = _.cloneDeep(nowDate);
+            if (this.isUndefinedOrNull(value)) {
+                return '';
+            }
+            date = moment(value);
+            if (!date.isValid() || !nowDate.isValid()) {
+                return '';
+            }
+            if (this.isUndefinedOrNull(hours)) {
+                hours = -24;
+            }
+            borderDate.add(hours, 'hours');
+            if (date.isBefore(borderDate)) {
+                return this.formatMiddleDateTime(date);
+            }
+            else {
+                var ms = nowDate.diff(date);
+                var diff = moment.duration(nowDate.diff(date));
+                var s = void 0;
+                var pipTranslate = this.$injector.has('pipTranslate') ? this.$injector.get('pipTranslate') : null;
+                if (pipTranslate) {
+                    var h = Math.floor(diff.asHours());
+                    var m = Math.floor(diff.asMinutes() - 60 * h);
+                    s = Math.floor(diff.asHours()) + moment.utc(ms).format(":mm ") + pipTranslate.translate('DATE_ELAPSED');
+                }
+                else {
+                    s = Math.floor(diff.asHours()) + moment.utc(ms).format(":mm ") + ' ago';
+                }
+                return s;
+            }
+        };
+        DateFormat.prototype.getHoursString = function (h) {
+            var hh = h % 10;
+            if (h == 0)
+                return '';
+            if (hh == 1) {
+                return 'DATE_HOUR_ONE';
+            }
+            if (hh > 1 && hh < 5) {
+                return 'DATE_HOURS_FEW';
+            }
+            return 'DATE_HOURS_AFTER_FOOR';
+        };
+        DateFormat.prototype.getMinutesString = function (m) {
+            if (m == 1) {
+                return 'DATE_MINUTE_ONE';
+            }
+            if (m > 1 && m < 5) {
+                return 'DATE_MINUTES_FEW';
+            }
+            return 'DATE_MINUTES_AFTER_FOOR';
+        };
+        DateFormat.prototype.formatLongElapsed = function (value, hours) {
+            var date, nowDate = moment(), borderDate = _.cloneDeep(nowDate);
+            if (this.isUndefinedOrNull(value)) {
+                return '';
+            }
+            date = moment(value);
+            if (!date.isValid() || !nowDate.isValid()) {
+                return '';
+            }
+            if (this.isUndefinedOrNull(hours)) {
+                hours = -24;
+            }
+            borderDate.add(hours, 'hours');
+            if (date.isBefore(borderDate)) {
+                return this.formatMiddleDateTime(date);
+            }
+            else {
+                var ms = nowDate.diff(date);
+                var diff = moment.duration(nowDate.diff(date));
+                var s = void 0;
+                var pipTranslate = this.$injector.has('pipTranslate') ? this.$injector.get('pipTranslate') : null;
+                var h = Math.floor(diff.asHours());
+                var m = Math.floor(diff.asMinutes() - 60 * h);
+                if (pipTranslate) {
+                    var hString = this.getHoursString(h);
+                    var mString = this.getMinutesString(m);
+                    if (h) {
+                        s = Math.floor(diff.asHours()) + ' ' + pipTranslate.translate(hString) + moment.utc(ms).format(" mm ") +
+                            pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
+                    }
+                    else {
+                        if (s) {
+                            s = moment.utc(ms).format("mm ") + pipTranslate.translate(mString) + pipTranslate.translate('DATE_ELAPSED');
+                        }
+                        else {
+                            s = pipTranslate.translate('DATE_FEW_SECOND') + ' ' + pipTranslate.translate('DATE_ELAPSED');
+                        }
+                    }
+                }
+                else {
+                    if (h) {
+                        s = Math.floor(diff.asHours()) + ' hours ' + moment.utc(ms).format(":mm minutes") + ' ago';
+                    }
+                    else {
+                        if (s) {
+                            s = moment.utc(ms).format("mm minutes") + ' ago';
+                        }
+                        else {
+                            s = 'few second ago';
+                        }
+                    }
+                }
+                return s;
+            }
+        };
+        DateFormat.prototype.formatMiddleElapsed = function (value, hours) {
+            var date, nowDate = moment(), borderDate = _.cloneDeep(nowDate);
+            if (this.isUndefinedOrNull(value)) {
+                return '';
+            }
+            date = moment(value);
+            if (!date.isValid() || !nowDate.isValid()) {
+                return '';
+            }
+            if (this.isUndefinedOrNull(hours)) {
+                hours = -24;
+            }
+            borderDate.add(hours, 'hours');
+            if (date.isBefore(borderDate)) {
+                return this.formatMiddleDateTime(date);
+            }
+            else {
+                var ms = nowDate.diff(date);
+                var diff = moment.duration(nowDate.diff(date));
+                var s = void 0;
+                var pipTranslate = this.$injector.has('pipTranslate') ? this.$injector.get('pipTranslate') : null;
+                var h = Math.floor(diff.asHours());
+                var m = Math.floor(diff.asMinutes() - 60 * h);
+                if (pipTranslate) {
+                    var hString = 'DATE_HOUR_SHORT';
+                    var mString = 'DATE_MINUTE_SHORT';
+                    if (h) {
+                        s = Math.floor(diff.asHours()) + ' ' + pipTranslate.translate(hString) + moment.utc(ms).format(" mm ") +
+                            pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
+                    }
+                    else {
+                        if (s) {
+                            s = moment.utc(ms).format("mm ") + pipTranslate.translate(mString) + pipTranslate.translate('DATE_ELAPSED');
+                        }
+                        else {
+                            s = pipTranslate.translate('DATE_FEW_SECOND_SHORT') + ' ' + pipTranslate.translate('DATE_ELAPSED');
+                        }
+                    }
+                }
+                else {
+                    if (h) {
+                        s = Math.floor(diff.asHours()) + ' h. ' + moment.utc(ms).format(":mm min.") + ' ago';
+                    }
+                    else {
+                        if (s) {
+                            s = moment.utc(ms).format("mm min.") + ' ago';
+                        }
+                        else {
+                            s = 'few sec. ago';
+                        }
+                    }
+                }
+                return s;
+            }
+        };
         DateFormat.prototype.getDateJSON = function (date) {
             return JSON.stringify(moment(date));
         };
         return DateFormat;
-    }());
-    var DateFormatService = (function () {
-        function DateFormatService(_format) {
-            this._format = _format;
-        }
-        Object.defineProperty(DateFormatService.prototype, "defaultTimeZoneOffset", {
-            get: function () {
-                return this._format.defaultTimeZoneOffset;
-            },
-            set: function (value) {
-                this._format.defaultTimeZoneOffset = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        DateFormatService.prototype.formatTime = function (value, format) {
-            return this._format.formatTime(value, format);
-        };
-        DateFormatService.prototype.formatDateOptional = function (value, format) {
-            return this._format.formatDateOptional(value, format);
-        };
-        DateFormatService.prototype.formatShortDate = function (value) {
-            return this._format.formatShortDate(value);
-        };
-        DateFormatService.prototype.formatMiddleDate = function (value) {
-            return this._format.formatMiddleDate(value);
-        };
-        DateFormatService.prototype.formatLongDate = function (value) {
-            return this._format.formatLongDate(value);
-        };
-        DateFormatService.prototype.formatMonth = function (value) {
-            return this._format.formatMonth(value);
-        };
-        DateFormatService.prototype.formatLongMonth = function (value) {
-            return this._format.formatLongMonth(value);
-        };
-        DateFormatService.prototype.formatYear = function (value) {
-            return this._format.formatYear(value);
-        };
-        DateFormatService.prototype.formatWeek = function (value) {
-            return this._format.formatWeek(value);
-        };
-        DateFormatService.prototype.formatShortWeek = function (value) {
-            return this._format.formatShortWeek(value);
-        };
-        DateFormatService.prototype.formatShortDateTime = function (value) {
-            return this._format.formatShortDateTime(value);
-        };
-        DateFormatService.prototype.formatMiddleDateTime = function (value) {
-            return this._format.formatMiddleDateTime(value);
-        };
-        DateFormatService.prototype.formatLongDateTime = function (value) {
-            return this._format.formatLongDateTime(value);
-        };
-        DateFormatService.prototype.formatFullDateTime = function (value) {
-            return this._format.formatFullDateTime(value);
-        };
-        DateFormatService.prototype.formatShortDateLongTime = function (value, firstTime) {
-            return this._format.formatShortDateLongTime(value, firstTime);
-        };
-        DateFormatService.prototype.formatMiddleDateLongTime = function (value, firstTime) {
-            return this._format.formatMiddleDateLongTime(value, firstTime);
-        };
-        DateFormatService.prototype.formatLongDateLongTime = function (value, firstTime) {
-            return this._format.formatLongDateLongTime(value, firstTime);
-        };
-        DateFormatService.prototype.bbFormatDateLongTime = function (value, firstTime) {
-            return this._format.bbFormatDateLongTime(value, firstTime);
-        };
-        DateFormatService.prototype.formatShortTime = function (value) {
-            return this._format.formatShortTime(value);
-        };
-        DateFormatService.prototype.formatLongTime = function (value) {
-            return this._format.formatLongTime(value);
-        };
-        DateFormatService.prototype.formatShortDayOfWeek = function (value) {
-            return this._format.formatShortDayOfWeek(value);
-        };
-        DateFormatService.prototype.formatLongDayOfWeek = function (value) {
-            return this._format.formatLongDayOfWeek(value);
-        };
-        DateFormatService.prototype.formatLongMonthDay = function (value) {
-            return this._format.formatLongMonthDay(value);
-        };
-        DateFormatService.prototype.formatShortMonthDay = function (value) {
-            return this._format.formatShortMonthDay(value);
-        };
-        DateFormatService.prototype.formatDateRange = function (value1, value2) {
-            return this._format.formatDateRange(value1, value2);
-        };
-        DateFormatService.prototype.formatDateTimeRange = function (value1, value2) {
-            return this._format.formatDateTimeRange(value1, value2);
-        };
-        DateFormatService.prototype.formatISOWeek = function (value) {
-            return this._format.formatISOWeek(value);
-        };
-        DateFormatService.prototype.formatShortISOWeek = function (value) {
-            return this._format.formatShortISOWeek(value);
-        };
-        DateFormatService.prototype.formatISOWeekOrdinal = function (value) {
-            return this._format.formatISOWeekOrdinal(value);
-        };
-        DateFormatService.prototype.formatDateY = function (value) {
-            return this._format.formatDateY(value);
-        };
-        DateFormatService.prototype.formatLongDateY = function (value) {
-            return this._format.formatLongDateY(value);
-        };
-        DateFormatService.prototype.formatTodayDateLongTimeLong = function (value) {
-            return this._format.formatTodayDateLongTimeLong(value);
-        };
-        DateFormatService.prototype.formatTodayDateShortTimeLong = function (value) {
-            return this._format.formatTodayDateShortTimeLong(value);
-        };
-        DateFormatService.prototype.formatTodayDateLongTimeShort = function (value) {
-            return this._format.formatTodayDateLongTimeShort(value);
-        };
-        DateFormatService.prototype.formatTodayDateShortTimeShort = function (value) {
-            return this._format.formatTodayDateShortTimeShort(value);
-        };
-        DateFormatService.prototype.formatMillisecondsToSeconds = function (value) {
-            return this._format.formatMillisecondsToSeconds(value);
-        };
-        DateFormatService.prototype.formatElapsedInterval = function (value, start) {
-            return this._format.formatElapsedInterval(value, start);
-        };
-        DateFormatService.prototype.getDateJSON = function (date) {
-            return this._format.getDateJSON(date);
-        };
-        return DateFormatService;
     }());
     var DateFormatProvider = (function (_super) {
         __extends(DateFormatProvider, _super);
         function DateFormatProvider() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        DateFormatProvider.prototype.$get = function () {
+        DateFormatProvider.prototype.$get = ['$injector', function ($injector) {
             "ngInject";
             if (this._service == null)
-                this._service = new DateFormatService(this);
+                this._service = new DateFormat($injector);
             return this._service;
-        };
+        }];
         return DateFormatProvider;
     }(DateFormat));
+    function declarePipDateResources($injector) {
+        var pipTranslateProvider = $injector.has('pipTranslateProvider') ? $injector.get('pipTranslateProvider') : null;
+        if (pipTranslateProvider && pipTranslateProvider.translations) {
+            pipTranslateProvider.translations('en', {
+                DATE_ELAPSED: 'ago',
+                DATE_HOUR_ONE: 'hour',
+                DATE_HOUR_SHORT: 'h',
+                DATE_MINUTE_SHORT: 'min',
+                DATE_HOURS_FEW: 'hours',
+                DATE_HOURS_AFTER_FOOR: 'hours',
+                DATE_MINUTE_ONE: 'minute',
+                DATE_MINUTES_FEW: 'minutes',
+                DATE_MINUTES_AFTER_FOOR: 'minutes',
+                DATE_FEW_SECOND: 'few sec. ago'
+            });
+            pipTranslateProvider.translations('ru', {
+                DATE_ELAPSED: 'тн',
+                DATE_HOUR_ONE: 'час',
+                DATE_HOUR_SHORT: 'ч.',
+                DATE_MINUTE_SHORT: 'мин.',
+                DATE_HOURS_FEW: 'часа',
+                DATE_HOURS_AFTER_FOOR: 'часов',
+                DATE_MINUTE_ONE: 'минуту',
+                DATE_MINUTES_FEW: 'минуты',
+                DATE_MINUTES_AFTER_FOOR: 'минут',
+                DATE_FEW_SECOND: 'несколько секунд назад',
+                DATE_FEW_SECOND_SHORT: 'неск. сек. тн',
+            });
+        }
+    }
     angular
         .module('pipDate.Format', [])
-        .provider('pipDateFormat', DateFormatProvider);
+        .provider('pipDateFormat', DateFormatProvider)
+        .config(declarePipDateResources);
 })();
 },{"./IDateConvertService":5}],5:[function(require,module,exports){
 "use strict";

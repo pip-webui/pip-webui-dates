@@ -297,6 +297,30 @@ function formatElapsedIntervalFilter(pipDateFormat: IDateFormatService) {
     }
 }
 
+function formatShortElapsedFilter(pipDateFormat: IDateFormatService) {
+    "ngInject";
+
+    return (value: any, hours?: number): string => {
+        return pipDateFormat.formatShortElapsed(value, hours);
+    }
+}
+
+function formatLongElapsedFilter(pipDateFormat: IDateFormatService) {
+    "ngInject";
+
+    return (value: any, hours?: number): string => {
+        return pipDateFormat.formatLongElapsed(value, hours);
+    }
+}
+
+function formatMiddleElapsedFilter(pipDateFormat: IDateFormatService) {
+    "ngInject";
+
+    return (value: any, hours?: number): string => {
+        return pipDateFormat.formatMiddleElapsed(value, hours);
+    }
+}
+
 function getDateJSONFilter(pipDateConvert: IDateConvertService) {
     "ngInject";
 
@@ -343,4 +367,7 @@ angular
     .filter('formatTodayDateLongTimeShort', formatTodayDateLongTimeShortFilter)
     .filter('formatTodayDateShortTimeShort', formatTodayDateShortTimeShortFilter)
     .filter('formatMillisecondsToSeconds', formatMillisecondsToSecondsFilter)
-    .filter('formatElapsedInterval', formatElapsedIntervalFilter);
+    .filter('formatElapsedInterval', formatElapsedIntervalFilter)
+    .filter('formatShortElapsed', formatShortElapsedFilter)
+    .filter('formatMiddleElapsed', formatMiddleElapsedFilter)
+    .filter('formatLongElapsed', formatLongElapsedFilter);
