@@ -405,7 +405,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
 
             if (date.isBefore(borderDate)) {
                 // return date
-                return this.formatMiddleDateTime(date);
+                return this.formatShortDateTime(date);
             } else {
                 // return time
                 let ms = nowDate.diff(date);
@@ -492,7 +492,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
 
             if (date.isBefore(borderDate)) {
                 // return date
-                return this.formatMiddleDateTime(date);
+                return this.formatFullDateTime(date);
             } else {
                 // return time
                 let ms = nowDate.diff(date);

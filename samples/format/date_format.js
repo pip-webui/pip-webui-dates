@@ -14,7 +14,7 @@
             $scope.fewDaysAgo = new Date(new Date().getTime() - 172800000);
             $scope.fewHoursFuture = new Date($scope.currentTime.getTime() + 60000*180);
             $scope.pastTime = new Date(new Date().getTime() - 10000000000);
-            $scope.pastTime1 = new Date(new Date().getTime() - 33 * 60 * 60 * 1000 - 3*60*1000);
+            $scope.pastTime1 = new Date(new Date().getTime() - 3 * 60 * 60 * 1000 - 3*60*1000);
             $scope.pastTime2 = new Date(new Date().getTime() - 100000000000);
 
             $scope.longDate = pipDateFormat.formatLongDate($scope.currentTime);

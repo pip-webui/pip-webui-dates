@@ -999,20 +999,42 @@ var IDateConvertService_1 = require("./IDateConvertService");
             }
             borderDate.add(hours, 'hours');
             if (date.isBefore(borderDate)) {
-                return this.formatMiddleDateTime(date);
+                return this.formatShortDateTime(date);
             }
             else {
                 var ms = nowDate.diff(date);
                 var diff = moment.duration(nowDate.diff(date));
                 var s = void 0;
                 var pipTranslate = this.$injector.has('pipTranslate') ? this.$injector.get('pipTranslate') : null;
+                var h = Math.floor(diff.asHours());
+                var m = Math.floor(diff.asMinutes() - 60 * h);
                 if (pipTranslate) {
-                    var h = Math.floor(diff.asHours());
-                    var m = Math.floor(diff.asMinutes() - 60 * h);
-                    s = Math.floor(diff.asHours()) + moment.utc(ms).format(":mm ") + pipTranslate.translate('DATE_ELAPSED');
+                    var hString = this.getHoursString(h);
+                    var mString = this.getMinutesString(m);
+                    if (h) {
+                        s = Math.floor(diff.asHours()) + moment.utc(ms).format(":mm ") + pipTranslate.translate('DATE_ELAPSED');
+                    }
+                    else {
+                        if (m) {
+                            s = moment.utc(ms).format("mm ") + pipTranslate.translate('DATE_ELAPSED');
+                        }
+                        else {
+                            s = pipTranslate.translate('DATE_FEW_SECOND_SHORT');
+                        }
+                    }
                 }
                 else {
-                    s = Math.floor(diff.asHours()) + moment.utc(ms).format(":mm ") + ' ago';
+                    if (h) {
+                        s = Math.floor(diff.asHours()) + moment.utc(ms).format(":mm ") + ' ago';
+                    }
+                    else {
+                        if (m) {
+                            s = moment.utc(ms).format("mm min.") + ' ago';
+                        }
+                        else {
+                            s = 'few sec. ago';
+                        }
+                    }
                 }
                 return s;
             }
@@ -1052,7 +1074,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
             }
             borderDate.add(hours, 'hours');
             if (date.isBefore(borderDate)) {
-                return this.formatMiddleDateTime(date);
+                return this.formatFullDateTime(date);
             }
             else {
                 var ms = nowDate.diff(date);
@@ -1069,7 +1091,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                             pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                     }
                     else {
-                        if (s) {
+                        if (m) {
                             s = moment.utc(ms).format("mm ") + pipTranslate.translate(mString) + pipTranslate.translate('DATE_ELAPSED');
                         }
                         else {
@@ -1082,7 +1104,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                         s = Math.floor(diff.asHours()) + ' hours ' + moment.utc(ms).format(":mm minutes") + ' ago';
                     }
                     else {
-                        if (s) {
+                        if (m) {
                             s = moment.utc(ms).format("mm minutes") + ' ago';
                         }
                         else {
@@ -1124,7 +1146,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                             pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                     }
                     else {
-                        if (s) {
+                        if (m) {
                             s = moment.utc(ms).format("mm ") + pipTranslate.translate(mString) + pipTranslate.translate('DATE_ELAPSED');
                         }
                         else {
@@ -1137,7 +1159,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                         s = Math.floor(diff.asHours()) + ' h. ' + moment.utc(ms).format(":mm min.") + ' ago';
                     }
                     else {
-                        if (s) {
+                        if (m) {
                             s = moment.utc(ms).format("mm min.") + ' ago';
                         }
                         else {
