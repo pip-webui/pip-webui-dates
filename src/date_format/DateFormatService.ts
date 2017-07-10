@@ -413,13 +413,31 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                 let s: string;
 
                 let pipTranslate: any = this.$injector.has('pipTranslate') ? this.$injector.get('pipTranslate') : null;
-
-                if (pipTranslate) {
                     let h = Math.floor(diff.asHours());
                     let m = Math.floor(diff.asMinutes() - 60 * h);
-                    s = Math.floor(diff.asHours()) + moment.utc(ms).format(":mm ") + pipTranslate.translate('DATE_ELAPSED');
+
+                if (pipTranslate) {
+                    let hString: string = this.getHoursString(h);
+                    let mString: string = this.getMinutesString(m);
+                    if (h) {
+                        s = Math.floor(diff.asHours()) + moment.utc(ms).format(":mm ") + pipTranslate.translate('DATE_ELAPSED');
+                    } else {
+                        if (m) {
+                            s = moment.utc(ms).format("mm ") + pipTranslate.translate('DATE_ELAPSED');
+                        } else {
+                            s = pipTranslate.translate('DATE_FEW_SECOND_SHORT');
+                        }
+                    }
                 } else {
-                    s = Math.floor(diff.asHours()) + moment.utc(ms).format(":mm ") + ' ago';
+                    if (h) {
+                         s = Math.floor(diff.asHours()) + moment.utc(ms).format(":mm ") + ' ago';
+                    } else {
+                        if (m) {
+                            s = moment.utc(ms).format("mm min.") + ' ago';
+                        } else {
+                            s = 'few sec. ago';
+                        }                        
+                    }
                 }
 
                 return s;
@@ -493,7 +511,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                         s = Math.floor(diff.asHours()) + ' ' + pipTranslate.translate(hString) + moment.utc(ms).format(" mm ") +
                             pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                     } else {
-                        if (s) {
+                        if (m) {
                             s = moment.utc(ms).format("mm ") + pipTranslate.translate(mString) + pipTranslate.translate('DATE_ELAPSED');
                         } else {
                             s = pipTranslate.translate('DATE_FEW_SECOND') + ' ' + pipTranslate.translate('DATE_ELAPSED');
@@ -503,7 +521,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                     if (h) {
                         s = Math.floor(diff.asHours()) + ' hours ' + moment.utc(ms).format(":mm minutes") + ' ago';
                     } else {
-                        if (s) {
+                        if (m) {
                             s = moment.utc(ms).format("mm minutes") + ' ago';
                         } else {
                             s = 'few second ago';
@@ -557,7 +575,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                         s = Math.floor(diff.asHours()) + ' ' + pipTranslate.translate(hString) + moment.utc(ms).format(" mm ") +
                             pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                     } else {
-                        if (s) {
+                        if (m) {
                             s = moment.utc(ms).format("mm ") + pipTranslate.translate(mString) + pipTranslate.translate('DATE_ELAPSED');
                         } else {
                             s = pipTranslate.translate('DATE_FEW_SECOND_SHORT') + ' ' + pipTranslate.translate('DATE_ELAPSED');
@@ -567,7 +585,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                     if (h) {
                         s = Math.floor(diff.asHours()) + ' h. ' + moment.utc(ms).format(":mm min.") + ' ago';
                     } else {
-                        if (s) {
+                        if (m) {
                             s = moment.utc(ms).format("mm min.") + ' ago';
                         } else {
                             s = 'few sec. ago';
