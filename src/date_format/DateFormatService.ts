@@ -512,7 +512,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                             pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                     } else {
                         if (m) {
-                            s = moment.utc(ms).format("mm ") + pipTranslate.translate(mString) + pipTranslate.translate('DATE_ELAPSED');
+                            s = moment.utc(ms).format("mm ") + pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                         } else {
                             s = pipTranslate.translate('DATE_FEW_SECOND') + ' ' + pipTranslate.translate('DATE_ELAPSED');
                         }
@@ -576,7 +576,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                             pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                     } else {
                         if (m) {
-                            s = moment.utc(ms).format("mm ") + pipTranslate.translate(mString) + pipTranslate.translate('DATE_ELAPSED');
+                            s = moment.utc(ms).format("mm ") + pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                         } else {
                             s = pipTranslate.translate('DATE_FEW_SECOND_SHORT') + ' ' + pipTranslate.translate('DATE_ELAPSED');
                         }
@@ -631,7 +631,8 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                 DATE_MINUTE_ONE: 'minute',
                 DATE_MINUTES_FEW: 'minutes',
                 DATE_MINUTES_AFTER_FOOR: 'minutes',
-                DATE_FEW_SECOND: 'few sec. ago'
+                DATE_FEW_SECOND: 'few sec. ago',
+                DATE_FEW_SECOND_SHORT: 'few sec. ago'
 
             });
             pipTranslateProvider.translations('ru', {
