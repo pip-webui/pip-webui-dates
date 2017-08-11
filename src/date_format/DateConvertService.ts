@@ -122,7 +122,7 @@ import { DateRangeType, IDateConvertService, IDateConvertProvider } from './IDat
             }
 
             range = this.getRange(type);
-            result = moment(localDate).startOf(range).add(this.getOperationRange(range));
+            result = moment(localDate).startOf(range).add(1, this.getOperationRange(range));
 
             return result.toDate();
         }
