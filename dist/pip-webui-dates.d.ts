@@ -58,6 +58,7 @@ export interface IDateFormatService {
     formatLongDayOfWeek(value: any): string;
     formatLongMonthDay(value: any): string;
     formatShortMonthDay(value: any): string;
+    formatRange(value1: any, value2: any, basicFormat: string): string;
     formatDateRange(value1: any, value2: any): string;
     formatDateTimeRange(value1: any, value2: any): string;
     formatISOWeek(value: any): string;

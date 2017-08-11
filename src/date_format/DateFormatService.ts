@@ -103,7 +103,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
         }
 
         //  use timezone not testing
-        private formatRange(value1: any, value2: any, basicFormat: string): string {
+        public formatRange(value1: any, value2: any, basicFormat: string): string {
             let dateStart: moment.Moment;
             let dateEnd: moment.Moment;
             let format = basicFormat ? basicFormat : this._defaultFormat;
