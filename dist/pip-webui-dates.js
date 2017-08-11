@@ -229,7 +229,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                 return '';
             }
             range = this.getRange(type);
-            result = moment(localDate).startOf(range).add(this.getOperationRange(range));
+            result = moment(localDate).startOf(range).add(1, this.getOperationRange(range));
             return result.toDate();
         };
         DateConvert.prototype.toPrevRange = function (date, type) {
