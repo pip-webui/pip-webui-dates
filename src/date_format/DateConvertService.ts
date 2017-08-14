@@ -37,7 +37,7 @@ import { DateRangeType, IDateConvertService, IDateConvertProvider } from './IDat
                 return DateRangeType.Day;
             }
 
-            let range: string = date == DateRangeType.WeekFromSunday ? DateRangeType.Week : date,
+            let range: string = date == DateRangeType.WeekFromSunday ? DateRangeType.WeekFromSunday : date,
                 index = this._momentRanged.indexOf(range)
 
             if (index < 0) {
@@ -68,7 +68,7 @@ import { DateRangeType, IDateConvertService, IDateConvertProvider } from './IDat
             return localDate.startOf(range).toDate();
         }
 
-        private toEndRange(date: any, range: string, offset: number): any {
+        private toEndRange(date: any, range: string, offset?: number): any {
             let localDate: any,
                 result: any,
                 mssOffset: number;
@@ -92,12 +92,12 @@ import { DateRangeType, IDateConvertService, IDateConvertProvider } from './IDat
             }
 
             if (mssOffset) {
-                result = localDate.startOf(range).add(mssOffset, 'milliseconds');
+                result = localDate.endOf(range).add(mssOffset, 'milliseconds');
             } else {
-                result = localDate.startOf(range);
+                result = localDate.endOf(range);
             }
 
-            return localDate.startOf(range).toDate();
+            return localDate.endOf(range).toDate();
         }
 
         public toJson(date: any): string {
@@ -182,23 +182,23 @@ import { DateRangeType, IDateConvertService, IDateConvertProvider } from './IDat
             return this.toStartRange(date, DateRangeType.Day);
         }
 
-        public toEndDay(date: any, offset: number): Date {
+        public toEndDay(date: any, offset?: number): Date {
             return this.toEndRange(date, DateRangeType.Day, offset);
         }
 
         public toStartWeek(date: any): Date {
-            return this.toStartRange(date, DateRangeType.Week);
+            return this.toStartRange(date, DateRangeType.WeekFromSunday);
         }
 
-        public toEndWeek(date: any, offset: number): Date {
-            return this.toEndRange(date, DateRangeType.Week, offset);
+        public toEndWeek(date: any, offset?: number): Date {
+            return this.toEndRange(date, DateRangeType.WeekFromSunday, offset);
         }
 
         public toStartMonth(date: any): Date {
             return this.toStartRange(date, DateRangeType.Month);
         }
 
-        public toEndMonth(date: any, offset: number): Date {
+        public toEndMonth(date: any, offset?: number): Date {
             return this.toEndRange(date, DateRangeType.Month, offset);
         }
 
@@ -206,7 +206,7 @@ import { DateRangeType, IDateConvertService, IDateConvertProvider } from './IDat
             return this.toStartRange(date, DateRangeType.Year);
         }
 
-        public toEndYear(date: any, offset: number): Date {
+        public toEndYear(date: any, offset?: number): Date {
             return this.toEndRange(date, DateRangeType.Year, offset);
         }
 
@@ -256,7 +256,7 @@ import { DateRangeType, IDateConvertService, IDateConvertProvider } from './IDat
             return this._convert.toStartDay(date);
         }
 
-        public toEndDay(date: any, offset: number): any {
+        public toEndDay(date: any, offset?: number): any {
             return this._convert.toEndDay(date, offset);
         }
 
@@ -264,7 +264,7 @@ import { DateRangeType, IDateConvertService, IDateConvertProvider } from './IDat
             return this._convert.toStartWeek(date);
         }
 
-        public toEndWeek(date: any, offset: number): any {
+        public toEndWeek(date: any, offset?: number): any {
             return this._convert.toEndWeek(date, offset);
         }
 
@@ -272,7 +272,7 @@ import { DateRangeType, IDateConvertService, IDateConvertProvider } from './IDat
             return this._convert.toStartMonth(date);
         }
 
-        public toEndMonth(date: any, offset: number): any {
+        public toEndMonth(date: any, offset?: number): any {
             return this._convert.toEndMonth(date, offset);
         }
 
@@ -280,7 +280,7 @@ import { DateRangeType, IDateConvertService, IDateConvertProvider } from './IDat
             return this._convert.toStartYear(date);
         }
 
-        public toEndYear(date: any, offset: number): any {
+        public toEndYear(date: any, offset?: number): any {
             return this._convert.toEndYear(date, offset);
         }
 

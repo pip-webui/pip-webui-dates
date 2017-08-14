@@ -169,7 +169,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
             if (this.isUndefinedOrNull(date)) {
                 return IDateConvertService_1.DateRangeType.Day;
             }
-            var range = date == IDateConvertService_1.DateRangeType.WeekFromSunday ? IDateConvertService_1.DateRangeType.Week : date, index = this._momentRanged.indexOf(range);
+            var range = date == IDateConvertService_1.DateRangeType.WeekFromSunday ? IDateConvertService_1.DateRangeType.WeekFromSunday : date, index = this._momentRanged.indexOf(range);
             if (index < 0) {
                 return IDateConvertService_1.DateRangeType.Day;
             }
@@ -209,12 +209,12 @@ var IDateConvertService_1 = require("./IDateConvertService");
                 return '';
             }
             if (mssOffset) {
-                result = localDate.startOf(range).add(mssOffset, 'milliseconds');
+                result = localDate.endOf(range).add(mssOffset, 'milliseconds');
             }
             else {
-                result = localDate.startOf(range);
+                result = localDate.endOf(range);
             }
-            return localDate.startOf(range).toDate();
+            return localDate.endOf(range).toDate();
         };
         DateConvert.prototype.toJson = function (date) {
             return JSON.stringify(moment(date));
@@ -273,10 +273,10 @@ var IDateConvertService_1 = require("./IDateConvertService");
             return this.toEndRange(date, IDateConvertService_1.DateRangeType.Day, offset);
         };
         DateConvert.prototype.toStartWeek = function (date) {
-            return this.toStartRange(date, IDateConvertService_1.DateRangeType.Week);
+            return this.toStartRange(date, IDateConvertService_1.DateRangeType.WeekFromSunday);
         };
         DateConvert.prototype.toEndWeek = function (date, offset) {
-            return this.toEndRange(date, IDateConvertService_1.DateRangeType.Week, offset);
+            return this.toEndRange(date, IDateConvertService_1.DateRangeType.WeekFromSunday, offset);
         };
         DateConvert.prototype.toStartMonth = function (date) {
             return this.toStartRange(date, IDateConvertService_1.DateRangeType.Month);

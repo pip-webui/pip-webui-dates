@@ -17,13 +17,13 @@ export interface IDateConvertService {
 
     addHours(date: any, hours: number): Date;
     toStartDay(date: any): Date;
-    toEndDay(date: any, offset: number): Date;
+    toEndDay(date: any, offset?: number): Date;
     toStartWeek(date: any): Date;
-    toEndWeek(date: any, offset: number): Date;
+    toEndWeek(date: any, offset?: number): Date;
     toStartMonth(date: any): Date;
-    toEndMonth(date: any, offset: number): Date;
+    toEndMonth(date: any, offset?: number): Date;
     toStartYear(date: any): Date;
-    toEndYear(date: any, offset: number): Date;
+    toEndYear(date: any, offset?: number): Date;
 }
 
 export interface IDateConvertProvider extends IDateConvertService, ng.IServiceProvider {
