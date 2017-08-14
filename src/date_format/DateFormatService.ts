@@ -70,7 +70,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
         private formatDay(value: any, basicFormat: string): string {
             let date: moment.Moment;
             let format = moment.localeData().longDateFormat(basicFormat ? basicFormat : this._defaultFormat);
-            let formatMonthYearless = format.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '').replace(/M/g, '').replace(/[.]/g, '');
+            let formatMonthYearless = format.replace(/Y/g, '').replace(/^\W|\W$|\W\W/, '').replace(/M/g, '').replace(/[./]/g, '');
 
             if (this.isUndefinedOrNull(value)) return '';
 
