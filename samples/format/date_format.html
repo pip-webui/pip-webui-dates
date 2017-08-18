@@ -310,3 +310,55 @@
         <td>{{ pastTime1 | formatLongElapsed }}</td>
     </tr>
 </table>
+
+
+<h2>Elapsed date</h2>
+<table>
+
+    <tr>
+        <td><b>formatShortElapsed</b></td>
+        <td>{{ pastTime2 | formatShortElapsed }}</td>
+    </tr>
+    <tr>
+        <td><b>formatMiddleElapsed</b></td>
+        <td>{{ pastTime2 | formatMiddleElapsed  }}</td>
+    </tr>
+    <tr>
+        <td><b>formatLongElapsed</b></td>
+        <td>{{ pastTime3 | formatLongElapsed }}</td>
+    </tr>
+</table>
+
+<h2>Elapsed from Time</h2>
+<table>
+
+    <tr>
+        <td><b>formatShortElapsed</b></td>
+        <td>{{ pastTime3 | formatShortElapsed : -24 : startDate1 }}</td>
+    </tr>
+    <tr>
+        <td><b>formatMiddleElapsed</b></td>
+        <td>{{ pastTime3 | formatMiddleElapsed : -24 : startDate1 }}</td>
+    </tr>
+    <tr>
+        <td><b>formatLongElapsed</b></td>
+        <td>{{ pastTime3 | formatLongElapsed : -24 : startDate1 }}</td>
+    </tr>
+</table>
+
+<h2>Elapsed from date</h2>
+<table>
+
+    <tr>
+        <td><b>formatShortElapsed</b></td>
+        <td>{{ pastTime4 | formatShortElapsed : -24 : startDate1 }}</td>
+    </tr>
+    <tr>
+        <td><b>formatMiddleElapsed</b></td>
+        <td>{{ pastTime4 | formatMiddleElapsed : -24 : startDate1 }}</td>
+    </tr>
+    <tr>
+        <td><b>formatLongElapsed</b></td>
+        <td>{{ pastTime4 | formatLongElapsed : -24 : startDate1 }}</td>
+    </tr>
+</table>

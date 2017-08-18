@@ -632,20 +632,20 @@ function formatElapsedIntervalFilter(pipDateFormat) {
 }
 function formatShortElapsedFilter(pipDateFormat) {
     "ngInject";
-    return function (value, hours) {
-        return pipDateFormat.formatShortElapsed(value, hours);
+    return function (value, hours, start) {
+        return pipDateFormat.formatShortElapsed(value, hours, start);
     };
 }
 function formatLongElapsedFilter(pipDateFormat) {
     "ngInject";
-    return function (value, hours) {
-        return pipDateFormat.formatLongElapsed(value, hours);
+    return function (value, hours, start) {
+        return pipDateFormat.formatLongElapsed(value, hours, start);
     };
 }
 function formatMiddleElapsedFilter(pipDateFormat) {
     "ngInject";
-    return function (value, hours) {
-        return pipDateFormat.formatMiddleElapsed(value, hours);
+    return function (value, hours, start) {
+        return pipDateFormat.formatMiddleElapsed(value, hours, start);
     };
 }
 function getDateJSONFilter(pipDateConvert) {
@@ -985,11 +985,19 @@ var IDateConvertService_1 = require("./IDateConvertService");
             }
             return moment(date).fromNow(nowDate);
         };
-        DateFormat.prototype.formatShortElapsed = function (value, hours) {
-            var date, nowDate = moment(), borderDate = _.cloneDeep(nowDate);
+        DateFormat.prototype.formatShortElapsed = function (value, hours, start) {
+            var date, nowDate, borderDate;
+            ;
             if (this.isUndefinedOrNull(value)) {
                 return '';
             }
+            if (this.isUndefinedOrNull(start)) {
+                nowDate = moment();
+            }
+            else {
+                nowDate = moment(start);
+            }
+            borderDate = _.cloneDeep(nowDate);
             date = moment(value);
             if (!date.isValid() || !nowDate.isValid()) {
                 return '';
@@ -1060,11 +1068,19 @@ var IDateConvertService_1 = require("./IDateConvertService");
             }
             return 'DATE_MINUTES_AFTER_FOOR';
         };
-        DateFormat.prototype.formatLongElapsed = function (value, hours) {
-            var date, nowDate = moment(), borderDate = _.cloneDeep(nowDate);
+        DateFormat.prototype.formatLongElapsed = function (value, hours, start) {
+            var date, nowDate, borderDate;
+            ;
             if (this.isUndefinedOrNull(value)) {
                 return '';
             }
+            if (this.isUndefinedOrNull(start)) {
+                nowDate = moment();
+            }
+            else {
+                nowDate = moment(start);
+            }
+            borderDate = _.cloneDeep(nowDate);
             date = moment(value);
             if (!date.isValid() || !nowDate.isValid()) {
                 return '';
@@ -1115,11 +1131,19 @@ var IDateConvertService_1 = require("./IDateConvertService");
                 return s;
             }
         };
-        DateFormat.prototype.formatMiddleElapsed = function (value, hours) {
-            var date, nowDate = moment(), borderDate = _.cloneDeep(nowDate);
+        DateFormat.prototype.formatMiddleElapsed = function (value, hours, start) {
+            var date, nowDate, borderDate;
+            ;
             if (this.isUndefinedOrNull(value)) {
                 return '';
             }
+            if (this.isUndefinedOrNull(start)) {
+                nowDate = moment();
+            }
+            else {
+                nowDate = moment(start);
+            }
+            borderDate = _.cloneDeep(nowDate);
             date = moment(value);
             if (!date.isValid() || !nowDate.isValid()) {
                 return '';

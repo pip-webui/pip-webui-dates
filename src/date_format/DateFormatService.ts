@@ -382,14 +382,21 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
             return moment(date).fromNow(nowDate);
         }
 
-        public formatShortElapsed(value: any, hours?: number): string {
+        public formatShortElapsed(value: any, hours?: number, start?: any): string {
             let date: moment.Moment,
-                nowDate: any = moment(),
-                borderDate: any = _.cloneDeep(nowDate);
+                nowDate: moment.Moment,
+                borderDate: moment.Moment; ;
 
             if (this.isUndefinedOrNull(value)) {
                 return '';
             }
+
+            if (this.isUndefinedOrNull(start)) {
+                nowDate = moment();
+            } else {
+                nowDate = moment(start);
+            }
+            borderDate = _.cloneDeep(nowDate) 
 
             date = moment(value);
             if (!date.isValid() || !nowDate.isValid()) {
@@ -469,14 +476,21 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
             return 'DATE_MINUTES_AFTER_FOOR'
         }
 
-        public formatLongElapsed(value: any, hours?: number): string {
+        public formatLongElapsed(value: any, hours?: number, start?: any): string {
             let date: moment.Moment,
-                nowDate: any = moment(),
-                borderDate: any = _.cloneDeep(nowDate);
+                nowDate: moment.Moment,
+                borderDate: moment.Moment; ;
 
             if (this.isUndefinedOrNull(value)) {
                 return '';
             }
+
+            if (this.isUndefinedOrNull(start)) {
+                nowDate = moment();
+            } else {
+                nowDate = moment(start);
+            }
+            borderDate = _.cloneDeep(nowDate) 
 
             date = moment(value);
             if (!date.isValid() || !nowDate.isValid()) {
@@ -533,14 +547,21 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
             }
         }
 
-        public formatMiddleElapsed(value: any, hours?: number): string {
+        public formatMiddleElapsed(value: any, hours?: number, start?: any): string {
             let date: moment.Moment,
-                nowDate: any = moment(),
-                borderDate: any = _.cloneDeep(nowDate);
+                nowDate: moment.Moment,
+                borderDate: moment.Moment; ;
 
             if (this.isUndefinedOrNull(value)) {
                 return '';
             }
+
+            if (this.isUndefinedOrNull(start)) {
+                nowDate = moment();
+            } else {
+                nowDate = moment(start);
+            }
+            borderDate = _.cloneDeep(nowDate) 
 
             date = moment(value);
             if (!date.isValid() || !nowDate.isValid()) {

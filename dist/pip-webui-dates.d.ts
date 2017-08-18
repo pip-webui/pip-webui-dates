@@ -71,9 +71,9 @@ export interface IDateFormatService {
     formatTodayDateShortTimeShort(value: any): string;
     formatMillisecondsToSeconds(value: any): string;
     formatElapsedInterval(value: any, start: any): string;
-    formatShortElapsed(value: any, hours?: number): string;
-    formatMiddleElapsed(value: any, hours?: number): string;
-    formatLongElapsed(value: any, hours?: number): string;
+    formatShortElapsed(value: any, hours?: number, start?: any): string;
+    formatMiddleElapsed(value: any, hours?: number, start?: any): string;
+    formatLongElapsed(value: any, hours?: number, start?: any): string;
 }
 export interface IDateFormatProvider extends IDateFormatService, ng.IServiceProvider {
 }

@@ -300,24 +300,24 @@ function formatElapsedIntervalFilter(pipDateFormat: IDateFormatService) {
 function formatShortElapsedFilter(pipDateFormat: IDateFormatService) {
     "ngInject";
 
-    return (value: any, hours?: number): string => {
-        return pipDateFormat.formatShortElapsed(value, hours);
+    return (value: any, hours?: number, start?: any): string => {
+        return pipDateFormat.formatShortElapsed(value, hours, start);
     }
 }
 
 function formatLongElapsedFilter(pipDateFormat: IDateFormatService) {
     "ngInject";
 
-    return (value: any, hours?: number): string => {
-        return pipDateFormat.formatLongElapsed(value, hours);
+    return (value: any, hours?: number, start?: any): string => {
+        return pipDateFormat.formatLongElapsed(value, hours, start);
     }
 }
 
 function formatMiddleElapsedFilter(pipDateFormat: IDateFormatService) {
     "ngInject";
 
-    return (value: any, hours?: number): string => {
-        return pipDateFormat.formatMiddleElapsed(value, hours);
+    return (value: any, hours?: number, start?: any): string => {
+        return pipDateFormat.formatMiddleElapsed(value, hours, start);
     }
 }
 

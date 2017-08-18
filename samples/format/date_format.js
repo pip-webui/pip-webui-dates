@@ -17,6 +17,19 @@
             $scope.pastTime1 = new Date(new Date().getTime() - 3 * 60 * 60 * 1000 - 3*60*1000);
             $scope.pastTime2 = new Date(new Date().getTime() - 100000000000);
 
+
+
+
+            $scope.pastTime = new Date(new Date().getTime() - 10000000000);
+            $scope.pastTime1 = new Date(new Date().getTime() - 3 * 60 * 60 * 1000 - 3*60*1000);
+            $scope.pastTime2 = new Date(new Date().getTime() - 48 * 60 * 60 * 1000 - 3*60*1000);
+            $scope.pastTime3 = new Date(new Date().getTime() - 140 * 60 * 60 * 1000 - 3*60*1000);
+            $scope.pastTime4 = new Date(new Date().getTime() - 3500 * 60 * 60 * 1000 - 3*60*1000);
+            $scope.startDate1 = new Date(new Date().getTime() - 120 * 60 * 60 * 1000 - 3*60*1000);
+
+
+
+
             $scope.longDate = pipDateFormat.formatLongDate($scope.currentTime);
             $scope.shortDate = pipDateFormat.formatShortDate($scope.currentTime);
             $scope.longDateWithoutYear = pipDateFormat.formatLongDateY($scope.currentTime);
@@ -56,12 +69,7 @@
             $scope.dateTimeRangeStart.text = pipDateFormat.formatDateTimeRange($scope.dateTimeRangeStart.start, $scope.dateTimeRangeStart.end);
             $scope.dateTimeRangeEnd.text = pipDateFormat.formatDateTimeRange($scope.dateTimeRangeEnd.start, $scope.dateTimeRangeEnd.end);
 
-            console.log('pipDateFormat', pipDateFormat.formatLongElapsed(new Date($scope.currentTime.getTime())));
-            console.log('pipDateFormat', pipDateFormat.formatLongElapsed(new Date($scope.currentTime.getTime() - 120 * 60 * 60 * 1000)));
-            console.log('pipDateFormat', pipDateFormat.formatLongElapsed(new Date($scope.currentTime.getTime() - 20 * 60 * 60 * 1000)));
-            console.log('pipDateFormat', pipDateFormat.formatLongElapsed(new Date($scope.currentTime.getTime() - 20 * 60 * 60 * 1000 - 560000)));
-            console.log('pipDateFormat', pipDateFormat.formatLongElapsed(new Date($scope.currentTime.getTime() - 3 * 60 * 60 * 1000 - 3*60*1000)));            
-            console.log('pipDateFormat', pipDateFormat.formatLongElapsed(new Date($scope.currentTime.getTime() - 20 * 60 * 60 * 1000 + 3 * 60 * 1000)));
+
 
             
 
