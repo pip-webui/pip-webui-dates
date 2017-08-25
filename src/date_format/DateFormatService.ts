@@ -533,7 +533,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                         if (m) {
                             s = moment.utc(ms).format("mm ") + pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                         } else {
-                            s = pipTranslate.translate('DATE_FEW_SECOND') + ' ' + pipTranslate.translate('DATE_ELAPSED');
+                            s = pipTranslate.translate('DATE_FEW_SECOND');
                         }
                     }
                 } else {
@@ -733,7 +733,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
 
             });
             pipTranslateProvider.translations('ru', {
-                DATE_ELAPSED: 'тн',
+                DATE_ELAPSED: 'назад',
                 DATE_HOUR_ONE: 'час',
                 DATE_HOUR_SHORT: 'ч.',
                 DATE_MINUTE_SHORT: 'мин.',
@@ -743,7 +743,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                 DATE_MINUTES_FEW: 'минуты',
                 DATE_MINUTES_AFTER_FOOR: 'минут',
                 DATE_FEW_SECOND: 'несколько секунд назад',
-                DATE_FEW_SECOND_SHORT: 'неск. сек. тн',
+                DATE_FEW_SECOND_SHORT: 'неск. с. назад',
             });
         }
 
