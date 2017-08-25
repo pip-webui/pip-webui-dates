@@ -42,7 +42,9 @@ export interface IDateFormatService {
     formatElapsedInterval(value: any, start: any): string;
     formatShortElapsed(value: any, hours?: number, start?: any): string;
     formatMiddleElapsed(value: any, hours?: number, start?: any): string;
-    formatLongElapsed(value: any, hours?: number, start?: any): string
+    formatLongElapsed(value: any, hours?: number, start?: any): string;
+    formatTimeShort(value: number): string;
+    formatTimeLong(value: number): string;
 }
 
 export interface IDateFormatProvider extends IDateFormatService, ng.IServiceProvider {

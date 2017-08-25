@@ -407,6 +407,8 @@ formatShortElapsedFilter.$inject = ['pipDateFormat'];
 formatLongElapsedFilter.$inject = ['pipDateFormat'];
 formatMiddleElapsedFilter.$inject = ['pipDateFormat'];
 getDateJSONFilter.$inject = ['pipDateConvert'];
+formatTimeShortFilter.$inject = ['pipDateFormat'];
+formatTimeLongFilter.$inject = ['pipDateFormat'];
 Object.defineProperty(exports, "__esModule", { value: true });
 function formatTimeFilter(pipDateFormat) {
     "ngInject";
@@ -654,6 +656,18 @@ function getDateJSONFilter(pipDateConvert) {
         return pipDateConvert.toJson(value);
     };
 }
+function formatTimeShortFilter(pipDateFormat) {
+    "ngInject";
+    return function (value) {
+        return pipDateFormat.formatTimeShort(value);
+    };
+}
+function formatTimeLongFilter(pipDateFormat) {
+    "ngInject";
+    return function (value) {
+        return pipDateFormat.formatTimeLong(value);
+    };
+}
 angular
     .module('pipDate.Filter', [])
     .filter('formatTime', formatTimeFilter)
@@ -695,7 +709,9 @@ angular
     .filter('formatElapsedInterval', formatElapsedIntervalFilter)
     .filter('formatShortElapsed', formatShortElapsedFilter)
     .filter('formatMiddleElapsed', formatMiddleElapsedFilter)
-    .filter('formatLongElapsed', formatLongElapsedFilter);
+    .filter('formatLongElapsed', formatLongElapsedFilter)
+    .filter('formatTimeShort', formatTimeShortFilter)
+    .filter('formatTimeLong', formatTimeLongFilter);
 },{}],4:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
@@ -717,6 +733,10 @@ var IDateConvertService_1 = require("./IDateConvertService");
             this.$injector = $injector;
             this._momentRanged = IDateConvertService_1.DateRangeType.All;
             this._defaultFormat = 'LL';
+            this.oneHour = 60 * 60 * 1000;
+            this.oneMinute = 60 * 1000;
+            this.oneSeccond = 1000;
+            this.oneDay = 24 * 60 * 60 * 1000;
         }
         Object.defineProperty(DateFormat.prototype, "defaultTimeZoneOffset", {
             get: function () {
@@ -1193,6 +1213,82 @@ var IDateConvertService_1 = require("./IDateConvertService");
                 }
                 return s;
             }
+        };
+        DateFormat.prototype.formatTimeShort = function (value) {
+            if (value <= 0)
+                return '';
+            var s = '';
+            var h = Math.floor(value / this.oneHour);
+            var m = Math.floor((value - h * this.oneHour) / this.oneMinute);
+            var pipTranslate = this.$injector.has('pipTranslate') ? this.$injector.get('pipTranslate') : null;
+            if (pipTranslate) {
+                var hString = 'DATE_HOUR_SHORT';
+                var mString = 'DATE_MINUTE_SHORT';
+                if (h) {
+                    s = h + ' ' + pipTranslate.translate(hString) + ' ' +
+                        ("0" + m).substr(-2, 2) + ' ' + pipTranslate.translate(mString);
+                }
+                else {
+                    if (m) {
+                        s = m + ' ' + pipTranslate.translate(mString);
+                    }
+                    else {
+                        s = pipTranslate.translate('DATE_FEW_SECOND_SHORT');
+                    }
+                }
+            }
+            else {
+                if (h) {
+                    s = h + ' h. ' + ("0" + m).substr(-2, 2) + ' min.';
+                }
+                else {
+                    if (m) {
+                        s = m + ' min.';
+                    }
+                    else {
+                        s = 'few sec.';
+                    }
+                }
+            }
+            return s;
+        };
+        DateFormat.prototype.formatTimeLong = function (value) {
+            if (value <= 0)
+                return '';
+            var s = '';
+            var h = Math.floor(value / this.oneHour);
+            var m = Math.floor((value - h * this.oneHour) / this.oneMinute);
+            var pipTranslate = this.$injector.has('pipTranslate') ? this.$injector.get('pipTranslate') : null;
+            if (pipTranslate) {
+                var hString = this.getHoursString(h);
+                var mString = this.getMinutesString(m);
+                if (h) {
+                    s = h + ' ' + pipTranslate.translate(hString) + ' ' +
+                        ("0" + m).substr(-2, 2) + ' ' + pipTranslate.translate(mString);
+                }
+                else {
+                    if (m) {
+                        s = m + ' ' + pipTranslate.translate(mString);
+                    }
+                    else {
+                        s = pipTranslate.translate('DATE_FEW_SECOND');
+                    }
+                }
+            }
+            else {
+                if (h) {
+                    s = h + ' hours ' + ("0" + m).substr(-2, 2) + ' minutes';
+                }
+                else {
+                    if (m) {
+                        s = m + ' minutes';
+                    }
+                    else {
+                        s = 'few second';
+                    }
+                }
+            }
+            return s;
         };
         DateFormat.prototype.getDateJSON = function (date) {
             return JSON.stringify(moment(date));
@@ -2122,22 +2218,6 @@ try {
   module = angular.module('pipDates.Templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('time_range/TimeRange.html',
-    '<p>\n' +
-    '    <span ng-if="$ctrl.data.start != null">{{$ctrl.data.start | formatLongDateTime}}</span>\n' +
-    '    <span  class="separator" ng-if="$ctrl.data.start && $ctrl.data.end"> - </span>\n' +
-    '    <span ng-if="$ctrl.data.end != null">{{$ctrl.data.end | formatLongDateTime}}</span>\n' +
-    '</p>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('pipDates.Templates');
-} catch (e) {
-  module = angular.module('pipDates.Templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('time_range_edit/TimeRangeEdit.html',
     '<div class="event-edit layout-row layout-xs-column flex layout-align-start-start">\n' +
     '    <div flex="47" class="start-time-container ">\n' +
@@ -2189,6 +2269,22 @@ module.run(['$templateCache', function($templateCache) {
     '    </div>\n' +
     '</div>\n' +
     '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('pipDates.Templates');
+} catch (e) {
+  module = angular.module('pipDates.Templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('time_range/TimeRange.html',
+    '<p>\n' +
+    '    <span ng-if="$ctrl.data.start != null">{{$ctrl.data.start | formatLongDateTime}}</span>\n' +
+    '    <span  class="separator" ng-if="$ctrl.data.start && $ctrl.data.end"> - </span>\n' +
+    '    <span ng-if="$ctrl.data.end != null">{{$ctrl.data.end | formatLongDateTime}}</span>\n' +
+    '</p>');
 }]);
 })();
 

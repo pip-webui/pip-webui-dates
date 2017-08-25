@@ -7,6 +7,11 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
         protected _defaultFormat: string = 'LL'
 
         private _defaultTimeZoneOffset: number;
+        private oneHour: number = 60 * 60 * 1000;
+        private oneMinute: number = 60 * 1000;
+        private oneSeccond: number = 1000;
+        private oneDay: number = 24 * 60 * 60 * 1000;
+
 
         public constructor(
             private $injector: angular.auto.IInjectorService
@@ -385,7 +390,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
         public formatShortElapsed(value: any, hours?: number, start?: any): string {
             let date: moment.Moment,
                 nowDate: moment.Moment,
-                borderDate: moment.Moment; ;
+                borderDate: moment.Moment;;
 
             if (this.isUndefinedOrNull(value)) {
                 return '';
@@ -396,7 +401,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
             } else {
                 nowDate = moment(start);
             }
-            borderDate = _.cloneDeep(nowDate) 
+            borderDate = _.cloneDeep(nowDate)
 
             date = moment(value);
             if (!date.isValid() || !nowDate.isValid()) {
@@ -420,8 +425,8 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                 let s: string;
 
                 let pipTranslate: any = this.$injector.has('pipTranslate') ? this.$injector.get('pipTranslate') : null;
-                    let h = Math.floor(diff.asHours());
-                    let m = Math.floor(diff.asMinutes() - 60 * h);
+                let h = Math.floor(diff.asHours());
+                let m = Math.floor(diff.asMinutes() - 60 * h);
 
                 if (pipTranslate) {
                     let hString: string = this.getHoursString(h);
@@ -437,13 +442,13 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                     }
                 } else {
                     if (h) {
-                         s = Math.floor(diff.asHours()) + moment.utc(ms).format(":mm ") + ' ago';
+                        s = Math.floor(diff.asHours()) + moment.utc(ms).format(":mm ") + ' ago';
                     } else {
                         if (m) {
                             s = moment.utc(ms).format("mm min.") + ' ago';
                         } else {
                             s = 'few sec. ago';
-                        }                        
+                        }
                     }
                 }
 
@@ -479,7 +484,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
         public formatLongElapsed(value: any, hours?: number, start?: any): string {
             let date: moment.Moment,
                 nowDate: moment.Moment,
-                borderDate: moment.Moment; ;
+                borderDate: moment.Moment;;
 
             if (this.isUndefinedOrNull(value)) {
                 return '';
@@ -490,7 +495,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
             } else {
                 nowDate = moment(start);
             }
-            borderDate = _.cloneDeep(nowDate) 
+            borderDate = _.cloneDeep(nowDate)
 
             date = moment(value);
             if (!date.isValid() || !nowDate.isValid()) {
@@ -539,7 +544,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                             s = moment.utc(ms).format("mm minutes") + ' ago';
                         } else {
                             s = 'few second ago';
-                        }                        
+                        }
                     }
                 }
 
@@ -550,7 +555,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
         public formatMiddleElapsed(value: any, hours?: number, start?: any): string {
             let date: moment.Moment,
                 nowDate: moment.Moment,
-                borderDate: moment.Moment; ;
+                borderDate: moment.Moment;;
 
             if (this.isUndefinedOrNull(value)) {
                 return '';
@@ -561,7 +566,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
             } else {
                 nowDate = moment(start);
             }
-            borderDate = _.cloneDeep(nowDate) 
+            borderDate = _.cloneDeep(nowDate)
 
             date = moment(value);
             if (!date.isValid() || !nowDate.isValid()) {
@@ -610,12 +615,83 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                             s = moment.utc(ms).format("mm min.") + ' ago';
                         } else {
                             s = 'few sec. ago';
-                        }                        
+                        }
                     }
                 }
 
                 return s;
             }
+        }
+
+        public formatTimeShort(value: number): string {
+            if (value <= 0) return '';
+
+            let s: string = '';
+            let h = Math.floor(value / this.oneHour);
+            let m = Math.floor((value - h * this.oneHour) / this.oneMinute);
+            let pipTranslate: any = this.$injector.has('pipTranslate') ? this.$injector.get('pipTranslate') : null;
+            if (pipTranslate) {
+                let hString: string = 'DATE_HOUR_SHORT';
+                let mString: string = 'DATE_MINUTE_SHORT';
+                if (h) {
+                    s = h + ' ' + pipTranslate.translate(hString) + ' ' +
+                        ("0" + m).substr(-2, 2) + ' ' + pipTranslate.translate(mString);
+                } else {
+                    if (m) {
+                        s = m + ' ' + pipTranslate.translate(mString);
+                    } else {
+                        s = pipTranslate.translate('DATE_FEW_SECOND_SHORT');
+                    }
+                }
+            } else {
+                if (h) {
+                    s = h + ' h. ' + ("0" + m).substr(-2, 2) + ' min.';
+                } else {
+                    if (m) {
+                        s = m + ' min.';
+                    } else {
+                        s = 'few sec.';
+                    }
+                }
+            }
+
+            return s;
+        }
+
+        public formatTimeLong(value: number): string {
+            if (value <= 0) return '';
+
+            let s: string = '';
+            let h = Math.floor(value / this.oneHour);
+            let m = Math.floor((value - h * this.oneHour) / this.oneMinute);
+            let pipTranslate: any = this.$injector.has('pipTranslate') ? this.$injector.get('pipTranslate') : null;
+            if (pipTranslate) {
+                    let hString: string = this.getHoursString(h);
+                    let mString: string = this.getMinutesString(m);
+                if (h) {
+                    
+                    s = h + ' ' + pipTranslate.translate(hString) + ' ' +
+                        ("0" + m).substr(-2, 2) + ' ' + pipTranslate.translate(mString);
+                } else {
+                    if (m) {
+                        s = m + ' ' + pipTranslate.translate(mString);
+                    } else {
+                        s = pipTranslate.translate('DATE_FEW_SECOND');
+                    }
+                }
+            } else {
+                if (h) {
+                    s = h + ' hours ' + ("0" + m).substr(-2, 2) + ' minutes';
+                } else {
+                    if (m) {
+                        s = m + ' minutes';
+                    } else {
+                        s = 'few second';
+                    }
+                }
+            }
+
+            return s;
         }
 
         public getDateJSON(date: any): string {
@@ -660,7 +736,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                 DATE_ELAPSED: 'тн',
                 DATE_HOUR_ONE: 'час',
                 DATE_HOUR_SHORT: 'ч.',
-                DATE_MINUTE_SHORT: 'мин.',                
+                DATE_MINUTE_SHORT: 'мин.',
                 DATE_HOURS_FEW: 'часа',
                 DATE_HOURS_AFTER_FOOR: 'часов',
                 DATE_MINUTE_ONE: 'минуту',

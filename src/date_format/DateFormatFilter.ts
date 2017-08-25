@@ -329,6 +329,21 @@ function getDateJSONFilter(pipDateConvert: IDateConvertService) {
     }
 }
 
+function formatTimeShortFilter(pipDateFormat: IDateFormatService) {
+    "ngInject";
+
+    return (value: number): string => {
+        return pipDateFormat.formatTimeShort(value);
+    }
+}
+
+function formatTimeLongFilter(pipDateFormat: IDateFormatService) {
+    "ngInject";
+
+    return (value: number): string => {
+        return pipDateFormat.formatTimeLong(value);
+    }
+}
 angular
     .module('pipDate.Filter', [])
     .filter('formatTime', formatTimeFilter)
@@ -370,4 +385,6 @@ angular
     .filter('formatElapsedInterval', formatElapsedIntervalFilter)
     .filter('formatShortElapsed', formatShortElapsedFilter)
     .filter('formatMiddleElapsed', formatMiddleElapsedFilter)
-    .filter('formatLongElapsed', formatLongElapsedFilter);
+    .filter('formatLongElapsed', formatLongElapsedFilter)
+    .filter('formatTimeShort', formatTimeShortFilter)
+    .filter('formatTimeLong', formatTimeLongFilter);
