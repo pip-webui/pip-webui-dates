@@ -1044,7 +1044,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                     }
                     else {
                         if (m) {
-                            s = moment.utc(ms).format("m ") + pipTranslate.translate('DATE_ELAPSED');
+                            s = moment.utc(ms).format("m") + pipTranslate.translate('DATE_ELAPSED');
                         }
                         else {
                             s = pipTranslate.translate('DATE_FEW_SECOND_SHORT');
@@ -1128,7 +1128,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                     }
                     else {
                         if (m) {
-                            s = moment.utc(ms).format("m ") + pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
+                            s = moment.utc(ms).format("m") + pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                         }
                         else {
                             s = pipTranslate.translate('DATE_FEW_SECOND');
@@ -1191,7 +1191,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                     }
                     else {
                         if (m) {
-                            s = moment.utc(ms).format("m ") + pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
+                            s = moment.utc(ms).format("m") + pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                         }
                         else {
                             s = pipTranslate.translate('DATE_FEW_SECOND_SHORT') + ' ' + pipTranslate.translate('DATE_ELAPSED');
@@ -1204,7 +1204,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                     }
                     else {
                         if (m) {
-                            s = moment.utc(ms).format("m ") + ' min. ago';
+                            s = moment.utc(ms).format("m") + ' min. ago';
                         }
                         else {
                             s = 'few sec. ago';
