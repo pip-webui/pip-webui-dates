@@ -50,13 +50,11 @@
             // let strD1 = "2017-05-15T00:00:00-03:00";
 
 
-            let yyy = moment('2017-02-08T00:00:00+03:00').startOf('day');
-            console.log('now day local', yyy.format());
-            console.log('yyy', moment('2017-02-08T00:00:00+03:00').tz('Europe/Kiev').startOf('day'));
-            console.log('yyy111', moment('2017-02-08T00:00:00+03:00').tz('Europe/Kiev').startOf('day').toDate());
-            console.log('yyy111', moment('2017-02-08T00:00:00+03:00').tz('Europe/Kiev').startOf('day').format());
-            console.log('yyy111', moment('2017-02-08T00:00:00+03:00').tz('Europe/Kiev').startOf('day').toDate());
-console.log('utcOffset Europe/Kiev', moment(new Date()).tz("Europe/Kiev").utcOffset());
+            console.log('2017-06-15T00:00:00+04:00');
+            console.log('yyy', moment('2017-06-15T00:00:00+04:00').tz('Indian/Mauritius'|| 'UTC').startOf('day'));
+            console.log('yyy111', moment('2017-06-15T00:00:00+04:00').tz('Indian/Mauritius'|| 'UTC').startOf('day').toDate());
+            console.log('yyy222', moment('2017-06-15T00:00:00+04:00').tz('Indian/Mauritius'|| 'UTC').startOf('day').format());
+console.log('utcOffset Indian/Mauritius', moment(new Date()).tz("Indian/Mauritius" || 'UTC').utcOffset());
 
 
             let my1 = moment(new Date()).startOf('day');

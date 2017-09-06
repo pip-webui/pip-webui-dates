@@ -25,8 +25,8 @@ export interface IDateConvertService {
     toStartYear(date: any): Date;
     toEndYear(date: any, offset?: number): Date;
 
-    toTimeZoneToString(date: any, tzOffset?: number, offset?: number): string;
-    fromTimeZoneToString(date: any, tzOffset?: number, offset?: number): string;
+    // toTimeZoneToString(date: any, tzOffset?: number, offset?: number): string;
+    // fromTimeZoneToString(date: any, tzOffset?: number, offset?: number): string;
 }
 
 export interface IDateConvertProvider extends IDateConvertService, ng.IServiceProvider {

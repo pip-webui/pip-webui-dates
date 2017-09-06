@@ -290,16 +290,6 @@ var IDateConvertService_1 = require("./IDateConvertService");
         DateConvert.prototype.toEndYear = function (date, offset) {
             return this.toEndRange(date, IDateConvertService_1.DateRangeType.Year, offset);
         };
-        DateConvert.prototype.toTimeZoneToString = function (date, tzOffset, offset) {
-            tzOffset = tzOffset !== null && tzOffset !== undefined ? tzOffset : 0;
-            offset = offset ? offset : 0;
-            return moment(date).add(offset - tzOffset, 'minutes').format();
-        };
-        DateConvert.prototype.fromTimeZoneToString = function (date, tzOffset, offset) {
-            tzOffset = tzOffset !== null && tzOffset !== undefined ? tzOffset : 0;
-            offset = offset ? offset : 0;
-            return moment(date).add(tzOffset - offset, 'minutes').format();
-        };
         return DateConvert;
     }());
     var DateConvertService = (function () {
@@ -354,12 +344,6 @@ var IDateConvertService_1 = require("./IDateConvertService");
         };
         DateConvertService.prototype.toEndYear = function (date, offset) {
             return this._convert.toEndYear(date, offset);
-        };
-        DateConvertService.prototype.toTimeZoneToString = function (date, tzOffset, offset) {
-            return this._convert.toTimeZoneToString(date, tzOffset, offset);
-        };
-        DateConvertService.prototype.fromTimeZoneToString = function (date, tzOffset, offset) {
-            return this._convert.fromTimeZoneToString(date, tzOffset, offset);
         };
         return DateConvertService;
     }());
@@ -1060,7 +1044,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                     }
                     else {
                         if (m) {
-                            s = moment.utc(ms).format("m") + pipTranslate.translate('DATE_ELAPSED');
+                            s = moment.utc(ms).format("m") + ' ' + pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                         }
                         else {
                             s = pipTranslate.translate('DATE_FEW_SECOND_SHORT');
@@ -1144,7 +1128,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                     }
                     else {
                         if (m) {
-                            s = moment.utc(ms).format("m") + pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
+                            s = moment.utc(ms).format("m") + ' ' + pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                         }
                         else {
                             s = pipTranslate.translate('DATE_FEW_SECOND');
@@ -1207,7 +1191,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                     }
                     else {
                         if (m) {
-                            s = moment.utc(ms).format("m") + pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
+                            s = moment.utc(ms).format("m") + ' ' + pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                         }
                         else {
                             s = pipTranslate.translate('DATE_FEW_SECOND_SHORT') + ' ' + pipTranslate.translate('DATE_ELAPSED');
