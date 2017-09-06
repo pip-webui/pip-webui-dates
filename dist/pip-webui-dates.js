@@ -290,6 +290,16 @@ var IDateConvertService_1 = require("./IDateConvertService");
         DateConvert.prototype.toEndYear = function (date, offset) {
             return this.toEndRange(date, IDateConvertService_1.DateRangeType.Year, offset);
         };
+        DateConvert.prototype.toTimeZoneToString = function (date, tzOffset, offset) {
+            tzOffset = tzOffset !== null && tzOffset !== undefined ? tzOffset : 0;
+            offset = offset ? offset : 0;
+            return moment(date).add(offset - tzOffset, 'minutes').format();
+        };
+        DateConvert.prototype.fromTimeZoneToString = function (date, tzOffset, offset) {
+            tzOffset = tzOffset !== null && tzOffset !== undefined ? tzOffset : 0;
+            offset = offset ? offset : 0;
+            return moment(date).add(tzOffset - offset, 'minutes').format();
+        };
         return DateConvert;
     }());
     var DateConvertService = (function () {
@@ -344,6 +354,12 @@ var IDateConvertService_1 = require("./IDateConvertService");
         };
         DateConvertService.prototype.toEndYear = function (date, offset) {
             return this._convert.toEndYear(date, offset);
+        };
+        DateConvertService.prototype.toTimeZoneToString = function (date, tzOffset, offset) {
+            return this._convert.toTimeZoneToString(date, tzOffset, offset);
+        };
+        DateConvertService.prototype.fromTimeZoneToString = function (date, tzOffset, offset) {
+            return this._convert.fromTimeZoneToString(date, tzOffset, offset);
         };
         return DateConvertService;
     }());

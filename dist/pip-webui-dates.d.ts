@@ -4,6 +4,8 @@ declare module pip.dates {
 
 
 
+
+
 export class DateRangeType {
     static Year: string;
     static Month: string;
@@ -27,6 +29,8 @@ export interface IDateConvertService {
     toEndMonth(date: any, offset?: number): Date;
     toStartYear(date: any): Date;
     toEndYear(date: any, offset?: number): Date;
+    toTimeZoneToString(date: any, tzOffset?: number, offset?: number): string;
+    fromTimeZoneToString(date: any, tzOffset?: number, offset?: number): string;
 }
 export interface IDateConvertProvider extends IDateConvertService, ng.IServiceProvider {
 }
@@ -79,8 +83,6 @@ export interface IDateFormatService {
 }
 export interface IDateFormatProvider extends IDateFormatService, ng.IServiceProvider {
 }
-
-
 
 
 

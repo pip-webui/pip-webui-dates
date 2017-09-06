@@ -2,14 +2,14 @@ export class DateRangeType {
     static Year: string = 'year';
     static Month: string = 'month';
     static Week: string = 'week';
-    static WeekFromSunday: string = 'isoweek'; 
+    static WeekFromSunday: string = 'isoweek';
     static Day: string = 'day';
-    static All: string[] = ['year', 'month', 'week', 'isoweek', 'day'] 
+    static All: string[] = ['year', 'month', 'week', 'isoweek', 'day']
 }
 
 export interface IDateConvertService {
     defaultTimeZoneOffset: number;
-    
+
     toJson(date: any): string;
     toNextRange(date: any, type: string): Date;
     toPrevRange(date: any, type: string): Date;
@@ -24,6 +24,9 @@ export interface IDateConvertService {
     toEndMonth(date: any, offset?: number): Date;
     toStartYear(date: any): Date;
     toEndYear(date: any, offset?: number): Date;
+
+    toTimeZoneToString(date: any, tzOffset?: number, offset?: number): string;
+    fromTimeZoneToString(date: any, tzOffset?: number, offset?: number): string;
 }
 
 export interface IDateConvertProvider extends IDateConvertService, ng.IServiceProvider {

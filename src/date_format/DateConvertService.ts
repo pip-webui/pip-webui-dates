@@ -210,6 +210,20 @@ import { DateRangeType, IDateConvertService, IDateConvertProvider } from './IDat
             return this.toEndRange(date, DateRangeType.Year, offset);
         }
 
+        public toTimeZoneToString(date: any, tzOffset?: number, offset?: number): string {
+            tzOffset = tzOffset !== null && tzOffset !== undefined ? tzOffset : 0;
+            offset = offset ? offset : 0; 
+
+            return moment(date).add(offset - tzOffset, 'minutes').format();
+        }
+
+        public fromTimeZoneToString(date: any, tzOffset?: number, offset?: number): string {
+            tzOffset = tzOffset !== null && tzOffset !== undefined ? tzOffset : 0;
+            offset = offset ? offset : 0; 
+
+            return moment(date).add(tzOffset - offset, 'minutes').format();
+        }
+
     }
 
     class DateConvertService {
@@ -284,6 +298,13 @@ import { DateRangeType, IDateConvertService, IDateConvertProvider } from './IDat
             return this._convert.toEndYear(date, offset);
         }
 
+        public toTimeZoneToString(date: any, tzOffset?: number, offset?: number): string {
+            return this._convert.toTimeZoneToString(date, tzOffset, offset);
+        }
+
+        public fromTimeZoneToString(date: any, tzOffset?: number, offset?: number): string {
+            return this._convert.fromTimeZoneToString(date, tzOffset, offset);
+        }
     }
 
     class DateConvertProvider extends DateConvert implements IDateConvertProvider {
