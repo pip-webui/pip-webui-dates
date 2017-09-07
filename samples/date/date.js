@@ -39,52 +39,71 @@
 
             //---------------------- test
             moment.tz.add(zones);
-            // console.log('zones name', moment.tz.names());
-            // let my = moment();
-            // let american = my.clone().tz("America/Los_Angeles");
-            // console.log('offset 1', my.format());
-            // console.log('offset 2', american.format());
-            // // console.log('offset 3', american.toDate());
-            // console.log('offset 3', american.clone().utcOffset(0).toDate());
-            // let strD = "2017-05-15T00:00:00+03:00";
-            // let strD1 = "2017-05-15T00:00:00-03:00";
 
 
-            console.log('2017-06-15T00:00:00+04:00');
-            console.log('yyy', moment('2017-06-15T00:00:00+04:00').tz('Indian/Mauritius'|| 'UTC').startOf('day'));
-            console.log('yyy111', moment('2017-06-15T00:00:00+04:00').tz('Indian/Mauritius'|| 'UTC').startOf('day').toDate());
-            console.log('yyy222', moment('2017-06-15T00:00:00+04:00').tz('Indian/Mauritius'|| 'UTC').startOf('day').format());
-console.log('utcOffset Indian/Mauritius', moment(new Date()).tz("Indian/Mauritius" || 'UTC').utcOffset());
+            let yy = '2017-06-15T00:00:00+02:00';
+            let yy1 = '2017-06-15T00:00:00-06:00';
+            let yy2 = '2017-06-15T00:00:00+00:00';
 
 
-            let my1 = moment(new Date()).startOf('day');
-            let my2 = moment(new Date()).startOf('day');
-            console.log('now day local', my1.format());
-            let serverOffset = moment(new Date()).tz("America/Los_Angeles").utcOffset();
-            let utcOffset = moment(new Date()).tz('UTC').utcOffset();
-            let localOffset = moment(new Date()).utcOffset();
-            console.log('utcOffset', utcOffset);
+            console.log('yy format', moment(yy).tz('Indian/Mauritius').format());
+            console.log('yy toISOString', moment(yy).tz('Indian/Mauritius').toISOString());
+            console.log('yy toDate', moment(yy).toDate());
+            console.log('yy tz toDate', moment(yy).tz('Indian/Mauritius').toDate());
+            console.log('yy utc format', moment.utc(yy).tz('Indian/Mauritius').format());
+            console.log('yy utc toISOString', moment.utc(yy).tz('Indian/Mauritius').toISOString());
+            console.log('yy utc toDate', moment.utc(yy).tz('Indian/Mauritius').toDate());
+            console.log('yy utc format toISOString', moment.utc(moment(yy).tz('Indian/Mauritius').format()).toISOString());
 
-            let t1 = my1.format();
-            let t2 = my2.add('minutes', localOffset - serverOffset).format();
+            console.log('yy1 format', moment(yy1).tz('Indian/Mauritius').format());
+            console.log('yy1 toISOString', moment(yy1).tz('Indian/Mauritius').toISOString());
+            console.log('yy1 tz toDate', moment(yy1).tz('Indian/Mauritius').toDate());
+            console.log('yy1 utc format', moment.utc(yy1).tz('Indian/Mauritius').format());
+            console.log('yy1 utc toISOString', moment.utc(yy1).tz('Indian/Mauritius').toISOString());
+            console.log('yy1 utc toDate', moment.utc(yy1).tz('Indian/Mauritius').toDate());
+            console.log('yy1 utc format toISOString', moment.utc(moment(yy1).tz('Indian/Mauritius').format()).toISOString());
 
-            console.log('t1', t1);
-            console.log('t2', t2);
+            console.log('yy2 format', moment(yy2).tz('Indian/Mauritius').format());
+            console.log('yy2 toISOString', moment(yy2).tz('Indian/Mauritius').toISOString());
+            console.log('yy2 tz toDate', moment(yy2).tz('Indian/Mauritius').toDate());
+            console.log('yy2 utc format', moment.utc(yy2).tz('Indian/Mauritius').format());
+            console.log('yy2 utc toISOString', moment.utc(yy2).tz('Indian/Mauritius').toISOString());
+            console.log('yy2 utc toDate', moment.utc(yy2).tz('Indian/Mauritius').toDate());
+            console.log('yy2 utc format toISOString', moment.utc(moment(yy2).tz('Indian/Mauritius').format()).toISOString());
 
-            let dd1 = moment(t1).tz("America/Los_Angeles" || 'UTC');
-            let ddd1 = moment(t1).tz("America/Los_Angeles" || 'UTC').startOf('day');
-            console.log('dd1', dd1.format());
-            console.log('ddd1', ddd1.format());
+
+            console.log('startof');
+            console.log('yy tz toDate', moment(yy).tz('Indian/Mauritius').startOf('day').toISOString());
+            console.log('yy1 tz toDate', moment(yy1).tz('Indian/Mauritius').startOf('day').toISOString());
+            console.log('yy2 tz toDate', moment(yy2).tz('Indian/Mauritius').startOf('day').toISOString());
+            // let my1 = moment(new Date()).startOf('day');
+            // let my2 = moment(new Date()).startOf('day');
+            // console.log('now day local', my1.format());
+            // let serverOffset = moment(new Date()).tz("America/Los_Angeles").utcOffset();
+            // let utcOffset = moment(new Date()).tz('UTC').utcOffset();
+            // let localOffset = moment(new Date()).utcOffset();
+            // console.log('utcOffset', utcOffset);
+
+            // let t1 = my1.format();
+            // let t2 = my2.add('minutes', localOffset - serverOffset).format();
+
+            // console.log('t1', t1);
+            // console.log('t2', t2);
+
+            // let dd1 = moment(t1).tz("America/Los_Angeles" || 'UTC');
+            // let ddd1 = moment(t1).tz("America/Los_Angeles" || 'UTC').startOf('day');
+            // console.log('dd1', dd1.format());
+            // console.log('ddd1', ddd1.format());
 
 
-            let dd2 = moment(t2).tz("America/Los_Angeles" || 'UTC');
-            let ddd2 = moment(t2).tz("America/Los_Angeles" || 'UTC').startOf('day');
-            console.log('dd2', dd2.format());
-            console.log('ddd2', ddd2.format());
+            // let dd2 = moment(t2).tz("America/Los_Angeles" || 'UTC');
+            // let ddd2 = moment(t2).tz("America/Los_Angeles" || 'UTC').startOf('day');
+            // console.log('dd2', dd2.format());
+            // console.log('ddd2', ddd2.format());
 
-            let fromServer = "2017-09-05T00:00:00-07:00";
-            let dd3 = moment(fromServer).add('minutes', serverOffset - localOffset);
-            console.log('dd3', dd3.toDate());
+            // let fromServer = "2017-09-05T00:00:00-07:00";
+            // let dd3 = moment(fromServer).add('minutes', serverOffset - localOffset);
+            // console.log('dd3', dd3.toDate());
 
             // ---------------------------------
 
