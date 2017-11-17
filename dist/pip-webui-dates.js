@@ -1173,7 +1173,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
             }
             borderDate.add(hours, 'hours');
             if (date.isBefore(borderDate)) {
-                return this.formatMiddleDateTime(date);
+                return this.formatMiddleDateLongTime(date);
             }
             else {
                 var ms = nowDate.diff(date);

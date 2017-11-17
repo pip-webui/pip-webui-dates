@@ -582,7 +582,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
 
             if (date.isBefore(borderDate)) {
                 // return date
-                return this.formatMiddleDateTime(date);
+                return this.formatMiddleDateLongTime(date);
             } else {
                 // return time
                 let ms = nowDate.diff(date);
