@@ -1047,7 +1047,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                             s = moment.utc(ms).format("m") + ' ' + pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                         }
                         else {
-                            s = pipTranslate.translate('DATE_FEW_SECOND_SHORT');
+                            s = pipTranslate.translate('DATE_FEW_SECOND_SHORT_ELAPSED');
                         }
                     }
                 }
@@ -1131,7 +1131,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                             s = moment.utc(ms).format("m") + ' ' + pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                         }
                         else {
-                            s = pipTranslate.translate('DATE_FEW_SECOND');
+                            s = pipTranslate.translate('DATE_FEW_SECOND_ELAPSED');
                         }
                     }
                 }
@@ -1194,7 +1194,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                             s = moment.utc(ms).format("m") + ' ' + pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                         }
                         else {
-                            s = pipTranslate.translate('DATE_FEW_SECOND_SHORT') + ' ' + pipTranslate.translate('DATE_ELAPSED');
+                            s = pipTranslate.translate('DATE_FEW_SECOND_SHORT_ELAPSED') + ' ' + pipTranslate.translate('DATE_ELAPSED');
                         }
                     }
                 }
@@ -1220,6 +1220,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
             var s = '';
             var h = Math.floor(value / this.oneHour);
             var m = Math.floor((value - h * this.oneHour) / this.oneMinute);
+            var sec = Math.floor((value - h * this.oneHour - m * this.oneMinute) / this.oneSeccond);
             var pipTranslate = this.$injector.has('pipTranslate') ? this.$injector.get('pipTranslate') : null;
             if (pipTranslate) {
                 var hString = 'DATE_HOUR_SHORT';
@@ -1233,7 +1234,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                         s = m + ' ' + pipTranslate.translate(mString);
                     }
                     else {
-                        s = pipTranslate.translate('DATE_FEW_SECOND_SHORT');
+                        s = sec + ' ' + pipTranslate.translate('DATE_FEW_SECOND_SHORT');
                     }
                 }
             }
@@ -1246,7 +1247,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                         s = m + ' min.';
                     }
                     else {
-                        s = 'few sec.';
+                        s = sec + ' sec.';
                     }
                 }
             }
@@ -1258,6 +1259,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
             var s = '';
             var h = Math.floor(value / this.oneHour);
             var m = Math.floor((value - h * this.oneHour) / this.oneMinute);
+            var sec = Math.floor((value - h * this.oneHour - m * this.oneMinute) / this.oneSeccond);
             var pipTranslate = this.$injector.has('pipTranslate') ? this.$injector.get('pipTranslate') : null;
             if (pipTranslate) {
                 var hString = this.getHoursString(h);
@@ -1271,7 +1273,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                         s = m + ' ' + pipTranslate.translate(mString);
                     }
                     else {
-                        s = pipTranslate.translate('DATE_FEW_SECOND');
+                        s = sec + ' ' + pipTranslate.translate('DATE_FEW_SECOND');
                     }
                 }
             }
@@ -1284,7 +1286,7 @@ var IDateConvertService_1 = require("./IDateConvertService");
                         s = m + ' minutes';
                     }
                     else {
-                        s = 'few second';
+                        s = sec + ' second';
                     }
                 }
             }
@@ -1321,8 +1323,10 @@ var IDateConvertService_1 = require("./IDateConvertService");
                 DATE_MINUTE_ONE: 'minute',
                 DATE_MINUTES_FEW: 'minutes',
                 DATE_MINUTES_AFTER_FOOR: 'minutes',
-                DATE_FEW_SECOND: 'few sec. ago',
-                DATE_FEW_SECOND_SHORT: 'few sec. ago'
+                DATE_FEW_SECOND: 'second',
+                DATE_FEW_SECOND_SHORT: 'sec.',
+                DATE_FEW_SECOND_ELAPSED: 'few sec. ago',
+                DATE_FEW_SECOND_SHORT_ELAPSED: 'few sec. ago'
             });
             pipTranslateProvider.translations('ru', {
                 DATE_ELAPSED: 'назад',
@@ -1334,8 +1338,10 @@ var IDateConvertService_1 = require("./IDateConvertService");
                 DATE_MINUTE_ONE: 'минуту',
                 DATE_MINUTES_FEW: 'минуты',
                 DATE_MINUTES_AFTER_FOOR: 'минут',
-                DATE_FEW_SECOND: 'несколько секунд назад',
-                DATE_FEW_SECOND_SHORT: 'неск. с. назад',
+                DATE_FEW_SECOND: 'секунд',
+                DATE_FEW_SECOND_SHORT: 'сек.',
+                DATE_FEW_SECOND_ELAPSED: 'несколько секунд назад',
+                DATE_FEW_SECOND_SHORT_ELAPSED: 'неск. с. назад',
             });
         }
     }
@@ -2218,6 +2224,22 @@ try {
   module = angular.module('pipDates.Templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('time_range/TimeRange.html',
+    '<p>\n' +
+    '    <span ng-if="$ctrl.data.start != null">{{$ctrl.data.start | formatLongDateTime}}</span>\n' +
+    '    <span  class="separator" ng-if="$ctrl.data.start && $ctrl.data.end"> - </span>\n' +
+    '    <span ng-if="$ctrl.data.end != null">{{$ctrl.data.end | formatLongDateTime}}</span>\n' +
+    '</p>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('pipDates.Templates');
+} catch (e) {
+  module = angular.module('pipDates.Templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('time_range_edit/TimeRangeEdit.html',
     '<div class="event-edit layout-row layout-xs-column flex layout-align-start-start">\n' +
     '    <div flex="47" class="start-time-container ">\n' +
@@ -2269,22 +2291,6 @@ module.run(['$templateCache', function($templateCache) {
     '    </div>\n' +
     '</div>\n' +
     '');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('pipDates.Templates');
-} catch (e) {
-  module = angular.module('pipDates.Templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('time_range/TimeRange.html',
-    '<p>\n' +
-    '    <span ng-if="$ctrl.data.start != null">{{$ctrl.data.start | formatLongDateTime}}</span>\n' +
-    '    <span  class="separator" ng-if="$ctrl.data.start && $ctrl.data.end"> - </span>\n' +
-    '    <span ng-if="$ctrl.data.end != null">{{$ctrl.data.end | formatLongDateTime}}</span>\n' +
-    '</p>');
 }]);
 })();
 

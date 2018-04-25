@@ -437,7 +437,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                         if (m) {
                             s = moment.utc(ms).format("m") + ' ' + pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                         } else {
-                            s = pipTranslate.translate('DATE_FEW_SECOND_SHORT');
+                            s = pipTranslate.translate('DATE_FEW_SECOND_SHORT_ELAPSED');
                         }
                     }
                 } else {
@@ -533,7 +533,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                         if (m) {
                             s = moment.utc(ms).format("m") + ' ' + pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                         } else {
-                            s = pipTranslate.translate('DATE_FEW_SECOND');
+                            s = pipTranslate.translate('DATE_FEW_SECOND_ELAPSED');
                         }
                     }
                 } else {
@@ -604,7 +604,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                         if (m) {
                             s = moment.utc(ms).format("m") + ' ' + pipTranslate.translate(mString) + ' ' + pipTranslate.translate('DATE_ELAPSED');
                         } else {
-                            s = pipTranslate.translate('DATE_FEW_SECOND_SHORT') + ' ' + pipTranslate.translate('DATE_ELAPSED');
+                            s = pipTranslate.translate('DATE_FEW_SECOND_SHORT_ELAPSED') + ' ' + pipTranslate.translate('DATE_ELAPSED');
                         }
                     }
                 } else {
@@ -629,6 +629,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
             let s: string = '';
             let h = Math.floor(value / this.oneHour);
             let m = Math.floor((value - h * this.oneHour) / this.oneMinute);
+            let sec = Math.floor((value - h * this.oneHour - m * this.oneMinute) / this.oneSeccond);
             let pipTranslate: any = this.$injector.has('pipTranslate') ? this.$injector.get('pipTranslate') : null;
             if (pipTranslate) {
                 let hString: string = 'DATE_HOUR_SHORT';
@@ -640,7 +641,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                     if (m) {
                         s = m + ' ' + pipTranslate.translate(mString);
                     } else {
-                        s = pipTranslate.translate('DATE_FEW_SECOND_SHORT');
+                        s = sec + ' ' + pipTranslate.translate('DATE_FEW_SECOND_SHORT');
                     }
                 }
             } else {
@@ -650,7 +651,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                     if (m) {
                         s = m + ' min.';
                     } else {
-                        s = 'few sec.';
+                        s = sec + ' sec.';
                     }
                 }
             }
@@ -664,6 +665,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
             let s: string = '';
             let h = Math.floor(value / this.oneHour);
             let m = Math.floor((value - h * this.oneHour) / this.oneMinute);
+            let sec = Math.floor((value - h * this.oneHour - m * this.oneMinute) / this.oneSeccond);
             let pipTranslate: any = this.$injector.has('pipTranslate') ? this.$injector.get('pipTranslate') : null;
             if (pipTranslate) {
                     let hString: string = this.getHoursString(h);
@@ -676,7 +678,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                     if (m) {
                         s = m + ' ' + pipTranslate.translate(mString);
                     } else {
-                        s = pipTranslate.translate('DATE_FEW_SECOND');
+                        s = sec + ' ' + pipTranslate.translate('DATE_FEW_SECOND');
                     }
                 }
             } else {
@@ -686,7 +688,7 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                     if (m) {
                         s = m + ' minutes';
                     } else {
-                        s = 'few second';
+                        s = sec + ' second';
                     }
                 }
             }
@@ -728,8 +730,10 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                 DATE_MINUTE_ONE: 'minute',
                 DATE_MINUTES_FEW: 'minutes',
                 DATE_MINUTES_AFTER_FOOR: 'minutes',
-                DATE_FEW_SECOND: 'few sec. ago',
-                DATE_FEW_SECOND_SHORT: 'few sec. ago'
+                DATE_FEW_SECOND: 'second',
+                DATE_FEW_SECOND_SHORT: 'sec.',
+                DATE_FEW_SECOND_ELAPSED: 'few sec. ago',
+                DATE_FEW_SECOND_SHORT_ELAPSED: 'few sec. ago'
 
             });
             pipTranslateProvider.translations('ru', {
@@ -742,8 +746,10 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                 DATE_MINUTE_ONE: 'минуту',
                 DATE_MINUTES_FEW: 'минуты',
                 DATE_MINUTES_AFTER_FOOR: 'минут',
-                DATE_FEW_SECOND: 'несколько секунд назад',
-                DATE_FEW_SECOND_SHORT: 'неск. с. назад',
+                DATE_FEW_SECOND: 'секунд',
+                DATE_FEW_SECOND_SHORT: 'сек.',
+                DATE_FEW_SECOND_ELAPSED: 'несколько секунд назад',
+                DATE_FEW_SECOND_SHORT_ELAPSED: 'неск. с. назад',
             });
         }
 
