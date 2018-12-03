@@ -2090,40 +2090,6 @@ try {
   module = angular.module('pipDates.Templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('date/Date.html',
-    '<div class="pip-date layout-row flex" tabindex="-1">\n' +
-    '	<md-input-container class="input-container flex">\n' +
-    '		<md-select class="pip-date-day flex" ng-disabled="$ctrl.disableControls"\n' +
-    '				   ng-model="$ctrl.day" placeholder="{{$ctrl.dayLabel}}" ng-change="$ctrl.setValue()">\n' +
-    '			<md-option ng-value="opt" ng-repeat="opt in $ctrl.days track by opt">{{:: opt }}</md-option>\n' +
-    '		</md-select>\n' +
-    '	</md-input-container>\n' +
-    '	<div class="input-container-separator flex-fixed"></div>\n' +
-    '	<md-input-container class="input-container flex">\n' +
-    '		<md-select class="pip-date-monthflex" ng-disabled="$ctrl.disableControls"\n' +
-    '				   ng-model="$ctrl.month" placeholder="{{$ctrl.monthLabel}}" ng-change="$ctrl.onMonthChanged()">\n' +
-    '			<md-option ng-value="opt.id" ng-repeat="opt in $ctrl.months track by opt.id">{{:: opt.name }}</md-option>\n' +
-    '		</md-select>\n' +
-    '	</md-input-container>\n' +
-    '	<div class="input-container-separator flex-fixed"></div>\n' +
-    '	<md-input-container class="input-container flex">\n' +
-    '		<md-select class="pip-date-year flex" ng-disabled="$ctrl.disableControls"\n' +
-    '				   ng-model="$ctrl.year" placeholder="{{$ctrl.yearLabel}}" ng-change="$ctrl.onYearChanged()">\n' +
-    '			<md-option ng-value="opt" ng-repeat="opt in $ctrl.years track by opt">{{:: opt }}</md-option>\n' +
-    '		</md-select>\n' +
-    '	</md-input-container>\n' +
-    '</div>\n' +
-    '					');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('pipDates.Templates');
-} catch (e) {
-  module = angular.module('pipDates.Templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('date_range/DateRange.html',
     '<div class="pip-date-range layout-row flex" tabindex="-1">\n' +
     '    <md-input-container ng-show="$ctrl.isDay()" class="input-container pip-day flex"\n' +
@@ -2291,6 +2257,40 @@ module.run(['$templateCache', function($templateCache) {
     '    </div>\n' +
     '</div>\n' +
     '');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('pipDates.Templates');
+} catch (e) {
+  module = angular.module('pipDates.Templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('date/Date.html',
+    '<div class="pip-date layout-row flex" tabindex="-1">\n' +
+    '	<md-input-container class="input-container flex">\n' +
+    '		<md-select class="pip-date-day flex" ng-disabled="$ctrl.disableControls"\n' +
+    '				   ng-model="$ctrl.day" placeholder="{{$ctrl.dayLabel}}" ng-change="$ctrl.setValue()">\n' +
+    '			<md-option ng-value="opt" ng-repeat="opt in $ctrl.days track by opt">{{:: opt }}</md-option>\n' +
+    '		</md-select>\n' +
+    '	</md-input-container>\n' +
+    '	<div class="input-container-separator flex-fixed"></div>\n' +
+    '	<md-input-container class="input-container flex">\n' +
+    '		<md-select class="pip-date-monthflex" ng-disabled="$ctrl.disableControls"\n' +
+    '				   ng-model="$ctrl.month" placeholder="{{$ctrl.monthLabel}}" ng-change="$ctrl.onMonthChanged()">\n' +
+    '			<md-option ng-value="opt.id" ng-repeat="opt in $ctrl.months track by opt.id">{{:: opt.name }}</md-option>\n' +
+    '		</md-select>\n' +
+    '	</md-input-container>\n' +
+    '	<div class="input-container-separator flex-fixed"></div>\n' +
+    '	<md-input-container class="input-container flex">\n' +
+    '		<md-select class="pip-date-year flex" ng-disabled="$ctrl.disableControls"\n' +
+    '				   ng-model="$ctrl.year" placeholder="{{$ctrl.yearLabel}}" ng-change="$ctrl.onYearChanged()">\n' +
+    '			<md-option ng-value="opt" ng-repeat="opt in $ctrl.years track by opt">{{:: opt }}</md-option>\n' +
+    '		</md-select>\n' +
+    '	</md-input-container>\n' +
+    '</div>\n' +
+    '					');
 }]);
 })();
 
