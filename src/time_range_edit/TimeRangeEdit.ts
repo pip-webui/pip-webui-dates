@@ -74,6 +74,7 @@ export const MillisecondsInSecond = 1000;
             private pipDateConvert,
             private $scope: ng.IScope,
             $element: JQuery) {
+            "ngInject";
 
             this.translate();
             this.intervalTimeCollection = this.getTimeInterval();
@@ -183,7 +184,7 @@ export const MillisecondsInSecond = 1000;
         private validateEndDate() {
             let date: any = new Date(), start: Date = new Date(), end: Date = new Date();
 
-            if (!this.data.endDate ) {
+            if (!this.data.endDate) {
                 this.data.endTime = null;
                 this.data.endDate = null;
                 return;
@@ -199,7 +200,7 @@ export const MillisecondsInSecond = 1000;
                     this.data.endTime = this.data.startTime === (HoursInDay * MinutesInHour - IntervalTimeRange) ? (HoursInDay * MinutesInHour - IntervalTimeRange) : this.data.startTime + IntervalTimeRange;
                 }
             }
-            if (this.data.startDate &&  this.data.startTime) {
+            if (this.data.startDate && this.data.startTime) {
                 start = new Date(this.data.startDate.getTime() + this.data.startTime * MinutesInHour * MillisecondsInSecond);
             }
             if (this.data.endDate && this.data.endTime) {

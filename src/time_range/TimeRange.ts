@@ -30,6 +30,7 @@
         public end: any;
 
         constructor($scope: ng.IScope, $attrs: ng.IAttributes, $element: JQuery) {
+            "ngInject";
             this.data = new TimeRangeData();
             this.defineStartDate();
             this.defineEndDate();

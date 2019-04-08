@@ -51,6 +51,7 @@
         constructor(
             $injector: angular.auto.IInjectorService,
             $scope: ng.IScope) {
+            "ngInject";
             this.momentMonths = angular.isArray(this.localeDate['_months']) ? this.localeDate['_months'] : this.localeDate['_months'].format;
             this.momentDays = angular.isArray(this.localeDate['_weekdays']) ? this.localeDate['_weekdays'] : this.localeDate['_weekdays'].format;
             this.momentShortDays = this.localeDate['_weekdaysMin'];

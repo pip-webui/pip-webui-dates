@@ -72,6 +72,7 @@
             $element,
             $rootScope: ng.IRootScopeService,
             $injector: angular.auto.IInjectorService) {
+            "ngInject";
 
             this.localeDate = moment.localeData();
             this.momentMonths = angular.isArray(this.localeDate._months) ? this.localeDate._months : this.localeDate._months.standalone;
