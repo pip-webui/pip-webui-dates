@@ -276,7 +276,7 @@
             days = [];
             for (let i: number = 1; i <= count; i++) {
                 days.push(i);
-                this.nameDays.push(this.momentShortDays[moment([year, month - 1, i]).weekday()]);
+                this.nameDays.push(moment([year, month - 1, i]).format('dd'));
             }
 
             return days;
