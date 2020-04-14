@@ -1001,7 +1001,10 @@ var IDateConvertService_1 = require("./IDateConvertService");
             else {
                 nowDate = moment(start);
             }
-            date = moment(value);
+            if (this._defaultTimeZoneOffset != undefined && this._defaultTimeZoneOffset != null)
+                date = moment(value).utcOffset(this._defaultTimeZoneOffset);
+            else
+                date = moment(value);
             if (!date.isValid() || !nowDate.isValid()) {
                 return '';
             }
@@ -1020,7 +1023,10 @@ var IDateConvertService_1 = require("./IDateConvertService");
                 nowDate = moment(start);
             }
             borderDate = _.cloneDeep(nowDate);
-            date = moment(value);
+            if (this._defaultTimeZoneOffset != undefined && this._defaultTimeZoneOffset != null)
+                date = moment(value).utcOffset(this._defaultTimeZoneOffset);
+            else
+                date = moment(value);
             if (!date.isValid() || !nowDate.isValid()) {
                 return '';
             }
@@ -1103,7 +1109,10 @@ var IDateConvertService_1 = require("./IDateConvertService");
                 nowDate = moment(start);
             }
             borderDate = _.cloneDeep(nowDate);
-            date = moment(value);
+            if (this._defaultTimeZoneOffset != undefined && this._defaultTimeZoneOffset != null)
+                date = moment(value).utcOffset(this._defaultTimeZoneOffset);
+            else
+                date = moment(value);
             if (!date.isValid() || !nowDate.isValid()) {
                 return '';
             }
@@ -1166,7 +1175,10 @@ var IDateConvertService_1 = require("./IDateConvertService");
                 nowDate = moment(start);
             }
             borderDate = _.cloneDeep(nowDate);
-            date = moment(value);
+            if (this._defaultTimeZoneOffset != undefined && this._defaultTimeZoneOffset != null)
+                date = moment(value).utcOffset(this._defaultTimeZoneOffset);
+            else
+                date = moment(value);
             if (!date.isValid() || !nowDate.isValid()) {
                 return '';
             }

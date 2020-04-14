@@ -379,7 +379,10 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
                 nowDate = moment(start);
             }
 
-            date = moment(value);
+            if (this._defaultTimeZoneOffset != undefined && this._defaultTimeZoneOffset != null)
+                date = moment(value).utcOffset(this._defaultTimeZoneOffset);
+            else
+                date = moment(value);
             if (!date.isValid() || !nowDate.isValid()) {
                 return '';
             }
@@ -403,7 +406,10 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
             }
             borderDate = _.cloneDeep(nowDate)
 
-            date = moment(value);
+            if (this._defaultTimeZoneOffset != undefined && this._defaultTimeZoneOffset != null)
+                date = moment(value).utcOffset(this._defaultTimeZoneOffset);
+            else
+                date = moment(value);
             if (!date.isValid() || !nowDate.isValid()) {
                 return '';
             }
@@ -497,7 +503,10 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
             }
             borderDate = _.cloneDeep(nowDate)
 
-            date = moment(value);
+            if (this._defaultTimeZoneOffset != undefined && this._defaultTimeZoneOffset != null)
+                date = moment(value).utcOffset(this._defaultTimeZoneOffset);
+            else
+                date = moment(value);
             if (!date.isValid() || !nowDate.isValid()) {
                 return '';
             }
@@ -568,7 +577,10 @@ import { IDateFormatService, IDateFormatProvider } from './IDateFormatService';
             }
             borderDate = _.cloneDeep(nowDate)
 
-            date = moment(value);
+            if (this._defaultTimeZoneOffset != undefined && this._defaultTimeZoneOffset != null)
+                date = moment(value).utcOffset(this._defaultTimeZoneOffset);
+            else
+                date = moment(value);
             if (!date.isValid() || !nowDate.isValid()) {
                 return '';
             }
