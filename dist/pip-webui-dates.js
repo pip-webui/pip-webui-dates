@@ -1440,6 +1440,9 @@ __export(require("./IDateConvertService"));
                     _this.init();
                 }
             });
+            $scope.$watch(function () { return _this.model; }, function (newValue) {
+                _this.getValue(newValue);
+            });
         }
         DateRangeController.prototype.$onChanges = function (changes) {
             if (changes.type && changes.type.currentValue) {

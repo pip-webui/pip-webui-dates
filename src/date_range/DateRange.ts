@@ -96,6 +96,10 @@
                 }
             });
 
+            $scope.$watch(() => this.model, (newValue) => {
+                this.getValue(newValue);
+            });
+
         }
 
         public $onChanges(changes: DateRangeChanges) {
